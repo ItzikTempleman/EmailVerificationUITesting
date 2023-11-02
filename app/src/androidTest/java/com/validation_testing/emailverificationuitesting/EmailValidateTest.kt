@@ -19,6 +19,7 @@ class EmailValidateTest {
         composeTestRule.setContent {
             EmailVerificationUITestingTheme {
                 LoginValidationScreen(modifier = Modifier)
+
                 //composeTestRule.onNodeWithTag("button").performClick()
             }
         }
