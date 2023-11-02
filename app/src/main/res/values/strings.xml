@@ -3,4 +3,6 @@
     <string name="email">Enter email</string>
     <string name="password">Enter password</string>
     <string name="validate">Validate</string>
+    <string name="success">Successfully logged in</string>
+    <string name="fail">Incorrect data, please fix</string>
 </resources>
