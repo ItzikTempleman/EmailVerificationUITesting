@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Email and password validation testing</string>
+    <string name="app_name">Validation testing</string>
     <string name="email">Enter email</string>
     <string name="password">Enter password</string>
     <string name="validate">Validate</string>
