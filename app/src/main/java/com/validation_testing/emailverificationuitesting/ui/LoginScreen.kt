@@ -9,13 +9,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.IconButton
 import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.TextFieldColors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,6 +40,7 @@ import androidx.compose.ui.unit.sp
 import com.validation_testing.emailverificationuitesting.R
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginValidationScreen(
     modifier: Modifier,
@@ -46,18 +50,22 @@ fun LoginValidationScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         val context = LocalContext.current
-        var email by remember {
-            mutableStateOf("")
-        }
-        var password by remember {
-            mutableStateOf("")
-        }
+
+        var isEmailError by remember { mutableStateOf(false) }
+        var emailLabelMessage by remember { mutableStateOf("Enter email") }
+
+        var isPasswordError by remember { mutableStateOf(false) }
+        var passwordLabelMessage by remember { mutableStateOf("Enter password") }
+
+        var email by remember { mutableStateOf("") }
+        var password by remember { mutableStateOf("") }
+
         var isPasswordVisible by remember { mutableStateOf(false) }
 
         Text(
             modifier = Modifier.padding(20.dp),
             text = stringResource(id = R.string.app_name),
-            color = colorResource(id = R.color.custom),
+            color = colorResource(id = R.color.custom_blue),
             fontSize = 32.sp,
             fontStyle = FontStyle.Italic,
             fontWeight = FontWeight.Bold
@@ -73,9 +81,9 @@ fun LoginValidationScreen(
                 email = it
             },
             label = {
-                Text(text ="Enter email")
+                Text(text = emailLabelMessage)
             },
-
+            isError = isEmailError,
             trailingIcon = {
                 Icon(
                     imageVector = Icons.Default.Email,
@@ -84,13 +92,15 @@ fun LoginValidationScreen(
             }
         )
 
+
         OutlinedTextField(
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Password
             ),
             label = {
-                Text(text ="Enter password")
+                Text(text = passwordLabelMessage)
             },
+            isError = isPasswordError,
             visualTransformation = if (isPasswordVisible) VisualTransformation.None
             else PasswordVisualTransformation(),
             trailingIcon = {
@@ -121,7 +131,16 @@ fun LoginValidationScreen(
                 .fillMaxWidth()
                 .padding(20.dp),
             onClick = {
-                loginMessage(context, isEmailValid(email) && isPasswordValid(password))
+                if(!isDataValid(email)){
+                    isEmailError=true
+                    emailLabelMessage="Invalid email"
+                }
+                if(!isDataValid(password)){
+                    isPasswordError=true
+
+                    passwordLabelMessage="Invalid password"
+                }
+                loginMessage(context, isDataValid(email) && isPasswordValid(password))
             }
         ) {
             Text(
@@ -132,15 +151,8 @@ fun LoginValidationScreen(
     }
 }
 
-
-fun isEmailValid(email: String): Boolean {
-    return email.isNotBlank() && email.length > 9
-}
-
-
-fun isPasswordValid(password: String): Boolean {
-    return password.isNotBlank() && password.length > 9
-}
+fun isDataValid(email: String): Boolean = email.isNotBlank() && email.length > 9
+fun isPasswordValid(password: String): Boolean = password.isNotBlank() && password.length > 9
 
 
 fun loginMessage(context: Context, isSuccessfulData: Boolean) {
