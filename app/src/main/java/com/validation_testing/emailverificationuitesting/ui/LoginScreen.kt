@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.IconButton
 import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.TextFieldColors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Visibility
@@ -18,7 +17,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,6 +28,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -73,7 +73,9 @@ fun LoginValidationScreen(
 
         OutlinedTextField(
             singleLine = true,
-            modifier = Modifier
+            modifier = Modifier.semantics {
+                contentDescription="Email field"
+            }
                 .fillMaxWidth()
                 .padding(20.dp),
             value = email,
@@ -91,7 +93,6 @@ fun LoginValidationScreen(
                 )
             }
         )
-
 
         OutlinedTextField(
             keyboardOptions = KeyboardOptions(
@@ -116,7 +117,9 @@ fun LoginValidationScreen(
                 }
             },
             singleLine = true,
-            modifier = Modifier
+            modifier = Modifier.semantics {
+                contentDescription="password field"
+            }
                 .fillMaxWidth()
                 .padding(20.dp),
             value = password,
@@ -126,21 +129,23 @@ fun LoginValidationScreen(
         )
 
         Button(
-            modifier = Modifier
+            modifier = Modifier.semantics {
+                contentDescription="Validation button"
+            }
                 .testTag("button")
                 .fillMaxWidth()
                 .padding(20.dp),
             onClick = {
-                if(!isDataValid(email)){
-                    isEmailError=true
-                    emailLabelMessage="Invalid email"
+                if (!isEmailValid(email)) {
+                    isEmailError = true
+                    emailLabelMessage = "Invalid email"
                 }
-                if(!isDataValid(password)){
-                    isPasswordError=true
+                if (!isPasswordValid(password)) {
+                    isPasswordError = true
 
-                    passwordLabelMessage="Invalid password"
+                    passwordLabelMessage = "Invalid password"
                 }
-                loginMessage(context, isDataValid(email) && isPasswordValid(password))
+                loginMessage(context, isEmailValid(email) && isPasswordValid(password))
             }
         ) {
             Text(
@@ -151,7 +156,9 @@ fun LoginValidationScreen(
     }
 }
 
-fun isDataValid(email: String): Boolean = email.isNotBlank() && email.length > 9
+fun isEmailValid(email: String): Boolean = email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\$".toRegex())
+
+
 fun isPasswordValid(password: String): Boolean = password.isNotBlank() && password.length > 9
 
 
