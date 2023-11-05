@@ -139,12 +139,11 @@ fun LoginValidationScreen(
                 if (!isEmailValid(email)) {
                     isEmailError = true
                     emailLabelMessage = "Invalid email"
-                }
+                }else isEmailError =false
                 if (!isPasswordValid(password)) {
                     isPasswordError = true
-
                     passwordLabelMessage = "Invalid password"
-                }
+                }else isPasswordError =false
                 loginMessage(context, isEmailValid(email) && isPasswordValid(password))
             }
         ) {
