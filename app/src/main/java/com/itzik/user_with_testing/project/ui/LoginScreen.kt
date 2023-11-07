@@ -1,4 +1,4 @@
-package com.validation_testing.emailverificationuitesting.ui
+package com.itzik.user_with_testing.project.ui
 
 
 import android.content.Context
@@ -14,7 +14,6 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,13 +34,18 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.validation_testing.emailverificationuitesting.R
-
+import androidx.navigation.NavHostController
+import com.itzik.user_with_testing.R
+import com.itzik.user_with_testing.project.viewmodels.UserViewModel
+import kotlinx.coroutines.CoroutineScope
 
 
 @Composable
-fun LoginValidationScreen(
+fun LoginScreen(
+    coroutineScope: CoroutineScope,
     modifier: Modifier,
+    navHostController: NavHostController,
+    userViewModel: UserViewModel
 ) {
     Column(
         modifier = modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally

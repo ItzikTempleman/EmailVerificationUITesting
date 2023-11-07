@@ -1,4 +1,4 @@
-package com.validation_testing.emailverificationuitesting.ui.theme
+package com.itzik.user_with_testing.theme
 
 import android.app.Activity
 import android.os.Build

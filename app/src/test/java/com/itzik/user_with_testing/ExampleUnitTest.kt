@@ -1,4 +1,4 @@
-package com.validation_testing.emailverificationuitesting
+package com.itzik.user_with_testing
 
 import org.junit.Test
 

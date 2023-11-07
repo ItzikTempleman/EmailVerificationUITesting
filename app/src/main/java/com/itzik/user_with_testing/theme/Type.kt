@@ -1,4 +1,4 @@
-package com.validation_testing.emailverificationuitesting.ui.theme
+package com.itzik.user_with_testing.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

@@ -1,4 +1,4 @@
-package com.validation_testing.emailverificationuitesting
+package com.itzik.user_with_testing
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
