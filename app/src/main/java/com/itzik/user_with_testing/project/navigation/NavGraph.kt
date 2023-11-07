@@ -6,12 +6,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import com.itzik.user_with_testing.project.ui.FirstRegistrationScreen
-import com.itzik.user_with_testing.project.ui.HomeScreen
-import com.itzik.user_with_testing.project.ui.LoginScreen
-import com.itzik.user_with_testing.project.ui.ResetPasswordScreen
-import com.itzik.user_with_testing.project.ui.SecondRegistrationScreen
-import com.itzik.user_with_testing.project.ui.SplashScreen
+
+import com.itzik.user_with_testing.project.ui.screens.FirstRegistrationScreen
+import com.itzik.user_with_testing.project.ui.screens.HomeScreen
+import com.itzik.user_with_testing.project.ui.screens.LoginScreen
+import com.itzik.user_with_testing.project.ui.screens.ResetPasswordScreen
+import com.itzik.user_with_testing.project.ui.screens.SecondRegistrationScreen
+import com.itzik.user_with_testing.project.ui.screens.SplashScreen
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 
@@ -37,9 +38,9 @@ fun SetupNavGraph(
                 route = SplashGraph.SplashPage.route
             ) {
                 SplashScreen(
-                    navHostController=navHostController,
-                    userViewModel=userViewModel,
-                    coroutineScope=coroutineScope,
+                    navHostController = navHostController,
+                    userViewModel = userViewModel,
+                    coroutineScope = coroutineScope,
                     modifier = Modifier
                 )
             }
@@ -53,9 +54,9 @@ fun SetupNavGraph(
                 route = LoginGraph.LoginPage.route
             ) {
                 LoginScreen(
-                    navHostController=navHostController,
-                    userViewModel=userViewModel,
-                    coroutineScope=coroutineScope,
+                    navHostController = navHostController,
+                    userViewModel = userViewModel,
+                    coroutineScope = coroutineScope,
                     modifier = Modifier
                 )
             }
@@ -63,9 +64,9 @@ fun SetupNavGraph(
                 route = LoginGraph.FirstRegistrationPage.route
             ) {
                 FirstRegistrationScreen(
-                    navHostController=navHostController,
-                    userViewModel=userViewModel,
-                    coroutineScope=coroutineScope,
+                    navHostController = navHostController,
+                    userViewModel = userViewModel,
+                    coroutineScope = coroutineScope,
                     modifier = Modifier
                 )
             }
@@ -73,9 +74,9 @@ fun SetupNavGraph(
                 route = LoginGraph.SecondRegistrationPage.route
             ) {
                 SecondRegistrationScreen(
-                    navHostController=navHostController,
-                    userViewModel=userViewModel,
-                    coroutineScope=coroutineScope,
+                    navHostController = navHostController,
+                    userViewModel = userViewModel,
+                    coroutineScope = coroutineScope,
                     modifier = Modifier
                 )
             }
@@ -83,9 +84,9 @@ fun SetupNavGraph(
                 route = LoginGraph.ResetPasswordPage.route
             ) {
                 ResetPasswordScreen(
-                    navHostController=navHostController,
-                    userViewModel=userViewModel,
-                    coroutineScope=coroutineScope,
+                    navHostController = navHostController,
+                    userViewModel = userViewModel,
+                    coroutineScope = coroutineScope,
                     modifier = Modifier
                 )
             }
@@ -99,12 +100,14 @@ fun SetupNavGraph(
                 route = HomeGraph.HomePage.route
             ) {
                 HomeScreen(
-                    navHostController=navHostController,
-                    userViewModel=userViewModel,
-                    coroutineScope=coroutineScope,
+                    navHostController = navHostController,
+                    userViewModel = userViewModel,
+                    coroutineScope = coroutineScope,
                     modifier = Modifier
                 )
             }
         }
     }
 }
+
+

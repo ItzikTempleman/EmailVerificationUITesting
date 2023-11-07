@@ -33,7 +33,7 @@ fun SplashScreen(
     coroutineScope: CoroutineScope,
     modifier: Modifier,
     navHostController: NavHostController,
-    userViewModel: UserViewModel,
+    userViewModel: UserViewModel?,
 ) {
 
     var startAnim by remember {
@@ -51,7 +51,7 @@ fun SplashScreen(
         delay(3500)
 
         navHostController.popBackStack()
-        navHostController.navigate(LoginGraph.LoginPage.route)
+         navHostController.navigate(LoginGraph.LoginPage.route)
     }
 
     ConstraintLayout(

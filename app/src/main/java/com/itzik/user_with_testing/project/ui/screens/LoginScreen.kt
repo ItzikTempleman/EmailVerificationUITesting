@@ -42,10 +42,10 @@ import kotlinx.coroutines.CoroutineScope
 
 @Composable
 fun LoginScreen(
-    coroutineScope: CoroutineScope?=null,
+    coroutineScope: CoroutineScope,
     modifier: Modifier,
-    navHostController: NavHostController?=null,
-    userViewModel: UserViewModel?=null
+    navHostController: NavHostController,
+    userViewModel: UserViewModel?
 ) {
     Column(
         modifier = modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
