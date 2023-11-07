@@ -5,8 +5,9 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
-import com.itzik.user_with_testing.project.ui.LoginValidationScreen
-import com.itzik.user_with_testing.theme.EmailVerificationUITestingTheme
+
+import com.itzik.user_with_testing.project.ui.screens.LoginScreen
+
 import org.junit.Rule
 import org.junit.Test
 
@@ -18,9 +19,7 @@ class EmailValidateTest {
     @Test
     fun validateEmail() {
         composeTestRule.setContent {
-            EmailVerificationUITestingTheme {
-                LoginValidationScreen(modifier = Modifier)
-            }
+                LoginScreen(modifier = Modifier)
         }
 
         composeTestRule.onNodeWithTag("emailTextField").performTextInput("itzik.templeman@gmail.com")
