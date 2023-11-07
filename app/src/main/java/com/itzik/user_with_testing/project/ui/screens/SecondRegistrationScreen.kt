@@ -1,4 +1,4 @@
-package com.itzik.user_with_testing.project.ui
+package com.itzik.user_with_testing.project.ui.screens
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

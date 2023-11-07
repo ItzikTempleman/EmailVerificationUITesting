@@ -1,4 +1,4 @@
-package com.itzik.user_with_testing.project.ui
+package com.itzik.user_with_testing.project.ui.screens
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween

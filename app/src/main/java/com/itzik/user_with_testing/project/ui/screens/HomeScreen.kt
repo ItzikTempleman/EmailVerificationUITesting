@@ -1,4 +1,4 @@
-package com.itzik.user_with_testing.project.ui
+package com.itzik.user_with_testing.project.ui.screens
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -7,7 +7,7 @@ import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
-fun ResetPasswordScreen(
+fun HomeScreen(
     coroutineScope: CoroutineScope,
     modifier: Modifier,
     navHostController: NavHostController,
