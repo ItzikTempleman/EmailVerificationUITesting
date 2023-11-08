@@ -9,6 +9,7 @@ import androidx.compose.ui.test.performTextInput
 import androidx.navigation.compose.rememberNavController
 
 import com.itzik.user_with_testing.project.ui.screens.LoginScreen
+import com.itzik.user_with_testing.theme.EmailVerificationUITestingTheme
 
 import org.junit.Rule
 import org.junit.Test
@@ -21,14 +22,16 @@ class EmailValidateTest {
     @Test
     fun validateEmail() {
         composeTestRule.setContent {
+            EmailVerificationUITestingTheme {
                 LoginScreen(
                     modifier = Modifier,
                     navHostController = rememberNavController(),
                     coroutineScope = rememberCoroutineScope(),
                     userViewModel = null
-                    )
-        }
+                )
 
+            }
+        }
         composeTestRule.onNodeWithTag("emailTextField").performTextInput("itzik.templeman@gmail.com")
         composeTestRule.onNodeWithTag("passwordTextField").performTextInput("Qwerty1024")
         composeTestRule.onNodeWithTag("validationButton").performClick()
