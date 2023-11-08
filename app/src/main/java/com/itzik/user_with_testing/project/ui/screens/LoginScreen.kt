@@ -3,6 +3,7 @@ package com.itzik.user_with_testing.project.ui.screens
 
 import android.content.Context
 import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -15,6 +16,7 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -41,6 +43,7 @@ import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
     coroutineScope: CoroutineScope,
@@ -54,12 +57,13 @@ fun LoginScreen(
         val (title, emailTF, passwordTF, loginBtn, forgotPasswordText, google, facebook) = createRefs()
 
         val context = LocalContext.current
-
+        val emailText = stringResource(id = R.string.enter_email)
+        val passwordText = stringResource(id = R.string.enter_password)
         var isEmailError by remember { mutableStateOf(false) }
-        var emailLabelMessage by remember { mutableStateOf("Enter email") }
+        var emailLabelMessage by remember { mutableStateOf(emailText) }
 
         var isPasswordError by remember { mutableStateOf(false) }
-        var passwordLabelMessage by remember { mutableStateOf("Enter password") }
+        var passwordLabelMessage by remember { mutableStateOf(passwordText) }
 
         var email by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
@@ -80,7 +84,10 @@ fun LoginScreen(
             fontWeight = FontWeight.Bold
         )
 
-        OutlinedTextField(singleLine = true,
+
+        OutlinedTextField(
+
+            singleLine = true,
             modifier = Modifier
                 .fillMaxWidth()
                 .constrainAs(emailTF) {
@@ -98,9 +105,14 @@ fun LoginScreen(
             isError = isEmailError,
             trailingIcon = {
                 Icon(
-                    imageVector = Icons.Default.Email, contentDescription = null
+                    imageVector = Icons.Default.Email,
+                    contentDescription = null,
+                    tint = colorResource(
+                        id = R.color.custom_blue
+                    )
                 )
-            })
+            }
+        )
 
         OutlinedTextField(keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Password
@@ -116,7 +128,9 @@ fun LoginScreen(
                     isPasswordVisible = !isPasswordVisible
                 }) {
                     Icon(
-                        contentDescription = null,
+                        contentDescription = null, tint = colorResource(
+                            id = R.color.custom_blue
+                        ),
                         imageVector = if (isPasswordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
                     )
                 }
@@ -128,7 +142,7 @@ fun LoginScreen(
                 }
                 .testTag("passwordTextField")
                 .fillMaxWidth()
-                .padding(20.dp),
+                .padding(horizontal = 20.dp, vertical = 8.dp),
             value = password,
             onValueChange = {
                 password = it
@@ -137,12 +151,12 @@ fun LoginScreen(
         Button(
             shape = CutCornerShape(percent = 8),
             modifier = Modifier
-            .constrainAs(loginBtn) {
-                bottom.linkTo(parent.bottom)
-            }
-            .testTag("validationButton")
-            .fillMaxWidth()
-            .padding(20.dp),
+                .constrainAs(loginBtn) {
+                    bottom.linkTo(parent.bottom)
+                }
+                .testTag("validationButton")
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp, vertical = 8.dp),
             onClick = {
                 if (!isEmailValid(email)) {
                     isEmailError = true
@@ -158,6 +172,25 @@ fun LoginScreen(
                 text = stringResource(id = R.string.log_in), fontSize = 24.sp
             )
         }
+
+
+        Text(
+            modifier = Modifier
+                .clickable {
+
+                }
+                .constrainAs(forgotPasswordText) {
+                    top.linkTo(passwordTF.bottom)
+                    end.linkTo(parent.end)
+                }
+                .padding(horizontal = 50.dp, vertical = 8.dp),
+            text = stringResource(id = R.string.forgot),
+            color = colorResource(id = R.color.custom_blue),
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+            fontStyle = FontStyle.Italic
+        )
+
     }
 }
 
