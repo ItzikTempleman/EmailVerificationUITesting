@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">Test user</string>
+    <string name="app_name">User testing</string>
     <string name="welcome">Welcome</string>
-    <string name="sign_up_first">Sign up - first step</string>
-    <string name="sign_up_second">Sign up - continue</string>
+    <string name="sign_up_first">Sign up - First step</string>
+    <string name="sign_up_second">Sign up - Continue</string>
     <string name="forgot">Forgot password</string>
     <string name="enter_phone_number">Enter reset phone number</string>
     <string name="enter_received_sms_code">Enter received SMS code</string>
@@ -10,6 +10,8 @@
     <string name="enter_email">Your user name or Email</string>
     <string name="enter_password">Enter your password</string>
     <string name="log_in">Log in</string>
+    <string name="sign_up">Not registered?  Sign up</string>
+
 
     <string name="success">Successfully logged in</string>
     <string name="fail">Incorrect data, please fix</string>

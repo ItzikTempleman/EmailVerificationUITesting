@@ -1,12 +1,14 @@
 package com.itzik.user_with_testing.project.ui.screens
 
 
-import android.content.Context
-import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.IconButton
@@ -28,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -39,11 +42,15 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
+import com.itzik.user_with_testing.project.navigation.LoginGraph
+import com.itzik.user_with_testing.project.utils.isEmailValid
+import com.itzik.user_with_testing.project.utils.isPasswordValid
+import com.itzik.user_with_testing.project.utils.loginMessage
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+@ExperimentalMaterial3Api
 @Composable
 fun LoginScreen(
     coroutineScope: CoroutineScope,
@@ -54,7 +61,7 @@ fun LoginScreen(
     ConstraintLayout(
         modifier = modifier.fillMaxSize()
     ) {
-        val (title, emailTF, passwordTF, loginBtn, forgotPasswordText, google, facebook) = createRefs()
+        val (title, emailTF, passwordTF, loginBtn, forgotPasswordText, iconRow, signUp) = createRefs()
 
         val context = LocalContext.current
         val emailText = stringResource(id = R.string.enter_email)
@@ -78,7 +85,7 @@ fun LoginScreen(
                     top.linkTo(parent.top)
                 },
             text = stringResource(id = R.string.welcome),
-            color = colorResource(id = R.color.custom_blue),
+            color = DefaultBlue,
             fontSize = 32.sp,
             fontStyle = FontStyle.Italic,
             fontWeight = FontWeight.Bold
@@ -86,7 +93,6 @@ fun LoginScreen(
 
 
         OutlinedTextField(
-
             singleLine = true,
             modifier = Modifier
                 .fillMaxWidth()
@@ -107,9 +113,7 @@ fun LoginScreen(
                 Icon(
                     imageVector = Icons.Default.Email,
                     contentDescription = null,
-                    tint = colorResource(
-                        id = R.color.custom_blue
-                    )
+                    tint = DefaultBlue
                 )
             }
         )
@@ -128,9 +132,7 @@ fun LoginScreen(
                     isPasswordVisible = !isPasswordVisible
                 }) {
                     Icon(
-                        contentDescription = null, tint = colorResource(
-                            id = R.color.custom_blue
-                        ),
+                        contentDescription = null, tint = DefaultBlue,
                         imageVector = if (isPasswordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
                     )
                 }
@@ -147,16 +149,66 @@ fun LoginScreen(
             onValueChange = {
                 password = it
             })
+        Text(
+            modifier = Modifier
+                .clickable {
+
+                }
+                .constrainAs(forgotPasswordText) {
+                    top.linkTo(passwordTF.bottom)
+                    end.linkTo(parent.end)
+                }
+                .padding(horizontal = 50.dp, vertical = 8.dp),
+            text = stringResource(id = R.string.forgot),
+            color = colorResource(id = R.color.custom_blue),
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+            fontStyle = FontStyle.Italic
+        )
+
+
+        Row(
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier
+                .fillMaxWidth()
+                .constrainAs(iconRow) {
+                    top.linkTo(forgotPasswordText.bottom)
+                }
+                .padding(30.dp),
+        ) {
+            Image(
+                modifier = Modifier
+                    .width(40.dp)
+                    .clickable {
+
+                    },
+                painter = painterResource(id = R.drawable.facebook),
+                contentDescription = null
+            )
+            Image(
+                modifier = Modifier
+                    .width(40.dp)
+                    .clickable {
+
+                    },
+                painter = painterResource(id = R.drawable.google),
+                contentDescription = null
+            )
+        }
+
+
+
+
 
         Button(
             shape = CutCornerShape(percent = 8),
             modifier = Modifier
                 .constrainAs(loginBtn) {
-                    bottom.linkTo(parent.bottom)
+                    top.linkTo(iconRow.bottom)
                 }
                 .testTag("validationButton")
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp, vertical = 8.dp),
+                .padding(start = 20.dp, top = 8.dp, end=20.dp),
             onClick = {
                 if (!isEmailValid(email)) {
                     isEmailError = true
@@ -177,34 +229,19 @@ fun LoginScreen(
         Text(
             modifier = Modifier
                 .clickable {
-
+                    navHostController.navigate(LoginGraph.FirstRegistrationPage.route)
                 }
-                .constrainAs(forgotPasswordText) {
-                    top.linkTo(passwordTF.bottom)
+                .constrainAs(signUp) {
+                    top.linkTo(loginBtn.bottom)
                     end.linkTo(parent.end)
-                }
-                .padding(horizontal = 50.dp, vertical = 8.dp),
-            text = stringResource(id = R.string.forgot),
-            color = colorResource(id = R.color.custom_blue),
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
-            fontStyle = FontStyle.Italic
+                    start.linkTo(parent.start)
+                }.padding(8.dp),
+            text = stringResource(id = R.string.sign_up),
+            color = DefaultBlue,
+            fontSize = 22.sp,
+            fontStyle = FontStyle.Italic,
+            fontWeight = FontWeight.Bold
         )
-
     }
 }
 
-fun isEmailValid(email: String): Boolean =
-    email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\$".toRegex())
-
-
-fun isPasswordValid(password: String): Boolean = password.isNotBlank() && password.length > 9
-
-
-fun loginMessage(context: Context, isSuccessfulData: Boolean) {
-    Toast.makeText(
-        context,
-        if (isSuccessfulData) "Successfully logged in" else "Incorrect data, please fix",
-        Toast.LENGTH_SHORT
-    ).show()
-}

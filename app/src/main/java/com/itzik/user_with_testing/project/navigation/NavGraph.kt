@@ -1,5 +1,6 @@
 package com.itzik.user_with_testing.project.navigation
 
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -19,6 +20,7 @@ const val SPLASH_GRAPH = "splashGraph"
 const val LOGIN_GRAPH = "loginGraph"
 const val HOME_GRAPH = "homeGraph"
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SetupNavGraph(
     navHostController: NavHostController,
