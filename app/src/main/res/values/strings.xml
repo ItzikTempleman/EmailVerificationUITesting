@@ -1,8 +1,16 @@
 <resources>
-    <string name="app_name">Validation testing</string>
-    <string name="email">Enter email</string>
-    <string name="password">Enter password</string>
-    <string name="validate">Validate</string>
+    <string name="app_name">Test user</string>
+    <string name="welcome">Welcome</string>
+    <string name="sign_up_first">Sign up - first step</string>
+    <string name="sign_up_second">Sign up - continue</string>
+    <string name="forgot">Forgot password</string>
+    <string name="enter_phone_number">Enter reset phone number</string>
+    <string name="enter_received_sms_code">Enter received SMS code</string>
+
+    <string name="enter_email">Enter email</string>
+    <string name="enter_password">Enter password</string>
+    <string name="log_in">Log in</string>
+
     <string name="success">Successfully logged in</string>
     <string name="fail">Incorrect data, please fix</string>
 </resources>

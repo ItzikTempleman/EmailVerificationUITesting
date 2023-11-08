@@ -14,7 +14,6 @@ sealed class LoginGraph(
     object LoginPage : LoginGraph(route = "loginPage")
     object FirstRegistrationPage:LoginGraph(route = "firstRegistrationPage")
     object SecondRegistrationPage:LoginGraph(route = "secondRegistrationPage")
-    object ResetPasswordPage:LoginGraph(route = "resetPasswordPage")
 }
 
 

@@ -3,9 +3,10 @@ package com.itzik.user_with_testing.project.ui.screens
 
 import android.content.Context
 import android.widget.Toast
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.IconButton
 import androidx.compose.material.OutlinedTextField
@@ -21,7 +22,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
@@ -34,6 +34,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
@@ -45,11 +46,13 @@ fun LoginScreen(
     coroutineScope: CoroutineScope,
     modifier: Modifier,
     navHostController: NavHostController,
-    userViewModel: UserViewModel?
+    userViewModel: UserViewModel?,
 ) {
-    Column(
-        modifier = modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
+    ConstraintLayout(
+        modifier = modifier.fillMaxSize()
     ) {
+        val (title, emailTF, passwordTF, loginBtn, forgotPasswordText, google, facebook) = createRefs()
+
         val context = LocalContext.current
 
         var isEmailError by remember { mutableStateOf(false) }
@@ -64,8 +67,13 @@ fun LoginScreen(
         var isPasswordVisible by remember { mutableStateOf(false) }
 
         Text(
-            modifier = Modifier.padding(20.dp),
-            text = stringResource(id = R.string.app_name),
+            modifier = Modifier
+                .padding(20.dp)
+                .constrainAs(title) {
+                    start.linkTo(parent.start)
+                    top.linkTo(parent.top)
+                },
+            text = stringResource(id = R.string.welcome),
             color = colorResource(id = R.color.custom_blue),
             fontSize = 32.sp,
             fontStyle = FontStyle.Italic,
@@ -74,8 +82,11 @@ fun LoginScreen(
 
         OutlinedTextField(singleLine = true,
             modifier = Modifier
-                .testTag("emailTextField")
                 .fillMaxWidth()
+                .constrainAs(emailTF) {
+                    top.linkTo(title.bottom)
+                }
+                .testTag("emailTextField")
                 .padding(20.dp),
             value = email,
             onValueChange = {
@@ -112,6 +123,9 @@ fun LoginScreen(
             },
             singleLine = true,
             modifier = Modifier
+                .constrainAs(passwordTF) {
+                    top.linkTo(emailTF.bottom)
+                }
                 .testTag("passwordTextField")
                 .fillMaxWidth()
                 .padding(20.dp),
@@ -120,7 +134,12 @@ fun LoginScreen(
                 password = it
             })
 
-        Button(modifier = Modifier
+        Button(
+            shape = CutCornerShape(percent = 8),
+            modifier = Modifier
+            .constrainAs(loginBtn) {
+                bottom.linkTo(parent.bottom)
+            }
             .testTag("validationButton")
             .fillMaxWidth()
             .padding(20.dp),
@@ -136,7 +155,7 @@ fun LoginScreen(
                 loginMessage(context, isEmailValid(email) && isPasswordValid(password))
             }) {
             Text(
-                text = stringResource(id = R.string.validate), fontSize = 24.sp
+                text = stringResource(id = R.string.log_in), fontSize = 24.sp
             )
         }
     }

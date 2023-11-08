@@ -10,7 +10,6 @@ import androidx.navigation.compose.navigation
 import com.itzik.user_with_testing.project.ui.screens.FirstRegistrationScreen
 import com.itzik.user_with_testing.project.ui.screens.HomeScreen
 import com.itzik.user_with_testing.project.ui.screens.LoginScreen
-import com.itzik.user_with_testing.project.ui.screens.ResetPasswordScreen
 import com.itzik.user_with_testing.project.ui.screens.SecondRegistrationScreen
 import com.itzik.user_with_testing.project.ui.screens.SplashScreen
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
@@ -74,16 +73,6 @@ fun SetupNavGraph(
                 route = LoginGraph.SecondRegistrationPage.route
             ) {
                 SecondRegistrationScreen(
-                    navHostController = navHostController,
-                    userViewModel = userViewModel,
-                    coroutineScope = coroutineScope,
-                    modifier = Modifier
-                )
-            }
-            composable(
-                route = LoginGraph.ResetPasswordPage.route
-            ) {
-                ResetPasswordScreen(
                     navHostController = navHostController,
                     userViewModel = userViewModel,
                     coroutineScope = coroutineScope,
