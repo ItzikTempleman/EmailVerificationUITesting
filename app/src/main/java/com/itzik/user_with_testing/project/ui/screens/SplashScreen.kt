@@ -21,12 +21,13 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.navigation.LoginGraph
+import com.itzik.user_with_testing.project.utils.Blue
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 
 
-val DefaultBlue = Color(0xFF08648C)
+
 
 @Composable
 fun SplashScreen(
@@ -69,7 +70,7 @@ fun SplashScreen(
                 .padding(top = 100.dp)
                 .alpha(alpha = alphaAnim.value),
             fontSize = 42.sp,
-            color = DefaultBlue
+            color = Blue
         )
     }
 }

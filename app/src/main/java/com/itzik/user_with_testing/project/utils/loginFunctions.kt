@@ -2,6 +2,8 @@ package com.itzik.user_with_testing.project.utils
 
 import android.content.Context
 import android.widget.Toast
+import androidx.navigation.NavHostController
+import com.itzik.user_with_testing.project.navigation.HomeGraph
 
 fun isEmailValid(email: String): Boolean =
     email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\$".toRegex())
@@ -11,9 +13,12 @@ fun isPasswordValid(password: String): Boolean = password.isNotBlank() && passwo
 
 
 fun loginMessage(context: Context, isSuccessfulData: Boolean) {
-    Toast.makeText(
-        context,
-        if (isSuccessfulData) "Successfully logged in" else "Incorrect data, please fix",
-        Toast.LENGTH_SHORT
-    ).show()
+    Toast.makeText(context, if (isSuccessfulData) "Successfully logged in" else "Incorrect data, please fix", Toast.LENGTH_SHORT).show()
+}
+
+
+fun moveToHomeScreen(isSuccessfulData: Boolean, navHostController: NavHostController) {
+    if (isSuccessfulData) {
+        navHostController.navigate(HomeGraph.HomePage.route)
+    }
 }

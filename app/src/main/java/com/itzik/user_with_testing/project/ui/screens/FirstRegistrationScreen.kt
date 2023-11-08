@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
+import com.itzik.user_with_testing.project.utils.Blue
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 
@@ -33,7 +34,7 @@ fun FirstRegistrationScreen(
                 start.linkTo(parent.start)
                 top.linkTo(parent.top)
             }.padding(20.dp),
-            color = DefaultBlue,
+            color = Blue,
             fontSize = 32.sp,
             fontStyle = FontStyle.Italic,
             fontWeight = FontWeight.Bold

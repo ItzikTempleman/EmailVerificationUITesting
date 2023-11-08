@@ -13,6 +13,8 @@ import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.IconButton
 import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Visibility
@@ -27,9 +29,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
@@ -42,10 +44,15 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
+import com.itzik.user_with_testing.project.navigation.HomeGraph
 import com.itzik.user_with_testing.project.navigation.LoginGraph
+import com.itzik.user_with_testing.project.ui.shapes.ColorRectangle
+import com.itzik.user_with_testing.project.utils.Blue
+
 import com.itzik.user_with_testing.project.utils.isEmailValid
 import com.itzik.user_with_testing.project.utils.isPasswordValid
 import com.itzik.user_with_testing.project.utils.loginMessage
+import com.itzik.user_with_testing.project.utils.moveToHomeScreen
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 
@@ -58,23 +65,23 @@ fun LoginScreen(
     navHostController: NavHostController,
     userViewModel: UserViewModel?,
 ) {
+    ColorRectangle()
     ConstraintLayout(
         modifier = modifier.fillMaxSize()
     ) {
-        val (title, emailTF, passwordTF, loginBtn, forgotPasswordText, iconRow, signUp) = createRefs()
-
+        val (title, emailTF, passwordTF, loginBtn, forgotPasswordText, iconRow, signUp, phoneNumberRow) = createRefs()
         val context = LocalContext.current
         val emailText = stringResource(id = R.string.enter_email)
         val passwordText = stringResource(id = R.string.enter_password)
         var isEmailError by remember { mutableStateOf(false) }
         var emailLabelMessage by remember { mutableStateOf(emailText) }
-
         var isPasswordError by remember { mutableStateOf(false) }
-        var passwordLabelMessage by remember { mutableStateOf(passwordText) }
+        var isEnterPhoneNumberDisplayed by remember { mutableStateOf(false) }
+        var phoneNumberToReset by remember { mutableStateOf("") }
 
+        var passwordLabelMessage by remember { mutableStateOf(passwordText) }
         var email by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
-
         var isPasswordVisible by remember { mutableStateOf(false) }
 
         Text(
@@ -85,13 +92,11 @@ fun LoginScreen(
                     top.linkTo(parent.top)
                 },
             text = stringResource(id = R.string.welcome),
-            color = DefaultBlue,
+            color = Blue,
             fontSize = 32.sp,
             fontStyle = FontStyle.Italic,
             fontWeight = FontWeight.Bold
         )
-
-
         OutlinedTextField(
             singleLine = true,
             modifier = Modifier
@@ -107,23 +112,30 @@ fun LoginScreen(
             },
             label = {
                 Text(text = emailLabelMessage)
-            },
+            }, colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = Blue,
+                unfocusedBorderColor = Color.DarkGray,
+                backgroundColor = Color.White
+            ),
             isError = isEmailError,
             trailingIcon = {
                 Icon(
                     imageVector = Icons.Default.Email,
                     contentDescription = null,
-                    tint = DefaultBlue
+                    tint = Blue
                 )
             }
         )
-
         OutlinedTextField(keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Password
-        ),
-            label = {
+        ),label = {
                 Text(text = passwordLabelMessage)
             },
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = Blue,
+                unfocusedBorderColor = Color.DarkGray,
+                backgroundColor = Color.White
+            ),
             isError = isPasswordError,
             visualTransformation = if (isPasswordVisible) VisualTransformation.None
             else PasswordVisualTransformation(),
@@ -132,7 +144,7 @@ fun LoginScreen(
                     isPasswordVisible = !isPasswordVisible
                 }) {
                     Icon(
-                        contentDescription = null, tint = DefaultBlue,
+                        contentDescription = null, tint = Blue,
                         imageVector = if (isPasswordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
                     )
                 }
@@ -160,13 +172,11 @@ fun LoginScreen(
                 }
                 .padding(horizontal = 50.dp, vertical = 8.dp),
             text = stringResource(id = R.string.forgot),
-            color = colorResource(id = R.color.custom_blue),
+            color = Blue,
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
             fontStyle = FontStyle.Italic
         )
-
-
         Row(
             horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier
@@ -195,11 +205,6 @@ fun LoginScreen(
                 contentDescription = null
             )
         }
-
-
-
-
-
         Button(
             shape = CutCornerShape(percent = 8),
             modifier = Modifier
@@ -208,7 +213,7 @@ fun LoginScreen(
                 }
                 .testTag("validationButton")
                 .fillMaxWidth()
-                .padding(start = 20.dp, top = 8.dp, end=20.dp),
+                .padding(start = 20.dp, top = 8.dp, end = 20.dp),
             onClick = {
                 if (!isEmailValid(email)) {
                     isEmailError = true
@@ -219,13 +224,12 @@ fun LoginScreen(
                     passwordLabelMessage = "Invalid password"
                 } else isPasswordError = false
                 loginMessage(context, isEmailValid(email) && isPasswordValid(password))
+                moveToHomeScreen(isEmailValid(email) && isPasswordValid(password), navHostController)
             }) {
             Text(
                 text = stringResource(id = R.string.log_in), fontSize = 24.sp
             )
         }
-
-
         Text(
             modifier = Modifier
                 .clickable {
@@ -235,13 +239,31 @@ fun LoginScreen(
                     top.linkTo(loginBtn.bottom)
                     end.linkTo(parent.end)
                     start.linkTo(parent.start)
-                }.padding(8.dp),
+                }
+                .padding(8.dp),
             text = stringResource(id = R.string.sign_up),
-            color = DefaultBlue,
+            color = Blue,
             fontSize = 22.sp,
             fontStyle = FontStyle.Italic,
             fontWeight = FontWeight.Bold
         )
+
+        if(isEnterPhoneNumberDisplayed) {
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 8.dp).constrainAs(phoneNumberRow){
+                    top.linkTo(signUp.bottom)
+                }
+            ) {
+
+                TextField(
+                    value = phoneNumberToReset,
+                    onValueChange = {
+                        phoneNumberToReset = it
+                    }
+                )
+            }
+        }
     }
 }
+
 
