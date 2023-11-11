@@ -1,18 +1,22 @@
 <resources>
     <string name="app_name">User testing</string>
     <string name="welcome">Welcome</string>
-    <string name="sign_up_first">Sign up - First step</string>
-    <string name="sign_up_second">Sign up - Continue</string>
+    <string name="create_new">Create new account</string>
     <string name="forgot">Forgot password</string>
     <string name="enter_phone_number">Enter reset phone number</string>
     <string name="enter_received_sms_code">Enter received SMS code</string>
-
     <string name="enter_email">Your user name or Email</string>
     <string name="enter_password">Enter your password</string>
     <string name="log_in">Log in</string>
     <string name="sign_up">Not registered?  Sign up</string>
     <string name="home_screen">Home screen</string>
-
     <string name="success">Successfully logged in</string>
     <string name="fail">Incorrect data, please fix</string>
+    <string name="first_name">Name</string>
+    <string name="family_name">Family name</string>
+    <string name="your_email">Email</string>
+    <string name="create_password">Create password</string>
+    <string name="reenter_password">Re-enter password</string>
+    <string name="age">Age</string>
+    <string name="gender">Gender</string>
 </resources>

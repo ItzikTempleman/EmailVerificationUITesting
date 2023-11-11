@@ -44,12 +44,12 @@ fun SplashScreen(
     val alphaAnim = animateFloatAsState(
         targetValue = if (startAnim) 1f else 0f,
         animationSpec = tween(
-            durationMillis = 2500
+            durationMillis = 1000
         ), label = ""
     )
     LaunchedEffect(key1 = true) {
         startAnim = true
-        delay(3500)
+        delay(1000)
 
         navHostController.popBackStack()
          navHostController.navigate(LoginGraph.LoginPage.route)

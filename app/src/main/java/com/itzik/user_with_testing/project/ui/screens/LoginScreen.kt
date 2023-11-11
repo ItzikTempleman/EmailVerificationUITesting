@@ -2,6 +2,7 @@ package com.itzik.user_with_testing.project.ui.screens
 
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -44,11 +45,9 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
-import com.itzik.user_with_testing.project.navigation.HomeGraph
 import com.itzik.user_with_testing.project.navigation.LoginGraph
 import com.itzik.user_with_testing.project.ui.shapes.ColorRectangle
 import com.itzik.user_with_testing.project.utils.Blue
-
 import com.itzik.user_with_testing.project.utils.isEmailValid
 import com.itzik.user_with_testing.project.utils.isPasswordValid
 import com.itzik.user_with_testing.project.utils.loginMessage
@@ -65,7 +64,6 @@ fun LoginScreen(
     navHostController: NavHostController,
     userViewModel: UserViewModel?,
 ) {
-    ColorRectangle()
     ConstraintLayout(
         modifier = modifier.fillMaxSize()
     ) {
@@ -78,15 +76,14 @@ fun LoginScreen(
         var isPasswordError by remember { mutableStateOf(false) }
         var isEnterPhoneNumberDisplayed by remember { mutableStateOf(false) }
         var phoneNumberToReset by remember { mutableStateOf("") }
-
         var passwordLabelMessage by remember { mutableStateOf(passwordText) }
         var email by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
         var isPasswordVisible by remember { mutableStateOf(false) }
 
         Text(
-            modifier = Modifier
-                .padding(20.dp)
+            modifier = modifier
+                .padding(top = 40.dp, start = 20.dp)
                 .constrainAs(title) {
                     start.linkTo(parent.start)
                     top.linkTo(parent.top)
@@ -99,7 +96,7 @@ fun LoginScreen(
         )
         OutlinedTextField(
             singleLine = true,
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .constrainAs(emailTF) {
                     top.linkTo(title.bottom)
@@ -128,9 +125,9 @@ fun LoginScreen(
         )
         OutlinedTextField(keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Password
-        ),label = {
-                Text(text = passwordLabelMessage)
-            },
+        ), label = {
+            Text(text = passwordLabelMessage)
+        },
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 focusedBorderColor = Blue,
                 unfocusedBorderColor = Color.DarkGray,
@@ -150,7 +147,7 @@ fun LoginScreen(
                 }
             },
             singleLine = true,
-            modifier = Modifier
+            modifier = modifier
                 .constrainAs(passwordTF) {
                     top.linkTo(emailTF.bottom)
                 }
@@ -162,9 +159,9 @@ fun LoginScreen(
                 password = it
             })
         Text(
-            modifier = Modifier
+            modifier = modifier
                 .clickable {
-
+                    isEnterPhoneNumberDisplayed = true
                 }
                 .constrainAs(forgotPasswordText) {
                     top.linkTo(passwordTF.bottom)
@@ -179,7 +176,7 @@ fun LoginScreen(
         )
         Row(
             horizontalArrangement = Arrangement.SpaceEvenly,
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .constrainAs(iconRow) {
                     top.linkTo(forgotPasswordText.bottom)
@@ -187,7 +184,7 @@ fun LoginScreen(
                 .padding(30.dp),
         ) {
             Image(
-                modifier = Modifier
+                modifier = modifier
                     .width(40.dp)
                     .clickable {
 
@@ -196,7 +193,7 @@ fun LoginScreen(
                 contentDescription = null
             )
             Image(
-                modifier = Modifier
+                modifier = modifier
                     .width(40.dp)
                     .clickable {
 
@@ -207,7 +204,7 @@ fun LoginScreen(
         }
         Button(
             shape = CutCornerShape(percent = 8),
-            modifier = Modifier
+            modifier = modifier
                 .constrainAs(loginBtn) {
                     top.linkTo(iconRow.bottom)
                 }
@@ -224,16 +221,19 @@ fun LoginScreen(
                     passwordLabelMessage = "Invalid password"
                 } else isPasswordError = false
                 loginMessage(context, isEmailValid(email) && isPasswordValid(password))
-                moveToHomeScreen(isEmailValid(email) && isPasswordValid(password), navHostController)
+                moveToHomeScreen(
+                    isEmailValid(email) && isPasswordValid(password),
+                    navHostController
+                )
             }) {
             Text(
                 text = stringResource(id = R.string.log_in), fontSize = 24.sp
             )
         }
         Text(
-            modifier = Modifier
+            modifier = modifier
                 .clickable {
-                    navHostController.navigate(LoginGraph.FirstRegistrationPage.route)
+                    navHostController.navigate(LoginGraph.CreateAccountPage.route)
                 }
                 .constrainAs(signUp) {
                     top.linkTo(loginBtn.bottom)
@@ -247,14 +247,15 @@ fun LoginScreen(
             fontStyle = FontStyle.Italic,
             fontWeight = FontWeight.Bold
         )
-
-        if(isEnterPhoneNumberDisplayed) {
+        if (isEnterPhoneNumberDisplayed) {
             Row(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 8.dp).constrainAs(phoneNumberRow){
-                    top.linkTo(signUp.bottom)
-                }
+                modifier = modifier.background(Color.White)
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp, vertical = 8.dp)
+                    .constrainAs(phoneNumberRow) {
+                        top.linkTo(signUp.bottom)
+                    }
             ) {
-
                 TextField(
                     value = phoneNumberToReset,
                     onValueChange = {

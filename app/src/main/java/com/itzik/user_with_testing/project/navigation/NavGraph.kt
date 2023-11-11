@@ -1,5 +1,7 @@
 package com.itzik.user_with_testing.project.navigation
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -7,14 +9,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-
-import com.itzik.user_with_testing.project.ui.screens.FirstRegistrationScreen
+import com.itzik.user_with_testing.project.ui.screens.CreateAccountScreen
 import com.itzik.user_with_testing.project.ui.screens.HomeScreen
 import com.itzik.user_with_testing.project.ui.screens.LoginScreen
-import com.itzik.user_with_testing.project.ui.screens.SecondRegistrationScreen
 import com.itzik.user_with_testing.project.ui.screens.SplashScreen
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
+
+
 
 const val SPLASH_GRAPH = "splashGraph"
 const val LOGIN_GRAPH = "loginGraph"
@@ -33,7 +35,9 @@ fun SetupNavGraph(
     ) {
         navigation(
             startDestination = SplashGraph.SplashPage.route,
-            route = SPLASH_GRAPH
+            route = SPLASH_GRAPH,
+            enterTransition = { EnterTransition.None },
+            exitTransition = { ExitTransition.None }
         ) {
             composable(
                 route = SplashGraph.SplashPage.route
@@ -62,19 +66,9 @@ fun SetupNavGraph(
                 )
             }
             composable(
-                route = LoginGraph.FirstRegistrationPage.route
+                route = LoginGraph.CreateAccountPage.route
             ) {
-                FirstRegistrationScreen(
-                    navHostController = navHostController,
-                    userViewModel = userViewModel,
-                    coroutineScope = coroutineScope,
-                    modifier = Modifier
-                )
-            }
-            composable(
-                route = LoginGraph.SecondRegistrationPage.route
-            ) {
-                SecondRegistrationScreen(
+                CreateAccountScreen(
                     navHostController = navHostController,
                     userViewModel = userViewModel,
                     coroutineScope = coroutineScope,
