@@ -19,21 +19,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.navigation.LoginGraph
-import com.itzik.user_with_testing.project.ui.shapes.Blue
 import com.itzik.user_with_testing.project.ui.shapes.RoundedBackGround
+import com.itzik.user_with_testing.project.ui.shapes.Turquoise
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
-
-
 
 
 @Composable
@@ -48,6 +44,7 @@ fun SplashScreen(
         mutableStateOf(false)
     }
 
+
     val alphaAnim = animateFloatAsState(
         targetValue = if (startAnim) 1f else 0f,
         animationSpec = tween(
@@ -61,14 +58,47 @@ fun SplashScreen(
         navHostController.popBackStack()
         navHostController.navigate(LoginGraph.LoginPage.route)
     }
-    RoundedBackGround(Blue)
+    RoundedBackGround(Turquoise)
     ConstraintLayout(
         modifier = Modifier.fillMaxSize()
     ) {
+
+        val (title, title2) = createRefs()
+
+        Text(
+            text = stringResource(id = R.string.app_name),
+            modifier = modifier
+                .constrainAs(title) {
+                    start.linkTo(parent.start)
+                    top.linkTo(parent.top)
+                    end.linkTo(parent.end)
+                }
+                .padding(top = 20.dp)
+                .alpha(alpha = alphaAnim.value),
+            color = Color.White,
+            fontSize = 36.sp,
+
+        )
+
+        Text(
+            text = stringResource(id = R.string.welcome),
+            modifier = modifier
+                .constrainAs(title2) {
+                    start.linkTo(parent.start)
+                    top.linkTo(title.bottom)
+                    end.linkTo(parent.end)
+                }
+                .padding(8.dp)
+                .alpha(alpha = alphaAnim.value),
+            color = Color.White,
+            fontSize = 32.sp,
+
+        )
+
         Card(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 16.dp, vertical = 60.dp),
+                .padding(horizontal = 20.dp, vertical = 130.dp),
             colors = CardDefaults.cardColors(
                 containerColor = Color.White
             ),
@@ -81,45 +111,17 @@ fun SplashScreen(
             ConstraintLayout(
                 modifier = Modifier.fillMaxSize()
             ) {
-                val (title, title2, progressBar) = createRefs()
+                val (progressBar) = createRefs()
 
-                Text(
-                    text = stringResource(id = R.string.app_name),
-                    modifier = modifier
-                        .constrainAs(title) {
-                            start.linkTo(parent.start)
-                            top.linkTo(parent.top)
-                        }.padding(top = 40.dp, start = 20.dp)
-                        .alpha(alpha = alphaAnim.value),
-                    color = Blue,
-                    fontSize = 36.sp,
-                    fontStyle = FontStyle.Italic,
-                    fontWeight = FontWeight.Bold
-                )
-
-                Text(
-                    text = stringResource(id = R.string.welcome),
-                    modifier = modifier
-                        .constrainAs(title2) {
-                            start.linkTo(parent.start)
-                            top.linkTo(title.bottom)
-                        }
-                        .padding(20.dp)
-                        .alpha(alpha = alphaAnim.value),
-                    color = Blue,
-                    fontSize = 32.sp,
-                    fontStyle = FontStyle.Italic,
-                    fontWeight = FontWeight.Bold
-                )
 
                 CircularProgressIndicator(
                     modifier = modifier
                         .constrainAs(progressBar) {
                             start.linkTo(parent.start)
                             end.linkTo(parent.end)
-                            top.linkTo(title2.bottom)
+                            top.linkTo(parent.top)
+                            bottom.linkTo(parent.bottom)
                         }
-                        .padding(20.dp)
                 )
             }
         }

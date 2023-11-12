@@ -51,6 +51,7 @@ import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.navigation.LoginGraph
 import com.itzik.user_with_testing.project.ui.shapes.Blue
 import com.itzik.user_with_testing.project.ui.shapes.RoundedBackGround
+import com.itzik.user_with_testing.project.ui.shapes.Turquoise
 import com.itzik.user_with_testing.project.ui.shapes.Yellow
 import com.itzik.user_with_testing.project.utils.isEmailValid
 import com.itzik.user_with_testing.project.utils.isPasswordValid
@@ -68,15 +69,28 @@ fun LoginScreen(
     navHostController: NavHostController,
     userViewModel: UserViewModel?,
 ) {
-    RoundedBackGround(Blue)
+    RoundedBackGround(Turquoise)
     ConstraintLayout(
         modifier = modifier.fillMaxSize()
     ) {
 
+        val (title) = createRefs()
+        Text(
+            modifier = modifier
+                .padding(top = 70.dp)
+                .constrainAs(title) {
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    top.linkTo(parent.top)
+                },
+            text = stringResource(id = R.string.log_in),
+            color = Color.White,
+            fontSize = 32.sp
+        )
         Card(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 16.dp, vertical = 60.dp),
+                .padding(horizontal = 20.dp, vertical = 130.dp),
             colors = CardDefaults.cardColors(
                 containerColor = Color.White
             ),
@@ -89,7 +103,7 @@ fun LoginScreen(
             ConstraintLayout(
                 modifier = Modifier.fillMaxSize()
             ) {
-                val (title, emailTF, passwordTF, loginBtn, forgotPasswordText, iconRow, signUp, phoneNumberOutlinedTF, or) = createRefs()
+                val ( emailTF, passwordTF, loginBtn, forgotPasswordText, iconRow, signUp, phoneNumberOutlinedTF, or) = createRefs()
                 val context = LocalContext.current
 
                 var email by remember { mutableStateOf("") }
@@ -116,29 +130,15 @@ fun LoginScreen(
                 }
 
 
-
-                Text(
-                    modifier = modifier
-                        .padding(top = 40.dp, start = 20.dp)
-                        .constrainAs(title) {
-                            start.linkTo(parent.start)
-                            top.linkTo(parent.top)
-                        },
-                    text = stringResource(id = R.string.log_in),
-                    color = Blue,
-                    fontSize = 32.sp,
-                    fontStyle = FontStyle.Italic,
-                    fontWeight = FontWeight.Bold
-                )
                 OutlinedTextField(
                     singleLine = true,
                     modifier = modifier
                         .fillMaxWidth()
                         .constrainAs(emailTF) {
-                            top.linkTo(title.bottom)
+                            top.linkTo(parent.top)
                         }
                         .testTag("emailTextField")
-                        .padding(20.dp),
+                        .padding(horizontal = 20.dp, vertical = 20.dp),
                     value = email,
                     onValueChange = {
                         email = it
@@ -159,6 +159,8 @@ fun LoginScreen(
                         )
                     }
                 )
+
+
                 OutlinedTextField(keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password
                 ), label = {
@@ -202,7 +204,7 @@ fun LoginScreen(
                         .constrainAs(iconRow) {
                             top.linkTo(passwordTF.bottom)
                         }
-                        .padding(30.dp),
+                        .padding(20.dp),
                 ) {
                     Image(
                         modifier = modifier
@@ -223,6 +225,7 @@ fun LoginScreen(
                         contentDescription = null
                     )
                 }
+
                 Button(
                     shape = RoundedCornerShape(12.dp),
                     modifier = modifier
@@ -249,18 +252,14 @@ fun LoginScreen(
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Yellow,
-                        contentColor = Blue
+                        contentColor = Color.White
                     )
                 ) {
                     Text(
-                        text = stringResource(id = R.string.log_in), fontSize = 24.sp,
-                        fontStyle = FontStyle.Italic
-
+                        text = stringResource(id = R.string.go),
+                        fontSize = 24.sp
                     )
                 }
-
-
-
 
                 Text(
                     modifier = modifier
@@ -271,7 +270,7 @@ fun LoginScreen(
                             top.linkTo(loginBtn.bottom)
                             end.linkTo(parent.end)
                         }
-                        .padding(start = 40.dp, end = 40.dp, top = 30.dp),
+                        .padding(start = 40.dp, end = 40.dp, top = 20.dp),
                     text = stringResource(id = R.string.forgot),
                     color = Blue,
                     fontSize = 20.sp,
@@ -330,12 +329,10 @@ fun LoginScreen(
                             end.linkTo(parent.end)
                             start.linkTo(parent.start)
                         }
-                        .padding(top = 180.dp),
-                    text = "----------------------  OR  ------------------------",
+                        .padding(top = 160.dp),
+                    text = "-----------------------  OR  ------------------------",
                     color = Blue,
-                    fontSize = 16.sp,
-                    fontStyle = FontStyle.Italic,
-                    fontWeight = FontWeight.Bold
+                    fontSize = 14.sp
                 )
 
                 Text(
@@ -348,7 +345,7 @@ fun LoginScreen(
                             end.linkTo(parent.end)
                             start.linkTo(parent.start)
                         }
-                        .padding(8.dp),
+                        .padding(20.dp),
                     text = stringResource(id = R.string.sign_up),
                     color = Blue,
                     fontSize = 20.sp,

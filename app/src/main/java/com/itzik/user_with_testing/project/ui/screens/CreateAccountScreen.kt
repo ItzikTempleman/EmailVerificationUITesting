@@ -24,8 +24,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -34,7 +32,7 @@ import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.navigation.LoginGraph
 import com.itzik.user_with_testing.project.ui.shapes.Blue
 import com.itzik.user_with_testing.project.ui.shapes.RoundedBackGround
-import com.itzik.user_with_testing.project.ui.shapes.Yellow
+import com.itzik.user_with_testing.project.ui.shapes.Turquoise
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 
@@ -46,13 +44,14 @@ fun CreateAccountScreen(
     userViewModel: UserViewModel,
 ) {
 
-    RoundedBackGround(Yellow)
+    RoundedBackGround(Turquoise)
+
     ConstraintLayout(
         modifier = modifier.fillMaxSize()
     ) {
-        val (backBtn) = createRefs()
+        val (backBtn,title) = createRefs()
         Icon(
-            tint = Blue,
+            tint = Color.White,
             contentDescription = null,
             imageVector = Icons.Default.ArrowBack,
             modifier = modifier.width(50.dp).height(50.dp)
@@ -65,11 +64,23 @@ fun CreateAccountScreen(
                 }
                 .padding(top = 8.dp, start = 20.dp),
         )
+        Text(
+            text = stringResource(id = R.string.create_new),
+            modifier = modifier
+                .constrainAs(title) {
+                    start.linkTo(parent.start)
+                    top.linkTo(backBtn.bottom)
+                    end.linkTo(parent.end)
+                }
+                .padding(20.dp),
+            color = Color.White,
+            fontSize = 32.sp,
+        )
 
         Card(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 16.dp, vertical = 60.dp),
+                .padding(start = 20.dp, top = 130.dp,end=20.dp, bottom = 20.dp),
             colors = CardDefaults.cardColors(
                 containerColor = Color.White
             ),
@@ -83,32 +94,20 @@ fun CreateAccountScreen(
                 modifier = Modifier.fillMaxSize()
             ) {
 
-                val (title, userName, email, password, genderBox, phoneNumber) = createRefs()
+                val (userName, email, password, genderBox, phoneNumber) = createRefs()
 
                 val fullNameText = stringResource(id = R.string.full_name)
                 val fullNameLabelMessage by remember { mutableStateOf(fullNameText) }
                 var fullName by remember { mutableStateOf("") }
 
-                Text(
-                    text = stringResource(id = R.string.create_new),
-                    modifier = modifier
-                        .constrainAs(title) {
-                            start.linkTo(parent.start)
-                            top.linkTo(parent.top)
-                        }
-                        .padding(top = 40.dp, start = 20.dp),
-                    color = Blue,
-                    fontSize = 32.sp,
-                    fontStyle = FontStyle.Italic,
-                    fontWeight = FontWeight.Bold
-                )
+
 
                 OutlinedTextField(
                     singleLine = true,
                     modifier = modifier
                         .fillMaxWidth()
                         .constrainAs(userName) {
-                            top.linkTo(title.bottom)
+                            top.linkTo(parent.top)
                         }
                         .padding(20.dp),
                     value = fullName,

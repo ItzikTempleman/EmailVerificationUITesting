@@ -14,8 +14,9 @@ import androidx.compose.ui.unit.dp
 
 
 val Blue = Color(0xFF08648C)
-val Yellow= Color(0xFFFFD557)
-
+val Yellow= Color(0xFFdeb522)
+val Turquoise =Color(0xFF30D5C8)
+// <color name="turquoise">#30D5C8</color>
 @Composable
 fun RoundedBackGround(color:Color) {
     Box(
@@ -29,8 +30,8 @@ fun RoundedBackGround(color:Color) {
             )
     ) {}
     Canvas(modifier = Modifier.fillMaxSize()) {
-        translate(left = -650f, top = -1800f) {
-            drawCircle(color, radius = 550.dp.toPx())
+        translate(left = 0f, top = -1800f) {
+            drawCircle(color, radius = 700.dp.toPx())
         }
     }
 }
