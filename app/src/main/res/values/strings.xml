@@ -21,4 +21,6 @@
     <string name="reenter_password">Re-enter password</string>
     <string name="age">Age</string>
     <string name="gender">Gender</string>
+    <string name="or"> -----------------------  OR  ------------------------</string>
+
 </resources>

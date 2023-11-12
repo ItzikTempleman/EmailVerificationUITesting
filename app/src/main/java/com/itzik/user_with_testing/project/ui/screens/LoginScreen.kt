@@ -336,7 +336,7 @@ fun LoginScreen(
                             start.linkTo(parent.start)
                         }
                         .padding(top = 160.dp),
-                    text = "-----------------------  OR  ------------------------",
+                    text = stringResource(id = R.string.or),
                     color = Color.Black,
                     fontSize = 14.sp
                 )
@@ -362,11 +362,14 @@ fun LoginScreen(
                     onClick = {
                         navHostController.navigate(LoginGraph.CreateAccountPage.route)
                     },
-                    modifier = modifier.size(40.dp).constrainAs(signUpBtn) {
-                        top.linkTo(signUp.top)
-                        bottom.linkTo(signUp.bottom)
-                        start.linkTo(signUp.end)
-                    }.padding(2.dp)
+                    modifier = modifier
+                        .size(40.dp)
+                        .constrainAs(signUpBtn) {
+                            top.linkTo(signUp.top)
+                            bottom.linkTo(signUp.bottom)
+                            start.linkTo(signUp.end)
+                        }
+                        .padding(2.dp)
                 ) {
                     Icon(imageVector = Icons.Default.ArrowForward,
                         contentDescription = null,
