@@ -85,8 +85,8 @@ fun CreateAccountScreen(
 
                 val (title, userName, email, password, genderBox, phoneNumber) = createRefs()
 
-                var fullNameText = stringResource(id = R.string.full_name)
-                var fullNameLabelMessage by remember { mutableStateOf(fullNameText) }
+                val fullNameText = stringResource(id = R.string.full_name)
+                val fullNameLabelMessage by remember { mutableStateOf(fullNameText) }
                 var fullName by remember { mutableStateOf("") }
 
                 Text(
@@ -122,7 +122,7 @@ fun CreateAccountScreen(
                         unfocusedBorderColor = Color.DarkGray,
                         backgroundColor = Color.White
                     ),
-                    trailingIcon = {
+                    leadingIcon = {
                         Icon(
                             imageVector = Icons.Default.Person,
                             contentDescription = null,

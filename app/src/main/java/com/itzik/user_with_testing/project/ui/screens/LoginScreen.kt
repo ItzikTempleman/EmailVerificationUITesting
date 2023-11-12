@@ -2,7 +2,6 @@ package com.itzik.user_with_testing.project.ui.screens
 
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -14,10 +13,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.IconButton
 import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Send
+import androidx.compose.material.icons.filled.Smartphone
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
@@ -89,19 +89,33 @@ fun LoginScreen(
             ConstraintLayout(
                 modifier = Modifier.fillMaxSize()
             ) {
-                val (title, emailTF, passwordTF, loginBtn, forgotPasswordText, iconRow, signUp, phoneNumberRow) = createRefs()
+                val (title, emailTF, passwordTF, loginBtn, forgotPasswordText, iconRow, signUp, phoneNumberOutlinedTF, or) = createRefs()
                 val context = LocalContext.current
-                val emailText = stringResource(id = R.string.enter_email)
-                val passwordText = stringResource(id = R.string.enter_password)
-                var isEmailError by remember { mutableStateOf(false) }
-                var emailLabelMessage by remember { mutableStateOf(emailText) }
-                var isPasswordError by remember { mutableStateOf(false) }
-                var isEnterPhoneNumberDisplayed by remember { mutableStateOf(false) }
-                var phoneNumberToReset by remember { mutableStateOf("") }
-                var passwordLabelMessage by remember { mutableStateOf(passwordText) }
+
                 var email by remember { mutableStateOf("") }
+                val emailText = stringResource(id = R.string.enter_email)
+                var emailLabelMessage by remember { mutableStateOf(emailText) }
+
+
+                val passwordText = stringResource(id = R.string.enter_password)
+                var passwordLabelMessage by remember { mutableStateOf(passwordText) }
                 var password by remember { mutableStateOf("") }
+
+
+                var isEmailError by remember { mutableStateOf(false) }
                 var isPasswordVisible by remember { mutableStateOf(false) }
+                var isPasswordError by remember { mutableStateOf(false) }
+
+
+                var isEnterPhoneNumberDisplayed by remember { mutableStateOf(false) }
+
+                var phoneNumberValue by remember { mutableStateOf("") }
+                val phoneNumber = stringResource(id = R.string.enter_phone_number)
+                var phoneNumberToResetLabel by remember {
+                    mutableStateOf(phoneNumber)
+                }
+
+
 
                 Text(
                     modifier = modifier
@@ -137,7 +151,7 @@ fun LoginScreen(
                         backgroundColor = Color.White
                     ),
                     isError = isEmailError,
-                    trailingIcon = {
+                    leadingIcon = {
                         Icon(
                             imageVector = Icons.Default.Email,
                             contentDescription = null,
@@ -158,7 +172,7 @@ fun LoginScreen(
                     isError = isPasswordError,
                     visualTransformation = if (isPasswordVisible) VisualTransformation.None
                     else PasswordVisualTransformation(),
-                    trailingIcon = {
+                    leadingIcon = {
                         IconButton(onClick = {
                             isPasswordVisible = !isPasswordVisible
                         }) {
@@ -180,28 +194,13 @@ fun LoginScreen(
                     onValueChange = {
                         password = it
                     })
-                Text(
-                    modifier = modifier
-                        .clickable {
-                            isEnterPhoneNumberDisplayed = true
-                        }
-                        .constrainAs(forgotPasswordText) {
-                            top.linkTo(passwordTF.bottom)
-                            end.linkTo(parent.end)
-                        }
-                        .padding(horizontal = 40.dp, vertical = 8.dp),
-                    text = stringResource(id = R.string.forgot),
-                    color = Blue,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontStyle = FontStyle.Italic
-                )
+
                 Row(
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     modifier = modifier
                         .fillMaxWidth()
                         .constrainAs(iconRow) {
-                            top.linkTo(forgotPasswordText.bottom)
+                            top.linkTo(passwordTF.bottom)
                         }
                         .padding(30.dp),
                 ) {
@@ -259,40 +258,105 @@ fun LoginScreen(
 
                     )
                 }
+
+
+
+
+                Text(
+                    modifier = modifier
+                        .clickable {
+                            isEnterPhoneNumberDisplayed = !isEnterPhoneNumberDisplayed
+                        }
+                        .constrainAs(forgotPasswordText) {
+                            top.linkTo(loginBtn.bottom)
+                            end.linkTo(parent.end)
+                        }
+                        .padding(start = 40.dp, end = 40.dp, top = 30.dp),
+                    text = stringResource(id = R.string.forgot),
+                    color = Blue,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontStyle = FontStyle.Italic
+                )
+
+                if (isEnterPhoneNumberDisplayed) {
+
+                    OutlinedTextField(
+                        singleLine = true,
+                        label = {
+                            Text(text = phoneNumberToResetLabel)
+                        },
+                        modifier = modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 20.dp, vertical = 8.dp)
+                            .constrainAs(phoneNumberOutlinedTF) {
+                                top.linkTo(forgotPasswordText.bottom)
+                            },
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            focusedBorderColor = Blue,
+                            unfocusedBorderColor = Color.DarkGray,
+                            backgroundColor = Color.White
+                        ),
+                        value = phoneNumberValue,
+                        onValueChange = {
+                            phoneNumberValue = it
+                        },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Smartphone,
+                                contentDescription = null,
+                                tint = Blue
+                            )
+                        },
+                        trailingIcon = {
+                            IconButton(onClick = {
+                                phoneNumberToResetLabel = "Reset text message sent"
+                                phoneNumberValue = "Enter the code sent to your number"
+                            }) {
+                                Icon(
+                                    contentDescription = null, tint = Blue,
+                                    imageVector = Icons.Default.Send
+                                )
+                            }
+                        }
+                    )
+
+                }
+
+                Text(
+                    modifier = modifier
+                        .constrainAs(or) {
+                            top.linkTo(loginBtn.bottom)
+                            end.linkTo(parent.end)
+                            start.linkTo(parent.start)
+                        }
+                        .padding(top = 180.dp),
+                    text = "----------------------  OR  ------------------------",
+                    color = Blue,
+                    fontSize = 16.sp,
+                    fontStyle = FontStyle.Italic,
+                    fontWeight = FontWeight.Bold
+                )
+
                 Text(
                     modifier = modifier
                         .clickable {
                             navHostController.navigate(LoginGraph.CreateAccountPage.route)
                         }
                         .constrainAs(signUp) {
-                            top.linkTo(loginBtn.bottom)
+                            top.linkTo(or.bottom)
                             end.linkTo(parent.end)
+                            start.linkTo(parent.start)
                         }
-                        .padding(vertical = 8.dp, horizontal = 40.dp),
+                        .padding(8.dp),
                     text = stringResource(id = R.string.sign_up),
                     color = Blue,
                     fontSize = 20.sp,
                     fontStyle = FontStyle.Italic,
                     fontWeight = FontWeight.Bold
                 )
-                if (isEnterPhoneNumberDisplayed) {
-                    Row(
-                        modifier = modifier
-                            .background(Color.White)
-                            .fillMaxWidth()
-                            .padding(horizontal = 20.dp, vertical = 8.dp)
-                            .constrainAs(phoneNumberRow) {
-                                top.linkTo(signUp.bottom)
-                            }
-                    ) {
-                        TextField(
-                            value = phoneNumberToReset,
-                            onValueChange = {
-                                phoneNumberToReset = it
-                            }
-                        )
-                    }
-                }
+
+
             }
         }
     }

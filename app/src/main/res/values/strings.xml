@@ -8,11 +8,11 @@
     <string name="enter_email">Your user name or Email</string>
     <string name="enter_password">Enter your password</string>
     <string name="log_in">Log in</string>
-    <string name="sign_up">Not registered?  Sign up</string>
+    <string name="sign_up">Sign up</string>
     <string name="home_screen">Home screen</string>
     <string name="success">Successfully logged in</string>
     <string name="fail">Incorrect data, please fix</string>
-    <string name="full_name">Name</string>
+    <string name="full_name">Enter full name</string>
     <string name="first_name">Name</string>
     <string name="family_name">Family name</string>
     <string name="your_email">Email</string>
