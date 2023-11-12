@@ -40,7 +40,9 @@ fun SetupNavGraph(
             exitTransition = { ExitTransition.None }
         ) {
             composable(
-                route = SplashGraph.SplashPage.route
+                route = SplashGraph.SplashPage.route,
+                enterTransition = null,
+                exitTransition = null
             ) {
                 SplashScreen(
                     navHostController = navHostController,
@@ -56,7 +58,9 @@ fun SetupNavGraph(
             route = LOGIN_GRAPH
         ) {
             composable(
-                route = LoginGraph.LoginPage.route
+                route = LoginGraph.LoginPage.route,
+                enterTransition = null,
+                exitTransition = null
             ) {
                 LoginScreen(
                     navHostController = navHostController,
@@ -66,7 +70,9 @@ fun SetupNavGraph(
                 )
             }
             composable(
-                route = LoginGraph.CreateAccountPage.route
+                route = LoginGraph.CreateAccountPage.route,
+                enterTransition = null,
+                exitTransition = null
             ) {
                 CreateAccountScreen(
                     navHostController = navHostController,
@@ -82,7 +88,9 @@ fun SetupNavGraph(
             route = HOME_GRAPH
         ) {
             composable(
-                route = HomeGraph.HomePage.route
+                route = HomeGraph.HomePage.route,
+                enterTransition = null,
+                exitTransition = null
             ) {
                 HomeScreen(
                     navHostController = navHostController,

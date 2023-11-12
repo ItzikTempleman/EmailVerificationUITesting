@@ -12,6 +12,7 @@
     <string name="home_screen">Home screen</string>
     <string name="success">Successfully logged in</string>
     <string name="fail">Incorrect data, please fix</string>
+    <string name="full_name">Name</string>
     <string name="first_name">Name</string>
     <string name="family_name">Family name</string>
     <string name="your_email">Email</string>
