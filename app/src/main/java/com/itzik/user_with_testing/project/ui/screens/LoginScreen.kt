@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.IconButton
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.TextFieldDefaults
@@ -47,7 +46,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
@@ -56,6 +54,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.navigation.LoginGraph
+import com.itzik.user_with_testing.project.ui.semantics.GenericOutlinedTextField
 import com.itzik.user_with_testing.project.ui.shapes.Blue
 import com.itzik.user_with_testing.project.ui.shapes.RoundedBackGround
 import com.itzik.user_with_testing.project.ui.shapes.Turquoise
@@ -111,98 +110,77 @@ fun LoginScreen(
                 modifier = Modifier.fillMaxSize()
             ) {
                 val (emailTF, passwordTF, loginBtn, forgotPasswordText, iconRow, signUp, phoneNumberOutlinedTF, or, signUpBtn) = createRefs()
+
                 val context = LocalContext.current
 
                 var email by remember { mutableStateOf("") }
                 val emailText = stringResource(id = R.string.enter_email)
                 var emailLabelMessage by remember { mutableStateOf(emailText) }
+                var isEmailError by remember { mutableStateOf(false) }
 
 
                 val passwordText = stringResource(id = R.string.enter_password)
                 var passwordLabelMessage by remember { mutableStateOf(passwordText) }
                 var password by remember { mutableStateOf("") }
-
-
-                var isEmailError by remember { mutableStateOf(false) }
-                var isPasswordVisible by remember { mutableStateOf(false) }
                 var isPasswordError by remember { mutableStateOf(false) }
 
 
-                var isEnterPhoneNumberDisplayed by remember { mutableStateOf(false) }
+                var isPasswordVisible by remember { mutableStateOf(false) }
 
+
+                var isEnterPhoneNumberDisplayed by remember { mutableStateOf(false) }
                 var phoneNumberValue by remember { mutableStateOf("") }
                 val phoneNumber = stringResource(id = R.string.enter_phone_number)
                 var phoneNumberToResetLabel by remember {
                     mutableStateOf(phoneNumber)
                 }
 
-
-                OutlinedTextField(
-                    singleLine = true,
+                GenericOutlinedTextField(
+                    value = email,
+                    thisValueChange = {
+                        email = it
+                    },
+                    label = emailLabelMessage,
                     modifier = modifier
-                        .fillMaxWidth()
                         .constrainAs(emailTF) {
                             top.linkTo(parent.top)
                         }
                         .testTag("emailTextField")
-                        .padding(horizontal = 20.dp, vertical = 20.dp),
-                    value = email,
-                    onValueChange = {
-                        email = it
-                    },
-                    label = {
-                        Text(text = emailLabelMessage)
-                    }, colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = Blue,
-                        unfocusedBorderColor = Color.DarkGray,
-                        backgroundColor = Color.White
-                    ),
+                        .padding(20.dp),
+                    imageVector = Icons.Default.Email,
                     isError = isEmailError,
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Default.Email,
-                            contentDescription = null,
-                            tint = Blue
-                        )
-                    }
+                    isKeyboardPasswordType = false,
+                    isTrailingIconExist = false,
+                    isIconClickable = false,
+                    visualTransformation = VisualTransformation.None
                 )
 
-
-                OutlinedTextField(keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Password
-                ), label = {
-                    Text(text = passwordLabelMessage)
-                },
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = Blue,
-                        unfocusedBorderColor = Color.DarkGray,
-                        backgroundColor = Color.White
-                    ),
-                    isError = isPasswordError,
-                    visualTransformation = if (isPasswordVisible) VisualTransformation.None
-                    else PasswordVisualTransformation(),
-                    leadingIcon = {
-                        IconButton(onClick = {
-                            isPasswordVisible = !isPasswordVisible
-                        }) {
-                            Icon(
-                                contentDescription = null, tint = Blue,
-                                imageVector = if (isPasswordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
-                            )
-                        }
+                GenericOutlinedTextField(
+                    value = password,
+                    thisValueChange = {
+                        password = it
                     },
-                    singleLine = true,
+                    label = passwordLabelMessage,
                     modifier = modifier
                         .constrainAs(passwordTF) {
                             top.linkTo(emailTF.bottom)
                         }
                         .testTag("passwordTextField")
-                        .fillMaxWidth()
                         .padding(horizontal = 20.dp, vertical = 8.dp),
-                    value = password,
-                    onValueChange = {
-                        password = it
-                    })
+                    imageVector = if (isPasswordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
+                    isError = isPasswordError,
+                    isKeyboardPasswordType = true,
+                    isTrailingIconExist = false,
+                    isIconClickable = true,
+                    isPasswordToggleClicked=isPasswordVisible,
+                    isPasswordIconShowing = {
+                        isPasswordVisible = !isPasswordVisible
+
+                    },
+                    visualTransformation = if (isPasswordVisible) VisualTransformation.None
+                    else PasswordVisualTransformation(),
+                )
+
 
                 Row(
                     horizontalArrangement = Arrangement.SpaceEvenly,
@@ -371,10 +349,11 @@ fun LoginScreen(
                         }
                         .padding(2.dp)
                 ) {
-                    Icon(imageVector = Icons.Default.ArrowForward,
+                    Icon(
+                        imageVector = Icons.Default.ArrowForward,
                         contentDescription = null,
-                        tint= Blue
-                        )
+                        tint = Blue
+                    )
                 }
 
             }

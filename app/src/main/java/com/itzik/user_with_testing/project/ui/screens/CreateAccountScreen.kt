@@ -25,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -54,7 +55,7 @@ fun CreateAccountScreen(
     ) {
         val (backBtn,title) = createRefs()
         OutlinedButton(
-            border = BorderStroke(1.2.dp, White),
+            border = BorderStroke(1.2.dp, Black),
             shape = CircleShape,
             contentPadding = PaddingValues(0.dp),
             onClick = {
@@ -68,7 +69,7 @@ fun CreateAccountScreen(
            Icon(
                 imageVector = Icons.Default.ArrowBack,
                 contentDescription = null,
-                tint = White
+                tint = Black
             )
         }
 
