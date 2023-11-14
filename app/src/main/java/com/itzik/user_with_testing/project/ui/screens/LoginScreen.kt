@@ -14,9 +14,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.IconButton
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Email
@@ -172,7 +169,7 @@ fun LoginScreen(
                     isKeyboardPasswordType = true,
                     isTrailingIconExist = false,
                     isIconClickable = true,
-                    isPasswordToggleClicked=isPasswordVisible,
+                    isPasswordToggleClicked = isPasswordVisible,
                     isPasswordIconShowing = {
                         isPasswordVisible = !isPasswordVisible
 
@@ -264,47 +261,70 @@ fun LoginScreen(
 
                 if (isEnterPhoneNumberDisplayed) {
 
-                    OutlinedTextField(
-                        singleLine = true,
-                        label = {
-                            Text(text = phoneNumberToResetLabel)
+                    GenericOutlinedTextField(
+                        isTrailingIconExist = true,
+                        value = phoneNumberValue,
+                        thisValueChange = {
+                            phoneNumberValue = it
                         },
+                        label = phoneNumberToResetLabel,
                         modifier = modifier
-                            .fillMaxWidth()
                             .padding(horizontal = 20.dp, vertical = 8.dp)
                             .constrainAs(phoneNumberOutlinedTF) {
                                 top.linkTo(forgotPasswordText.bottom)
                             },
-                        colors = TextFieldDefaults.outlinedTextFieldColors(
-                            focusedBorderColor = Blue,
-                            unfocusedBorderColor = Color.DarkGray,
-                            backgroundColor = Color.White
-                        ),
-                        value = phoneNumberValue,
-                        onValueChange = {
-                            phoneNumberValue = it
-                        },
-                        leadingIcon = {
-                            Icon(
-                                imageVector = Icons.Default.Smartphone,
-                                contentDescription = null,
-                                tint = Blue
-                            )
-                        },
-                        trailingIcon = {
-                            IconButton(onClick = {
-                                phoneNumberToResetLabel = "Reset text message sent"
-                                phoneNumberValue = "Enter the code sent to your number"
-                            }) {
-                                Icon(
-                                    contentDescription = null, tint = Blue,
-                                    imageVector = Icons.Default.Send
-                                )
-                            }
+                        imageVector = Icons.Default.Smartphone,
+                        isKeyboardPasswordType = false,
+                        isIconClickable = false,
+                        visualTransformation = VisualTransformation.None,
+                        trailingImageVector = Icons.Default.Send,
+                        phoneNumberValue = {
+                            phoneNumberValue = "Enter the code sent to your number"
                         }
                     )
-
                 }
+//
+//                    OutlinedTextField(
+//                        singleLine = true,
+//                        label = {
+//                            Text(text = phoneNumberToResetLabel)
+//                        },
+//                        modifier = modifier
+//                            .fillMaxWidth()
+//                            .padding(horizontal = 20.dp, vertical = 8.dp)
+//                            .constrainAs(phoneNumberOutlinedTF) {
+//                                top.linkTo(forgotPasswordText.bottom)
+//                            },
+//                        colors = TextFieldDefaults.outlinedTextFieldColors(
+//                            focusedBorderColor = Blue,
+//                            unfocusedBorderColor = Color.DarkGray,
+//                            backgroundColor = White
+//                        ),
+//                        value = phoneNumberValue,
+//                        onValueChange = {
+//                            phoneNumberValue = it
+//                        },
+//                        leadingIcon = {
+//                            Icon(
+//                                imageVector = Icons.Default.Smartphone,
+//                                contentDescription = null,
+//                                tint = Blue
+//                            )
+//                        },
+//                        trailingIcon = {
+//                            IconButton(onClick = {
+//                                phoneNumberToResetLabel = "Reset text message sent"
+//                                phoneNumberValue = "Enter the code sent to your number"
+//                            }) {
+//                                Icon(
+//                                    contentDescription = null, tint = Blue,
+//                                    imageVector = Icons.Default.Send
+//                                )
+//                            }
+//                        }
+//                    )
+//
+//                }
 
                 Text(
                     modifier = modifier
@@ -315,7 +335,7 @@ fun LoginScreen(
                         }
                         .padding(top = 160.dp),
                     text = stringResource(id = R.string.or),
-                    color = Color.Black,
+                    color = Black,
                     fontSize = 14.sp
                 )
 

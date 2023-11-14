@@ -28,65 +28,97 @@ fun GenericOutlinedTextField(
     label: String,
     modifier: Modifier,
     imageVector: ImageVector,
-    isError: Boolean,
+    trailingImageVector: ImageVector? = null,
+    isError: Boolean? = null,
     isKeyboardPasswordType: Boolean,
     isIconClickable: Boolean,
+    phoneNumber:String ?=null,
     visualTransformation: VisualTransformation,
     isPasswordIconShowing: ((Boolean) -> Unit)? = null,
     isPasswordToggleClicked: Boolean? = null,
+    phoneNumberValue: ((String) -> Unit)? = null,
+    phoneNumberResetValue: ((String) -> Unit)? = null,
 ) {
+    val phoneValue by remember {
+        mutableStateOf(phoneNumber)
+    }
+
     val isIconClickableValue by remember {
         mutableStateOf(isIconClickable)
     }
     val isPasswordToggleClicked by remember {
         mutableStateOf(isPasswordToggleClicked)
     }
-    OutlinedTextField(
-        value = value,
-        onValueChange = {
-            thisValueChange(it)
-        },
-        modifier = modifier.fillMaxWidth(),
-        label = {
-            Text(
-                text = label,
-                fontSize = 16.sp,
-                color = Color.Black
-            )
-        },
-        leadingIcon = {
-            if (!isIconClickableValue) {
-                Icon(
-                    imageVector = imageVector,
-                    contentDescription = null,
-                    tint = Blue
+    if (isError != null) {
+        OutlinedTextField(
+            value = value,
+            onValueChange = {
+                thisValueChange(it)
+            },
+            modifier = modifier.fillMaxWidth(),
+            label = {
+                Text(
+                    text = label,
+                    fontSize = 16.sp,
+                    color = Color.Black
                 )
-            } else {
-                IconButton(onClick = {
-                    if (isPasswordIconShowing != null) {
-                        isPasswordToggleClicked?.let {
-                            isPasswordIconShowing(it)
-                        }
-                    }
-                }) {
+            },
+            leadingIcon = {
+                if (!isIconClickableValue) {
                     Icon(
                         imageVector = imageVector,
                         contentDescription = null,
                         tint = Blue
                     )
+                } else {
+                    IconButton(onClick = {
+                        if (isPasswordIconShowing != null) {
+                            isPasswordToggleClicked?.let {
+                                isPasswordIconShowing(it)
+                            }
+                        }
+                    }) {
+                        Icon(
+                            imageVector = imageVector,
+                            contentDescription = null,
+                            tint = Blue
+                        )
+                    }
                 }
-            }
-        },
-        singleLine = true,
-        visualTransformation = visualTransformation,
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = Blue,
-            unfocusedBorderColor = Color.DarkGray,
-            backgroundColor = Color.White
-        ),
-        isError = isError,
-        keyboardOptions = if (isKeyboardPasswordType) {
-            KeyboardOptions(keyboardType = KeyboardType.Password)
-        } else KeyboardOptions(keyboardType = KeyboardType.Text)
-    )
+            },
+            trailingIcon = {
+                if (isTrailingIconExist) {
+                    if (trailingImageVector != null) {
+                        IconButton(onClick = {
+                            if (phoneNumberResetValue != null) {
+                                phoneNumberResetValue("Reset text message sent")
+                            }
+
+                            if (phoneNumberValue != null) {
+                                phoneValue?.let { phoneNumberValue(it) }
+                            }
+                        }) {
+                            Icon(
+                                imageVector = trailingImageVector,
+                                contentDescription = null,
+                                tint = Blue
+                            )
+                        }
+                    }
+                }
+            },
+
+            singleLine = true,
+            visualTransformation = visualTransformation,
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = Blue,
+                unfocusedBorderColor = Color.DarkGray,
+                backgroundColor = Color.White
+            ),
+            isError = isError,
+            keyboardOptions = if (isKeyboardPasswordType) {
+                KeyboardOptions(keyboardType = KeyboardType.Password)
+            } else KeyboardOptions(keyboardType = KeyboardType.Text)
+        )
+    }
 }
