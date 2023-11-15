@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Send
 import androidx.compose.material.icons.filled.Smartphone
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -275,8 +276,8 @@ fun LoginScreen(
                         imageVector = Icons.Default.Smartphone,
                         isKeyboardPasswordType = false,
                         isIconClickable = false,
-//                        visualTransformation = VisualTransformation.None,
-//                        trailingImageVector = Icons.Default.Send,
+                        visualTransformation = VisualTransformation.None,
+                        trailingImageVector = Icons.Default.Send,
 //                        phoneNumberTFOuterLabel = {
 //
 //                        },
