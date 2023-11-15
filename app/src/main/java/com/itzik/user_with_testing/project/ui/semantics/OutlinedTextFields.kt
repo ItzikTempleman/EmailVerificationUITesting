@@ -33,11 +33,12 @@ fun GenericOutlinedTextField(
     isKeyboardPasswordType: Boolean,
     isIconClickable: Boolean,
     phoneNumber:String ?=null,
-    visualTransformation: VisualTransformation,
+    visualTransformation: VisualTransformation?=null,
     isPasswordIconShowing: ((Boolean) -> Unit)? = null,
     isPasswordToggleClicked: Boolean? = null,
-    phoneNumberValue: ((String) -> Unit)? = null,
-    phoneNumberResetValue: ((String) -> Unit)? = null,
+
+    phoneNumberLabel: ((String) -> Unit)? = null,
+    phoneNumberInnerLabel: ((String) -> Unit)? = null,
 ) {
     val phoneValue by remember {
         mutableStateOf(phoneNumber)
@@ -50,75 +51,77 @@ fun GenericOutlinedTextField(
         mutableStateOf(isPasswordToggleClicked)
     }
     if (isError != null) {
-        OutlinedTextField(
-            value = value,
-            onValueChange = {
-                thisValueChange(it)
-            },
-            modifier = modifier.fillMaxWidth(),
-            label = {
-                Text(
-                    text = label,
-                    fontSize = 16.sp,
-                    color = Color.Black
-                )
-            },
-            leadingIcon = {
-                if (!isIconClickableValue) {
-                    Icon(
-                        imageVector = imageVector,
-                        contentDescription = null,
-                        tint = Blue
+        if (visualTransformation != null) {
+            OutlinedTextField(
+                value = value,
+                onValueChange = {
+                    thisValueChange(it)
+                },
+                modifier = modifier.fillMaxWidth(),
+                label = {
+                    Text(
+                        text = label,
+                        fontSize = 16.sp,
+                        color = Color.Black
                     )
-                } else {
-                    IconButton(onClick = {
-                        if (isPasswordIconShowing != null) {
-                            isPasswordToggleClicked?.let {
-                                isPasswordIconShowing(it)
-                            }
-                        }
-                    }) {
+                },
+                leadingIcon = {
+                    if (!isIconClickableValue) {
                         Icon(
                             imageVector = imageVector,
                             contentDescription = null,
                             tint = Blue
                         )
-                    }
-                }
-            },
-            trailingIcon = {
-                if (isTrailingIconExist) {
-                    if (trailingImageVector != null) {
+                    } else {
                         IconButton(onClick = {
-                            if (phoneNumberResetValue != null) {
-                                phoneNumberResetValue("Reset text message sent")
-                            }
-
-                            if (phoneNumberValue != null) {
-                                phoneValue?.let { phoneNumberValue(it) }
+                            if (isPasswordIconShowing != null) {
+                                isPasswordToggleClicked?.let {
+                                    isPasswordIconShowing(it)
+                                }
                             }
                         }) {
                             Icon(
-                                imageVector = trailingImageVector,
+                                imageVector = imageVector,
                                 contentDescription = null,
                                 tint = Blue
                             )
                         }
                     }
-                }
-            },
+                },
+                trailingIcon = {
+                    if (isTrailingIconExist) {
+                        if (trailingImageVector != null) {
+                            IconButton(onClick = {
+                                if (phoneNumberInnerLabel != null) {
+                                    phoneNumberInnerLabel("Reset text message sent")
+                                }
 
-            singleLine = true,
-            visualTransformation = visualTransformation,
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Blue,
-                unfocusedBorderColor = Color.DarkGray,
-                backgroundColor = Color.White
-            ),
-            isError = isError,
-            keyboardOptions = if (isKeyboardPasswordType) {
-                KeyboardOptions(keyboardType = KeyboardType.Password)
-            } else KeyboardOptions(keyboardType = KeyboardType.Text)
-        )
+                                if (phoneNumberLabel != null) {
+                                    phoneValue?.let { phoneNumberLabel(it) }
+                                }
+                            }) {
+                                Icon(
+                                    imageVector = trailingImageVector,
+                                    contentDescription = null,
+                                    tint = Blue
+                                )
+                            }
+                        }
+                    }
+                },
+
+                singleLine = true,
+                visualTransformation = visualTransformation,
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = Blue,
+                    unfocusedBorderColor = Color.DarkGray,
+                    backgroundColor = Color.White
+                ),
+                isError = isError,
+                keyboardOptions = if (isKeyboardPasswordType) {
+                    KeyboardOptions(keyboardType = KeyboardType.Password)
+                } else KeyboardOptions(keyboardType = KeyboardType.Text)
+            )
+        }
     }
 }

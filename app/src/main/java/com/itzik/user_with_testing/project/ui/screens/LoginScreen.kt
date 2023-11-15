@@ -253,7 +253,7 @@ fun LoginScreen(
                             end.linkTo(parent.end)
                             start.linkTo(parent.start)
                         }
-                        .padding(start = 40.dp, end = 40.dp, top = 20.dp),
+                        .padding(20.dp),
                     text = stringResource(id = R.string.forgot),
                     color = Black,
                     fontSize = 20.sp,
@@ -276,14 +276,13 @@ fun LoginScreen(
                         imageVector = Icons.Default.Smartphone,
                         isKeyboardPasswordType = false,
                         isIconClickable = false,
-                        visualTransformation = VisualTransformation.None,
                         trailingImageVector = Icons.Default.Send,
-                        phoneNumberValue = {
+                        phoneNumberInnerLabel = {
                             phoneNumberValue = "Enter the code sent to your number"
                         }
                     )
+
                 }
-//
 //                    OutlinedTextField(
 //                        singleLine = true,
 //                        label = {
@@ -323,60 +322,60 @@ fun LoginScreen(
 //                            }
 //                        }
 //                    )
-//
-//                }
 
-                Text(
-                    modifier = modifier
-                        .constrainAs(or) {
-                            top.linkTo(loginBtn.bottom)
-                            end.linkTo(parent.end)
-                            start.linkTo(parent.start)
-                        }
-                        .padding(top = 160.dp),
-                    text = stringResource(id = R.string.or),
-                    color = Black,
-                    fontSize = 14.sp
-                )
 
-                Text(
-                    modifier = modifier
-                        .constrainAs(signUp) {
-                            top.linkTo(or.bottom)
-                            end.linkTo(parent.end)
-                            start.linkTo(parent.start)
-                        }
-                        .padding(vertical = 20.dp, horizontal = 8.dp),
-                    text = stringResource(id = R.string.sign_up),
-                    color = Blue,
-                    fontSize = 20.sp,
-                    fontStyle = FontStyle.Italic,
-                    fontWeight = FontWeight.Bold
-                )
-                OutlinedButton(
-                    border = BorderStroke(1.2.dp, Blue),
-                    shape = CircleShape,
-                    contentPadding = PaddingValues(0.dp),
-                    onClick = {
-                        navHostController.navigate(LoginGraph.CreateAccountPage.route)
-                    },
-                    modifier = modifier
-                        .size(40.dp)
-                        .constrainAs(signUpBtn) {
-                            top.linkTo(signUp.top)
-                            bottom.linkTo(signUp.bottom)
-                            start.linkTo(signUp.end)
-                        }
-                        .padding(2.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowForward,
-                        contentDescription = null,
-                        tint = Blue
+                    Text(
+                        modifier = modifier
+                            .constrainAs(or) {
+                                top.linkTo(loginBtn.bottom)
+                                end.linkTo(parent.end)
+                                start.linkTo(parent.start)
+                            }
+                            .padding(top = 160.dp),
+                        text = stringResource(id = R.string.or),
+                        color = Black,
+                        fontSize = 14.sp
                     )
-                }
 
+                    Text(
+                        modifier = modifier
+                            .constrainAs(signUp) {
+                                top.linkTo(or.bottom)
+                                end.linkTo(parent.end)
+                                start.linkTo(parent.start)
+                            }
+                            .padding(vertical = 20.dp, horizontal = 8.dp),
+                        text = stringResource(id = R.string.sign_up),
+                        color = Blue,
+                        fontSize = 20.sp,
+                        fontStyle = FontStyle.Italic,
+                        fontWeight = FontWeight.Bold
+                    )
+                    OutlinedButton(
+                        border = BorderStroke(1.2.dp, Blue),
+                        shape = CircleShape,
+                        contentPadding = PaddingValues(0.dp),
+                        onClick = {
+                            navHostController.navigate(LoginGraph.CreateAccountPage.route)
+                        },
+                        modifier = modifier
+                            .size(40.dp)
+                            .constrainAs(signUpBtn) {
+                                top.linkTo(signUp.top)
+                                bottom.linkTo(signUp.bottom)
+                                start.linkTo(signUp.end)
+                            }
+                            .padding(2.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowForward,
+                            contentDescription = null,
+                            tint = Blue
+                        )
+                    }
+
+                }
             }
         }
     }
-}
+
