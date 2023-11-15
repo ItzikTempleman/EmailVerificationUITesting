@@ -17,7 +17,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Send
 import androidx.compose.material.icons.filled.Smartphone
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -127,7 +126,7 @@ fun LoginScreen(
 
                 var isEnterPhoneNumberDisplayed by remember { mutableStateOf(false) }
                 var phoneNumberValue by remember { mutableStateOf("") }
-                val phoneNumber = stringResource(id = R.string.enter_phone_number)
+                var phoneNumber = stringResource(id = R.string.enter_phone_number)
                 var phoneNumberToResetLabel by remember {
                     mutableStateOf(phoneNumber)
                 }
@@ -276,13 +275,47 @@ fun LoginScreen(
                         imageVector = Icons.Default.Smartphone,
                         isKeyboardPasswordType = false,
                         isIconClickable = false,
-                        trailingImageVector = Icons.Default.Send,
-                        phoneNumberInnerLabel = {
-                            phoneNumberValue = "Enter the code sent to your number"
-                        }
+//                        visualTransformation = VisualTransformation.None,
+//                        trailingImageVector = Icons.Default.Send,
+//                        phoneNumberTFOuterLabel = {
+//
+//                        },
+//                        phoneNumberTFInnerText = {
+//                            phoneNumber=it
+//                            phoneNumberValue=it
+//                        }
                     )
-
                 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //                    OutlinedTextField(
 //                        singleLine = true,
 //                        label = {

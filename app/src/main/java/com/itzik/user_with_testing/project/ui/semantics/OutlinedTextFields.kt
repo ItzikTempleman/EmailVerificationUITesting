@@ -32,17 +32,15 @@ fun GenericOutlinedTextField(
     isError: Boolean? = null,
     isKeyboardPasswordType: Boolean,
     isIconClickable: Boolean,
-    phoneNumber:String ?=null,
-    visualTransformation: VisualTransformation?=null,
+    phoneNumberValue: String? = null,
+    visualTransformation: VisualTransformation? = null,
     isPasswordIconShowing: ((Boolean) -> Unit)? = null,
     isPasswordToggleClicked: Boolean? = null,
 
-    phoneNumberLabel: ((String) -> Unit)? = null,
-    phoneNumberInnerLabel: ((String) -> Unit)? = null,
+    phoneNumberTFOuterLabel: ((String) -> Unit)? = null,
+    phoneNumberTFInnerText: ((String) -> Unit)? = null,
 ) {
-    val phoneValue by remember {
-        mutableStateOf(phoneNumber)
-    }
+
 
     val isIconClickableValue by remember {
         mutableStateOf(isIconClickable)
@@ -92,12 +90,11 @@ fun GenericOutlinedTextField(
                     if (isTrailingIconExist) {
                         if (trailingImageVector != null) {
                             IconButton(onClick = {
-                                if (phoneNumberInnerLabel != null) {
-                                    phoneNumberInnerLabel("Reset text message sent")
-                                }
-
-                                if (phoneNumberLabel != null) {
-                                    phoneValue?.let { phoneNumberLabel(it) }
+                                if (phoneNumberTFInnerText != null) {
+                                    if (phoneNumberTFOuterLabel != null) {
+                                        phoneNumberTFOuterLabel("Reset text message sent")
+                                        phoneNumberTFInnerText("Enter the code sent to your number")
+                                    }
                                 }
                             }) {
                                 Icon(
