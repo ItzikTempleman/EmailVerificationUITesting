@@ -1,23 +1,18 @@
 package com.itzik.user_with_testing.project.ui.screens
 
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Send
 import androidx.compose.material.icons.filled.Smartphone
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -26,8 +21,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -52,6 +45,7 @@ import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.navigation.LoginGraph
 import com.itzik.user_with_testing.project.ui.semantics.GenericOutlinedTextField
+import com.itzik.user_with_testing.project.ui.semantics.GenericRoundedButton
 import com.itzik.user_with_testing.project.ui.shapes.Blue
 import com.itzik.user_with_testing.project.ui.shapes.RoundedBackGround
 import com.itzik.user_with_testing.project.ui.shapes.Turquoise
@@ -126,11 +120,13 @@ fun LoginScreen(
 
 
                 var isEnterPhoneNumberDisplayed by remember { mutableStateOf(false) }
-                var phoneNumberValue by remember { mutableStateOf("") }
-                var phoneNumber = stringResource(id = R.string.enter_phone_number)
-                var phoneNumberToResetLabel by remember {
-                    mutableStateOf(phoneNumber)
-                }
+
+                var phone by remember { mutableStateOf("") }
+                val phoneText = stringResource(id = R.string.enter_phone_number)
+                var phoneLabelMessage by remember { mutableStateOf(phoneText) }
+
+
+
 
                 GenericOutlinedTextField(
                     value = email,
@@ -262,12 +258,12 @@ fun LoginScreen(
                 if (isEnterPhoneNumberDisplayed) {
 
                     GenericOutlinedTextField(
-                        isTrailingIconExist = true,
-                        value = phoneNumberValue,
+                        isTrailingIconExist = false,
+                        value = phone,
                         thisValueChange = {
-                            phoneNumberValue = it
+                            phone = it
                         },
-                        label = phoneNumberToResetLabel,
+                        label = phoneLabelMessage,
                         modifier = modifier
                             .padding(horizontal = 20.dp, vertical = 8.dp)
                             .constrainAs(phoneNumberOutlinedTF) {
@@ -276,8 +272,8 @@ fun LoginScreen(
                         imageVector = Icons.Default.Smartphone,
                         isKeyboardPasswordType = false,
                         isIconClickable = false,
-                        visualTransformation = VisualTransformation.None,
-                        trailingImageVector = Icons.Default.Send,
+//                        visualTransformation = VisualTransformation.None,
+//                        trailingImageVector = Icons.Default.Send,
 //                        phoneNumberTFOuterLabel = {
 //
 //                        },
@@ -288,39 +284,10 @@ fun LoginScreen(
                     )
                 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //                    OutlinedTextField(
 //                        singleLine = true,
 //                        label = {
-//                            Text(text = phoneNumberToResetLabel)
+//                            Text(text = phoneLabelMessage)
 //                        },
 //                        modifier = modifier
 //                            .fillMaxWidth()
@@ -333,9 +300,9 @@ fun LoginScreen(
 //                            unfocusedBorderColor = Color.DarkGray,
 //                            backgroundColor = White
 //                        ),
-//                        value = phoneNumberValue,
+//                        value = phone,
 //                        onValueChange = {
-//                            phoneNumberValue = it
+//                            phone = it
 //                        },
 //                        leadingIcon = {
 //                            Icon(
@@ -346,8 +313,8 @@ fun LoginScreen(
 //                        },
 //                        trailingIcon = {
 //                            IconButton(onClick = {
-//                                phoneNumberToResetLabel = "Reset text message sent"
-//                                phoneNumberValue = "Enter the code sent to your number"
+//                                phoneLabelMessage = "Reset text message sent"
+//                                phone = "Enter the code sent to your number"
 //                            }) {
 //                                Icon(
 //                                    contentDescription = null, tint = Blue,
@@ -358,58 +325,49 @@ fun LoginScreen(
 //                    )
 
 
-                    Text(
-                        modifier = modifier
-                            .constrainAs(or) {
-                                top.linkTo(loginBtn.bottom)
-                                end.linkTo(parent.end)
-                                start.linkTo(parent.start)
-                            }
-                            .padding(top = 160.dp),
-                        text = stringResource(id = R.string.or),
-                        color = Black,
-                        fontSize = 14.sp
-                    )
+                Text(
+                    modifier = modifier
+                        .constrainAs(or) {
+                            top.linkTo(loginBtn.bottom)
+                            end.linkTo(parent.end)
+                            start.linkTo(parent.start)
+                        }
+                        .padding(top = 160.dp),
+                    text = stringResource(id = R.string.or),
+                    color = Black,
+                    fontSize = 14.sp
+                )
 
-                    Text(
-                        modifier = modifier
-                            .constrainAs(signUp) {
-                                top.linkTo(or.bottom)
-                                end.linkTo(parent.end)
-                                start.linkTo(parent.start)
-                            }
-                            .padding(vertical = 20.dp, horizontal = 8.dp),
-                        text = stringResource(id = R.string.sign_up),
-                        color = Blue,
-                        fontSize = 20.sp,
-                        fontStyle = FontStyle.Italic,
-                        fontWeight = FontWeight.Bold
-                    )
-                    OutlinedButton(
-                        border = BorderStroke(1.2.dp, Blue),
-                        shape = CircleShape,
-                        contentPadding = PaddingValues(0.dp),
-                        onClick = {
-                            navHostController.navigate(LoginGraph.CreateAccountPage.route)
-                        },
-                        modifier = modifier
-                            .size(40.dp)
-                            .constrainAs(signUpBtn) {
-                                top.linkTo(signUp.top)
-                                bottom.linkTo(signUp.bottom)
-                                start.linkTo(signUp.end)
-                            }
-                            .padding(2.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowForward,
-                            contentDescription = null,
-                            tint = Blue
-                        )
+                Text(
+                    modifier = modifier
+                        .constrainAs(signUp) {
+                            top.linkTo(or.bottom)
+                            end.linkTo(parent.end)
+                            start.linkTo(parent.start)
+                        }
+                        .padding(vertical = 20.dp, horizontal = 8.dp),
+                    text = stringResource(id = R.string.sign_up),
+                    color = Blue,
+                    fontSize = 20.sp,
+                    fontStyle = FontStyle.Italic,
+                    fontWeight = FontWeight.Bold
+                )
+
+                GenericRoundedButton(modifier = modifier
+                    .constrainAs(signUpBtn) {
+                        top.linkTo(signUp.top)
+                        bottom.linkTo(signUp.bottom)
+                        start.linkTo(signUp.end)
                     }
-
-                }
+                    .padding(2.dp),
+                    imageVector = Icons.Default.ArrowForward,
+                    onClickFunction = {
+                        navHostController.navigate(LoginGraph.CreateAccountPage.route)
+                    }
+                )
             }
         }
     }
+}
+//}
 
