@@ -16,7 +16,7 @@ data class User(
     val phoneNumber:String
 )
 
-sealed class Gender(name:String, icon: ImageVector) {
+sealed class Gender(val name:String, val icon: ImageVector) {
     object MALE : Gender(name="Male", icon = Icons.Default.Male)
     object FEMALE : Gender(name="Female", icon = Icons.Default.Female)
     object OTHER : Gender(name="Other", icon = Icons.Default.Transgender)

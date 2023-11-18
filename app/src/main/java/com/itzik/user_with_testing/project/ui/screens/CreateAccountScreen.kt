@@ -4,11 +4,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.material.RadioButton
+import androidx.compose.material.RadioButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -24,8 +25,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
@@ -35,6 +39,7 @@ import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.models.Gender
 import com.itzik.user_with_testing.project.navigation.Dark_Green
+import com.itzik.user_with_testing.project.navigation.Light_Orange
 import com.itzik.user_with_testing.project.navigation.LoginGraph
 import com.itzik.user_with_testing.project.navigation.Turquoise
 import com.itzik.user_with_testing.project.ui.semantics.GenericOutlinedTextField
@@ -105,12 +110,10 @@ fun CreateAccountScreen(
             ) {
 
 
-                val (userName, email, password, genderBox, phoneNumber) = createRefs()
+                val (userName, email, password, genderTitle, genderBox, age, phoneNumber, createUserBtn) = createRefs()
 
                 val genders = listOf(Gender.MALE, Gender.FEMALE, Gender.OTHER)
                 var selectedGender by remember { mutableStateOf(genders[0]) }
-
-
                 val fullNameText = stringResource(id = R.string.full_name)
                 val fullNameLabelMessage by remember { mutableStateOf(fullNameText) }
                 var fullName by remember { mutableStateOf("") }
@@ -190,42 +193,79 @@ fun CreateAccountScreen(
                     tint = Turquoise
                 )
 
+                Text(
+                    modifier=Modifier.constrainAs(genderTitle){
+                        start.linkTo(parent.start)
+                        top.linkTo(password.bottom)
+                    }.padding(horizontal = 32.dp, vertical = 8.dp),
+                    text = stringResource(id = R.string.choose_gender),
+                    color = Dark_Green,
+                    fontSize = 20.sp,
+                    fontStyle = FontStyle.Italic,
+                    fontWeight = FontWeight.Bold
+                    )
+
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .constrainAs(genderBox) {
-                            top.linkTo(password.bottom)
+                            top.linkTo(genderTitle.bottom)
                         }
-                        .padding(8.dp),
-                    horizontalArrangement = Arrangement.SpaceEvenly
+                        .padding(horizontal = 20.dp, vertical = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     genders.forEach {
-                            Card(
-                                modifier = Modifier
-                                    .padding(4.dp)
-                                    .width(110.dp)
-                                    .height(160.dp),
-                                elevation = CardDefaults.cardElevation(
-                                    defaultElevation = 4.dp
-                                ),
-                                colors = CardDefaults.cardColors(
-                                    containerColor = White
-                                ),
-                                shape = RoundedCornerShape(8.dp)
-                            ) {
+                        Card(
+                            modifier = Modifier
+                                .padding(4.dp)
+                                .size(100.dp),
+                            elevation = CardDefaults.cardElevation(
+                                defaultElevation = 4.dp
+                            ),
+                            colors = CardDefaults.cardColors(
+                                containerColor = White
+                            ),
+                            shape = RoundedCornerShape(8.dp)
+                        ) {
+                            ConstraintLayout(
+                                modifier=Modifier.size(90.dp)                            ) {
+                                val (genderButton, genderName, genderIcon) = createRefs()
                                 RadioButton(
-                                    selected = (it == selectedGender),
+                                    colors = RadioButtonDefaults.colors(
+                                        selectedColor = Light_Orange,
+                                        unselectedColor = Turquoise
+                                    ),
+                                    modifier = Modifier.constrainAs(genderButton) {
+                                        top.linkTo(parent.top)
+                                        start.linkTo(parent.start)
+                                    }, selected = (it == selectedGender),
                                     onClick = { selectedGender = it }
                                 )
                                 Text(
-                                    text = it.toString(),
-                                    modifier = Modifier.padding(start = 8.dp),
+                                    modifier = Modifier
+                                        .constrainAs(genderName) {
+                                            top.linkTo(parent.top)
+                                            end.linkTo(parent.end)
+                                        }
+                                        .padding(end = 2.dp, top = 12.dp),
+                                    text = it.name,
+                                    color = Black
                                 )
 
-//                Icon(
-//
-//                )
-
+                                Icon(
+                                    modifier = Modifier
+                                        .size(40.dp)
+                                        .padding(start = 8.dp)
+                                        .constrainAs(genderIcon) {
+                                            bottom.linkTo(parent.bottom)
+                                            start.linkTo(parent.start)
+                                            end.linkTo(parent.end)
+                                        },
+                                    tint = Turquoise,
+                                    imageVector = it.icon,
+                                    contentDescription = null
+                                )
+                            }
                         }
                     }
                 }
