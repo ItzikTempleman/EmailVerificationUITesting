@@ -121,6 +121,9 @@ fun GenericOutlinedTextField(
                     KeyboardOptions(keyboardType = KeyboardType.Password)
                 } else KeyboardOptions(keyboardType = KeyboardType.Text)
             )
+
+
+
         }
     }
 }

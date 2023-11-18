@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 
 
 @Composable
-fun RoundedBackGround(color:Color) {
+fun RoundedBackGround(topColor:Color, bottomColor:Color) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -23,12 +23,12 @@ fun RoundedBackGround(color:Color) {
                 clip = true
             )
             .background(
-                Color.White
+                bottomColor
             )
     ) {}
     Canvas(modifier = Modifier.fillMaxSize()) {
         translate(left = 0f, top = -1800f) {
-            drawCircle(color, radius = 700.dp.toPx())
+            drawCircle(topColor, radius = 700.dp.toPx())
         }
     }
 }

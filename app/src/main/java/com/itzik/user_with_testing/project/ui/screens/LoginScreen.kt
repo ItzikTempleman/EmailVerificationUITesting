@@ -72,7 +72,7 @@ fun LoginScreen(
     navHostController: NavHostController,
     userViewModel: UserViewModel?,
 ) {
-    RoundedBackGround(Turquoise)
+    RoundedBackGround(topColor = Turquoise, bottomColor = White)
     ConstraintLayout(
         modifier = modifier.fillMaxSize()
     ) {

@@ -1,8 +1,14 @@
 package com.itzik.user_with_testing.project.ui.screens
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.RadioButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -27,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
+import com.itzik.user_with_testing.project.models.Gender
 import com.itzik.user_with_testing.project.navigation.Dark_Green
 import com.itzik.user_with_testing.project.navigation.LoginGraph
 import com.itzik.user_with_testing.project.navigation.Turquoise
@@ -43,7 +50,10 @@ fun CreateAccountScreen(
     navHostController: NavHostController,
     userViewModel: UserViewModel,
 ) {
-    RoundedBackGround(Dark_Green)
+    RoundedBackGround(
+        topColor = Dark_Green,
+        bottomColor = Turquoise
+    )
 
     ConstraintLayout(
         modifier = modifier.fillMaxSize()
@@ -94,27 +104,24 @@ fun CreateAccountScreen(
                 modifier = Modifier.fillMaxSize()
             ) {
 
+
                 val (userName, email, password, genderBox, phoneNumber) = createRefs()
+
+                val genders = listOf(Gender.MALE, Gender.FEMALE, Gender.OTHER)
+                var selectedGender by remember { mutableStateOf(genders[0]) }
+
 
                 val fullNameText = stringResource(id = R.string.full_name)
                 val fullNameLabelMessage by remember { mutableStateOf(fullNameText) }
                 var fullName by remember { mutableStateOf("") }
                 var isFullNameError by remember { mutableStateOf(false) }
-
-
                 var createEmail by remember { mutableStateOf("") }
                 val createEmailText = stringResource(id = R.string.create_email)
                 var createEmailLabelMessage by remember { mutableStateOf(createEmailText) }
                 var isNewEmailError by remember { mutableStateOf(false) }
-
-
-
                 val createdPasswordText = stringResource(id = R.string.create_password)
                 var createPassword by remember { mutableStateOf("") }
-
-                var createPasswordLabelMessage by remember {
-                    mutableStateOf(createdPasswordText)
-                }
+                var createPasswordLabelMessage by remember { mutableStateOf(createdPasswordText) }
                 var isCreatePasswordError by remember { mutableStateOf(false) }
                 var isCreatedPasswordVisible by remember { mutableStateOf(false) }
 
@@ -133,10 +140,10 @@ fun CreateAccountScreen(
                     imageVector = Icons.Default.Person,
                     isKeyboardPasswordType = false,
                     isIconClickable = false,
-                    isError = isFullNameError, visualTransformation = VisualTransformation.None
-                , tint = Turquoise,
+                    isError = isFullNameError, visualTransformation = VisualTransformation.None,
+                    tint = Turquoise,
 
-                )
+                    )
 
                 GenericOutlinedTextField(
                     isTrailingIconExist = false,
@@ -154,8 +161,7 @@ fun CreateAccountScreen(
                     isKeyboardPasswordType = false,
                     isIconClickable = false,
                     isError = isNewEmailError,
-                    visualTransformation = VisualTransformation.None
-                    , tint = Turquoise
+                    visualTransformation = VisualTransformation.None, tint = Turquoise
                 )
 
                 GenericOutlinedTextField(
@@ -181,8 +187,48 @@ fun CreateAccountScreen(
                     },
                     visualTransformation = if (isCreatedPasswordVisible) VisualTransformation.None
                     else PasswordVisualTransformation(),
-                     tint = Turquoise
+                    tint = Turquoise
                 )
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .constrainAs(genderBox) {
+                            top.linkTo(password.bottom)
+                        }
+                        .padding(8.dp),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    genders.forEach {
+                            Card(
+                                modifier = Modifier
+                                    .padding(4.dp)
+                                    .width(110.dp)
+                                    .height(160.dp),
+                                elevation = CardDefaults.cardElevation(
+                                    defaultElevation = 4.dp
+                                ),
+                                colors = CardDefaults.cardColors(
+                                    containerColor = White
+                                ),
+                                shape = RoundedCornerShape(8.dp)
+                            ) {
+                                RadioButton(
+                                    selected = (it == selectedGender),
+                                    onClick = { selectedGender = it }
+                                )
+                                Text(
+                                    text = it.toString(),
+                                    modifier = Modifier.padding(start = 8.dp),
+                                )
+
+//                Icon(
+//
+//                )
+
+                        }
+                    }
+                }
             }
         }
     }
