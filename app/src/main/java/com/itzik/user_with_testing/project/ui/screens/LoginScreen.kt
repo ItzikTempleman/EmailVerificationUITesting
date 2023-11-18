@@ -34,6 +34,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
@@ -86,7 +87,7 @@ fun LoginScreen(
                     top.linkTo(parent.top)
                 },
             text = stringResource(id = R.string.log_in),
-            color = White,
+            color = Black,
             fontSize = 32.sp
         )
         Card(
@@ -151,6 +152,7 @@ fun LoginScreen(
                     isTrailingIconExist = false,
                     isIconClickable = false,
                     visualTransformation = VisualTransformation.None
+                    , tint = Dark_Green
                 )
 
                 GenericOutlinedTextField(
@@ -176,7 +178,8 @@ fun LoginScreen(
 
                     },
                     visualTransformation = if (isPasswordVisible) VisualTransformation.None
-                    else PasswordVisualTransformation(),
+                    else PasswordVisualTransformation()
+                    , tint = Dark_Green
                 )
 
 
@@ -358,7 +361,8 @@ fun LoginScreen(
                     imageVector = Icons.Default.ArrowForward,
                     onClickFunction = {
                         navHostController.navigate(LoginGraph.CreateAccountPage.route)
-                    }
+                    },
+                    tint = Dark_Green
                 )
             }
         }

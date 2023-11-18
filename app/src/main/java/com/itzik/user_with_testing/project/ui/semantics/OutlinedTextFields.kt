@@ -17,12 +17,12 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.sp
-import com.itzik.user_with_testing.project.navigation.Dark_Green
 
 
 @Composable
 fun GenericOutlinedTextField(
     data: String? = null,
+    tint:Color,
     isTrailingIconExist: Boolean,
     value: String,
     thisValueChange: (String) -> Unit,
@@ -69,7 +69,7 @@ fun GenericOutlinedTextField(
                         Icon(
                             imageVector = imageVector,
                             contentDescription = null,
-                            tint = Dark_Green
+                            tint = tint
                         )
                     } else {
                         IconButton(onClick = {
@@ -82,7 +82,7 @@ fun GenericOutlinedTextField(
                             Icon(
                                 imageVector = imageVector,
                                 contentDescription = null,
-                                tint = Dark_Green
+                                tint = tint
                             )
                         }
                     }
@@ -101,7 +101,7 @@ fun GenericOutlinedTextField(
                                 Icon(
                                     imageVector = trailingImageVector,
                                     contentDescription = null,
-                                    tint = Dark_Green
+                                    tint = tint
                                 )
                             }
                         }
@@ -111,7 +111,7 @@ fun GenericOutlinedTextField(
                 singleLine = true,
                 visualTransformation = visualTransformation,
                 colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = Dark_Green,
+                    focusedBorderColor = tint,
                     unfocusedBorderColor = Color.DarkGray,
                     backgroundColor = Color.White
                 ),

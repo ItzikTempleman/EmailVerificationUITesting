@@ -12,17 +12,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.itzik.user_with_testing.project.navigation.Dark_Green
 
 
 @Composable
 fun GenericRoundedButton(
     modifier: Modifier,
     imageVector: ImageVector,
-    onClickFunction: ()-> Unit
+    onClickFunction: ()-> Unit,
+    tint:Color
     ) {
     OutlinedButton(
-        border = BorderStroke(1.2.dp, Dark_Green),
+        border = BorderStroke(1.2.dp, tint),
         shape = CircleShape,
         colors= ButtonDefaults.outlinedButtonColors(backgroundColor = Color.Transparent),
         contentPadding = PaddingValues(0.dp),
@@ -39,7 +39,7 @@ fun GenericRoundedButton(
         Icon(
             imageVector = imageVector,
             contentDescription = null,
-            tint = Dark_Green
+            tint = tint
         )
     }
 }

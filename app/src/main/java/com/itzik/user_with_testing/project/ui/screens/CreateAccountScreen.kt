@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
+import com.itzik.user_with_testing.project.navigation.Dark_Green
 import com.itzik.user_with_testing.project.navigation.LoginGraph
 import com.itzik.user_with_testing.project.navigation.Turquoise
 import com.itzik.user_with_testing.project.ui.semantics.GenericOutlinedTextField
@@ -42,7 +43,7 @@ fun CreateAccountScreen(
     navHostController: NavHostController,
     userViewModel: UserViewModel,
 ) {
-    RoundedBackGround(Turquoise)
+    RoundedBackGround(Dark_Green)
 
     ConstraintLayout(
         modifier = modifier.fillMaxSize()
@@ -60,7 +61,8 @@ fun CreateAccountScreen(
             imageVector = Icons.Default.ArrowBack,
             onClickFunction = {
                 navHostController.navigate(LoginGraph.LoginPage.route)
-            }
+            },
+            tint = White
         )
         Text(
             text = stringResource(id = R.string.create_new),
@@ -132,6 +134,8 @@ fun CreateAccountScreen(
                     isKeyboardPasswordType = false,
                     isIconClickable = false,
                     isError = isFullNameError, visualTransformation = VisualTransformation.None
+                , tint = Turquoise,
+
                 )
 
                 GenericOutlinedTextField(
@@ -151,6 +155,7 @@ fun CreateAccountScreen(
                     isIconClickable = false,
                     isError = isNewEmailError,
                     visualTransformation = VisualTransformation.None
+                    , tint = Turquoise
                 )
 
                 GenericOutlinedTextField(
@@ -176,6 +181,7 @@ fun CreateAccountScreen(
                     },
                     visualTransformation = if (isCreatedPasswordVisible) VisualTransformation.None
                     else PasswordVisualTransformation(),
+                     tint = Turquoise
                 )
             }
         }
