@@ -13,10 +13,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 
 
-val Blue = Color(0xFF08648C)
-val Yellow= Color(0xFFdeb522)
-val Turquoise =Color(0xFF30D5C8)
-// <color name="turquoise">#30D5C8</color>
+
 @Composable
 fun RoundedBackGround(color:Color) {
     Box(

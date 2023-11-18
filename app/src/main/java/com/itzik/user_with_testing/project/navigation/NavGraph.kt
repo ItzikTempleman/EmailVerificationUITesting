@@ -5,6 +5,7 @@ import androidx.compose.animation.ExitTransition
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -16,6 +17,9 @@ import com.itzik.user_with_testing.project.ui.screens.SplashScreen
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 
+val Dark_Green = Color(0xFF007d74)
+val Turquoise = Color(0xFF30D5C8)
+val Light_Orange= Color(0xFFFFA500)
 
 
 const val SPLASH_GRAPH = "splashGraph"

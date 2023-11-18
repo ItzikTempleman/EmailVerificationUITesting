@@ -2,7 +2,6 @@ package com.itzik.user_with_testing.project.ui.screens
 
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,9 +9,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Send
 import androidx.compose.material.icons.filled.Smartphone
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -21,7 +24,9 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,7 +34,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.Black
+import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -43,13 +48,13 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
+import com.itzik.user_with_testing.project.navigation.Dark_Green
+import com.itzik.user_with_testing.project.navigation.Light_Orange
 import com.itzik.user_with_testing.project.navigation.LoginGraph
+import com.itzik.user_with_testing.project.navigation.Turquoise
 import com.itzik.user_with_testing.project.ui.semantics.GenericOutlinedTextField
 import com.itzik.user_with_testing.project.ui.semantics.GenericRoundedButton
-import com.itzik.user_with_testing.project.ui.shapes.Blue
 import com.itzik.user_with_testing.project.ui.shapes.RoundedBackGround
-import com.itzik.user_with_testing.project.ui.shapes.Turquoise
-import com.itzik.user_with_testing.project.ui.shapes.Yellow
 import com.itzik.user_with_testing.project.utils.isEmailValid
 import com.itzik.user_with_testing.project.utils.isPasswordValid
 import com.itzik.user_with_testing.project.utils.loginMessage
@@ -81,7 +86,7 @@ fun LoginScreen(
                     top.linkTo(parent.top)
                 },
             text = stringResource(id = R.string.log_in),
-            color = Color.White,
+            color = White,
             fontSize = 32.sp
         )
         Card(
@@ -89,7 +94,7 @@ fun LoginScreen(
                 .fillMaxSize()
                 .padding(horizontal = 20.dp, vertical = 130.dp),
             colors = CardDefaults.cardColors(
-                containerColor = Color.White
+                containerColor = White
             ),
             elevation = CardDefaults.cardElevation(
                 defaultElevation = 10.dp
@@ -184,24 +189,30 @@ fun LoginScreen(
                         }
                         .padding(20.dp),
                 ) {
-                    Image(
+                    IconButton(
+                        onClick = {
+
+                        },
                         modifier = modifier
                             .width(40.dp)
-                            .clickable {
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.facebook),
+                            contentDescription = null
+                        )
+                    }
+                    IconButton(
+                        onClick = {
 
-                            },
-                        painter = painterResource(id = R.drawable.facebook),
-                        contentDescription = null
-                    )
-                    Image(
+                        },
                         modifier = modifier
                             .width(40.dp)
-                            .clickable {
-
-                            },
-                        painter = painterResource(id = R.drawable.google),
-                        contentDescription = null
-                    )
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.google),
+                            contentDescription = null
+                        )
+                    }
                 }
 
                 Button(
@@ -229,8 +240,8 @@ fun LoginScreen(
                         )
                     },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Yellow,
-                        contentColor = Color.White
+                        containerColor = Light_Orange,
+                        contentColor = White
                     )
                 ) {
                     Text(
@@ -239,91 +250,68 @@ fun LoginScreen(
                     )
                 }
 
-                Text(
+                TextButton(
+                    onClick = {
+                        isEnterPhoneNumberDisplayed = !isEnterPhoneNumberDisplayed
+                    },
                     modifier = modifier
-                        .clickable {
-                            isEnterPhoneNumberDisplayed = !isEnterPhoneNumberDisplayed
-                        }
                         .constrainAs(forgotPasswordText) {
                             top.linkTo(loginBtn.bottom)
                             end.linkTo(parent.end)
                             start.linkTo(parent.start)
                         }
-                        .padding(20.dp),
-                    text = stringResource(id = R.string.forgot),
-                    color = Black,
-                    fontSize = 20.sp,
-                )
+                        .padding(horizontal = 20.dp, vertical = 8.dp),
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.forgot),
+                        color = Dark_Green,
+                        fontSize = 20.sp,
+                        fontStyle = FontStyle.Italic,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
 
                 if (isEnterPhoneNumberDisplayed) {
-
-                    GenericOutlinedTextField(
-                        isTrailingIconExist = false,
-                        value = phone,
-                        thisValueChange = {
-                            phone = it
+                    OutlinedTextField(
+                        singleLine = true,
+                        label = {
+                            Text(text = phoneLabelMessage)
                         },
-                        label = phoneLabelMessage,
                         modifier = modifier
+                            .fillMaxWidth()
                             .padding(horizontal = 20.dp, vertical = 8.dp)
                             .constrainAs(phoneNumberOutlinedTF) {
                                 top.linkTo(forgotPasswordText.bottom)
                             },
-                        imageVector = Icons.Default.Smartphone,
-                        isKeyboardPasswordType = false,
-                        isIconClickable = false,
-//                        visualTransformation = VisualTransformation.None,
-//                        trailingImageVector = Icons.Default.Send,
-//                        phoneNumberTFOuterLabel = {
-//
-//                        },
-//                        phoneNumberTFInnerText = {
-//                            phoneNumber=it
-//                            phoneNumberValue=it
-//                        }
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            focusedBorderColor = Dark_Green,
+                            unfocusedBorderColor = Color.DarkGray,
+                            backgroundColor = White
+                        ),
+                        value = phone,
+                        onValueChange = {
+                            phone = it
+                        },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Smartphone,
+                                contentDescription = null,
+                                tint = Dark_Green
+                            )
+                        },
+                        trailingIcon = {
+                            IconButton(onClick = {
+                                phoneLabelMessage = "Reset text message sent"
+                                phone = "Enter the code sent to your number"
+                            }) {
+                                Icon(
+                                    contentDescription = null, tint = Light_Orange,
+                                    imageVector = Icons.Default.Send
+                                )
+                            }
+                        }
                     )
                 }
-
-//                    OutlinedTextField(
-//                        singleLine = true,
-//                        label = {
-//                            Text(text = phoneLabelMessage)
-//                        },
-//                        modifier = modifier
-//                            .fillMaxWidth()
-//                            .padding(horizontal = 20.dp, vertical = 8.dp)
-//                            .constrainAs(phoneNumberOutlinedTF) {
-//                                top.linkTo(forgotPasswordText.bottom)
-//                            },
-//                        colors = TextFieldDefaults.outlinedTextFieldColors(
-//                            focusedBorderColor = Blue,
-//                            unfocusedBorderColor = Color.DarkGray,
-//                            backgroundColor = White
-//                        ),
-//                        value = phone,
-//                        onValueChange = {
-//                            phone = it
-//                        },
-//                        leadingIcon = {
-//                            Icon(
-//                                imageVector = Icons.Default.Smartphone,
-//                                contentDescription = null,
-//                                tint = Blue
-//                            )
-//                        },
-//                        trailingIcon = {
-//                            IconButton(onClick = {
-//                                phoneLabelMessage = "Reset text message sent"
-//                                phone = "Enter the code sent to your number"
-//                            }) {
-//                                Icon(
-//                                    contentDescription = null, tint = Blue,
-//                                    imageVector = Icons.Default.Send
-//                                )
-//                            }
-//                        }
-//                    )
-
 
                 Text(
                     modifier = modifier
@@ -332,34 +320,41 @@ fun LoginScreen(
                             end.linkTo(parent.end)
                             start.linkTo(parent.start)
                         }
-                        .padding(top = 160.dp),
-                    text = stringResource(id = R.string.or),
-                    color = Black,
-                    fontSize = 14.sp
+                        .padding(top = 140.dp),
+                    text = stringResource(id = R.string.alternative),
+                    color = Dark_Green,
+                    fontSize = 20.sp,
+                    fontStyle = FontStyle.Italic,
+                    fontWeight = FontWeight.Bold
                 )
 
-                Text(
+                TextButton(
+                    onClick = {
+                        navHostController.navigate(LoginGraph.CreateAccountPage.route)
+                    },
                     modifier = modifier
                         .constrainAs(signUp) {
                             top.linkTo(or.bottom)
                             end.linkTo(parent.end)
                             start.linkTo(parent.start)
                         }
-                        .padding(vertical = 20.dp, horizontal = 8.dp),
-                    text = stringResource(id = R.string.sign_up),
-                    color = Blue,
-                    fontSize = 20.sp,
-                    fontStyle = FontStyle.Italic,
-                    fontWeight = FontWeight.Bold
                 )
+                {
+                    Text(
+                        text = stringResource(id = R.string.sign_up),
+                        color = Dark_Green,
+                        fontSize = 20.sp,
+                        fontStyle = FontStyle.Italic,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
 
                 GenericRoundedButton(modifier = modifier
                     .constrainAs(signUpBtn) {
                         top.linkTo(signUp.top)
                         bottom.linkTo(signUp.bottom)
                         start.linkTo(signUp.end)
-                    }
-                    .padding(2.dp),
+                    },
                     imageVector = Icons.Default.ArrowForward,
                     onClickFunction = {
                         navHostController.navigate(LoginGraph.CreateAccountPage.route)
@@ -369,5 +364,5 @@ fun LoginScreen(
         }
     }
 }
-//}
+
 

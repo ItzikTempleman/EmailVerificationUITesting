@@ -25,8 +25,9 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.navigation.LoginGraph
+import com.itzik.user_with_testing.project.navigation.Turquoise
 import com.itzik.user_with_testing.project.ui.shapes.RoundedBackGround
-import com.itzik.user_with_testing.project.ui.shapes.Turquoise
+
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay

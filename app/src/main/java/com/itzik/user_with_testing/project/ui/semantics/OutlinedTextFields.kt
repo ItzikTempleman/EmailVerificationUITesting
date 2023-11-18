@@ -17,7 +17,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.sp
-import com.itzik.user_with_testing.project.ui.shapes.Blue
+import com.itzik.user_with_testing.project.navigation.Dark_Green
+
 
 @Composable
 fun GenericOutlinedTextField(
@@ -68,7 +69,7 @@ fun GenericOutlinedTextField(
                         Icon(
                             imageVector = imageVector,
                             contentDescription = null,
-                            tint = Blue
+                            tint = Dark_Green
                         )
                     } else {
                         IconButton(onClick = {
@@ -81,7 +82,7 @@ fun GenericOutlinedTextField(
                             Icon(
                                 imageVector = imageVector,
                                 contentDescription = null,
-                                tint = Blue
+                                tint = Dark_Green
                             )
                         }
                     }
@@ -100,7 +101,7 @@ fun GenericOutlinedTextField(
                                 Icon(
                                     imageVector = trailingImageVector,
                                     contentDescription = null,
-                                    tint = Blue
+                                    tint = Dark_Green
                                 )
                             }
                         }
@@ -110,10 +111,11 @@ fun GenericOutlinedTextField(
                 singleLine = true,
                 visualTransformation = visualTransformation,
                 colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = Blue,
+                    focusedBorderColor = Dark_Green,
                     unfocusedBorderColor = Color.DarkGray,
                     backgroundColor = Color.White
                 ),
+
                 isError = isError,
                 keyboardOptions = if (isKeyboardPasswordType) {
                     KeyboardOptions(keyboardType = KeyboardType.Password)

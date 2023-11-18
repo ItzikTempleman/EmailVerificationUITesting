@@ -7,6 +7,7 @@
     <string name="enter_phone_number">Enter reset phone number</string>
     <string name="enter_received_sms_code">Enter received SMS code</string>
     <string name="enter_email">Your user name or Email</string>
+    <string name="create_email">Create Email</string>
     <string name="enter_password">Enter your password</string>
     <string name="log_in">Log in</string>
     <string name="sign_up">Sign up</string>
@@ -21,6 +22,6 @@
     <string name="reenter_password">Re-enter password</string>
     <string name="age">Age</string>
     <string name="gender">Gender</string>
-    <string name="or"> -----------------------  OR  ------------------------</string>
+    <string name="alternative">or</string>
 
 </resources>
