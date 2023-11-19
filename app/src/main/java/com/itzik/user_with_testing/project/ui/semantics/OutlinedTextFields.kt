@@ -10,6 +10,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Send
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,6 +26,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.itzik.user_with_testing.project.navigation.Dark_Green
+import com.itzik.user_with_testing.project.navigation.Light_Orange
 
 
 @Composable
@@ -36,7 +39,7 @@ fun GenericOutlinedTextField(
     label: String,
     modifier: Modifier,
     imageVector: ImageVector,
-    trailingImageVector: ImageVector? = null,
+    trailingImageVector: ImageVector,
     isError: Boolean,
     isKeyboardPasswordType: Boolean,
     isIconClickable: Boolean,
@@ -95,7 +98,6 @@ fun GenericOutlinedTextField(
         },
         trailingIcon = {
             if (isTrailingIconExist) {
-                if (trailingImageVector != null) {
                     IconButton(onClick = {
                         if (phoneNumberTFInnerText != null) {
                             if (phoneNumberTFOuterLabel != null) {
@@ -105,13 +107,13 @@ fun GenericOutlinedTextField(
                         }
                     }) {
                         Icon(
-                            imageVector = trailingImageVector,
+                            imageVector = Icons.Default.Send,
                             contentDescription = null,
-                            tint = tint
+                            tint = Light_Orange
                         )
                     }
                 }
-            }
+
         },
 
         singleLine = true,

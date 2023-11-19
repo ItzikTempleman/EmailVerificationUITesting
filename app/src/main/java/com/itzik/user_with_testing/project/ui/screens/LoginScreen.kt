@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Smartphone
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -146,7 +147,8 @@ fun LoginScreen(
                     isKeyboardPasswordType = false,
                     isTrailingIconExist = false,
                     isIconClickable = false,
-                    visualTransformation = VisualTransformation.None, tint = Dark_Green
+                    visualTransformation = VisualTransformation.None, tint = Dark_Green,
+                    trailingImageVector = Icons.Default.Image
                 )
 
                 GenericOutlinedTextField(
@@ -172,7 +174,8 @@ fun LoginScreen(
 
                     },
                     visualTransformation = if (isPasswordVisible) VisualTransformation.None
-                    else PasswordVisualTransformation(), tint = Dark_Green
+                    else PasswordVisualTransformation(), tint = Dark_Green,
+                    trailingImageVector = Icons.Default.Image
                 )
 
 
@@ -275,6 +278,7 @@ fun LoginScreen(
                         thisValueChange = {
                             phone = it
                         },
+
                         label = phoneLabelMessage,
                         modifier = modifier
                             .padding(horizontal = 20.dp, vertical = 8.dp)
@@ -286,7 +290,8 @@ fun LoginScreen(
                         isKeyboardPasswordType = false,
                         isIconClickable = true,
                         visualTransformation = VisualTransformation.None,
-
+trailingImageVector = Icons.Default.Image,
+                        
                         )
 //                    OutlinedTextField(
 //                        singleLine = true,

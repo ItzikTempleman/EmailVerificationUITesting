@@ -16,6 +16,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -152,7 +153,7 @@ fun CreateAccountScreen(
                     isIconClickable = false,
                     isError = isFullNameError, visualTransformation = VisualTransformation.None,
                     tint = Turquoise,
-
+trailingImageVector = Icons.Default.Image
                     )
 
                 GenericOutlinedTextField(
@@ -171,7 +172,8 @@ fun CreateAccountScreen(
                     isKeyboardPasswordType = false,
                     isIconClickable = false,
                     isError = isNewEmailError,
-                    visualTransformation = VisualTransformation.None, tint = Turquoise
+                    visualTransformation = VisualTransformation.None, tint = Turquoise,
+                    trailingImageVector = Icons.Default.Image
                 )
 
                 GenericOutlinedTextField(
@@ -197,7 +199,8 @@ fun CreateAccountScreen(
                     },
                     visualTransformation = if (isCreatedPasswordVisible) VisualTransformation.None
                     else PasswordVisualTransformation(),
-                    tint = Turquoise
+                    tint = Turquoise,
+                    trailingImageVector = Icons.Default.Image
                 )
 
                 Text(
