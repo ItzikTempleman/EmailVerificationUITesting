@@ -1,6 +1,5 @@
 package com.itzik.user_with_testing.project.ui.screens
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -88,10 +87,10 @@ fun CreateAccountScreen(
             modifier = modifier
                 .constrainAs(title) {
                     start.linkTo(parent.start)
-                    top.linkTo(backBtn.bottom)
+                    top.linkTo(backBtn.top)
                     end.linkTo(parent.end)
                 }
-                .padding(horizontal = 20.dp),
+                .padding(start = 20.dp,end=20.dp, top=20.dp),
             color = White,
             fontSize = 32.sp
         )
@@ -103,7 +102,7 @@ fun CreateAccountScreen(
                 }
                 .height(450.dp)
                 .fillMaxWidth()
-                .padding(20.dp),
+                .padding(top=20.dp, start = 20.dp, end=20.dp),
             colors = CardDefaults.cardColors(
                 containerColor = White
             ),
@@ -297,44 +296,44 @@ fun CreateAccountScreen(
                 .padding(horizontal = 20.dp),
         ) {
             val (birthDateTitle, birthDateRow, phoneNumber, createUserBtn) = createRefs()
-            var dayOfMonthText = stringResource(id = R.string.day)
-            val dayOfMonthLabelMessage by remember { mutableStateOf(dayOfMonthText) }
+
             var dayOfMonth by remember { mutableStateOf("") }
+            val dayOfMonthText = stringResource(id = R.string.day)
+            val dayOfMonthLabelMessage by remember { mutableStateOf(dayOfMonthText) }
             var isDayOfMonthError by remember { mutableStateOf(false) }
 
-
-            var monthText = stringResource(id = R.string.month)
-            val monthLabelMessage by remember { mutableStateOf(monthText) }
             var month by remember { mutableStateOf("") }
+            val monthText = stringResource(id = R.string.month)
+            val monthLabelMessage by remember { mutableStateOf(monthText) }
             var isMonthError by remember { mutableStateOf(false) }
 
-
-            var yearText = stringResource(id = R.string.year)
-            val yearLabelMessage by remember { mutableStateOf(yearText) }
             var year by remember { mutableStateOf("") }
+            val yearText = stringResource(id = R.string.year)
+            val yearLabelMessage by remember { mutableStateOf(yearText) }
             var isYearError by remember { mutableStateOf(false) }
+
             Text(
                 modifier = Modifier
                     .constrainAs(birthDateTitle) {
                         start.linkTo(parent.start)
                         top.linkTo(parent.top)
                     }
-                    .padding(horizontal = 32.dp, vertical = 8.dp),
+                    .padding(start = 32.dp,end=32.dp, top = 12.dp),
                 text = stringResource(id = R.string.birthdate_title),
-                color = Dark_Green,
-                fontSize = 20.sp,
+                color = White,
+                fontSize = 28.sp,
                 fontStyle = FontStyle.Italic,
                 fontWeight = FontWeight.Bold
             )
 
             Row(
-                horizontalArrangement = Arrangement.SpaceEvenly,
+                horizontalArrangement = Arrangement.SpaceAround,
                 modifier = modifier
                     .constrainAs(birthDateRow) {
                         top.linkTo(birthDateTitle.bottom)
                     }
-                    .fillMaxWidth().background(White).height(100.dp)
-                    .padding(horizontal = 20.dp, vertical = 8.dp),
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp, vertical = 4.dp),
             ) {
 
                 DateOutlinedTextField(
@@ -342,7 +341,10 @@ fun CreateAccountScreen(
                     thisValueChange = {
                         dayOfMonth = it
                     },
-                    label = dayOfMonthLabelMessage
+                    label = dayOfMonthLabelMessage,
+                    visualTransformation= VisualTransformation.None,
+                    isError = isDayOfMonthError,
+                    modifier = modifier.weight(1f)
                 )
 
                 DateOutlinedTextField(
@@ -350,7 +352,10 @@ fun CreateAccountScreen(
                     thisValueChange = {
                         month = it
                     },
-                    label = monthLabelMessage
+                    label = monthLabelMessage,
+                    visualTransformation= VisualTransformation.None,
+                    isError = isMonthError,
+                    modifier = modifier.weight(1f)
                 )
 
                 DateOutlinedTextField(
@@ -358,7 +363,10 @@ fun CreateAccountScreen(
                     thisValueChange = {
                         year = it
                     },
-                    label = yearLabelMessage
+                    label = yearLabelMessage,
+                    visualTransformation= VisualTransformation.None,
+                    isError = isYearError,
+                    modifier = modifier.weight(1f)
                 )
             }
         }

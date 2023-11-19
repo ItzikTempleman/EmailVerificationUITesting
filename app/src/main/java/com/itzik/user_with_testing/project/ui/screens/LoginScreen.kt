@@ -9,13 +9,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Send
 import androidx.compose.material.icons.filled.Smartphone
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -33,7 +29,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.platform.LocalContext
@@ -130,7 +125,7 @@ fun LoginScreen(
                 var phone by remember { mutableStateOf("") }
                 val phoneText = stringResource(id = R.string.enter_phone_number)
                 var phoneLabelMessage by remember { mutableStateOf(phoneText) }
-
+                var isPhoneNumberError by remember { mutableStateOf(false) }
 
 
 
@@ -151,8 +146,7 @@ fun LoginScreen(
                     isKeyboardPasswordType = false,
                     isTrailingIconExist = false,
                     isIconClickable = false,
-                    visualTransformation = VisualTransformation.None
-                    , tint = Dark_Green
+                    visualTransformation = VisualTransformation.None, tint = Dark_Green
                 )
 
                 GenericOutlinedTextField(
@@ -178,8 +172,7 @@ fun LoginScreen(
 
                     },
                     visualTransformation = if (isPasswordVisible) VisualTransformation.None
-                    else PasswordVisualTransformation()
-                    , tint = Dark_Green
+                    else PasswordVisualTransformation(), tint = Dark_Green
                 )
 
 
@@ -275,45 +268,65 @@ fun LoginScreen(
                 }
 
                 if (isEnterPhoneNumberDisplayed) {
-                    OutlinedTextField(
-                        singleLine = true,
-                        label = {
-                            Text(text = phoneLabelMessage)
+                    GenericOutlinedTextField(
+                        tint = Dark_Green,
+                        isTrailingIconExist = true,
+                        value = phone,
+                        thisValueChange = {
+                            phone = it
                         },
+                        label = phoneLabelMessage,
                         modifier = modifier
-                            .fillMaxWidth()
                             .padding(horizontal = 20.dp, vertical = 8.dp)
                             .constrainAs(phoneNumberOutlinedTF) {
                                 top.linkTo(forgotPasswordText.bottom)
                             },
-                        colors = TextFieldDefaults.outlinedTextFieldColors(
-                            focusedBorderColor = Dark_Green,
-                            unfocusedBorderColor = Color.DarkGray,
-                            backgroundColor = White
-                        ),
-                        value = phone,
-                        onValueChange = {
-                            phone = it
-                        },
-                        leadingIcon = {
-                            Icon(
-                                imageVector = Icons.Default.Smartphone,
-                                contentDescription = null,
-                                tint = Dark_Green
-                            )
-                        },
-                        trailingIcon = {
-                            IconButton(onClick = {
-                                phoneLabelMessage = "Reset text message sent"
-                                phone = "Enter the code sent to your number"
-                            }) {
-                                Icon(
-                                    contentDescription = null, tint = Light_Orange,
-                                    imageVector = Icons.Default.Send
-                                )
-                            }
-                        }
-                    )
+                        imageVector = Icons.Default.Smartphone,
+                        isError = isPhoneNumberError,
+                        isKeyboardPasswordType = false,
+                        isIconClickable = true,
+                        visualTransformation = VisualTransformation.None,
+
+                        )
+//                    OutlinedTextField(
+//                        singleLine = true,
+//                        label = {
+//                            Text(text = phoneLabelMessage)
+//                        },
+//                        modifier = modifier
+//                            .fillMaxWidth()
+//                            .padding(horizontal = 20.dp, vertical = 8.dp)
+//                            .constrainAs(phoneNumberOutlinedTF) {
+//                                top.linkTo(forgotPasswordText.bottom)
+//                            },
+//                        colors = TextFieldDefaults.outlinedTextFieldColors(
+//                            focusedBorderColor = Dark_Green,
+//                            unfocusedBorderColor = Color.DarkGray,
+//                            backgroundColor = White
+//                        ),
+//                        value = phone,
+//                        onValueChange = {
+//                            phone = it
+//                        },
+//                        leadingIcon = {
+//                            Icon(
+//                                imageVector = Icons.Default.Smartphone,
+//                                contentDescription = null,
+//                                tint = Dark_Green
+//                            )
+//                        },
+//                        trailingIcon = {
+//                            IconButton(onClick = {
+//                                phoneLabelMessage = "Reset text message sent"
+//                                phone = "Enter the code sent to your number"
+//                            }) {
+//                                Icon(
+//                                    contentDescription = null, tint = Light_Orange,
+//                                    imageVector = Icons.Default.Send
+//                                )
+//                            }
+//                        }
+//                    )
                 }
 
                 Text(
@@ -352,12 +365,13 @@ fun LoginScreen(
                     )
                 }
 
-                GenericRoundedButton(modifier = modifier
-                    .constrainAs(signUpBtn) {
-                        top.linkTo(signUp.top)
-                        bottom.linkTo(signUp.bottom)
-                        start.linkTo(signUp.end)
-                    },
+                GenericRoundedButton(
+                    modifier = modifier
+                        .constrainAs(signUpBtn) {
+                            top.linkTo(signUp.top)
+                            bottom.linkTo(signUp.bottom)
+                            start.linkTo(signUp.end)
+                        },
                     imageVector = Icons.Default.ArrowForward,
                     onClickFunction = {
                         navHostController.navigate(LoginGraph.CreateAccountPage.route)
