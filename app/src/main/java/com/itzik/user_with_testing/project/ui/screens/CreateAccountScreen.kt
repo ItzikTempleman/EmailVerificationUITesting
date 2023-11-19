@@ -91,7 +91,7 @@ fun CreateAccountScreen(
                     top.linkTo(backBtn.top)
                     end.linkTo(parent.end)
                 }
-                .padding(start = 20.dp,end=20.dp, top=20.dp),
+                .padding(start = 20.dp, end = 20.dp, top = 20.dp),
             color = White,
             fontSize = 32.sp
         )
@@ -103,7 +103,7 @@ fun CreateAccountScreen(
                 }
                 .height(450.dp)
                 .fillMaxWidth()
-                .padding(top=20.dp, start = 20.dp, end=20.dp),
+                .padding(top = 20.dp, start = 20.dp, end = 20.dp),
             colors = CardDefaults.cardColors(
                 containerColor = White
             ),
@@ -153,8 +153,10 @@ fun CreateAccountScreen(
                     isIconClickable = false,
                     isError = isFullNameError, visualTransformation = VisualTransformation.None,
                     tint = Turquoise,
-trailingImageVector = Icons.Default.Image
-                    )
+                    trailingImageVector = Icons.Default.Image,
+                    phoneNumberTFInnerText = {},
+                    phoneNumberTFOuterLabel = {}
+                )
 
                 GenericOutlinedTextField(
                     isTrailingIconExist = false,
@@ -173,7 +175,9 @@ trailingImageVector = Icons.Default.Image
                     isIconClickable = false,
                     isError = isNewEmailError,
                     visualTransformation = VisualTransformation.None, tint = Turquoise,
-                    trailingImageVector = Icons.Default.Image
+                    trailingImageVector = Icons.Default.Image,
+                    phoneNumberTFInnerText = {},
+                    phoneNumberTFOuterLabel = {}
                 )
 
                 GenericOutlinedTextField(
@@ -200,7 +204,9 @@ trailingImageVector = Icons.Default.Image
                     visualTransformation = if (isCreatedPasswordVisible) VisualTransformation.None
                     else PasswordVisualTransformation(),
                     tint = Turquoise,
-                    trailingImageVector = Icons.Default.Image
+                    trailingImageVector = Icons.Default.Image,
+                    phoneNumberTFInnerText = {},
+                    phoneNumberTFOuterLabel = {}
                 )
 
                 Text(
@@ -321,7 +327,7 @@ trailingImageVector = Icons.Default.Image
                         start.linkTo(parent.start)
                         top.linkTo(parent.top)
                     }
-                    .padding(start = 32.dp,end=32.dp, top = 12.dp),
+                    .padding(start = 32.dp, end = 32.dp, top = 12.dp),
                 text = stringResource(id = R.string.birthdate_title),
                 color = White,
                 fontSize = 28.sp,
@@ -345,7 +351,7 @@ trailingImageVector = Icons.Default.Image
                         dayOfMonth = it
                     },
                     label = dayOfMonthLabelMessage,
-                    visualTransformation= VisualTransformation.None,
+                    visualTransformation = VisualTransformation.None,
                     isError = isDayOfMonthError,
                     modifier = modifier.weight(1f)
                 )
@@ -356,7 +362,7 @@ trailingImageVector = Icons.Default.Image
                         month = it
                     },
                     label = monthLabelMessage,
-                    visualTransformation= VisualTransformation.None,
+                    visualTransformation = VisualTransformation.None,
                     isError = isMonthError,
                     modifier = modifier.weight(1f)
                 )
@@ -367,7 +373,7 @@ trailingImageVector = Icons.Default.Image
                         year = it
                     },
                     label = yearLabelMessage,
-                    visualTransformation= VisualTransformation.None,
+                    visualTransformation = VisualTransformation.None,
                     isError = isYearError,
                     modifier = modifier.weight(1f)
                 )

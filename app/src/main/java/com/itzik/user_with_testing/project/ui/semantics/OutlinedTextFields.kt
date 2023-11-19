@@ -48,8 +48,8 @@ fun GenericOutlinedTextField(
     isPasswordIconShowing: ((Boolean) -> Unit)? = null,
     isPasswordToggleClicked: Boolean? = null,
 
-    phoneNumberTFOuterLabel: ((String) -> Unit)? = null,
-    phoneNumberTFInnerText: ((String) -> Unit)? = null,
+    phoneNumberTFOuterLabel: (String) -> Unit,
+    phoneNumberTFInnerText: (String) -> Unit,
 ) {
 
 
@@ -98,21 +98,17 @@ fun GenericOutlinedTextField(
         },
         trailingIcon = {
             if (isTrailingIconExist) {
-                    IconButton(onClick = {
-                        if (phoneNumberTFInnerText != null) {
-                            if (phoneNumberTFOuterLabel != null) {
-                                phoneNumberTFOuterLabel("Reset text message sent")
-                                phoneNumberTFInnerText("Enter the code sent to your number")
-                            }
-                        }
-                    }) {
-                        Icon(
-                            imageVector = Icons.Default.Send,
-                            contentDescription = null,
-                            tint = Light_Orange
-                        )
-                    }
+                IconButton(onClick = {
+                    phoneNumberTFOuterLabel("Reset text message sent")
+                    phoneNumberTFInnerText("Enter the code sent to your number")
+                }) {
+                    Icon(
+                        imageVector = Icons.Default.Send,
+                        contentDescription = null,
+                        tint = Light_Orange
+                    )
                 }
+            }
 
         },
 
@@ -146,13 +142,13 @@ fun DateOutlinedTextField(
 
 
     OutlinedTextField(
+
         value = value,
         onValueChange = {
-                if (label == "DD" || label == "MM"){
-                if(it.length<3)thisValueChange(it)
-            }
-            else {
-                if(it.length<5)thisValueChange(it)
+            if (label == "DD" || label == "MM") {
+                if (it.length < 3) thisValueChange(it)
+            } else {
+                if (it.length < 5) thisValueChange(it)
             }
         },
         label = {
@@ -174,8 +170,11 @@ fun DateOutlinedTextField(
             unfocusedBorderColor = Color.DarkGray,
             backgroundColor = Color.White
         ),
-        modifier=modifier.height(70.dp).padding(2.dp),
+        modifier = modifier
+            .height(70.dp)
+            .padding(2.dp),
         isError = isError,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+
     )
 }

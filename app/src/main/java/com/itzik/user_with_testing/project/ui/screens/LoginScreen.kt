@@ -14,6 +14,7 @@ import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Smartphone
+import androidx.compose.material.icons.filled.Transform
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
@@ -148,7 +149,9 @@ fun LoginScreen(
                     isTrailingIconExist = false,
                     isIconClickable = false,
                     visualTransformation = VisualTransformation.None, tint = Dark_Green,
-                    trailingImageVector = Icons.Default.Image
+                    trailingImageVector = Icons.Default.Image,
+                    phoneNumberTFInnerText = {},
+                    phoneNumberTFOuterLabel = {}
                 )
 
                 GenericOutlinedTextField(
@@ -175,9 +178,10 @@ fun LoginScreen(
                     },
                     visualTransformation = if (isPasswordVisible) VisualTransformation.None
                     else PasswordVisualTransformation(), tint = Dark_Green,
-                    trailingImageVector = Icons.Default.Image
+                    trailingImageVector = Icons.Default.Image,
+                    phoneNumberTFInnerText = {},
+                    phoneNumberTFOuterLabel = {}
                 )
-
 
                 Row(
                     horizontalArrangement = Arrangement.SpaceEvenly,
@@ -290,48 +294,16 @@ fun LoginScreen(
                         isKeyboardPasswordType = false,
                         isIconClickable = true,
                         visualTransformation = VisualTransformation.None,
-trailingImageVector = Icons.Default.Image,
-                        
-                        )
-//                    OutlinedTextField(
-//                        singleLine = true,
-//                        label = {
-//                            Text(text = phoneLabelMessage)
-//                        },
-//                        modifier = modifier
-//                            .fillMaxWidth()
-//                            .padding(horizontal = 20.dp, vertical = 8.dp)
-//                            .constrainAs(phoneNumberOutlinedTF) {
-//                                top.linkTo(forgotPasswordText.bottom)
-//                            },
-//                        colors = TextFieldDefaults.outlinedTextFieldColors(
-//                            focusedBorderColor = Dark_Green,
-//                            unfocusedBorderColor = Color.DarkGray,
-//                            backgroundColor = White
-//                        ),
-//                        value = phone,
-//                        onValueChange = {
-//                            phone = it
-//                        },
-//                        leadingIcon = {
-//                            Icon(
-//                                imageVector = Icons.Default.Smartphone,
-//                                contentDescription = null,
-//                                tint = Dark_Green
-//                            )
-//                        },
-//                        trailingIcon = {
-//                            IconButton(onClick = {
-//                                phoneLabelMessage = "Reset text message sent"
-//                                phone = "Enter the code sent to your number"
-//                            }) {
-//                                Icon(
-//                                    contentDescription = null, tint = Light_Orange,
-//                                    imageVector = Icons.Default.Send
-//                                )
-//                            }
-//                        }
-//                    )
+                        trailingImageVector = Icons.Default.Transform,
+
+
+                        phoneNumberTFInnerText = {
+                                        "Reset text message sent"
+                        },
+                        phoneNumberTFOuterLabel = {
+                            "Enter the code sent to your number"
+                        }
+                    )
                 }
 
                 Text(
@@ -389,3 +361,67 @@ trailingImageVector = Icons.Default.Image,
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//                    OutlinedTextField(
+//                        singleLine = true,
+//                        label = {
+//                            Text(text = phoneLabelMessage)
+//                        },
+//                        modifier = modifier
+//                            .fillMaxWidth()
+//                            .padding(horizontal = 20.dp, vertical = 8.dp)
+//                            .constrainAs(phoneNumberOutlinedTF) {
+//                                top.linkTo(forgotPasswordText.bottom)
+//                            },
+//                        colors = TextFieldDefaults.outlinedTextFieldColors(
+//                            focusedBorderColor = Dark_Green,
+//                            unfocusedBorderColor = Color.DarkGray,
+//                            backgroundColor = White
+//                        ),
+//                        value = phone,
+//                        onValueChange = {
+//                            phone = it
+//                        },
+//                        leadingIcon = {
+//                            Icon(
+//                                imageVector = Icons.Default.Smartphone,
+//                                contentDescription = null,
+//                                tint = Dark_Green
+//                            )
+//                        },
+//                        trailingIcon = {
+//                            IconButton(onClick = {
+//                                phoneLabelMessage = "Reset text message sent"
+//                                phone = "Enter the code sent to your number"
+//                            }) {
+//                                Icon(
+//                                    contentDescription = null, tint = Light_Orange,
+//                                    imageVector = Icons.Default.Send
+//                                )
+//                            }
+//                        }
+//                    )
+//                }
