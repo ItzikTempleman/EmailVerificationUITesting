@@ -17,9 +17,10 @@
         android:theme="@style/Theme.EmailVerificationUITesting"
         tools:targetApi="34">
         <activity
+
             android:name=".project.main.MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
+            android:windowSoftInputMode="stateVisible"
             android:theme="@style/Theme.EmailVerificationUITesting">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

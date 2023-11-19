@@ -17,12 +17,13 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.sp
+import com.itzik.user_with_testing.project.navigation.Dark_Green
 
 
 @Composable
 fun GenericOutlinedTextField(
     data: String? = null,
-    tint:Color,
+    tint: Color,
     isTrailingIconExist: Boolean,
     value: String,
     thisValueChange: (String) -> Unit,
@@ -123,7 +124,50 @@ fun GenericOutlinedTextField(
             )
 
 
+        }
+    }
+}
 
+
+@Composable
+fun DateOutlinedTextField(
+    data: String? = null,
+    value: String,
+    thisValueChange: (String) -> Unit,
+    label: String,
+    visualTransformation: VisualTransformation? = null,
+    isError: Boolean? = null,
+
+) {
+    if (visualTransformation != null) {
+        if (isError != null) {
+            OutlinedTextField(
+                value = value,
+                onValueChange = {
+                    thisValueChange(it)
+                },
+                label = {
+                    Text(
+                        text = label,
+                        fontSize = 16.sp,
+                        color = Color.Black
+                    )
+                },
+                singleLine = true,
+                visualTransformation = visualTransformation,
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = Dark_Green,
+                    unfocusedBorderColor = Color.DarkGray,
+                    backgroundColor = Color.White
+                ),
+                isError = isError,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                maxLines = if (label.contains("M") || label.contains("D")) {
+                    2
+                } else {
+                    4
+                }
+            )
         }
     }
 }

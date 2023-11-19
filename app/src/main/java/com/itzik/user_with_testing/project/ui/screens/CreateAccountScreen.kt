@@ -1,5 +1,6 @@
 package com.itzik.user_with_testing.project.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -8,10 +9,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
-import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.RadioButton
 import androidx.compose.material.RadioButtonDefaults
 import androidx.compose.material.Text
@@ -46,6 +45,7 @@ import com.itzik.user_with_testing.project.navigation.Dark_Green
 import com.itzik.user_with_testing.project.navigation.Light_Orange
 import com.itzik.user_with_testing.project.navigation.LoginGraph
 import com.itzik.user_with_testing.project.navigation.Turquoise
+import com.itzik.user_with_testing.project.ui.semantics.DateOutlinedTextField
 import com.itzik.user_with_testing.project.ui.semantics.GenericOutlinedTextField
 import com.itzik.user_with_testing.project.ui.semantics.GenericRoundedButton
 import com.itzik.user_with_testing.project.ui.shapes.RoundedBackGround
@@ -67,7 +67,7 @@ fun CreateAccountScreen(
     ConstraintLayout(
         modifier = modifier.fillMaxSize()
     ) {
-        val (backBtn, title) = createRefs()
+        val (backBtn, title, basicInfoCard, dateAndPhoneAndContinueBtn) = createRefs()
 
 
         GenericRoundedButton(
@@ -98,8 +98,12 @@ fun CreateAccountScreen(
 
         Card(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(start = 20.dp, top = 130.dp, end = 20.dp, bottom = 20.dp),
+                .constrainAs(basicInfoCard) {
+                    top.linkTo(title.bottom)
+                }
+                .height(450.dp)
+                .fillMaxWidth()
+                .padding(20.dp),
             colors = CardDefaults.cardColors(
                 containerColor = White
             ),
@@ -110,11 +114,9 @@ fun CreateAccountScreen(
         ) {
 
             ConstraintLayout(
-                modifier = Modifier.fillMaxSize()
+                modifier = modifier.fillMaxSize()
             ) {
-
-
-                val (userName, email, password, genderTitle, genderBox, birthDateTitle, birthDateRow, phoneNumber, createUserBtn) = createRefs()
+                val (userName, email, password, genderTitle, genderBox) = createRefs()
 
                 val genders = listOf(Gender.MALE, Gender.FEMALE, Gender.OTHER)
                 var selectedGender by remember { mutableStateOf(genders[0]) }
@@ -133,22 +135,6 @@ fun CreateAccountScreen(
                 var isCreatedPasswordVisible by remember { mutableStateOf(false) }
 
 
-                var dayOfMonthText = stringResource(id = R.string.day)
-                val dayOfMonthLabelMessage by remember { mutableStateOf(dayOfMonthText) }
-                var dayOfMonth by remember { mutableStateOf("") }
-                var isDayOfMonthError by remember { mutableStateOf(false) }
-
-
-                var monthText = stringResource(id = R.string.month)
-                val monthLabelMessage by remember { mutableStateOf(monthText) }
-                var month by remember { mutableStateOf("") }
-                var isMonthError by remember { mutableStateOf(false) }
-
-
-                var yearText = stringResource(id = R.string.year)
-                val yearLabelMessage by remember { mutableStateOf(yearText) }
-                var year by remember { mutableStateOf("") }
-                var isYearError by remember { mutableStateOf(false) }
 
                 GenericOutlinedTextField(
                     isTrailingIconExist = false,
@@ -298,51 +284,82 @@ fun CreateAccountScreen(
                         }
                     }
                 }
-                Text(
-                    modifier = Modifier
-                        .constrainAs(birthDateTitle) {
-                            start.linkTo(parent.start)
-                            top.linkTo(genderBox.bottom)
-                        }
-                        .padding(horizontal = 32.dp, vertical = 8.dp),
-                    text = stringResource(id = R.string.birthdate_title),
-                    color = Dark_Green,
-                    fontSize = 20.sp,
-                    fontStyle = FontStyle.Italic,
-                    fontWeight = FontWeight.Bold
+            }
+        }
+
+
+
+        ConstraintLayout(
+            modifier = Modifier
+                .constrainAs(dateAndPhoneAndContinueBtn) {
+                    top.linkTo(basicInfoCard.bottom)
+                }
+                .padding(horizontal = 20.dp),
+        ) {
+            val (birthDateTitle, birthDateRow, phoneNumber, createUserBtn) = createRefs()
+            var dayOfMonthText = stringResource(id = R.string.day)
+            val dayOfMonthLabelMessage by remember { mutableStateOf(dayOfMonthText) }
+            var dayOfMonth by remember { mutableStateOf("") }
+            var isDayOfMonthError by remember { mutableStateOf(false) }
+
+
+            var monthText = stringResource(id = R.string.month)
+            val monthLabelMessage by remember { mutableStateOf(monthText) }
+            var month by remember { mutableStateOf("") }
+            var isMonthError by remember { mutableStateOf(false) }
+
+
+            var yearText = stringResource(id = R.string.year)
+            val yearLabelMessage by remember { mutableStateOf(yearText) }
+            var year by remember { mutableStateOf("") }
+            var isYearError by remember { mutableStateOf(false) }
+            Text(
+                modifier = Modifier
+                    .constrainAs(birthDateTitle) {
+                        start.linkTo(parent.start)
+                        top.linkTo(parent.top)
+                    }
+                    .padding(horizontal = 32.dp, vertical = 8.dp),
+                text = stringResource(id = R.string.birthdate_title),
+                color = Dark_Green,
+                fontSize = 20.sp,
+                fontStyle = FontStyle.Italic,
+                fontWeight = FontWeight.Bold
+            )
+
+            Row(
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                modifier = modifier
+                    .constrainAs(birthDateRow) {
+                        top.linkTo(birthDateTitle.bottom)
+                    }
+                    .fillMaxWidth().background(White).height(100.dp)
+                    .padding(horizontal = 20.dp, vertical = 8.dp),
+            ) {
+
+                DateOutlinedTextField(
+                    value = dayOfMonth,
+                    thisValueChange = {
+                        dayOfMonth = it
+                    },
+                    label = dayOfMonthLabelMessage
                 )
 
-                Row(
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    modifier = Modifier
-                        .constrainAs(birthDateRow) {
-                            top.linkTo(birthDateTitle.bottom)
-                        }
-                        .fillMaxWidth()
-                        .padding(horizontal = 20.dp, vertical = 8.dp),
-                ) {
-
-                    OutlinedTextField(value = dayOfMonth, onValueChange = {
-                        dayOfMonth = it
-                    }, label = {
-                        Text(text = dayOfMonthLabelMessage)
-                    }
-                        , modifier=Modifier.width(90.dp).height(60.dp))
-
-
-                    OutlinedTextField(value = month, onValueChange = {
+                DateOutlinedTextField(
+                    value = month,
+                    thisValueChange = {
                         month = it
-                    }, label = {
-                        Text(text = monthLabelMessage)
-                    }, modifier=Modifier.width(90.dp).height(60.dp))
+                    },
+                    label = monthLabelMessage
+                )
 
-
-                    OutlinedTextField(value = year, onValueChange = {
+                DateOutlinedTextField(
+                    value = year,
+                    thisValueChange = {
                         year = it
-                    }, label = {
-                        Text(text = yearLabelMessage)
-                    }, modifier=Modifier.width(90.dp).height(60.dp))
-                }
+                    },
+                    label = yearLabelMessage
+                )
             }
         }
     }
