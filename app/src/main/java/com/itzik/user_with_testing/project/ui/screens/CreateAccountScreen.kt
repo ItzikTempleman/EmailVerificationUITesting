@@ -18,6 +18,8 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Smartphone
+import androidx.compose.material.icons.filled.Transform
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Card
@@ -150,11 +152,10 @@ fun CreateAccountScreen(
                         .padding(vertical = 8.dp, horizontal = 20.dp),
                     imageVector = Icons.Default.Person,
                     isKeyboardPasswordType = false,
-                    isIconClickable = false,
+                    isIconClickableParam = false,
                     isError = isFullNameError, visualTransformation = VisualTransformation.None,
                     tint = Turquoise,
                     trailingImageVector = Icons.Default.Image,
-                    phoneNumberTFInnerText = {},
                     phoneNumberTFOuterLabel = {}
                 )
 
@@ -172,11 +173,10 @@ fun CreateAccountScreen(
                         .padding(horizontal = 20.dp, vertical = 8.dp),
                     imageVector = Icons.Default.Email,
                     isKeyboardPasswordType = false,
-                    isIconClickable = false,
+                    isIconClickableParam = false,
                     isError = isNewEmailError,
                     visualTransformation = VisualTransformation.None, tint = Turquoise,
                     trailingImageVector = Icons.Default.Image,
-                    phoneNumberTFInnerText = {},
                     phoneNumberTFOuterLabel = {}
                 )
 
@@ -195,7 +195,7 @@ fun CreateAccountScreen(
                     isError = isCreatePasswordError,
                     isKeyboardPasswordType = true,
                     isTrailingIconExist = false,
-                    isIconClickable = true,
+                    isIconClickableParam = true,
                     isPasswordToggleClicked = isCreatedPasswordVisible,
                     isPasswordIconShowing = {
                         isCreatedPasswordVisible = !isCreatedPasswordVisible
@@ -205,7 +205,6 @@ fun CreateAccountScreen(
                     else PasswordVisualTransformation(),
                     tint = Turquoise,
                     trailingImageVector = Icons.Default.Image,
-                    phoneNumberTFInnerText = {},
                     phoneNumberTFOuterLabel = {}
                 )
 
@@ -304,22 +303,28 @@ fun CreateAccountScreen(
                 }
                 .padding(horizontal = 20.dp),
         ) {
-            val (birthDateTitle, birthDateRow, phoneNumber, createUserBtn) = createRefs()
+            val (birthDateTitle, birthDateRow, newPhoneNumberTF, createUserBtn) = createRefs()
 
             var dayOfMonth by remember { mutableStateOf("") }
             val dayOfMonthText = stringResource(id = R.string.day)
             val dayOfMonthLabelMessage by remember { mutableStateOf(dayOfMonthText) }
-            var isDayOfMonthError by remember { mutableStateOf(false) }
+            val isDayOfMonthError by remember { mutableStateOf(false) }
 
             var month by remember { mutableStateOf("") }
             val monthText = stringResource(id = R.string.month)
             val monthLabelMessage by remember { mutableStateOf(monthText) }
-            var isMonthError by remember { mutableStateOf(false) }
+            val isMonthError by remember { mutableStateOf(false) }
 
             var year by remember { mutableStateOf("") }
             val yearText = stringResource(id = R.string.year)
             val yearLabelMessage by remember { mutableStateOf(yearText) }
-            var isYearError by remember { mutableStateOf(false) }
+            val isYearError by remember { mutableStateOf(false) }
+
+
+            var newPhoneNumber by remember { mutableStateOf("") }
+            val newPhoneNumberText = stringResource(id = R.string.enter_new_phone_number)
+            val newPhoneNumberMessage by remember { mutableStateOf(newPhoneNumberText) }
+            var isNewPhoneNumberError by remember { mutableStateOf(false) }
 
             Text(
                 modifier = Modifier
@@ -378,6 +383,29 @@ fun CreateAccountScreen(
                     modifier = modifier.weight(1f)
                 )
             }
+
+
+            GenericOutlinedTextField(
+                tint = Dark_Green,
+                isTrailingIconExist = false,
+                value = newPhoneNumber,
+                thisValueChange = {
+                    newPhoneNumber = it
+                },
+                label = newPhoneNumberMessage,
+                modifier = modifier
+                    .padding(horizontal = 20.dp, vertical = 8.dp)
+                    .constrainAs(newPhoneNumberTF) {
+                        top.linkTo(birthDateRow.bottom)
+                    },
+                imageVector = Icons.Default.Smartphone,
+                isError = isNewPhoneNumberError,
+                isKeyboardPasswordType = false,
+                isIconClickableParam = false,
+                visualTransformation = VisualTransformation.None,
+                trailingImageVector = Icons.Default.Transform,
+                phoneNumberTFOuterLabel = {}
+            )
         }
     }
 }

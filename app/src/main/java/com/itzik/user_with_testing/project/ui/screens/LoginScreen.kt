@@ -17,8 +17,6 @@ import androidx.compose.material.icons.filled.Smartphone
 import androidx.compose.material.icons.filled.Transform
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -50,6 +48,7 @@ import com.itzik.user_with_testing.project.navigation.Dark_Green
 import com.itzik.user_with_testing.project.navigation.Light_Orange
 import com.itzik.user_with_testing.project.navigation.LoginGraph
 import com.itzik.user_with_testing.project.navigation.Turquoise
+import com.itzik.user_with_testing.project.ui.semantics.GenericButton
 import com.itzik.user_with_testing.project.ui.semantics.GenericOutlinedTextField
 import com.itzik.user_with_testing.project.ui.semantics.GenericRoundedButton
 import com.itzik.user_with_testing.project.ui.shapes.RoundedBackGround
@@ -106,30 +105,20 @@ fun LoginScreen(
                 val (emailTF, passwordTF, loginBtn, forgotPasswordText, iconRow, signUp, phoneNumberOutlinedTF, or, signUpBtn) = createRefs()
 
                 val context = LocalContext.current
-
                 var email by remember { mutableStateOf("") }
                 val emailText = stringResource(id = R.string.enter_email)
                 var emailLabelMessage by remember { mutableStateOf(emailText) }
                 var isEmailError by remember { mutableStateOf(false) }
-
-
                 val passwordText = stringResource(id = R.string.enter_password)
                 var passwordLabelMessage by remember { mutableStateOf(passwordText) }
                 var password by remember { mutableStateOf("") }
                 var isPasswordError by remember { mutableStateOf(false) }
-
-
                 var isPasswordVisible by remember { mutableStateOf(false) }
-
-
                 var isEnterPhoneNumberDisplayed by remember { mutableStateOf(false) }
-
                 var phone by remember { mutableStateOf("") }
                 val phoneText = stringResource(id = R.string.enter_phone_number)
                 var phoneLabelMessage by remember { mutableStateOf(phoneText) }
-                var isPhoneNumberError by remember { mutableStateOf(false) }
-
-
+                val isPhoneNumberError by remember { mutableStateOf(false) }
 
                 GenericOutlinedTextField(
                     value = email,
@@ -147,10 +136,9 @@ fun LoginScreen(
                     isError = isEmailError,
                     isKeyboardPasswordType = false,
                     isTrailingIconExist = false,
-                    isIconClickable = false,
+                    isIconClickableParam = false,
                     visualTransformation = VisualTransformation.None, tint = Dark_Green,
                     trailingImageVector = Icons.Default.Image,
-                    phoneNumberTFInnerText = {},
                     phoneNumberTFOuterLabel = {}
                 )
 
@@ -170,7 +158,7 @@ fun LoginScreen(
                     isError = isPasswordError,
                     isKeyboardPasswordType = true,
                     isTrailingIconExist = false,
-                    isIconClickable = true,
+                    isIconClickableParam = true,
                     isPasswordToggleClicked = isPasswordVisible,
                     isPasswordIconShowing = {
                         isPasswordVisible = !isPasswordVisible
@@ -179,7 +167,6 @@ fun LoginScreen(
                     visualTransformation = if (isPasswordVisible) VisualTransformation.None
                     else PasswordVisualTransformation(), tint = Dark_Green,
                     trailingImageVector = Icons.Default.Image,
-                    phoneNumberTFInnerText = {},
                     phoneNumberTFOuterLabel = {}
                 )
 
@@ -218,8 +205,8 @@ fun LoginScreen(
                     }
                 }
 
-                Button(
-                    shape = RoundedCornerShape(12.dp),
+
+                GenericButton(
                     modifier = modifier
                         .constrainAs(loginBtn) {
                             top.linkTo(iconRow.bottom)
@@ -241,18 +228,11 @@ fun LoginScreen(
                             isEmailValid(email) && isPasswordValid(password),
                             navHostController
                         )
-                    },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Light_Orange,
-                        contentColor = White
-                    )
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.go),
-                        fontSize = 24.sp
-                    )
-                }
+                              },
+                    buttonColor = Light_Orange,
+                    text = stringResource(id = R.string.go)
 
+                )
                 TextButton(
                     onClick = {
                         isEnterPhoneNumberDisplayed = !isEnterPhoneNumberDisplayed
@@ -282,7 +262,6 @@ fun LoginScreen(
                         thisValueChange = {
                             phone = it
                         },
-
                         label = phoneLabelMessage,
                         modifier = modifier
                             .padding(horizontal = 20.dp, vertical = 8.dp)
@@ -292,16 +271,11 @@ fun LoginScreen(
                         imageVector = Icons.Default.Smartphone,
                         isError = isPhoneNumberError,
                         isKeyboardPasswordType = false,
-                        isIconClickable = true,
+                        isIconClickableParam = true,
                         visualTransformation = VisualTransformation.None,
                         trailingImageVector = Icons.Default.Transform,
-
-
-                        phoneNumberTFInnerText = {
-                                        "Reset text message sent"
-                        },
                         phoneNumberTFOuterLabel = {
-                            "Enter the code sent to your number"
+                            phoneLabelMessage=it
                         }
                     )
                 }
@@ -331,8 +305,7 @@ fun LoginScreen(
                             end.linkTo(parent.end)
                             start.linkTo(parent.start)
                         }
-                )
-                {
+                ) {
                     Text(
                         text = stringResource(id = R.string.sign_up),
                         color = Dark_Green,
@@ -359,69 +332,3 @@ fun LoginScreen(
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//                    OutlinedTextField(
-//                        singleLine = true,
-//                        label = {
-//                            Text(text = phoneLabelMessage)
-//                        },
-//                        modifier = modifier
-//                            .fillMaxWidth()
-//                            .padding(horizontal = 20.dp, vertical = 8.dp)
-//                            .constrainAs(phoneNumberOutlinedTF) {
-//                                top.linkTo(forgotPasswordText.bottom)
-//                            },
-//                        colors = TextFieldDefaults.outlinedTextFieldColors(
-//                            focusedBorderColor = Dark_Green,
-//                            unfocusedBorderColor = Color.DarkGray,
-//                            backgroundColor = White
-//                        ),
-//                        value = phone,
-//                        onValueChange = {
-//                            phone = it
-//                        },
-//                        leadingIcon = {
-//                            Icon(
-//                                imageVector = Icons.Default.Smartphone,
-//                                contentDescription = null,
-//                                tint = Dark_Green
-//                            )
-//                        },
-//                        trailingIcon = {
-//                            IconButton(onClick = {
-//                                phoneLabelMessage = "Reset text message sent"
-//                                phone = "Enter the code sent to your number"
-//                            }) {
-//                                Icon(
-//                                    contentDescription = null, tint = Light_Orange,
-//                                    imageVector = Icons.Default.Send
-//                                )
-//                            }
-//                        }
-//                    )
-//                }

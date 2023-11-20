@@ -5,6 +5,7 @@
     <string name="go">Continue</string>
     <string name="forgot">Forgot password</string>
     <string name="enter_phone_number">Enter reset phone number</string>
+    <string name="enter_new_phone_number">Enter phone number</string>
     <string name="enter_received_sms_code">Enter received SMS code</string>
     <string name="enter_email">Your user name or Email</string>
     <string name="create_email">Create Email</string>
