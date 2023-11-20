@@ -53,8 +53,8 @@ fun CreateUserTopHalf(
     navHostController: NavHostController,
     userViewModel: UserViewModel,
 ) {
-    val genders = listOf(Gender.MALE, Gender.FEMALE, Gender.OTHER)
-    var selectedGender by remember { mutableStateOf(genders[0]) }
+
+
     val fullNameText = stringResource(id = R.string.full_name)
     val fullNameLabelMessage by remember { mutableStateOf(fullNameText) }
     var fullName by remember { mutableStateOf("") }
@@ -68,23 +68,8 @@ fun CreateUserTopHalf(
     val createPasswordLabelMessage by remember { mutableStateOf(createdPasswordText) }
     val isCreatePasswordError by remember { mutableStateOf(false) }
     var isCreatedPasswordVisible by remember { mutableStateOf(false) }
-    var dayOfMonth by remember { mutableStateOf("") }
-    val dayOfMonthText = stringResource(id = R.string.day)
-    val dayOfMonthLabelMessage by remember { mutableStateOf(dayOfMonthText) }
-    val isDayOfMonthError by remember { mutableStateOf(false) }
-    var month by remember { mutableStateOf("") }
-    val monthText = stringResource(id = R.string.month)
-    val monthLabelMessage by remember { mutableStateOf(monthText) }
-    val isMonthError by remember { mutableStateOf(false) }
-    var year by remember { mutableStateOf("") }
-    val yearText = stringResource(id = R.string.year)
-    val yearLabelMessage by remember { mutableStateOf(yearText) }
-    val isYearError by remember { mutableStateOf(false) }
-    var newPhoneNumber by remember { mutableStateOf("") }
-    val newPhoneNumberText = stringResource(id = R.string.enter_new_phone_number)
-    val newPhoneNumberMessage by remember { mutableStateOf(newPhoneNumberText) }
-    val isNewPhoneNumberError by remember { mutableStateOf(false) }
-    val age: Int = 0
+    val genders = listOf(Gender.MALE, Gender.FEMALE, Gender.OTHER)
+    var selectedGender by remember { mutableStateOf(genders[0]) }
 
     Card(
         modifier = modifier,
@@ -107,7 +92,7 @@ fun CreateUserTopHalf(
                     fullName = it
                 },
                 label = fullNameLabelMessage,
-                modifier = modifier
+                modifier = Modifier
                     .constrainAs(userName) {
                         top.linkTo(parent.top)
                     }
@@ -128,7 +113,7 @@ fun CreateUserTopHalf(
                     createEmail = it
                 },
                 label = createEmailLabelMessage,
-                modifier = modifier
+                modifier = Modifier
                     .constrainAs(email) {
                         top.linkTo(userName.bottom)
                     }
@@ -148,7 +133,7 @@ fun CreateUserTopHalf(
                     createPassword = it
                 },
                 label = createPasswordLabelMessage,
-                modifier = modifier
+                modifier = Modifier
                     .constrainAs(password) {
                         top.linkTo(email.bottom)
                     }

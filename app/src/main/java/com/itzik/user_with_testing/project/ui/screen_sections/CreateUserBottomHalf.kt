@@ -2,6 +2,7 @@ package com.itzik.user_with_testing.project.ui.screen_sections
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
@@ -24,19 +25,11 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
-import com.itzik.user_with_testing.project.models.Gender
 import com.itzik.user_with_testing.project.navigation.Dark_Green
 import com.itzik.user_with_testing.project.navigation.Light_Purple
 import com.itzik.user_with_testing.project.ui.semantics.DateOutlinedTextField
 import com.itzik.user_with_testing.project.ui.semantics.GenericButton
 import com.itzik.user_with_testing.project.ui.semantics.GenericOutlinedTextField
-import com.itzik.user_with_testing.project.utils.isAgeValid
-import com.itzik.user_with_testing.project.utils.isGenderValid
-import com.itzik.user_with_testing.project.utils.isNewEmailValid
-import com.itzik.user_with_testing.project.utils.isNewPasswordValid
-import com.itzik.user_with_testing.project.utils.isNewPhoneNumValid
-import com.itzik.user_with_testing.project.utils.isUsernameValid
-import com.itzik.user_with_testing.project.utils.moveToHomeScreen
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 
@@ -47,21 +40,6 @@ fun CreateUserBottomHalf(
     navHostController: NavHostController,
     userViewModel: UserViewModel,
 ) {
-    val genders = listOf(Gender.MALE, Gender.FEMALE, Gender.OTHER)
-    var selectedGender by remember { mutableStateOf(genders[0]) }
-    val fullNameText = stringResource(id = R.string.full_name)
-    val fullNameLabelMessage by remember { mutableStateOf(fullNameText) }
-    var fullName by remember { mutableStateOf("") }
-    val isFullNameError by remember { mutableStateOf(false) }
-    var createEmail by remember { mutableStateOf("") }
-    val createEmailText = stringResource(id = R.string.create_email)
-    val createEmailLabelMessage by remember { mutableStateOf(createEmailText) }
-    val isNewEmailError by remember { mutableStateOf(false) }
-    val createdPasswordText = stringResource(id = R.string.create_password)
-    var createPassword by remember { mutableStateOf("") }
-    val createPasswordLabelMessage by remember { mutableStateOf(createdPasswordText) }
-    val isCreatePasswordError by remember { mutableStateOf(false) }
-    var isCreatedPasswordVisible by remember { mutableStateOf(false) }
     var dayOfMonth by remember { mutableStateOf("") }
     val dayOfMonthText = stringResource(id = R.string.day)
     val dayOfMonthLabelMessage by remember { mutableStateOf(dayOfMonthText) }
@@ -81,7 +59,7 @@ fun CreateUserBottomHalf(
     val age: Int = 0
 
     ConstraintLayout(
-        modifier = modifier
+        modifier = modifier.fillMaxSize()
     ) {
         val (birthDateTitle, birthDateRow, newPhoneNumberTF, createUserBtn) = createRefs()
 
@@ -101,7 +79,7 @@ fun CreateUserBottomHalf(
 
         Row(
             horizontalArrangement = Arrangement.SpaceAround,
-            modifier = modifier
+            modifier = Modifier
                 .constrainAs(birthDateRow) {
                     top.linkTo(birthDateTitle.bottom)
                 }
@@ -117,7 +95,7 @@ fun CreateUserBottomHalf(
                 label = dayOfMonthLabelMessage,
                 visualTransformation = VisualTransformation.None,
                 isError = isDayOfMonthError,
-                modifier = modifier.weight(1f)
+                modifier = Modifier.weight(1f)
             )
 
             DateOutlinedTextField(
@@ -128,7 +106,7 @@ fun CreateUserBottomHalf(
                 label = monthLabelMessage,
                 visualTransformation = VisualTransformation.None,
                 isError = isMonthError,
-                modifier = modifier.weight(1f)
+                modifier = Modifier.weight(1f)
             )
 
             DateOutlinedTextField(
@@ -139,7 +117,7 @@ fun CreateUserBottomHalf(
                 label = yearLabelMessage,
                 visualTransformation = VisualTransformation.None,
                 isError = isYearError,
-                modifier = modifier.weight(1f)
+                modifier = Modifier.weight(1f)
             )
         }
 
@@ -152,7 +130,7 @@ fun CreateUserBottomHalf(
                 newPhoneNumber = it
             },
             label = newPhoneNumberMessage,
-            modifier = modifier
+            modifier = Modifier
                 .padding(horizontal = 20.dp, vertical = 8.dp)
                 .constrainAs(newPhoneNumberTF) {
                     top.linkTo(birthDateRow.bottom)
@@ -168,22 +146,22 @@ fun CreateUserBottomHalf(
 
 
         GenericButton(
-            modifier = modifier
+            modifier = Modifier
                 .constrainAs(createUserBtn) {
                     top.linkTo(newPhoneNumberTF.bottom)
                 }
                 .fillMaxWidth()
                 .padding(vertical = 12.dp),
             onClick = {
-                moveToHomeScreen(
-                    isUsernameValid(fullName) &&
-                            isNewEmailValid(createEmail) &&
-                            isNewPasswordValid(createPassword) &&
-                            isGenderValid(genders) &&
-                            isAgeValid(age) &&
-                            isNewPhoneNumValid(newPhoneNumber),
-                    navHostController
-                )
+//                moveToHomeScreen(
+//                    isUsernameValid(fullName) &&
+//                            isNewEmailValid(createEmail) &&
+//                            isNewPasswordValid(createPassword) &&
+//                            isGenderValid(genders) &&
+//                            isAgeValid(age) &&
+//                            isNewPhoneNumValid(newPhoneNumber),
+//                    navHostController
+//                )
             },
             buttonColor = Light_Purple,
             text = stringResource(id = R.string.create_account)
