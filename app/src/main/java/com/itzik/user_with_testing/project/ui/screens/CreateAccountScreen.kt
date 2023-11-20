@@ -45,12 +45,21 @@ import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.models.Gender
 import com.itzik.user_with_testing.project.navigation.Dark_Green
 import com.itzik.user_with_testing.project.navigation.Light_Orange
+import com.itzik.user_with_testing.project.navigation.Light_Purple
 import com.itzik.user_with_testing.project.navigation.LoginGraph
 import com.itzik.user_with_testing.project.navigation.Turquoise
 import com.itzik.user_with_testing.project.ui.semantics.DateOutlinedTextField
+import com.itzik.user_with_testing.project.ui.semantics.GenericButton
 import com.itzik.user_with_testing.project.ui.semantics.GenericOutlinedTextField
 import com.itzik.user_with_testing.project.ui.semantics.GenericRoundedButton
 import com.itzik.user_with_testing.project.ui.shapes.RoundedBackGround
+import com.itzik.user_with_testing.project.utils.isAgeValid
+import com.itzik.user_with_testing.project.utils.isGenderValid
+import com.itzik.user_with_testing.project.utils.isNewEmailValid
+import com.itzik.user_with_testing.project.utils.isNewPasswordValid
+import com.itzik.user_with_testing.project.utils.isNewPhoneNumValid
+import com.itzik.user_with_testing.project.utils.isUsernameValid
+import com.itzik.user_with_testing.project.utils.moveToHomeScreen
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 
@@ -71,6 +80,38 @@ fun CreateAccountScreen(
     ) {
         val (backBtn, title, basicInfoCard, dateAndPhoneAndContinueBtn) = createRefs()
 
+        val genders = listOf(Gender.MALE, Gender.FEMALE, Gender.OTHER)
+        var selectedGender by remember { mutableStateOf(genders[0]) }
+        val fullNameText = stringResource(id = R.string.full_name)
+        val fullNameLabelMessage by remember { mutableStateOf(fullNameText) }
+        var fullName by remember { mutableStateOf("") }
+        val isFullNameError by remember { mutableStateOf(false) }
+        var createEmail by remember { mutableStateOf("") }
+        val createEmailText = stringResource(id = R.string.create_email)
+        val createEmailLabelMessage by remember { mutableStateOf(createEmailText) }
+        val isNewEmailError by remember { mutableStateOf(false) }
+        val createdPasswordText = stringResource(id = R.string.create_password)
+        var createPassword by remember { mutableStateOf("") }
+        val createPasswordLabelMessage by remember { mutableStateOf(createdPasswordText) }
+        val isCreatePasswordError by remember { mutableStateOf(false) }
+        var isCreatedPasswordVisible by remember { mutableStateOf(false) }
+        var dayOfMonth by remember { mutableStateOf("") }
+        val dayOfMonthText = stringResource(id = R.string.day)
+        val dayOfMonthLabelMessage by remember { mutableStateOf(dayOfMonthText) }
+        val isDayOfMonthError by remember { mutableStateOf(false) }
+        var month by remember { mutableStateOf("") }
+        val monthText = stringResource(id = R.string.month)
+        val monthLabelMessage by remember { mutableStateOf(monthText) }
+        val isMonthError by remember { mutableStateOf(false) }
+        var year by remember { mutableStateOf("") }
+        val yearText = stringResource(id = R.string.year)
+        val yearLabelMessage by remember { mutableStateOf(yearText) }
+        val isYearError by remember { mutableStateOf(false) }
+        var newPhoneNumber by remember { mutableStateOf("") }
+        val newPhoneNumberText = stringResource(id = R.string.enter_new_phone_number)
+        val newPhoneNumberMessage by remember { mutableStateOf(newPhoneNumberText) }
+        val isNewPhoneNumberError by remember { mutableStateOf(false) }
+        val age: Int = 0
 
         GenericRoundedButton(
             modifier = modifier
@@ -115,28 +156,8 @@ fun CreateAccountScreen(
             shape = RoundedCornerShape(20.dp)
         ) {
 
-            ConstraintLayout(
-                modifier = modifier.fillMaxSize()
-            ) {
+            ConstraintLayout(modifier = modifier.fillMaxSize()) {
                 val (userName, email, password, genderTitle, genderBox) = createRefs()
-
-                val genders = listOf(Gender.MALE, Gender.FEMALE, Gender.OTHER)
-                var selectedGender by remember { mutableStateOf(genders[0]) }
-                val fullNameText = stringResource(id = R.string.full_name)
-                val fullNameLabelMessage by remember { mutableStateOf(fullNameText) }
-                var fullName by remember { mutableStateOf("") }
-                var isFullNameError by remember { mutableStateOf(false) }
-                var createEmail by remember { mutableStateOf("") }
-                val createEmailText = stringResource(id = R.string.create_email)
-                var createEmailLabelMessage by remember { mutableStateOf(createEmailText) }
-                var isNewEmailError by remember { mutableStateOf(false) }
-                val createdPasswordText = stringResource(id = R.string.create_password)
-                var createPassword by remember { mutableStateOf("") }
-                var createPasswordLabelMessage by remember { mutableStateOf(createdPasswordText) }
-                var isCreatePasswordError by remember { mutableStateOf(false) }
-                var isCreatedPasswordVisible by remember { mutableStateOf(false) }
-
-
 
                 GenericOutlinedTextField(
                     isTrailingIconExist = false,
@@ -294,8 +315,6 @@ fun CreateAccountScreen(
             }
         }
 
-
-
         ConstraintLayout(
             modifier = Modifier
                 .constrainAs(dateAndPhoneAndContinueBtn) {
@@ -305,26 +324,7 @@ fun CreateAccountScreen(
         ) {
             val (birthDateTitle, birthDateRow, newPhoneNumberTF, createUserBtn) = createRefs()
 
-            var dayOfMonth by remember { mutableStateOf("") }
-            val dayOfMonthText = stringResource(id = R.string.day)
-            val dayOfMonthLabelMessage by remember { mutableStateOf(dayOfMonthText) }
-            val isDayOfMonthError by remember { mutableStateOf(false) }
 
-            var month by remember { mutableStateOf("") }
-            val monthText = stringResource(id = R.string.month)
-            val monthLabelMessage by remember { mutableStateOf(monthText) }
-            val isMonthError by remember { mutableStateOf(false) }
-
-            var year by remember { mutableStateOf("") }
-            val yearText = stringResource(id = R.string.year)
-            val yearLabelMessage by remember { mutableStateOf(yearText) }
-            val isYearError by remember { mutableStateOf(false) }
-
-
-            var newPhoneNumber by remember { mutableStateOf("") }
-            val newPhoneNumberText = stringResource(id = R.string.enter_new_phone_number)
-            val newPhoneNumberMessage by remember { mutableStateOf(newPhoneNumberText) }
-            var isNewPhoneNumberError by remember { mutableStateOf(false) }
 
             Text(
                 modifier = Modifier
@@ -406,6 +406,39 @@ fun CreateAccountScreen(
                 trailingImageVector = Icons.Default.Transform,
                 phoneNumberTFOuterLabel = {}
             )
+
+
+            GenericButton(
+                modifier = modifier
+                    .constrainAs(createUserBtn) {
+                        top.linkTo(newPhoneNumberTF.bottom)
+                    }
+                    .fillMaxWidth()
+                    .padding(vertical = 12.dp),
+                onClick = {
+                    moveToHomeScreen(
+                        isUsernameValid(fullName) &&
+                                isNewEmailValid(createEmail) &&
+                                isNewPasswordValid(createPassword) &&
+                                isGenderValid(genders) &&
+                                isAgeValid(age) &&
+                                isNewPhoneNumValid(newPhoneNumber),
+                        navHostController
+                    )
+                },
+                buttonColor = Light_Purple,
+                text = stringResource(id = R.string.create_account)
+            )
         }
     }
 }
+
+
+
+
+
+
+
+
+
+

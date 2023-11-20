@@ -224,11 +224,7 @@ fun LoginScreen(
                             passwordLabelMessage = "Invalid password"
                         } else isPasswordError = false
                         loginMessage(context, isEmailValid(email) && isPasswordValid(password))
-                        moveToHomeScreen(
-                            isEmailValid(email) && isPasswordValid(password),
-                            navHostController
-                        )
-                              },
+                        moveToHomeScreen(isEmailValid(email) && isPasswordValid(password), navHostController) },
                     buttonColor = Light_Orange,
                     text = stringResource(id = R.string.go)
 
