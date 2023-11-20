@@ -96,7 +96,7 @@ fun CreateUserTopHalf(
                     .constrainAs(userName) {
                         top.linkTo(parent.top)
                     }
-                    .padding(vertical = 8.dp, horizontal = 20.dp),
+                    .padding(vertical = 8.dp),
                 imageVector = Icons.Default.Person,
                 isKeyboardPasswordType = false,
                 isIconClickableParam = false,
@@ -117,7 +117,7 @@ fun CreateUserTopHalf(
                     .constrainAs(email) {
                         top.linkTo(userName.bottom)
                     }
-                    .padding(horizontal = 20.dp, vertical = 8.dp),
+                    .padding( vertical = 8.dp),
                 imageVector = Icons.Default.Email,
                 isKeyboardPasswordType = false,
                 isIconClickableParam = false,
@@ -137,7 +137,7 @@ fun CreateUserTopHalf(
                     .constrainAs(password) {
                         top.linkTo(email.bottom)
                     }
-                    .padding(horizontal = 20.dp, vertical = 8.dp),
+                    .padding( vertical = 8.dp),
                 imageVector = if (isCreatedPasswordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
                 isError = isCreatePasswordError,
                 isKeyboardPasswordType = true,
@@ -161,7 +161,7 @@ fun CreateUserTopHalf(
                         start.linkTo(parent.start)
                         top.linkTo(password.bottom)
                     }
-                    .padding(horizontal = 32.dp, vertical = 8.dp),
+                    .padding(horizontal = 12.dp, vertical = 8.dp),
                 text = stringResource(id = R.string.choose_gender),
                 color = Dark_Green,
                 fontSize = 20.sp,
@@ -175,7 +175,7 @@ fun CreateUserTopHalf(
                     .constrainAs(genderBox) {
                         top.linkTo(genderTitle.bottom)
                     }
-                    .padding(horizontal = 20.dp, vertical = 8.dp),
+                    .padding(vertical = 8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 genders.forEach {
