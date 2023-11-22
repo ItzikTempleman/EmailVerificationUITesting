@@ -105,6 +105,9 @@ fun CreateUserTopHalf(
                 trailingImageVector = Icons.Default.Image,
                 phoneNumberTFOuterLabel = {}
             )
+            if (fullName.length > 9) {
+                userViewModel.splitUserNameIntoFirstAndFamilyName(fullName)
+            }
 
             GenericOutlinedTextField(
                 isTrailingIconExist = false,
@@ -117,7 +120,7 @@ fun CreateUserTopHalf(
                     .constrainAs(email) {
                         top.linkTo(userName.bottom)
                     }
-                    .padding( vertical = 8.dp),
+                    .padding(vertical = 8.dp),
                 imageVector = Icons.Default.Email,
                 isKeyboardPasswordType = false,
                 isIconClickableParam = false,
@@ -137,7 +140,7 @@ fun CreateUserTopHalf(
                     .constrainAs(password) {
                         top.linkTo(email.bottom)
                     }
-                    .padding( vertical = 8.dp),
+                    .padding(vertical = 8.dp),
                 imageVector = if (isCreatedPasswordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
                 isError = isCreatePasswordError,
                 isKeyboardPasswordType = true,
