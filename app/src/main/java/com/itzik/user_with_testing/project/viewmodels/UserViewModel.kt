@@ -8,4 +8,9 @@ class UserViewModel(
 
 ) : ViewModel() {
 
+
+    fun generateUser() {
+
+
+    }
 }
