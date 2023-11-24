@@ -80,7 +80,7 @@ fun CreateUserBottomHalf(
 
                 }
                 .fillMaxWidth()
-                .padding(12.dp),
+                .padding(top=30.dp, start = 12.dp, bottom = 12.dp, end=12.dp),
             value = selectBirthDate, onValueChange = {
                 selectBirthDate = it
             },
@@ -110,7 +110,7 @@ fun CreateUserBottomHalf(
             },
             label = newPhoneNumberMessage,
             modifier = Modifier
-                .padding(horizontal = 12.dp, vertical = 8.dp)
+                .padding(12.dp)
                 .constrainAs(newPhoneNumberTF) {
                     top.linkTo(birthDateRow.bottom)
                 },
