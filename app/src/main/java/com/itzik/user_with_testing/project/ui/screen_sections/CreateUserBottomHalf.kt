@@ -1,12 +1,14 @@
 package com.itzik.user_with_testing.project.ui.screen_sections
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Text
+import androidx.compose.material.Icon
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.Smartphone
 import androidx.compose.material.icons.filled.Transform
 import androidx.compose.runtime.Composable
@@ -16,9 +18,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -27,11 +29,11 @@ import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.navigation.Dark_Green
 import com.itzik.user_with_testing.project.navigation.Light_Purple
-import com.itzik.user_with_testing.project.ui.semantics.DateOutlinedTextField
 import com.itzik.user_with_testing.project.ui.semantics.GenericButton
 import com.itzik.user_with_testing.project.ui.semantics.GenericOutlinedTextField
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
+
 
 @Composable
 fun CreateUserBottomHalf(
@@ -56,70 +58,47 @@ fun CreateUserBottomHalf(
     val newPhoneNumberText = stringResource(id = R.string.enter_new_phone_number)
     val newPhoneNumberMessage by remember { mutableStateOf(newPhoneNumberText) }
     val isNewPhoneNumberError by remember { mutableStateOf(false) }
-    val age: Int = 0
+    val selectDateTextValue = stringResource(id = R.string.birthdate)
+    var selectBirthDate by remember {
+        mutableStateOf(selectDateTextValue)
+    }
+
+
 
     ConstraintLayout(
         modifier = modifier.fillMaxSize()
     ) {
-        val (birthDateTitle, birthDateRow, newPhoneNumberTF, createUserBtn) = createRefs()
+        val (birthDateRow, newPhoneNumberTF, createUserBtn) = createRefs()
 
-        Text(
-            modifier = Modifier
-                .constrainAs(birthDateTitle) {
-                    start.linkTo(parent.start)
-                    top.linkTo(parent.top)
-                }
-                .padding(start = 32.dp, end = 32.dp, top = 12.dp),
-            text = stringResource(id = R.string.birthdate_title),
-            color = Color.White,
-            fontSize = 28.sp,
-            fontStyle = FontStyle.Italic,
-            fontWeight = FontWeight.Bold
-        )
 
-        Row(
-            horizontalArrangement = Arrangement.SpaceAround,
+        OutlinedTextField(
             modifier = Modifier
                 .constrainAs(birthDateRow) {
-                    top.linkTo(birthDateTitle.bottom)
+                    top.linkTo(parent.top)
+                }
+                .clickable {
+
                 }
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp, vertical = 4.dp),
-        ) {
-
-            DateOutlinedTextField(
-                value = dayOfMonth,
-                thisValueChange = {
-                    dayOfMonth = it
-                },
-                label = dayOfMonthLabelMessage,
-                visualTransformation = VisualTransformation.None,
-                isError = isDayOfMonthError,
-                modifier = Modifier.weight(1f)
-            )
-
-            DateOutlinedTextField(
-                value = month,
-                thisValueChange = {
-                    month = it
-                },
-                label = monthLabelMessage,
-                visualTransformation = VisualTransformation.None,
-                isError = isMonthError,
-                modifier = Modifier.weight(1f)
-            )
-
-            DateOutlinedTextField(
-                value = year,
-                thisValueChange = {
-                    year = it
-                },
-                label = yearLabelMessage,
-                visualTransformation = VisualTransformation.None,
-                isError = isYearError,
-                modifier = Modifier.weight(1f)
-            )
-        }
+                .padding(12.dp),
+            value = selectBirthDate, onValueChange = {
+                selectBirthDate = it
+            },
+            readOnly = true,
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.CalendarToday,
+                    contentDescription = null,
+                    tint = Dark_Green
+                )
+            },
+            textStyle = TextStyle(fontSize = 16.sp),
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = Dark_Green,
+                unfocusedBorderColor = Color.DarkGray,
+                backgroundColor = White
+            ),
+        )
 
 
         GenericOutlinedTextField(
@@ -131,7 +110,7 @@ fun CreateUserBottomHalf(
             },
             label = newPhoneNumberMessage,
             modifier = Modifier
-                .padding(horizontal = 20.dp, vertical = 8.dp)
+                .padding(horizontal = 12.dp, vertical = 8.dp)
                 .constrainAs(newPhoneNumberTF) {
                     top.linkTo(birthDateRow.bottom)
                 },
@@ -153,18 +132,12 @@ fun CreateUserBottomHalf(
                 .fillMaxWidth()
                 .padding(vertical = 12.dp),
             onClick = {
-//                moveToHomeScreen(
-//                    isUsernameValid(fullName) &&
-//                            isNewEmailValid(createEmail) &&
-//                            isNewPasswordValid(createPassword) &&
-//                            isGenderValid(genders) &&
-//                            isAgeValid(age) &&
-//                            isNewPhoneNumValid(newPhoneNumber),
-//                    navHostController
-//                )
+
             },
             buttonColor = Light_Purple,
-            text = stringResource(id = R.string.create_account)
+            text = stringResource(id = R.string.create_account),
+            textColor = White,
+            roundedRadius = 12.dp
         )
     }
 }

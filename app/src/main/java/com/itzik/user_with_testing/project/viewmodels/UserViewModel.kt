@@ -3,6 +3,9 @@ package com.itzik.user_with_testing.project.viewmodels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @HiltViewModel
 class UserViewModel(
@@ -23,20 +26,25 @@ class UserViewModel(
         } else {
             ""
         }
-        val splitNames=Pair(firstName, familyName)
-        Log.d("TAG", "First name: $firstName and Family name: $familyName")
-        return splitNames
+        return Pair(firstName, familyName)
     }
 
-//    fun generateUser(
-//        fullName: String,
-//        age: Int,
-//        gender: Gender,
-//        emailOrUserName: String,
-//        password: String,
-//        phoneNumber: String,
-//    ): User {
-// }
-//
-//
+
+    fun getBirthDate(day: String, month: String, year: String): Date? {
+
+        val dataString = if (day.isNotEmpty() && month.isNotEmpty() && year.isNotEmpty()) { "$day-$month-$year"
+        } else "Invalid date"
+
+        val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).parse(dataString)
+
+        Log.d("TAG", "The date is: $dateFormat")
+        return dateFormat
+    }
+
+
+    fun getAge(day: String, month: String, year: String): Int {
+        return 0
+    }
+
+
 }

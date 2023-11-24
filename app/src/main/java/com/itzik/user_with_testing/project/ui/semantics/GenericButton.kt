@@ -7,7 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.sp
 
 @Composable
@@ -16,11 +16,14 @@ fun GenericButton(
     onClick: () -> Unit,
     buttonColor: Color,
     text: String,
+    textColor:Color,
+    roundedRadius: Dp,
+
 ) {
     Button(
         modifier = modifier,
         onClick = onClick,
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(roundedRadius),
         colors = ButtonDefaults.buttonColors(
             containerColor = buttonColor,
             contentColor = Color.White
@@ -28,7 +31,8 @@ fun GenericButton(
     ) {
         Text(
             text = text,
-            fontSize = 24.sp
+            fontSize = 24.sp,
+            color = textColor
         )
     }
 }

@@ -223,11 +223,16 @@ fun LoginScreen(
                             passwordLabelMessage = "Invalid password"
                         } else isPasswordError = false
                         loginMessage(context, isEmailValid(email) && isPasswordValid(password))
-                        moveToHomeScreen(isEmailValid(email) && isPasswordValid(password), navHostController) },
+                        moveToHomeScreen(
+                            isEmailValid(email) && isPasswordValid(password),
+                            navHostController
+                        )
+                    },
                     buttonColor = Light_Orange,
-                    text = stringResource(id = R.string.go)
-
-                )
+                    text = stringResource(id = R.string.go),
+                    roundedRadius = 12.dp,
+                    textColor = White
+                    )
                 TextButton(
                     onClick = {
                         isEnterPhoneNumberDisplayed = !isEnterPhoneNumberDisplayed
@@ -270,7 +275,7 @@ fun LoginScreen(
                         visualTransformation = VisualTransformation.None,
                         trailingImageVector = Icons.Default.Transform,
                         phoneNumberTFOuterLabel = {
-                            phoneLabelMessage=it
+                            phoneLabelMessage = it
                         }
                     )
                 }
