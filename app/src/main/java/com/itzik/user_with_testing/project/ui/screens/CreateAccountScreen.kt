@@ -18,7 +18,6 @@ import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.navigation.Dark_Green
 import com.itzik.user_with_testing.project.navigation.LoginGraph
-import com.itzik.user_with_testing.project.navigation.Turquoise
 import com.itzik.user_with_testing.project.ui.screen_sections.CreateUserBottomHalf
 import com.itzik.user_with_testing.project.ui.screen_sections.CreateUserTopHalf
 import com.itzik.user_with_testing.project.ui.semantics.GenericRoundedButton
@@ -35,7 +34,7 @@ fun CreateAccountScreen(
 ) {
     RoundedBackGround(
         topColor = Dark_Green,
-        bottomColor = Turquoise
+        bottomColor = White
     )
 
     ConstraintLayout(

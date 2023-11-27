@@ -27,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -101,7 +102,7 @@ fun CreateUserTopHalf(
                 isKeyboardPasswordType = false,
                 isIconClickableParam = false,
                 isError = isFullNameError, visualTransformation = VisualTransformation.None,
-                tint = Turquoise,
+                tint = Dark_Green,
                 trailingImageVector = Icons.Default.Image,
                 phoneNumberTFOuterLabel = {}
             )
@@ -125,7 +126,7 @@ fun CreateUserTopHalf(
                 isKeyboardPasswordType = false,
                 isIconClickableParam = false,
                 isError = isNewEmailError,
-                visualTransformation = VisualTransformation.None, tint = Turquoise,
+                visualTransformation = VisualTransformation.None, tint = Dark_Green,
                 trailingImageVector = Icons.Default.Image,
                 phoneNumberTFOuterLabel = {}
             )
@@ -153,7 +154,7 @@ fun CreateUserTopHalf(
                 },
                 visualTransformation = if (isCreatedPasswordVisible) VisualTransformation.None
                 else PasswordVisualTransformation(),
-                tint = Turquoise,
+                tint = Dark_Green,
                 trailingImageVector = Icons.Default.Image,
                 phoneNumberTFOuterLabel = {}
             )
@@ -221,7 +222,7 @@ fun CreateUserTopHalf(
                                     .padding(end = 2.dp, top = 12.dp),
                                 text = it.name,
                                 fontSize = 16.sp,
-                                color = Color.Black
+                                color = Black
                             )
 
                             Icon(
@@ -233,7 +234,7 @@ fun CreateUserTopHalf(
                                         start.linkTo(parent.start)
                                         end.linkTo(parent.end)
                                     },
-                                tint = Turquoise,
+                                tint = Dark_Green,
                                 imageVector = it.icon,
                                 contentDescription = null
                             )

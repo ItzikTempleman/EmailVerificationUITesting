@@ -14,12 +14,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.itzik.user_with_testing.project.navigation.Dark_Green
 
 @Composable
 fun GenericButton(
@@ -57,7 +57,7 @@ fun GenericButton(
 
                         }.padding(top=8.dp),
                     contentDescription = null,
-                    tint = Dark_Green
+                    tint = White
                 )
                 Text(
                     modifier = Modifier

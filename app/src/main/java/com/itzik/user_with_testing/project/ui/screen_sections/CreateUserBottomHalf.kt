@@ -3,7 +3,6 @@ package com.itzik.user_with_testing.project.ui.screen_sections
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
 import android.widget.DatePicker
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -75,7 +74,7 @@ fun CreateUserBottomHalf(
 
 
         GenericButton(
-            buttonBorder = BorderStroke(1.5.dp, Dark_Green),
+            //buttonBorder = BorderStroke(1.5.dp, Dark_Green),
             modifier = Modifier
                 .constrainAs(birthDateRow) {
                     top.linkTo(parent.top)
@@ -85,13 +84,12 @@ fun CreateUserBottomHalf(
             onClick = {
                 datePickerDialog.show()
             },
-            buttonColor = White,
+            buttonColor = Dark_Green,
             text = stringResource(id = R.string.birthdate),
-            textColor = Dark_Green,
+            textColor = White,
             roundedRadius = 4.dp,
             imageVector = Icons.Default.CalendarToday
         )
-
 
 
         GenericOutlinedTextField(
