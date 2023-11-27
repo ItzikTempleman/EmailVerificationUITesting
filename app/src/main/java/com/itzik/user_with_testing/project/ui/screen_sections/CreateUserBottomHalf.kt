@@ -69,13 +69,9 @@ fun CreateUserBottomHalf(
     val date = remember { mutableStateOf("") }
 
     val datePickerDialog = DatePickerDialog(
-        context,
-        { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
+        context, { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
             date.value = "$dayOfMonth/$month/$year"
-        },
-        year,
-        month,
-        day
+        }, year, month, day
     )
 
 
