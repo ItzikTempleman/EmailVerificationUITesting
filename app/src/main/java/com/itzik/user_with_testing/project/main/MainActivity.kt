@@ -24,7 +24,8 @@ class MainActivity : ComponentActivity() {
                 SetupNavGraph(
                     navHostController = rememberNavController(),
                     userViewModel = userViewModel,
-                    coroutineScope = coroutineScope
+                    coroutineScope = coroutineScope,
+                    context = this
                 )
             }
         }

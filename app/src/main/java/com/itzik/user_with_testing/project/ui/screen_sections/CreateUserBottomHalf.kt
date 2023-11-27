@@ -1,5 +1,9 @@
 package com.itzik.user_with_testing.project.ui.screen_sections
 
+import android.app.DatePickerDialog
+import android.content.Context
+import android.icu.util.Calendar
+import android.widget.DatePicker
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -33,6 +37,7 @@ import com.itzik.user_with_testing.project.ui.semantics.GenericButton
 import com.itzik.user_with_testing.project.ui.semantics.GenericOutlinedTextField
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
+import java.util.Date
 
 
 @Composable
@@ -41,28 +46,37 @@ fun CreateUserBottomHalf(
     modifier: Modifier,
     navHostController: NavHostController,
     userViewModel: UserViewModel,
+    context: Context,
 ) {
-    var dayOfMonth by remember { mutableStateOf("") }
-    val dayOfMonthText = stringResource(id = R.string.day)
-    val dayOfMonthLabelMessage by remember { mutableStateOf(dayOfMonthText) }
-    val isDayOfMonthError by remember { mutableStateOf(false) }
-    var month by remember { mutableStateOf("") }
-    val monthText = stringResource(id = R.string.month)
-    val monthLabelMessage by remember { mutableStateOf(monthText) }
-    val isMonthError by remember { mutableStateOf(false) }
-    var year by remember { mutableStateOf("") }
-    val yearText = stringResource(id = R.string.year)
-    val yearLabelMessage by remember { mutableStateOf(yearText) }
-    val isYearError by remember { mutableStateOf(false) }
     var newPhoneNumber by remember { mutableStateOf("") }
     val newPhoneNumberText = stringResource(id = R.string.enter_new_phone_number)
     val newPhoneNumberMessage by remember { mutableStateOf(newPhoneNumberText) }
     val isNewPhoneNumberError by remember { mutableStateOf(false) }
-    val selectDateTextValue = stringResource(id = R.string.birthdate)
-    var selectBirthDate by remember {
-        mutableStateOf(selectDateTextValue)
-    }
 
+
+    val selectDateTextValue = stringResource(id = R.string.birthdate)
+    var selectBirthDate by remember { mutableStateOf(selectDateTextValue) }
+
+    val year: Int
+    val month: Int
+    val day: Int
+
+    val calendar = Calendar.getInstance()
+    year = calendar.get(Calendar.YEAR)
+    month = calendar.get(Calendar.MONTH)
+    day = calendar.get(Calendar.DAY_OF_MONTH)
+    calendar.time = Date()
+    val date = remember { mutableStateOf("") }
+
+    val datePickerDialog = DatePickerDialog(
+        context,
+        { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
+            date.value = "$dayOfMonth/$month/$year"
+        },
+        year,
+        month,
+        day
+    )
 
 
     ConstraintLayout(
@@ -77,11 +91,12 @@ fun CreateUserBottomHalf(
                     top.linkTo(parent.top)
                 }
                 .clickable {
-
+                    datePickerDialog.show()
                 }
                 .fillMaxWidth()
-                .padding(top=30.dp, start = 12.dp, bottom = 12.dp, end=12.dp),
-            value = selectBirthDate, onValueChange = {
+                .padding(top = 30.dp, start = 12.dp, bottom = 12.dp, end = 12.dp),
+            value = selectBirthDate,
+            onValueChange = {
                 selectBirthDate = it
             },
             readOnly = true,
@@ -141,3 +156,4 @@ fun CreateUserBottomHalf(
         )
     }
 }
+
