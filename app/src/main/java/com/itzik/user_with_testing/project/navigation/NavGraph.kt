@@ -1,6 +1,5 @@
 package com.itzik.user_with_testing.project.navigation
 
-import android.content.Context
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -33,8 +32,7 @@ const val HOME_GRAPH = "homeGraph"
 fun SetupNavGraph(
     navHostController: NavHostController,
     userViewModel: UserViewModel,
-    coroutineScope: CoroutineScope,
-    context: Context
+    coroutineScope: CoroutineScope
 ) {
     NavHost(
         navController = navHostController,
@@ -85,8 +83,7 @@ fun SetupNavGraph(
                     navHostController = navHostController,
                     userViewModel = userViewModel,
                     coroutineScope = coroutineScope,
-                    modifier = Modifier,
-                    context=context
+                    modifier = Modifier
                 )
             }
         }

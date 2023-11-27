@@ -1,6 +1,5 @@
 package com.itzik.user_with_testing.project.ui.screens
 
-import android.content.Context
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -32,8 +31,7 @@ fun CreateAccountScreen(
     coroutineScope: CoroutineScope,
     modifier: Modifier,
     navHostController: NavHostController,
-    userViewModel: UserViewModel,
-    context: Context
+    userViewModel: UserViewModel
 ) {
     RoundedBackGround(
         topColor = Dark_Green,
@@ -92,8 +90,7 @@ fun CreateAccountScreen(
                 }
                 .padding(horizontal = 20.dp),
             navHostController = navHostController,
-            userViewModel = userViewModel,
-            context=context
+            userViewModel = userViewModel
         )
     }
 }
