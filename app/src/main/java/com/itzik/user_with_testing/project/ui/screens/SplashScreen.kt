@@ -25,10 +25,9 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
+import com.itzik.user_with_testing.project.navigation.Dark_Green
 import com.itzik.user_with_testing.project.navigation.LoginGraph
-import com.itzik.user_with_testing.project.navigation.Turquoise
 import com.itzik.user_with_testing.project.ui.shapes.RoundedBackGround
-
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
@@ -60,7 +59,7 @@ fun SplashScreen(
         navHostController.popBackStack()
         navHostController.navigate(LoginGraph.LoginPage.route)
     }
-    RoundedBackGround(Turquoise, White)
+    RoundedBackGround(Dark_Green, White)
     ConstraintLayout(
         modifier = Modifier.fillMaxSize()
     ) {

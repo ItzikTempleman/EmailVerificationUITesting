@@ -46,7 +46,6 @@ import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.navigation.Dark_Green
 import com.itzik.user_with_testing.project.navigation.Light_Orange
 import com.itzik.user_with_testing.project.navigation.LoginGraph
-import com.itzik.user_with_testing.project.navigation.Turquoise
 import com.itzik.user_with_testing.project.ui.semantics.GenericButton
 import com.itzik.user_with_testing.project.ui.semantics.GenericOutlinedTextField
 import com.itzik.user_with_testing.project.ui.semantics.GenericRoundedButton
@@ -67,7 +66,7 @@ fun LoginScreen(
     navHostController: NavHostController,
     userViewModel: UserViewModel?,
 ) {
-    RoundedBackGround(topColor = Turquoise, bottomColor = White)
+    RoundedBackGround(topColor = Dark_Green, bottomColor = White)
     ConstraintLayout(
         modifier = modifier.fillMaxSize()
     ) {
@@ -82,7 +81,7 @@ fun LoginScreen(
                     top.linkTo(parent.top)
                 },
             text = stringResource(id = R.string.log_in),
-            color = Dark_Green,
+            color = White,
             fontSize = 32.sp
         )
         Card(
