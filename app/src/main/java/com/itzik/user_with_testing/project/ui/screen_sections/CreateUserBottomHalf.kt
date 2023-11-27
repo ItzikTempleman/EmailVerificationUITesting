@@ -25,7 +25,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.navigation.Dark_Green
-import com.itzik.user_with_testing.project.navigation.Light_Purple
+import com.itzik.user_with_testing.project.navigation.Light_Orange
 import com.itzik.user_with_testing.project.ui.semantics.GenericButton
 import com.itzik.user_with_testing.project.ui.semantics.GenericOutlinedTextField
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
@@ -121,11 +121,11 @@ fun CreateUserBottomHalf(
                     top.linkTo(newPhoneNumberTF.bottom)
                 }
                 .fillMaxWidth()
-                .padding(vertical = 12.dp),
+                .padding(horizontal = 12.dp, vertical = 40.dp),
             onClick = {
 
             },
-            buttonColor = Light_Purple,
+            buttonColor = Light_Orange,
             text = stringResource(id = R.string.create_account),
             textColor = White,
             roundedRadius = 12.dp
