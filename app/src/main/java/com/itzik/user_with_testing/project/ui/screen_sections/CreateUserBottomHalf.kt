@@ -2,6 +2,7 @@ package com.itzik.user_with_testing.project.ui.screen_sections
 
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
+import android.util.Log
 import android.widget.DatePicker
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -45,10 +46,7 @@ fun CreateUserBottomHalf(
     val newPhoneNumberMessage by remember { mutableStateOf(newPhoneNumberText) }
     val isNewPhoneNumberError by remember { mutableStateOf(false) }
 
-
-
-    val selectDateTextValue = stringResource(id = R.string.birthdate)
-    var selectBirthDate by remember { mutableStateOf(selectDateTextValue) }
+    var selectDateTextValue = stringResource(id = R.string.birthdate)
 
     val year: Int
     val month: Int
@@ -62,10 +60,11 @@ fun CreateUserBottomHalf(
     val date = remember { mutableStateOf("") }
 
     val datePickerDialog = DatePickerDialog(
-        LocalContext.current, { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
-            date.value = "$dayOfMonth/$month/$year"
-        }, year, month, day
+        LocalContext.current, {
+                _: DatePicker, yearName: Int, monthName: Int, dayOfMonth: Int -> date.value = "$dayOfMonth/$monthName/$yearName"
+                              }, year, month, day
     )
+
 
     ConstraintLayout(
         modifier = modifier.fillMaxSize()
@@ -74,7 +73,6 @@ fun CreateUserBottomHalf(
 
 
         GenericButton(
-            //buttonBorder = BorderStroke(1.5.dp, Dark_Green),
             modifier = Modifier
                 .constrainAs(birthDateRow) {
                     top.linkTo(parent.top)
@@ -83,9 +81,11 @@ fun CreateUserBottomHalf(
                 .padding(top = 30.dp, start = 12.dp, bottom = 12.dp, end = 12.dp),
             onClick = {
                 datePickerDialog.show()
+                Log.d("TAG,","Date: $date.value")
+                //selectDateTextValue=date.value
             },
             buttonColor = Dark_Green,
-            text = stringResource(id = R.string.birthdate),
+            text = selectDateTextValue,
             textColor = White,
             roundedRadius = 4.dp,
             imageVector = Icons.Default.CalendarToday
@@ -128,7 +128,7 @@ fun CreateUserBottomHalf(
             buttonColor = Light_Orange,
             text = stringResource(id = R.string.create_account),
             textColor = White,
-            roundedRadius = 12.dp
+            roundedRadius = 4.dp
         )
     }
 }

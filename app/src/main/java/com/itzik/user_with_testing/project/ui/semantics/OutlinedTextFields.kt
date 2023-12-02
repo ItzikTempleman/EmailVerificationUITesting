@@ -26,7 +26,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.itzik.user_with_testing.project.navigation.Dark_Green
-import com.itzik.user_with_testing.project.navigation.Light_Orange
 
 
 @Composable
@@ -103,11 +102,10 @@ fun GenericOutlinedTextField(
                     Icon(
                         imageVector = Icons.Default.Send,
                         contentDescription = null,
-                        tint = Light_Orange
+                        tint = Dark_Green
                     )
                 }
             }
-
         },
 
         singleLine = true,

@@ -40,7 +40,6 @@ import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.models.Gender
 import com.itzik.user_with_testing.project.navigation.Dark_Green
-import com.itzik.user_with_testing.project.navigation.Light_Orange
 import com.itzik.user_with_testing.project.ui.semantics.GenericOutlinedTextField
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -203,7 +202,7 @@ fun CreateUserTopHalf(
                             val (genderButton, genderName, genderIcon) = createRefs()
                             RadioButton(
                                 colors = RadioButtonDefaults.colors(
-                                    selectedColor = Light_Orange,
+                                    selectedColor = Dark_Green,
                                     unselectedColor = Dark_Green
                                 ),
                                 modifier = Modifier.constrainAs(genderButton) {

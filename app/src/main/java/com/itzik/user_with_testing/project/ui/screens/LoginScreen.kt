@@ -229,7 +229,7 @@ fun LoginScreen(
                     },
                     buttonColor = Light_Orange,
                     text = stringResource(id = R.string.go),
-                    roundedRadius = 12.dp,
+                    roundedRadius = 4.dp,
                     textColor = White
                     )
                 TextButton(
