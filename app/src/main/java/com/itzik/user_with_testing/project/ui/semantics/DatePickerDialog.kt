@@ -47,17 +47,6 @@ fun DatePickerDialogScreen(
                 tint = Dark_Green,
                 innerIconColor = White
             )
-//            IconButton(
-//                onClick = {
-//                    isDatePickerVisible = true
-//                }
-//            ) {
-//                Icon(
-//                    imageVector = Icons.Default.DateRange,
-//                    contentDescription = null,
-//                    tint = White
-//                )
-//            }
         },
         textStyle = TextStyle(
             color = White,
