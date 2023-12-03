@@ -44,6 +44,7 @@ fun CreateUserBottomHalf(
     val newPhoneNumberMessage by remember { mutableStateOf(newPhoneNumberText) }
     val isNewPhoneNumberError by remember { mutableStateOf(false) }
 
+
     ConstraintLayout(
         modifier = modifier.fillMaxSize()
     ) {
@@ -57,7 +58,7 @@ fun CreateUserBottomHalf(
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)
                 }
-                .padding(top=20.dp, start = 32.dp),
+                .padding(top = 20.dp, start = 32.dp),
             color = Dark_Green,
             fontSize = 22.sp,
             fontWeight = FontWeight.Bold,
@@ -65,13 +66,15 @@ fun CreateUserBottomHalf(
         )
 
         DatePickerDialogScreen(
+            userViewModel = userViewModel,
             modifier = Modifier
                 .constrainAs(birthDateTF) {
                     top.linkTo(birthDateTitle.bottom)
                 }
                 .fillMaxWidth()
-                .padding(top=8.dp, start = 12.dp, end=12.dp)
-        )
+                .padding(top = 8.dp, start = 12.dp, end = 12.dp),
+
+            )
 
 
 

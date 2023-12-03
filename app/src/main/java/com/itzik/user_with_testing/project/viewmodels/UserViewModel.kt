@@ -1,8 +1,9 @@
 package com.itzik.user_with_testing.project.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.util.Date
+import java.util.Calendar
 
 @HiltViewModel
 class UserViewModel : ViewModel() {
@@ -25,27 +26,7 @@ class UserViewModel : ViewModel() {
     }
 
 
-
-
-
-
-
-    fun getBirthDate(day: String, month: String, year: String): Date? {
-
-//        val dataString = if (day.isNotEmpty() && month.isNotEmpty() && year.isNotEmpty()) { "$day-$month-$year"
-//        } else "Invalid date"
-//
-//        val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).parse(dataString)
-//
-//        Log.d("TAG", "The date is: $dateFormat")
-//        return dateFormat
-        return Date()
+    fun validateDate(chosenDate: Calendar) {
+       Log.d("TAG", "Date: ${chosenDate.time.date}")
     }
-
-
-    fun getAge(day: String, month: String, year: String): Int {
-        return 0
-    }
-
-
 }

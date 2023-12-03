@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.itzik.user_with_testing.project.navigation.Dark_Green
 import com.itzik.user_with_testing.project.ui.semantics.GenericRoundedButton
+import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -29,12 +30,17 @@ import java.util.Locale
 @Composable
 fun DatePickerDialogScreen(
     modifier: Modifier,
+    userViewModel: UserViewModel,
 ) {
+
     var selectedDate by remember { mutableStateOf(Calendar.getInstance()) }
     var isDatePickerVisible by remember { mutableStateOf(false) }
-
+    var today by remember {
+        mutableStateOf(Calendar.getInstance())
+    }
     OutlinedTextField(
         value = SimpleDateFormat("dd/MM/yyyy", Locale.US).format(selectedDate.time),
+
         onValueChange = {},
         shape = RoundedCornerShape(6.dp),
         leadingIcon = {
@@ -84,8 +90,10 @@ fun DatePickerDialogScreen(
             selectedDate.get(Calendar.YEAR),
             selectedDate.get(Calendar.MONTH),
             selectedDate.get(Calendar.DAY_OF_MONTH)
-        )
 
+        )
+        today=selectedDate
+        userViewModel.validateDate(today)
         DisposableEffect(LocalContext.current) {
             onDispose {
                 datePickerDialog.dismiss()
@@ -103,5 +111,7 @@ fun DatePickerDialogScreen(
                 datePickerDialog.dismiss()
             }
         }
+
     }
+
 }
