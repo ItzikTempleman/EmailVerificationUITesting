@@ -35,12 +35,9 @@ fun DatePickerDialogScreen(
 
     var selectedDate by remember { mutableStateOf(Calendar.getInstance()) }
     var isDatePickerVisible by remember { mutableStateOf(false) }
-    var today by remember {
-        mutableStateOf(Calendar.getInstance())
-    }
+
     OutlinedTextField(
         value = SimpleDateFormat("dd/MM/yyyy", Locale.US).format(selectedDate.time),
-
         onValueChange = {},
         shape = RoundedCornerShape(6.dp),
         leadingIcon = {
@@ -72,9 +69,9 @@ fun DatePickerDialogScreen(
 
     if (isDatePickerVisible) {
         val onDismissDateSelector = { isDatePickerVisible = false }
-        val onDateSelected: (Long) -> Unit = { selectedDateInMillis ->
+        val onDateSelected: (Long) -> Unit = {
             selectedDate = Calendar.getInstance().apply {
-                timeInMillis = selectedDateInMillis
+                timeInMillis = it
             }
             onDismissDateSelector()
         }
@@ -82,20 +79,19 @@ fun DatePickerDialogScreen(
         val datePickerDialog = DatePickerDialog(
             LocalContext.current,
             { _, year, month, dayOfMonth ->
-                val newDate = Calendar.getInstance().apply {
+                val updatedDate = Calendar.getInstance().apply {
                     set(year, month, dayOfMonth)
                 }
-                onDateSelected(newDate.timeInMillis)
+                onDateSelected(updatedDate.timeInMillis)
             },
             selectedDate.get(Calendar.YEAR),
             selectedDate.get(Calendar.MONTH),
             selectedDate.get(Calendar.DAY_OF_MONTH)
-
         )
-        today=selectedDate
-        userViewModel.validateDate(today)
+
         DisposableEffect(LocalContext.current) {
             onDispose {
+                userViewModel.validateDate(selectedDate)
                 datePickerDialog.dismiss()
             }
         }
@@ -111,7 +107,5 @@ fun DatePickerDialogScreen(
                 datePickerDialog.dismiss()
             }
         }
-
     }
-
 }
