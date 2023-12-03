@@ -19,12 +19,13 @@ fun GenericRoundedButton(
     modifier: Modifier,
     imageVector: ImageVector,
     onClickFunction: ()-> Unit,
-    tint:Color
+    tint:Color,
+    innerIconColor:Color
     ) {
     OutlinedButton(
         border = BorderStroke(1.2.dp, tint),
         shape = CircleShape,
-        colors= ButtonDefaults.outlinedButtonColors(backgroundColor = Color.Transparent),
+        colors= ButtonDefaults.outlinedButtonColors(backgroundColor = innerIconColor),
         contentPadding = PaddingValues(0.dp),
         elevation = ButtonDefaults.elevation(
             defaultElevation = 0.dp,

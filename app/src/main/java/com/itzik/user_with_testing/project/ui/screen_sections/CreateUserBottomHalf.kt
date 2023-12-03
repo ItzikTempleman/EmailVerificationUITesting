@@ -1,14 +1,11 @@
 package com.itzik.user_with_testing.project.ui.screen_sections
 
-import android.app.DatePickerDialog
-import android.icu.util.Calendar
-import android.util.Log
-import android.widget.DatePicker
+import DatePickerDialogScreen
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.Smartphone
 import androidx.compose.material.icons.filled.Transform
 import androidx.compose.runtime.Composable
@@ -18,10 +15,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.White
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
@@ -31,7 +30,6 @@ import com.itzik.user_with_testing.project.ui.semantics.GenericButton
 import com.itzik.user_with_testing.project.ui.semantics.GenericOutlinedTextField
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
-import java.util.Date
 
 
 @Composable
@@ -39,57 +37,42 @@ fun CreateUserBottomHalf(
     coroutineScope: CoroutineScope,
     modifier: Modifier,
     navHostController: NavHostController,
-    userViewModel: UserViewModel
+    userViewModel: UserViewModel,
 ) {
     var newPhoneNumber by remember { mutableStateOf("") }
     val newPhoneNumberText = stringResource(id = R.string.enter_new_phone_number)
     val newPhoneNumberMessage by remember { mutableStateOf(newPhoneNumberText) }
     val isNewPhoneNumberError by remember { mutableStateOf(false) }
 
-    var selectDateTextValue = stringResource(id = R.string.birthdate)
-
-    val year: Int
-    val month: Int
-    val day: Int
-
-    val calendar = Calendar.getInstance()
-    year = calendar.get(Calendar.YEAR)
-    month = calendar.get(Calendar.MONTH)
-    day = calendar.get(Calendar.DAY_OF_MONTH)
-    calendar.time = Date()
-    val date = remember { mutableStateOf("") }
-
-    val datePickerDialog = DatePickerDialog(
-        LocalContext.current, {
-                _: DatePicker, yearName: Int, monthName: Int, dayOfMonth: Int -> date.value = "$dayOfMonth/$monthName/$yearName"
-                              }, year, month, day
-    )
-
-
     ConstraintLayout(
         modifier = modifier.fillMaxSize()
     ) {
-        val (birthDateRow, newPhoneNumberTF, createUserBtn) = createRefs()
+        val (birthDateTitle, birthDateTF, newPhoneNumberTF, createUserBtn) = createRefs()
 
 
-        GenericButton(
+        Text(
+            text = stringResource(id = R.string.birthdate),
             modifier = Modifier
-                .constrainAs(birthDateRow) {
+                .constrainAs(birthDateTitle) {
                     top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                }
+                .padding(top=20.dp, start = 32.dp),
+            color = Dark_Green,
+            fontSize = 22.sp,
+            fontWeight = FontWeight.Bold,
+            fontStyle = FontStyle.Italic
+        )
+
+        DatePickerDialogScreen(
+            modifier = Modifier
+                .constrainAs(birthDateTF) {
+                    top.linkTo(birthDateTitle.bottom)
                 }
                 .fillMaxWidth()
-                .padding(top = 30.dp, start = 12.dp, bottom = 12.dp, end = 12.dp),
-            onClick = {
-                datePickerDialog.show()
-                Log.d("TAG,","Date: $date.value")
-                //selectDateTextValue=date.value
-            },
-            buttonColor = Dark_Green,
-            text = selectDateTextValue,
-            textColor = White,
-            roundedRadius = 4.dp,
-            imageVector = Icons.Default.CalendarToday
+                .padding(top=8.dp, start = 12.dp, end=12.dp)
         )
+
 
 
         GenericOutlinedTextField(
@@ -103,7 +86,7 @@ fun CreateUserBottomHalf(
             modifier = Modifier
                 .padding(12.dp)
                 .constrainAs(newPhoneNumberTF) {
-                    top.linkTo(birthDateRow.bottom)
+                    top.linkTo(birthDateTF.bottom)
                 },
             imageVector = Icons.Default.Smartphone,
             isError = isNewPhoneNumberError,
@@ -113,7 +96,6 @@ fun CreateUserBottomHalf(
             trailingImageVector = Icons.Default.Transform,
             phoneNumberTFOuterLabel = {}
         )
-
 
         GenericButton(
             modifier = Modifier

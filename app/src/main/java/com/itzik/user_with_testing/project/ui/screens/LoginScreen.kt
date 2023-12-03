@@ -325,7 +325,8 @@ fun LoginScreen(
                     onClickFunction = {
                         navHostController.navigate(LoginGraph.CreateAccountPage.route)
                     },
-                    tint = Dark_Green
+                    tint = Dark_Green,
+                    innerIconColor = White
                 )
             }
         }

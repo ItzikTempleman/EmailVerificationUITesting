@@ -53,7 +53,8 @@ fun CreateAccountScreen(
             onClickFunction = {
                 navHostController.navigate(LoginGraph.LoginPage.route)
             },
-            tint = White
+            tint = White,
+            innerIconColor = Dark_Green
         )
         Text(
             text = stringResource(id = R.string.create_new),
