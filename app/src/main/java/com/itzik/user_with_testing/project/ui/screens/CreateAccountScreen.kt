@@ -1,5 +1,6 @@
 package com.itzik.user_with_testing.project.ui.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -10,6 +11,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -32,6 +34,17 @@ fun CreateAccountScreen(
     navHostController: NavHostController,
     userViewModel: UserViewModel
 ) {
+
+
+    @Composable
+    fun ShowDateErrorMessage(message: String){
+        Toast.makeText(
+            LocalContext.current,
+            message,
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
     RoundedBackGround(
         topColor = Dark_Green,
         bottomColor = White
@@ -70,7 +83,7 @@ fun CreateAccountScreen(
         )
 
         CreateUserTopHalf(
-            coroutineScope =coroutineScope ,
+            coroutineScope = coroutineScope,
             modifier = Modifier
                 .constrainAs(basicInfoCard) {
                     top.linkTo(title.bottom)
@@ -83,7 +96,7 @@ fun CreateAccountScreen(
         )
 
         CreateUserBottomHalf(
-            coroutineScope =coroutineScope ,
+            coroutineScope = coroutineScope,
             modifier = Modifier
                 .constrainAs(dateAndPhoneAndContinueBtn) {
                     top.linkTo(basicInfoCard.bottom)
