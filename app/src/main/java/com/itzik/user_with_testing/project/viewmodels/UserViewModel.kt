@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Locale
 
@@ -12,11 +14,8 @@ class UserViewModel : ViewModel() {
 
     private var dateSelected = ""
     private val pattern = "dd/MM/yyyy"
-    private val timeFormat= SimpleDateFormat(pattern, Locale.US)
-    private var today =timeFormat.format(Calendar.getInstance().time)
-
-
-
+    private val timeFormat = SimpleDateFormat(pattern, Locale.US)
+    private var today = timeFormat.format(Calendar.getInstance().time)
 
 
     fun splitUserNameIntoFirstAndFamilyName(fullName: String): Pair<List<String>, String> {
@@ -38,36 +37,50 @@ class UserViewModel : ViewModel() {
 
 
     fun validateDate(chosenDate: Calendar) {
+
         dateSelected = formattedDate(chosenDate)
 
         val result = compareDates(today, dateSelected)
-//        if (result > 0) {
-//
-//
-//        }
-        when {
-            result < 0 -> Log.d("TAG", "today comes earlier")
-            result > 0 -> Log.d("TAG", "$dateSelected comes earlier")
-            else -> Log.d("TAG", "Both dates are equal")
-        }
+        extractAgeFromDate(dateSelected)
+        if (result < 0) {
+            logD("Can't choose future birth date ")
+        } else if (result > 0) {
+            logD("$dateSelected comes earlier")
+        } else logD("Both dates are equal")
     }
-
-
-
-
-
-
 
     private fun formattedDate(calendar: Calendar): String {
         val dateFormat = timeFormat
+
         return dateFormat.format(calendar.time)
     }
 
+    private fun extractAgeFromDate(dateSelected: String): Int {
+        val formatter = DateTimeFormatter.ofPattern(pattern)
 
-    private fun compareDates(dateString1: String, dateString2: String): Int {
+        val thisYear= LocalDate.parse(today, formatter).year
+        val selectedYear= LocalDate.parse(dateSelected, formatter).year
+        val thisDayOfMonth= LocalDate.parse(today, formatter).dayOfMonth
+        val selectedDayOfMonth= LocalDate.parse(dateSelected, formatter).dayOfMonth
+
+        var age = thisYear - selectedYear
+        if (thisDayOfMonth < selectedDayOfMonth) {
+            age--
+        }
+        logD("$age")
+        return age
+    }
+
+
+    private fun compareDates(todayString: String, selectedDateString: String): Int {
         val dateFormat = timeFormat
-        val date1 = dateFormat.parse(dateString1)
-        val date2 = dateFormat.parse(dateString2)
-        return date1.compareTo(date2)
+        val today = dateFormat.parse(todayString)
+        val selectedDate = dateFormat.parse(selectedDateString)
+        return today.compareTo(selectedDate)
+    }
+
+    private fun logD(message: String) {
+        Log.d("TAG", message)
     }
 }
+
