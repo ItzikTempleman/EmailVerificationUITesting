@@ -18,11 +18,9 @@ import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 
 val Dark_Green = Color(0xFF007d74)
-val Turquoise = Color(0xFF30D5C8)
-val Light_Orange= Color(0xFFFFA500)
-val Light_Green= Color(0xFF65A769)
-val Light_Purple= Color(0xFFB782DD)
-val Light_Blue= Color(0xFF58A8FF)
+val Light_Green= Color(0xFF64DB95)
+val Yellow= Color(0xFFFFC107)
+
 
 const val SPLASH_GRAPH = "splashGraph"
 const val LOGIN_GRAPH = "loginGraph"

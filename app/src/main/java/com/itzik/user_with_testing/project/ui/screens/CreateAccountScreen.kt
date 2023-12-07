@@ -20,8 +20,10 @@ import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.navigation.Dark_Green
 import com.itzik.user_with_testing.project.navigation.LoginGraph
+import com.itzik.user_with_testing.project.navigation.Yellow
 import com.itzik.user_with_testing.project.ui.screen_sections.CreateUserBottomHalf
 import com.itzik.user_with_testing.project.ui.screen_sections.CreateUserTopHalf
+import com.itzik.user_with_testing.project.ui.semantics.GenericButton
 import com.itzik.user_with_testing.project.ui.semantics.GenericRoundedButton
 import com.itzik.user_with_testing.project.ui.shapes.RoundedBackGround
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
@@ -32,18 +34,19 @@ fun CreateAccountScreen(
     coroutineScope: CoroutineScope,
     modifier: Modifier,
     navHostController: NavHostController,
-    userViewModel: UserViewModel
+    userViewModel: UserViewModel,
 ) {
 
-
-    @Composable
-    fun ShowDateErrorMessage(message: String){
-        Toast.makeText(
-            LocalContext.current,
-            message,
-            Toast.LENGTH_LONG
-        ).show()
-    }
+//    val userAge = userViewModel.age
+//    var isUserAgeValid by remember {
+//        mutableStateOf(false)
+//    }
+//
+//    if (userAge < 18) {
+//        isUserAgeValid = false
+//    }
+//
+//    if (!isUserAgeValid) ShowDateErrorMessage("Must be at least 18 year old to sign up")
 
     RoundedBackGround(
         topColor = Dark_Green,
@@ -53,7 +56,7 @@ fun CreateAccountScreen(
     ConstraintLayout(
         modifier = modifier.fillMaxSize()
     ) {
-        val (backBtn, title, basicInfoCard, dateAndPhoneAndContinueBtn) = createRefs()
+        val (backBtn, title, basicInfoCard, dateAndPhoneLayout, createUserBtn) = createRefs()
 
         GenericRoundedButton(
             modifier = modifier
@@ -66,8 +69,10 @@ fun CreateAccountScreen(
             onClickFunction = {
                 navHostController.navigate(LoginGraph.LoginPage.route)
             },
-            tint = White,
-            innerIconColor = Dark_Green
+            outerTint = White,
+            iconTint=White,
+            innerIconColor = Dark_Green,
+            1.2.dp
         )
         Text(
             text = stringResource(id = R.string.create_new),
@@ -88,7 +93,7 @@ fun CreateAccountScreen(
                 .constrainAs(basicInfoCard) {
                     top.linkTo(title.bottom)
                 }
-                .height(450.dp)
+                .height(420.dp)
                 .fillMaxWidth()
                 .padding(top = 20.dp, start = 20.dp, end = 20.dp),
             navHostController = navHostController,
@@ -98,12 +103,37 @@ fun CreateAccountScreen(
         CreateUserBottomHalf(
             coroutineScope = coroutineScope,
             modifier = Modifier
-                .constrainAs(dateAndPhoneAndContinueBtn) {
+                .constrainAs(dateAndPhoneLayout) {
                     top.linkTo(basicInfoCard.bottom)
                 }
                 .padding(horizontal = 20.dp),
             navHostController = navHostController,
-            userViewModel = userViewModel
+            userViewModel = userViewModel,
+        )
+
+        GenericButton(
+            modifier = Modifier
+                .constrainAs(createUserBtn) {
+                    top.linkTo(dateAndPhoneLayout.bottom)
+                }
+                .fillMaxWidth()
+                .padding(start = 32.dp,end=32.dp, top = 60.dp),
+            onClick = {
+
+            },
+            buttonColor = Yellow,
+            text = stringResource(id = R.string.create_account),
+            textColor = White,
+            roundedRadius = 4.dp
         )
     }
+}
+
+@Composable
+fun ShowDateErrorMessage(message: String) {
+    Toast.makeText(
+        LocalContext.current,
+        message,
+        Toast.LENGTH_LONG
+    ).show()
 }

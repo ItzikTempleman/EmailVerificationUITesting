@@ -29,8 +29,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
@@ -39,7 +37,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.models.Gender
-import com.itzik.user_with_testing.project.navigation.Dark_Green
+import com.itzik.user_with_testing.project.navigation.Light_Green
 import com.itzik.user_with_testing.project.ui.semantics.GenericOutlinedTextField
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -82,7 +80,7 @@ fun CreateUserTopHalf(
     ) {
 
         ConstraintLayout(modifier = modifier.fillMaxSize()) {
-            val (userName, email, password, genderTitle, genderBox) = createRefs()
+            val (userName, email, password, genderBox) = createRefs()
 
             GenericOutlinedTextField(
                 isTrailingIconExist = false,
@@ -100,7 +98,7 @@ fun CreateUserTopHalf(
                 isKeyboardPasswordType = false,
                 isIconClickableParam = false,
                 isError = isFullNameError, visualTransformation = VisualTransformation.None,
-                tint = Dark_Green,
+                tint = Light_Green,
                 trailingImageVector = Icons.Default.Image,
                 phoneNumberTFOuterLabel = {}
             )
@@ -124,7 +122,8 @@ fun CreateUserTopHalf(
                 isKeyboardPasswordType = false,
                 isIconClickableParam = false,
                 isError = isNewEmailError,
-                visualTransformation = VisualTransformation.None, tint = Dark_Green,
+                visualTransformation = VisualTransformation.None,
+                tint = Light_Green,
                 trailingImageVector = Icons.Default.Image,
                 phoneNumberTFOuterLabel = {}
             )
@@ -152,30 +151,17 @@ fun CreateUserTopHalf(
                 },
                 visualTransformation = if (isCreatedPasswordVisible) VisualTransformation.None
                 else PasswordVisualTransformation(),
-                tint = Dark_Green,
+                tint = Light_Green,
                 trailingImageVector = Icons.Default.Image,
                 phoneNumberTFOuterLabel = {}
             )
 
-            Text(
-                modifier = Modifier
-                    .constrainAs(genderTitle) {
-                        start.linkTo(parent.start)
-                        top.linkTo(password.bottom)
-                    }
-                    .padding(horizontal = 12.dp, vertical = 8.dp),
-                text = stringResource(id = R.string.choose_gender),
-                color = Dark_Green,
-                fontSize = 20.sp,
-                fontStyle = FontStyle.Italic,
-                fontWeight = FontWeight.Bold
-            )
 
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .constrainAs(genderBox) {
-                        top.linkTo(genderTitle.bottom)
+                        top.linkTo(password.bottom)
                     }
                     .padding(vertical = 8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -202,8 +188,8 @@ fun CreateUserTopHalf(
                             val (genderButton, genderName, genderIcon) = createRefs()
                             RadioButton(
                                 colors = RadioButtonDefaults.colors(
-                                    selectedColor = Dark_Green,
-                                    unselectedColor = Dark_Green
+                                    selectedColor = Light_Green,
+                                    unselectedColor = Light_Green
                                 ),
                                 modifier = Modifier.constrainAs(genderButton) {
                                     top.linkTo(parent.top)
@@ -232,7 +218,7 @@ fun CreateUserTopHalf(
                                         start.linkTo(parent.start)
                                         end.linkTo(parent.end)
                                     },
-                                tint = Dark_Green,
+                                tint = Light_Green,
                                 imageVector = it.icon,
                                 contentDescription = null
                             )

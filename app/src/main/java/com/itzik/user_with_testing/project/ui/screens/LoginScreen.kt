@@ -44,8 +44,9 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.navigation.Dark_Green
-import com.itzik.user_with_testing.project.navigation.Light_Orange
+import com.itzik.user_with_testing.project.navigation.Light_Green
 import com.itzik.user_with_testing.project.navigation.LoginGraph
+import com.itzik.user_with_testing.project.navigation.Yellow
 import com.itzik.user_with_testing.project.ui.semantics.GenericButton
 import com.itzik.user_with_testing.project.ui.semantics.GenericOutlinedTextField
 import com.itzik.user_with_testing.project.ui.semantics.GenericRoundedButton
@@ -135,7 +136,8 @@ fun LoginScreen(
                     isKeyboardPasswordType = false,
                     isTrailingIconExist = false,
                     isIconClickableParam = false,
-                    visualTransformation = VisualTransformation.None, tint = Dark_Green,
+                    visualTransformation = VisualTransformation.None,
+                    tint = Light_Green,
                     trailingImageVector = Icons.Default.Image,
                     phoneNumberTFOuterLabel = {}
                 )
@@ -163,7 +165,8 @@ fun LoginScreen(
 
                     },
                     visualTransformation = if (isPasswordVisible) VisualTransformation.None
-                    else PasswordVisualTransformation(), tint = Dark_Green,
+                    else PasswordVisualTransformation(),
+                    tint = Light_Green,
                     trailingImageVector = Icons.Default.Image,
                     phoneNumberTFOuterLabel = {}
                 )
@@ -227,7 +230,7 @@ fun LoginScreen(
                             navHostController
                         )
                     },
-                    buttonColor = Light_Orange,
+                    buttonColor = Yellow,
                     text = stringResource(id = R.string.go),
                     roundedRadius = 4.dp,
                     textColor = White
@@ -325,8 +328,10 @@ fun LoginScreen(
                     onClickFunction = {
                         navHostController.navigate(LoginGraph.CreateAccountPage.route)
                     },
-                    tint = Dark_Green,
-                    innerIconColor = White
+                    outerTint = Dark_Green,
+                    iconTint=Dark_Green,
+                    innerIconColor = White,
+                    1.2.dp
                 )
             }
         }

@@ -7,13 +7,15 @@ import androidx.compose.material.icons.filled.Transgender
 import androidx.compose.ui.graphics.vector.ImageVector
 
 data class User(
+    val id:Long,
     val firstName: String,
     val familyName: String,
     val age: Int,
     val gender: Gender,
-    val emailOrUserName: String,
+    val email: String,
     val password: String,
-    val phoneNumber:String
+    val phoneNumber:String,
+    val birthDate:String
 )
 
 sealed class Gender(val name:String, val icon: ImageVector) {

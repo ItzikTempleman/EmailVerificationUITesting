@@ -2,6 +2,8 @@ package com.itzik.user_with_testing.project.viewmodels
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.itzik.user_with_testing.project.models.Gender
+import com.itzik.user_with_testing.project.models.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -16,7 +18,7 @@ class UserViewModel : ViewModel() {
     private val pattern = "dd/MM/yyyy"
     private val timeFormat = SimpleDateFormat(pattern, Locale.US)
     private var today = timeFormat.format(Calendar.getInstance().time)
-
+    private var age = 0
 
     fun splitUserNameIntoFirstAndFamilyName(fullName: String): Pair<List<String>, String> {
         val nameParts = fullName.split(" ")
@@ -55,15 +57,15 @@ class UserViewModel : ViewModel() {
         return dateFormat.format(calendar.time)
     }
 
-    private fun extractAgeFromDate(dateSelected: String): Int {
+    fun extractAgeFromDate(dateSelected: String): Int {
         val formatter = DateTimeFormatter.ofPattern(pattern)
 
-        val thisYear= LocalDate.parse(today, formatter).year
-        val selectedYear= LocalDate.parse(dateSelected, formatter).year
-        val thisDayOfMonth= LocalDate.parse(today, formatter).dayOfMonth
-        val selectedDayOfMonth= LocalDate.parse(dateSelected, formatter).dayOfMonth
+        val thisYear = LocalDate.parse(today, formatter).year
+        val selectedYear = LocalDate.parse(dateSelected, formatter).year
+        val thisDayOfMonth = LocalDate.parse(today, formatter).dayOfMonth
+        val selectedDayOfMonth = LocalDate.parse(dateSelected, formatter).dayOfMonth
 
-        var age = thisYear - selectedYear
+        age = thisYear - selectedYear
         if (thisDayOfMonth < selectedDayOfMonth) {
             age--
         }
@@ -71,13 +73,29 @@ class UserViewModel : ViewModel() {
         return age
     }
 
-
     private fun compareDates(todayString: String, selectedDateString: String): Int {
         val dateFormat = timeFormat
         val today = dateFormat.parse(todayString)
         val selectedDate = dateFormat.parse(selectedDateString)
         return today.compareTo(selectedDate)
     }
+
+    fun createUser(
+
+        id: Long,
+        firstName: String,
+        familyName: String,
+        age: Int,
+        gender: Gender,
+        email: String,
+        password: String,
+        phoneNumber: String,
+        birthDate: String,
+
+        ): User {
+        return User(0, "", "", 0, Gender.MALE, "", "", "", "")
+    }
+
 
     private fun logD(message: String) {
         Log.d("TAG", message)

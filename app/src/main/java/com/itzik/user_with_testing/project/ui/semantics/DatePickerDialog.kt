@@ -22,6 +22,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.itzik.user_with_testing.project.navigation.Dark_Green
+import com.itzik.user_with_testing.project.navigation.Light_Green
 import com.itzik.user_with_testing.project.ui.semantics.GenericRoundedButton
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import java.text.SimpleDateFormat
@@ -32,10 +33,13 @@ import java.util.Locale
 fun DatePickerDialogScreen(
     modifier: Modifier,
     userViewModel: UserViewModel,
+
 ) {
 
     var selectedDate by remember { mutableStateOf(Calendar.getInstance()) }
     var isDatePickerVisible by remember { mutableStateOf(false) }
+
+
 
 
 
@@ -50,8 +54,10 @@ fun DatePickerDialogScreen(
                 onClickFunction = {
                     isDatePickerVisible = true
                 },
-                tint = Dark_Green,
-                innerIconColor = White
+                outerTint = White,
+                iconTint=White,
+                innerIconColor = Light_Green,
+                borderWidth = 3.5.dp
             )
         },
         textStyle = TextStyle(
@@ -94,7 +100,7 @@ fun DatePickerDialogScreen(
 
         DisposableEffect(LocalContext.current) {
             onDispose {
-                userViewModel.validateDate(selectedDate)
+
                 datePickerDialog.dismiss()
             }
         }
@@ -103,12 +109,16 @@ fun DatePickerDialogScreen(
             if (isDatePickerVisible) {
                 datePickerDialog.show()
             } else {
+
                 datePickerDialog.dismiss()
             }
 
             onDispose {
+                userViewModel.validateDate(selectedDate)
                 datePickerDialog.dismiss()
             }
         }
+
     }
+
 }
