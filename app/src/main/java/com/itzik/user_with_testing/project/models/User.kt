@@ -7,7 +7,7 @@ import androidx.compose.material.icons.filled.Transgender
 import androidx.compose.ui.graphics.vector.ImageVector
 
 data class User(
-    val id:Long=0,
+    val id:Long,
     val firstName: List<String>,
     val familyName: String,
     val age: Int,

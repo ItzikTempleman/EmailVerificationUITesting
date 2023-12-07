@@ -10,21 +10,22 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Locale
+import java.util.regex.Pattern
 
 @HiltViewModel
 class UserViewModel : ViewModel() {
 
-    private var firstName = listOf<String>()
-    private var familyName = ""
-    private var age = 0
-    private var gender = ""
-
-
-    private var dateSelected = ""
+    var firstName = listOf<String>()
+    var familyName = ""
+    var age = 0
+    var gender = ""
+    var email = ""
+    var password = ""
+    var phoneNumber = ""
+    var dateSelected = ""
     private val pattern = "dd/MM/yyyy"
     private val timeFormat = SimpleDateFormat(pattern, Locale.US)
     private var today = timeFormat.format(Calendar.getInstance().time)
-
 
 
     fun splitUserNameIntoFirstAndFamilyName(fullName: String): Pair<List<String>, String> {
@@ -64,7 +65,7 @@ class UserViewModel : ViewModel() {
         return dateFormat.format(calendar.time)
     }
 
-    fun extractAgeFromDate(dateSelected: String): Int {
+    private fun extractAgeFromDate(dateSelected: String): Int {
         val formatter = DateTimeFormatter.ofPattern(pattern)
 
         val thisYear = LocalDate.parse(today, formatter).year
@@ -98,35 +99,20 @@ class UserViewModel : ViewModel() {
         return gender
     }
 
-
-    fun validateEmail(
-        email:String
-    ){
-
+    fun validateEmail(email: String): Boolean {
+        val emailRegex = "^[A-Za-z](.*)([@]{1})(.{1,})([.]{1})(.{1,})$"
+        val pattern = Pattern.compile(emailRegex)
+        return pattern.matcher(email).matches()
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    fun isValidPassword(password: String): Boolean {
+        // Password criteria: At least 8 characters, one uppercase letter, one lowercase letter, and one digit
+        val passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$"
+        val pattern = Pattern.compile(passwordRegex)
+        return pattern.matcher(password).matches()
+    }
 
     fun createUser(
-
         id: Long,
         firstName: List<String>,
         familyName: String,
@@ -135,25 +121,42 @@ class UserViewModel : ViewModel() {
         email: String,
         password: String,
         phoneNumber: String,
-        birthDate: String,
+        birthDate: String
 
         ): User {
-        return User(
+        val user= User(
             0,
             firstName,
             familyName,
             age,
             gender,
-            "",
-            "",
-            "",
-            ""
+            email,
+            password,
+            phoneNumber,
+            dateSelected
         )
+        logD(user.toString())
+        return user
     }
-
 
     private fun logD(message: String) {
         Log.d("TAG", message)
+    }
+
+
+    fun updateEmail(createEmail: String): String {
+        email = createEmail
+        return email
+    }
+
+    fun updatePassword(createPassword: String): String {
+        password = createPassword
+        return password
+    }
+
+    fun updatePhoneNumber(newPhoneNumber: String): String {
+        phoneNumber = newPhoneNumber
+        return phoneNumber
     }
 }
 

@@ -231,4 +231,6 @@ fun CreateUserTopHalf(
             }
         }
     }
+    userViewModel.updateEmail(createEmail)
+    userViewModel.updatePassword(createPassword)
 }

@@ -93,7 +93,7 @@ fun CreateUserBottomHalf(
             trailingImageVector = Icons.Default.Transform,
             phoneNumberTFOuterLabel = {}
         )
-
+userViewModel.updatePhoneNumber(newPhoneNumber)
 
     }
 }

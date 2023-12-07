@@ -9,6 +9,10 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.platform.LocalContext
@@ -36,17 +40,17 @@ fun CreateAccountScreen(
     navHostController: NavHostController,
     userViewModel: UserViewModel,
 ) {
-
-//    val userAge = userViewModel.age
-//    var isUserAgeValid by remember {
-//        mutableStateOf(false)
-//    }
-//
-//    if (userAge < 18) {
-//        isUserAgeValid = false
-//    }
-//
-//    if (!isUserAgeValid) ShowDateErrorMessage("Must be at least 18 year old to sign up")
+    val userAge = userViewModel.age
+    val firstName = userViewModel.firstName
+    val familyName = userViewModel.familyName
+    val email = userViewModel.email
+    val password = userViewModel.password
+    val birthdate = userViewModel.dateSelected
+    val phoneNumber = userViewModel.phoneNumber
+    val gender = userViewModel.gender
+    var isUserAgeValid by remember {
+        mutableStateOf(false)
+    }
 
     RoundedBackGround(
         topColor = Dark_Green,
@@ -70,7 +74,7 @@ fun CreateAccountScreen(
                 navHostController.navigate(LoginGraph.LoginPage.route)
             },
             outerTint = White,
-            iconTint=White,
+            iconTint = White,
             innerIconColor = Dark_Green,
             1.2.dp
         )
@@ -117,15 +121,31 @@ fun CreateAccountScreen(
                     top.linkTo(dateAndPhoneLayout.bottom)
                 }
                 .fillMaxWidth()
-                .padding(start = 32.dp,end=32.dp, top = 60.dp),
+                .padding(start = 32.dp, end = 32.dp, top = 60.dp),
             onClick = {
-
+                if (userAge > 18) {
+                    isUserAgeValid = false
+                }
+                userViewModel.createUser(
+                    age = userAge,
+                    firstName = firstName,
+                    familyName = familyName,
+                    phoneNumber = phoneNumber,
+                    birthDate = birthdate,
+                    gender = gender,
+                    password = password,
+                    email = email,
+                    id = 0
+                )
             },
             buttonColor = Yellow,
             text = stringResource(id = R.string.create_account),
             textColor = White,
             roundedRadius = 4.dp
         )
+    }
+    if (!isUserAgeValid) {
+        ShowDateErrorMessage("Must be at least 18 year old to sign up")
     }
 }
 
