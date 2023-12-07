@@ -195,7 +195,10 @@ fun CreateUserTopHalf(
                                     top.linkTo(parent.top)
                                     start.linkTo(parent.start)
                                 }, selected = (it == selectedGender),
-                                onClick = { selectedGender = it }
+                                onClick = {
+                                    selectedGender = it
+                                    userViewModel.getGenderString(selectedGender)
+                                }
                             )
                             Text(
                                 modifier = Modifier

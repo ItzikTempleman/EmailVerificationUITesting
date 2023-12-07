@@ -14,22 +14,29 @@ import java.util.Locale
 @HiltViewModel
 class UserViewModel : ViewModel() {
 
+    private var firstName = listOf<String>()
+    private var familyName = ""
+    private var age = 0
+    private var gender = ""
+
+
     private var dateSelected = ""
     private val pattern = "dd/MM/yyyy"
     private val timeFormat = SimpleDateFormat(pattern, Locale.US)
     private var today = timeFormat.format(Calendar.getInstance().time)
-    private var age = 0
+
+
 
     fun splitUserNameIntoFirstAndFamilyName(fullName: String): Pair<List<String>, String> {
         val nameParts = fullName.split(" ")
 
-        val firstName = if (nameParts.size > 1) {
+        firstName = if (nameParts.size > 1) {
             nameParts.subList(0, nameParts.size - 1)
         } else {
             listOf(fullName)
         }
 
-        val familyName = if (nameParts.size > 1) {
+        familyName = if (nameParts.size > 1) {
             nameParts.last()
         } else {
             ""
@@ -80,20 +87,68 @@ class UserViewModel : ViewModel() {
         return today.compareTo(selectedDate)
     }
 
+
+    fun getGenderString(selectedGender: Gender): String {
+
+        gender = when (selectedGender) {
+            is Gender.MALE -> "Male"
+            is Gender.FEMALE -> "Female"
+            is Gender.OTHER -> "Other"
+        }
+        return gender
+    }
+
+
+    fun validateEmail(
+        email:String
+    ){
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     fun createUser(
 
         id: Long,
-        firstName: String,
+        firstName: List<String>,
         familyName: String,
         age: Int,
-        gender: Gender,
+        gender: String,
         email: String,
         password: String,
         phoneNumber: String,
         birthDate: String,
 
         ): User {
-        return User(0, "", "", 0, Gender.MALE, "", "", "", "")
+        return User(
+            0,
+            firstName,
+            familyName,
+            age,
+            gender,
+            "",
+            "",
+            "",
+            ""
+        )
     }
 
 
