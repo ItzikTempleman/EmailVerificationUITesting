@@ -139,7 +139,8 @@ fun LoginScreen(
                     visualTransformation = VisualTransformation.None,
                     tint = Light_Green,
                     trailingImageVector = Icons.Default.Image,
-                    phoneNumberTFOuterLabel = {}
+                    phoneNumberTFOuterLabel = {},
+
                 )
 
                 GenericOutlinedTextField(
@@ -168,7 +169,8 @@ fun LoginScreen(
                     else PasswordVisualTransformation(),
                     tint = Light_Green,
                     trailingImageVector = Icons.Default.Image,
-                    phoneNumberTFOuterLabel = {}
+                    phoneNumberTFOuterLabel = {},
+
                 )
 
                 Row(
@@ -278,7 +280,8 @@ fun LoginScreen(
                         trailingImageVector = Icons.Default.Transform,
                         phoneNumberTFOuterLabel = {
                             phoneLabelMessage = it
-                        }
+                        },
+
                     )
                 }
 

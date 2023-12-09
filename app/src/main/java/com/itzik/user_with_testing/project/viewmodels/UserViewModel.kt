@@ -15,14 +15,15 @@ import java.util.regex.Pattern
 @HiltViewModel
 class UserViewModel : ViewModel() {
 
-    var firstName = listOf<String>()
-    var familyName = ""
+    private var firstName = listOf<String>()
+    private var familyName = ""
+    private var gender = ""
+    private var email = ""
+    private var password = ""
+    private var phoneNumber = ""
+    private var dateSelected = ""
     var age = 0
-    var gender = ""
-    var email = ""
-    var password = ""
-    var phoneNumber = ""
-    var dateSelected = ""
+
     private val pattern = "dd/MM/yyyy"
     private val timeFormat = SimpleDateFormat(pattern, Locale.US)
     private var today = timeFormat.format(Calendar.getInstance().time)
@@ -45,7 +46,20 @@ class UserViewModel : ViewModel() {
         return Pair(firstName, familyName)
     }
 
+    fun updateEmail(createEmail: String): String {
+        email = createEmail
+        return email
+    }
 
+    fun updatePassword(createPassword: String): String {
+        password = createPassword
+        return password
+    }
+
+    fun updatePhoneNumber(newPhoneNumber: String): String {
+        phoneNumber = newPhoneNumber
+        return phoneNumber
+    }
     fun validateDate(chosenDate: Calendar) {
 
         dateSelected = formattedDate(chosenDate)
@@ -112,18 +126,7 @@ class UserViewModel : ViewModel() {
         return pattern.matcher(password).matches()
     }
 
-    fun createUser(
-        id: Long,
-        firstName: List<String>,
-        familyName: String,
-        age: Int,
-        gender: String,
-        email: String,
-        password: String,
-        phoneNumber: String,
-        birthDate: String
-
-        ): User {
+    fun createUser(): User {
         val user= User(
             0,
             firstName,
@@ -141,22 +144,6 @@ class UserViewModel : ViewModel() {
 
     private fun logD(message: String) {
         Log.d("TAG", message)
-    }
-
-
-    fun updateEmail(createEmail: String): String {
-        email = createEmail
-        return email
-    }
-
-    fun updatePassword(createPassword: String): String {
-        password = createPassword
-        return password
-    }
-
-    fun updatePhoneNumber(newPhoneNumber: String): String {
-        phoneNumber = newPhoneNumber
-        return phoneNumber
     }
 }
 

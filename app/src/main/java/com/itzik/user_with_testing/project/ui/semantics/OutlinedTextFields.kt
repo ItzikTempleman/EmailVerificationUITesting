@@ -40,7 +40,6 @@ fun GenericOutlinedTextField(
     visualTransformation: VisualTransformation,
     isPasswordIconShowing: ((Boolean) -> Unit)? = null,
     isPasswordToggleClicked: Boolean? = null,
-
     phoneNumberTFOuterLabel: (String) -> Unit,
 ) {
 

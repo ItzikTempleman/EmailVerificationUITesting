@@ -78,6 +78,7 @@ fun CreateUserBottomHalf(
             value = newPhoneNumber,
             thisValueChange = {
                 newPhoneNumber = it
+                userViewModel.updatePhoneNumber(newPhoneNumber)
             },
             label = newPhoneNumberMessage,
             modifier = Modifier
@@ -91,10 +92,8 @@ fun CreateUserBottomHalf(
             isIconClickableParam = false,
             visualTransformation = VisualTransformation.None,
             trailingImageVector = Icons.Default.Transform,
-            phoneNumberTFOuterLabel = {}
+            phoneNumberTFOuterLabel = {},
         )
-userViewModel.updatePhoneNumber(newPhoneNumber)
-
     }
 }
 

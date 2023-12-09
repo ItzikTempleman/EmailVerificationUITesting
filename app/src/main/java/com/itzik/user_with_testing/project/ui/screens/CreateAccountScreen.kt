@@ -41,13 +41,6 @@ fun CreateAccountScreen(
     userViewModel: UserViewModel,
 ) {
     val userAge = userViewModel.age
-    val firstName = userViewModel.firstName
-    val familyName = userViewModel.familyName
-    val email = userViewModel.email
-    val password = userViewModel.password
-    val birthdate = userViewModel.dateSelected
-    val phoneNumber = userViewModel.phoneNumber
-    val gender = userViewModel.gender
     var isUserAgeValid by remember {
         mutableStateOf(false)
     }
@@ -126,17 +119,7 @@ fun CreateAccountScreen(
                 if (userAge > 18) {
                     isUserAgeValid = false
                 }
-                userViewModel.createUser(
-                    age = userAge,
-                    firstName = firstName,
-                    familyName = familyName,
-                    phoneNumber = phoneNumber,
-                    birthDate = birthdate,
-                    gender = gender,
-                    password = password,
-                    email = email,
-                    id = 0
-                )
+                userViewModel.createUser()
             },
             buttonColor = Yellow,
             text = stringResource(id = R.string.create_account),

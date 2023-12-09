@@ -87,6 +87,9 @@ fun CreateUserTopHalf(
                 value = fullName,
                 thisValueChange = {
                     fullName = it
+                    if (fullName.length > 9) {
+                        userViewModel.splitUserNameIntoFirstAndFamilyName(fullName)
+                    }
                 },
                 label = fullNameLabelMessage,
                 modifier = Modifier
@@ -100,17 +103,17 @@ fun CreateUserTopHalf(
                 isError = isFullNameError, visualTransformation = VisualTransformation.None,
                 tint = Light_Green,
                 trailingImageVector = Icons.Default.Image,
-                phoneNumberTFOuterLabel = {}
+                phoneNumberTFOuterLabel = {},
+
             )
-            if (fullName.length > 9) {
-                userViewModel.splitUserNameIntoFirstAndFamilyName(fullName)
-            }
+
 
             GenericOutlinedTextField(
                 isTrailingIconExist = false,
                 value = createEmail,
                 thisValueChange = {
                     createEmail = it
+                    userViewModel.updateEmail(createEmail)
                 },
                 label = createEmailLabelMessage,
                 modifier = Modifier
@@ -125,13 +128,15 @@ fun CreateUserTopHalf(
                 visualTransformation = VisualTransformation.None,
                 tint = Light_Green,
                 trailingImageVector = Icons.Default.Image,
-                phoneNumberTFOuterLabel = {}
+                phoneNumberTFOuterLabel = {},
+
             )
 
             GenericOutlinedTextField(
                 value = createPassword,
                 thisValueChange = {
                     createPassword = it
+                    userViewModel.updatePassword(createPassword)
                 },
                 label = createPasswordLabelMessage,
                 modifier = Modifier
@@ -153,7 +158,8 @@ fun CreateUserTopHalf(
                 else PasswordVisualTransformation(),
                 tint = Light_Green,
                 trailingImageVector = Icons.Default.Image,
-                phoneNumberTFOuterLabel = {}
+                phoneNumberTFOuterLabel = {},
+
             )
 
 
@@ -231,6 +237,4 @@ fun CreateUserTopHalf(
             }
         }
     }
-    userViewModel.updateEmail(createEmail)
-    userViewModel.updatePassword(createPassword)
 }
