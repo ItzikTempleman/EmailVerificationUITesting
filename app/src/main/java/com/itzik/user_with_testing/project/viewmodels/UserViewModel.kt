@@ -15,15 +15,15 @@ import java.util.regex.Pattern
 
 @HiltViewModel
 class UserViewModel : ViewModel(), InterfaceAgeAndDateVerification {
-    private lateinit var ageValidationInterface: InterfaceAgeAndDateVerification
+    private var ageValidationInterface: InterfaceAgeAndDateVerification?=null
 
 
     override fun updateIsAgeValid(isAgeValid: Boolean) {
-        ageValidationInterface.updateIsAgeValid(isAgeValid)
+        ageValidationInterface?.updateIsAgeValid(isAgeValid)
     }
 
     override fun updateIsFutureDate(isDateValid: Boolean) {
-        ageValidationInterface.updateIsFutureDate(isDateValid)
+        ageValidationInterface?.updateIsFutureDate(isDateValid)
     }
 
 
@@ -80,7 +80,7 @@ class UserViewModel : ViewModel(), InterfaceAgeAndDateVerification {
         val result = compareDates(today, dateSelected)
         extractAgeFromDate(dateSelected)
         if (result < 0) {
-            ageValidationInterface.updateIsFutureDate(false)
+            ageValidationInterface?.updateIsFutureDate(false)
             logD("Can't choose future birth date ")
         } else if (result > 0) {
             logD("$dateSelected comes earlier")
@@ -106,7 +106,7 @@ class UserViewModel : ViewModel(), InterfaceAgeAndDateVerification {
             age--
         }
         logD("$age")
-        if(age<18) ageValidationInterface.updateIsAgeValid(false)
+        if(age<18) ageValidationInterface?.updateIsAgeValid(false)
         return age
     }
 
