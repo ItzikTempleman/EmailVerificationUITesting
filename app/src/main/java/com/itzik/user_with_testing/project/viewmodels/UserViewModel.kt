@@ -15,7 +15,7 @@ import java.util.regex.Pattern
 
 @HiltViewModel
 class UserViewModel : ViewModel(), InterfaceAgeAndDateVerification {
-    private var ageValidationInterface: InterfaceAgeAndDateVerification?=null
+    private var ageValidationInterface: InterfaceAgeAndDateVerification? = null
 
 
     override fun updateIsAgeValid(isAgeValid: Boolean) {
@@ -26,7 +26,7 @@ class UserViewModel : ViewModel(), InterfaceAgeAndDateVerification {
         ageValidationInterface?.updateIsFutureDate(isDateValid)
     }
 
-
+    private var _full_name = ""
     private var firstName = listOf<String>()
     private var familyName = ""
     private var gender = ""
@@ -34,7 +34,7 @@ class UserViewModel : ViewModel(), InterfaceAgeAndDateVerification {
     private var password = ""
     private var phoneNumber = ""
     private var dateSelected = ""
-    var age = 0
+    private var age = 0
 
     private val pattern = "dd/MM/yyyy"
     private val timeFormat = SimpleDateFormat(pattern, Locale.US)
@@ -43,7 +43,8 @@ class UserViewModel : ViewModel(), InterfaceAgeAndDateVerification {
 
     fun splitUserNameIntoFirstAndFamilyName(fullName: String): Pair<List<String>, String> {
         val nameParts = fullName.split(" ")
-
+        _full_name = fullName
+        getFullName(_full_name)
         firstName = if (nameParts.size > 1) {
             nameParts.subList(0, nameParts.size - 1)
         } else {
@@ -57,6 +58,8 @@ class UserViewModel : ViewModel(), InterfaceAgeAndDateVerification {
         }
         return Pair(firstName, familyName)
     }
+
+    private fun getFullName(fullName: String) = fullName
 
     fun updateEmail(createEmail: String): String {
         email = createEmail
@@ -106,7 +109,7 @@ class UserViewModel : ViewModel(), InterfaceAgeAndDateVerification {
             age--
         }
         logD("$age")
-        if(age<18) ageValidationInterface?.updateIsAgeValid(false)
+        if (age < 18) ageValidationInterface?.updateIsAgeValid(false)
         return age
     }
 
@@ -128,17 +131,31 @@ class UserViewModel : ViewModel(), InterfaceAgeAndDateVerification {
         return gender
     }
 
-    fun validateEmail(email: String): Boolean {
+    private fun isValidEmail(email: String): Boolean {
         val emailRegex = "^[A-Za-z](.*)([@]{1})(.{1,})([.]{1})(.{1,})$"
         val pattern = Pattern.compile(emailRegex)
         return pattern.matcher(email).matches()
     }
 
-    fun isValidPassword(password: String): Boolean {
+    private fun isValidPassword(password: String): Boolean {
         val passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$"
         val pattern = Pattern.compile(passwordRegex)
         return pattern.matcher(password).matches()
     }
+
+    fun setErrors() {
+
+    }
+
+    private fun isPhoneNumberOk(phoneNumber: String): Boolean = phoneNumber.isNotBlank()
+
+
+    private fun isNameFieldEmpty(_full_name: String): Boolean = _full_name.isNotEmpty()
+
+    fun isAllFieldsOk(): Boolean =
+        isNameFieldEmpty(_full_name) && isValidEmail(email) && isValidPassword(password) && isPhoneNumberOk(
+            phoneNumber
+        )
 
     fun createUser(): User {
         val user = User(
@@ -155,6 +172,7 @@ class UserViewModel : ViewModel(), InterfaceAgeAndDateVerification {
         logD(user.toString())
         return user
     }
+
 
     private fun logD(message: String) {
         Log.d("TAG", message)

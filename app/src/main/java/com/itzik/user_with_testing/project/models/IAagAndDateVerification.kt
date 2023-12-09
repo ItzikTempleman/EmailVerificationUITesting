@@ -4,4 +4,6 @@ interface InterfaceAgeAndDateVerification {
     fun updateIsAgeValid(isAgeValid: Boolean)
 
     fun updateIsFutureDate(isDateValid: Boolean)
+
+
 }

@@ -23,6 +23,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.navigation.Dark_Green
+import com.itzik.user_with_testing.project.navigation.HomeGraph
 import com.itzik.user_with_testing.project.navigation.LoginGraph
 import com.itzik.user_with_testing.project.navigation.Yellow
 import com.itzik.user_with_testing.project.ui.screen_sections.CreateUserBottomHalf
@@ -40,10 +41,9 @@ fun CreateAccountScreen(
     navHostController: NavHostController,
     userViewModel: UserViewModel,
 
-) {
-    userViewModel.age
+    ) {
     var isUserAgeValid by remember {
-        mutableStateOf(true)
+        mutableStateOf(false)
     }
 
 
@@ -109,7 +109,7 @@ fun CreateAccountScreen(
             navHostController = navHostController,
             userViewModel = userViewModel,
 
-        )
+            )
 
         GenericButton(
             modifier = Modifier
@@ -119,7 +119,11 @@ fun CreateAccountScreen(
                 .fillMaxWidth()
                 .padding(start = 32.dp, end = 32.dp, top = 60.dp),
             onClick = {
-                userViewModel.createUser(     )
+               if (userViewModel.isAllFieldsOk()) {
+                    userViewModel.createUser()
+                    navHostController.popBackStack()
+                    navHostController.navigate(HomeGraph.HomePage.route)
+                } else userViewModel.setErrors()
             },
             buttonColor = Yellow,
             text = stringResource(id = R.string.create_account),
@@ -127,7 +131,7 @@ fun CreateAccountScreen(
             roundedRadius = 4.dp
         )
     }
-    if (!isUserAgeValid) {
+    if (isUserAgeValid) {
         ShowDateErrorMessage("Must be at least 18 year old to sign up")
     }
 }
