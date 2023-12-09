@@ -32,7 +32,8 @@ fun CreateUserBottomHalf(
     coroutineScope: CoroutineScope,
     modifier: Modifier,
     navHostController: NavHostController,
-    userViewModel: UserViewModel
+    userViewModel: UserViewModel,
+
 ) {
     var newPhoneNumber by remember { mutableStateOf("") }
     val newPhoneNumberText = stringResource(id = R.string.enter_new_phone_number)

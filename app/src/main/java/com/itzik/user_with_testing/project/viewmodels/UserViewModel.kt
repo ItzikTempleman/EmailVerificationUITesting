@@ -3,6 +3,7 @@ package com.itzik.user_with_testing.project.viewmodels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.itzik.user_with_testing.project.models.Gender
+import com.itzik.user_with_testing.project.models.InterfaceAgeAndDateVerification
 import com.itzik.user_with_testing.project.models.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.text.SimpleDateFormat
@@ -13,7 +14,18 @@ import java.util.Locale
 import java.util.regex.Pattern
 
 @HiltViewModel
-class UserViewModel : ViewModel() {
+class UserViewModel : ViewModel(), InterfaceAgeAndDateVerification {
+    private lateinit var ageValidationInterface: InterfaceAgeAndDateVerification
+
+
+    override fun updateIsAgeValid(isAgeValid: Boolean) {
+        ageValidationInterface.updateIsAgeValid(isAgeValid)
+    }
+
+    override fun updateIsFutureDate(isDateValid: Boolean) {
+        ageValidationInterface.updateIsFutureDate(isDateValid)
+    }
+
 
     private var firstName = listOf<String>()
     private var familyName = ""
@@ -60,6 +72,7 @@ class UserViewModel : ViewModel() {
         phoneNumber = newPhoneNumber
         return phoneNumber
     }
+
     fun validateDate(chosenDate: Calendar) {
 
         dateSelected = formattedDate(chosenDate)
@@ -67,6 +80,7 @@ class UserViewModel : ViewModel() {
         val result = compareDates(today, dateSelected)
         extractAgeFromDate(dateSelected)
         if (result < 0) {
+            ageValidationInterface.updateIsFutureDate(false)
             logD("Can't choose future birth date ")
         } else if (result > 0) {
             logD("$dateSelected comes earlier")
@@ -92,6 +106,7 @@ class UserViewModel : ViewModel() {
             age--
         }
         logD("$age")
+        if(age<18) ageValidationInterface.updateIsAgeValid(false)
         return age
     }
 
@@ -120,14 +135,13 @@ class UserViewModel : ViewModel() {
     }
 
     fun isValidPassword(password: String): Boolean {
-        // Password criteria: At least 8 characters, one uppercase letter, one lowercase letter, and one digit
         val passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$"
         val pattern = Pattern.compile(passwordRegex)
         return pattern.matcher(password).matches()
     }
 
     fun createUser(): User {
-        val user= User(
+        val user = User(
             0,
             firstName,
             familyName,
@@ -146,4 +160,5 @@ class UserViewModel : ViewModel() {
         Log.d("TAG", message)
     }
 }
+
 

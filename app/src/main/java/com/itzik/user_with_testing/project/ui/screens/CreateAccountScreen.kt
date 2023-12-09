@@ -39,11 +39,13 @@ fun CreateAccountScreen(
     modifier: Modifier,
     navHostController: NavHostController,
     userViewModel: UserViewModel,
+
 ) {
-    val userAge = userViewModel.age
+    userViewModel.age
     var isUserAgeValid by remember {
-        mutableStateOf(false)
+        mutableStateOf(true)
     }
+
 
     RoundedBackGround(
         topColor = Dark_Green,
@@ -106,6 +108,7 @@ fun CreateAccountScreen(
                 .padding(horizontal = 20.dp),
             navHostController = navHostController,
             userViewModel = userViewModel,
+
         )
 
         GenericButton(
@@ -116,10 +119,7 @@ fun CreateAccountScreen(
                 .fillMaxWidth()
                 .padding(start = 32.dp, end = 32.dp, top = 60.dp),
             onClick = {
-                if (userAge > 18) {
-                    isUserAgeValid = false
-                }
-                userViewModel.createUser()
+                userViewModel.createUser(     )
             },
             buttonColor = Yellow,
             text = stringResource(id = R.string.create_account),
