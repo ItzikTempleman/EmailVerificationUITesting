@@ -3,8 +3,8 @@ package com.itzik.user_with_testing.project.viewmodels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.itzik.user_with_testing.project.models.Gender
-import com.itzik.user_with_testing.project.repositories.InterfaceAgeAndDateVerification
 import com.itzik.user_with_testing.project.models.User
+import com.itzik.user_with_testing.project.repositories.InterfaceAgeAndDateVerification
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -25,7 +25,7 @@ class UserViewModel : ViewModel(), InterfaceAgeAndDateVerification {
     override fun updateIsFutureDate(isDateValid: Boolean) {
         ageValidationInterface?.updateIsFutureDate(isDateValid)
     }
-
+    private lateinit var user:User
     private var _full_name = ""
     private var firstName = listOf<String>()
     private var familyName = ""
@@ -138,7 +138,18 @@ class UserViewModel : ViewModel(), InterfaceAgeAndDateVerification {
     }
 
     private fun isValidPassword(password: String): Boolean {
-        val passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$"
+        /**
+        ^ # start-of-string
+        (?=.*[0-9]) # a digit must occur at least once
+        (?=.*[a-z]) # a lower case letter must occur at least once
+        (?=.*[A-Z]) # an upper case letter must occur at least once
+        (?=.*[@#$%^&+=]) # a special character must occur at least once replace with your special characters
+        (?=\\S+$) # no whitespace allowed in the entire string
+        .{8,} # anything, at least six places though
+        $ # end-of-string
+         **/
+
+        val passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#\$%^&+=])(?=\\\\S+\$).{4,}\$"
         val pattern = Pattern.compile(passwordRegex)
         return pattern.matcher(password).matches()
     }
@@ -158,7 +169,7 @@ class UserViewModel : ViewModel(), InterfaceAgeAndDateVerification {
         )
 
     fun createUser(): User {
-        val user = User(
+         user = User(
             0,
             firstName,
             familyName,

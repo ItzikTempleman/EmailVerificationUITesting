@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
+import java.io.Serializable
 
 
 @Parcelize
@@ -24,7 +25,7 @@ data class User(
     val password: String,
     val phoneNumber:String,
     val birthDate:String
-): Parcelable
+): Parcelable, Serializable
 
 sealed class Gender(val name:String, val icon: ImageVector) {
     object MALE : Gender(name="Male", icon = Icons.Default.Male)

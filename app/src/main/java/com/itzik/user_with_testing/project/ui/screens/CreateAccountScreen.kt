@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.platform.LocalContext
@@ -42,7 +41,7 @@ fun CreateAccountScreen(
     userViewModel: UserViewModel,
 
     ) {
-    var isUserAgeValid by remember {
+    val isUserAgeValid by remember {
         mutableStateOf(false)
     }
 
@@ -121,7 +120,11 @@ fun CreateAccountScreen(
             onClick = {
                if (userViewModel.isAllFieldsOk()) {
                     userViewModel.createUser()
+                  //val user=userViewModel.user
                     navHostController.popBackStack()
+//                   navHostController.currentBackStackEntry?.arguments?.apply {
+//                       putSerializable("user", user)
+//                   }
                     navHostController.navigate(HomeGraph.HomePage.route)
                 } else userViewModel.setErrors()
             },
