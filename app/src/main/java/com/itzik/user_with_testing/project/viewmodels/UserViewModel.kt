@@ -3,7 +3,7 @@ package com.itzik.user_with_testing.project.viewmodels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.itzik.user_with_testing.project.models.Gender
-import com.itzik.user_with_testing.project.models.InterfaceAgeAndDateVerification
+import com.itzik.user_with_testing.project.repositories.InterfaceAgeAndDateVerification
 import com.itzik.user_with_testing.project.models.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.text.SimpleDateFormat

@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id ("kotlin-parcelize")
 }
 
 android {
@@ -66,7 +67,7 @@ dependencies {
 
     implementation ("androidx.navigation:navigation-compose:2.7.5")
     implementation ("me.onebone:toolbar-compose:2.3.5")
-    implementation ("androidx.compose.runtime:runtime-livedata:1.6.0-beta01")
+    implementation ("androidx.compose.runtime:runtime-livedata:1.6.0-beta02")
 
     //coroutines
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
@@ -88,6 +89,11 @@ dependencies {
 
     //coil
     implementation ("io.coil-kt:coil-compose:2.5.0")
+
+    //room
+    implementation ("androidx.room:room-ktx:2.6.1")
+    implementation ("androidx.room:room-runtime:2.6.1")
+
 
     //dagger hilt
     implementation ("com.google.dagger:hilt-android:2.48.1")

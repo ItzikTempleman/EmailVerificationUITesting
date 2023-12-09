@@ -14,17 +14,20 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
+import com.itzik.user_with_testing.project.models.User
 import com.itzik.user_with_testing.project.navigation.Dark_Green
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
 fun HomeScreen(
+    user: User?,
     coroutineScope: CoroutineScope,
     modifier: Modifier,
     navHostController: NavHostController,
     userViewModel: UserViewModel
 ) {
+
     ConstraintLayout(
         modifier = Modifier.fillMaxSize()
     ) {
