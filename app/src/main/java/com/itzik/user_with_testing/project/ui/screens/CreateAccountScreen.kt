@@ -1,6 +1,5 @@
 package com.itzik.user_with_testing.project.ui.screens
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -9,12 +8,8 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.White
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -38,14 +33,8 @@ fun CreateAccountScreen(
     coroutineScope: CoroutineScope,
     modifier: Modifier,
     navHostController: NavHostController,
-    userViewModel: UserViewModel,
-
+    userViewModel: UserViewModel
     ) {
-    val isUserAgeValid by remember {
-        mutableStateOf(false)
-    }
-
-
     RoundedBackGround(
         topColor = Dark_Green,
         bottomColor = White
@@ -132,16 +121,7 @@ fun CreateAccountScreen(
             roundedRadius = 4.dp
         )
     }
-    if (isUserAgeValid) {
-        ShowDateErrorMessage("Must be at least 18 year old to sign up")
-    }
+
 }
 
-@Composable
-fun ShowDateErrorMessage(message: String) {
-    Toast.makeText(
-        LocalContext.current,
-        message,
-        Toast.LENGTH_LONG
-    ).show()
-}
+

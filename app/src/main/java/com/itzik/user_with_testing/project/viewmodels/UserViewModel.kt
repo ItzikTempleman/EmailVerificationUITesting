@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.itzik.user_with_testing.project.models.Gender
 import com.itzik.user_with_testing.project.models.User
-import com.itzik.user_with_testing.project.repositories.InterfaceAgeAndDateVerification
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -14,13 +13,7 @@ import java.util.Locale
 import java.util.regex.Pattern
 
 @HiltViewModel
-class UserViewModel : ViewModel(), InterfaceAgeAndDateVerification {
-    private var ageValidationInterface: InterfaceAgeAndDateVerification? = null
-
-
-    override fun updateIsAgeValid(isAgeValid: Boolean) {
-        ageValidationInterface?.updateIsAgeValid(isAgeValid)
-    }
+class UserViewModel : ViewModel(){
 
     private lateinit var user:User
     private var _fullName = ""
@@ -73,7 +66,7 @@ class UserViewModel : ViewModel(), InterfaceAgeAndDateVerification {
     fun validateAge(chosenDate: Calendar): Boolean {
         dateSelected = formattedDate(chosenDate)
         age = extractAgeFromDate(dateSelected)
-        return age >= 18
+        return age > 9
     }
 
     private fun formattedDate(calendar: Calendar): String {
@@ -94,8 +87,6 @@ class UserViewModel : ViewModel(), InterfaceAgeAndDateVerification {
         if (thisDayOfMonth < selectedDayOfMonth) {
             tempAge--
         }
-        logD("$tempAge")
-        if (tempAge < 18) ageValidationInterface?.updateIsAgeValid(false)
         return tempAge
     }
 
@@ -139,16 +130,15 @@ class UserViewModel : ViewModel(), InterfaceAgeAndDateVerification {
 
     private fun isPhoneNumberOk(): Boolean = phoneNumber.isNotBlank()
 
-
     private fun isNameFieldEmpty(): Boolean = _fullName.isNotEmpty()
 
     fun isAllFieldsOk(): Boolean =
         !isNameFieldEmpty() && isValidEmail(email) && isValidPassword(password)
-                && isPhoneNumberOk() && age >= 18
+                && isPhoneNumberOk() && age >= 9
 
     fun createUser(): User {
          user = User(
-            0,
+             0,
             firstName,
             familyName,
             age,
@@ -158,13 +148,8 @@ class UserViewModel : ViewModel(), InterfaceAgeAndDateVerification {
             phoneNumber,
             dateSelected
         )
-        logD(user.toString())
+        Log.d("TAG", "$user")
         return user
-    }
-
-
-    private fun logD(message: String) {
-        Log.d("TAG", message)
     }
 }
 
