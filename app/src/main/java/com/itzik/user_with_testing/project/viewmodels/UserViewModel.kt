@@ -26,7 +26,7 @@ class UserViewModel : ViewModel(), InterfaceAgeAndDateVerification {
         ageValidationInterface?.updateIsFutureDate(isDateValid)
     }
     private lateinit var user:User
-    private var _full_name = ""
+    private var _fullName = ""
     private var firstName = listOf<String>()
     private var familyName = ""
     private var gender = ""
@@ -43,8 +43,7 @@ class UserViewModel : ViewModel(), InterfaceAgeAndDateVerification {
 
     fun splitUserNameIntoFirstAndFamilyName(fullName: String): Pair<List<String>, String> {
         val nameParts = fullName.split(" ")
-        _full_name = fullName
-        getFullName(_full_name)
+        _fullName = fullName
         firstName = if (nameParts.size > 1) {
             nameParts.subList(0, nameParts.size - 1)
         } else {
@@ -58,8 +57,6 @@ class UserViewModel : ViewModel(), InterfaceAgeAndDateVerification {
         }
         return Pair(firstName, familyName)
     }
-
-    private fun getFullName(fullName: String) = fullName
 
     fun updateEmail(createEmail: String): String {
         email = createEmail
@@ -164,7 +161,7 @@ class UserViewModel : ViewModel(), InterfaceAgeAndDateVerification {
     private fun isNameFieldEmpty(_full_name: String): Boolean = _full_name.isNotEmpty()
 
     fun isAllFieldsOk(): Boolean =
-        isNameFieldEmpty(_full_name) && isValidEmail(email) && isValidPassword(password) && isPhoneNumberOk(
+        isNameFieldEmpty(_fullName) && isValidEmail(email) && isValidPassword(password) && isPhoneNumberOk(
             phoneNumber
         )
 

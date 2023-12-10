@@ -10,7 +10,7 @@ import androidx.compose.ui.test.performTextInput
 import androidx.navigation.compose.rememberNavController
 
 import com.itzik.user_with_testing.project.ui.screens.LoginScreen
-import com.itzik.user_with_testing.theme.EmailVerificationUITestingTheme
+import com.itzik.user_with_testing.theme.Main
 
 import org.junit.Rule
 import org.junit.Test
@@ -24,7 +24,7 @@ class EmailValidateTest {
     @Test
     fun validateEmail() {
         composeTestRule.setContent {
-            EmailVerificationUITestingTheme {
+            Main {
                 LoginScreen(
                     modifier = Modifier,
                     navHostController = rememberNavController(),

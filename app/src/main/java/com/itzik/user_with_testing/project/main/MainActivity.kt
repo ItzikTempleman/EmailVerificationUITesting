@@ -8,7 +8,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.itzik.user_with_testing.project.navigation.SetupNavGraph
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
-import com.itzik.user_with_testing.theme.EmailVerificationUITestingTheme
+import com.itzik.user_with_testing.theme.Main
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,7 +18,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            EmailVerificationUITestingTheme {
+            Main {
                 userViewModel = viewModel()
                 val coroutineScope = rememberCoroutineScope()
                 SetupNavGraph(

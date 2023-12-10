@@ -87,7 +87,7 @@ fun CreateUserTopHalf(
                 value = fullName,
                 thisValueChange = {
                     fullName = it
-                    if (fullName.length > 9) {
+                    if (fullName.isNotEmpty()) {
                         userViewModel.splitUserNameIntoFirstAndFamilyName(fullName)
                     }
                 },

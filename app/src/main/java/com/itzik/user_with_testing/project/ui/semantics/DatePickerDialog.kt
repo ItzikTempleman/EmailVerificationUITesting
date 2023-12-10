@@ -1,5 +1,6 @@
 
 import android.app.DatePickerDialog
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -8,7 +9,6 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,14 +38,12 @@ fun DatePickerDialogScreen(
 
     var selectedDate by remember { mutableStateOf(Calendar.getInstance()) }
     var isDatePickerVisible by remember { mutableStateOf(false) }
-
-
-
-
+    var datePickerDialog: DatePickerDialog? = null
 
     OutlinedTextField(
         value = SimpleDateFormat("dd/MM/yyyy", Locale.US).format(selectedDate.time),
         onValueChange = {},
+        enabled = false,
         shape = RoundedCornerShape(6.dp),
         leadingIcon = {
             GenericRoundedButton(
@@ -68,7 +66,9 @@ fun DatePickerDialogScreen(
             imeAction = ImeAction.Done,
             keyboardType = KeyboardType.Text
         ),
-        modifier = modifier,
+        modifier = modifier.clickable {
+          isDatePickerVisible = true
+        },
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = White,
             unfocusedBorderColor = White,
@@ -82,10 +82,11 @@ fun DatePickerDialogScreen(
             selectedDate = Calendar.getInstance().apply {
                 timeInMillis = it
             }
+            userViewModel.validateDate(selectedDate)
             onDismissDateSelector()
         }
 
-        val datePickerDialog = DatePickerDialog(
+        datePickerDialog = DatePickerDialog(
             LocalContext.current,
             { _, year, month, dayOfMonth ->
                 val updatedDate = Calendar.getInstance().apply {
@@ -97,26 +98,9 @@ fun DatePickerDialogScreen(
             selectedDate.get(Calendar.MONTH),
             selectedDate.get(Calendar.DAY_OF_MONTH)
         )
-
-        DisposableEffect(LocalContext.current) {
-            onDispose {
-
-                datePickerDialog.dismiss()
-            }
-        }
-
-        DisposableEffect(isDatePickerVisible) {
-            if (isDatePickerVisible) {
-                datePickerDialog.show()
-            } else {
-
-                datePickerDialog.dismiss()
-            }
-
-            onDispose {
-                userViewModel.validateDate(selectedDate)
-                datePickerDialog.dismiss()
-            }
+        datePickerDialog.show()
+        datePickerDialog.setOnDismissListener {
+            isDatePickerVisible = false
         }
 
     }
