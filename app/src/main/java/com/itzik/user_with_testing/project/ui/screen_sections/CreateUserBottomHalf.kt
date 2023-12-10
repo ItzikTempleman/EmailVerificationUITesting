@@ -19,19 +19,15 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.navigation.Light_Green
 import com.itzik.user_with_testing.project.ui.semantics.GenericOutlinedTextField
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
-import kotlinx.coroutines.CoroutineScope
 
 
 @Composable
 fun CreateUserBottomHalf(
-    coroutineScope: CoroutineScope,
     modifier: Modifier,
-    navHostController: NavHostController,
     userViewModel: UserViewModel,
 
 ) {
@@ -75,7 +71,6 @@ fun CreateUserBottomHalf(
 
         GenericOutlinedTextField(
             tint = Light_Green,
-            isTrailingIconExist = false,
             value = newPhoneNumber,
             thisValueChange = {
                 newPhoneNumber = it
@@ -89,11 +84,8 @@ fun CreateUserBottomHalf(
                 },
             imageVector = Icons.Default.Smartphone,
             isError = isNewPhoneNumberError,
-            isKeyboardPasswordType = false,
-            isIconClickableParam = false,
             visualTransformation = VisualTransformation.None,
             trailingImageVector = Icons.Default.Transform,
-            phoneNumberTFOuterLabel = {},
         )
     }
 }

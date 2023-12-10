@@ -28,23 +28,18 @@ import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.navigation.Light_Green
 import com.itzik.user_with_testing.project.navigation.LoginGraph
 import com.itzik.user_with_testing.project.ui.shapes.RoundedBackGround
-import com.itzik.user_with_testing.project.viewmodels.UserViewModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 
 
 @Composable
 fun SplashScreen(
-    coroutineScope: CoroutineScope,
     modifier: Modifier,
     navHostController: NavHostController,
-    userViewModel: UserViewModel?,
 ) {
 
     var startAnim by remember {
         mutableStateOf(false)
     }
-
 
     val alphaAnim = animateFloatAsState(
         targetValue = if (startAnim) 1f else 0f,

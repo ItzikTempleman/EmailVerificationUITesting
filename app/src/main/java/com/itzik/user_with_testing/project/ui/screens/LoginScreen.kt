@@ -62,10 +62,8 @@ import kotlinx.coroutines.CoroutineScope
 @ExperimentalMaterial3Api
 @Composable
 fun LoginScreen(
-    coroutineScope: CoroutineScope,
     modifier: Modifier,
     navHostController: NavHostController,
-    userViewModel: UserViewModel?,
 ) {
     RoundedBackGround(topColor = Dark_Green, bottomColor = White)
     ConstraintLayout(
@@ -133,14 +131,9 @@ fun LoginScreen(
                         .padding(20.dp),
                     imageVector = Icons.Default.Email,
                     isError = isEmailError,
-                    isKeyboardPasswordType = false,
-                    isTrailingIconExist = false,
-                    isIconClickableParam = false,
                     visualTransformation = VisualTransformation.None,
                     tint = Light_Green,
                     trailingImageVector = Icons.Default.Image,
-                    phoneNumberTFOuterLabel = {},
-
                 )
 
                 GenericOutlinedTextField(
@@ -158,7 +151,6 @@ fun LoginScreen(
                     imageVector = if (isPasswordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
                     isError = isPasswordError,
                     isKeyboardPasswordType = true,
-                    isTrailingIconExist = false,
                     isIconClickableParam = true,
                     isPasswordToggleClicked = isPasswordVisible,
                     isPasswordIconShowing = {
@@ -169,8 +161,6 @@ fun LoginScreen(
                     else PasswordVisualTransformation(),
                     tint = Light_Green,
                     trailingImageVector = Icons.Default.Image,
-                    phoneNumberTFOuterLabel = {},
-
                 )
 
                 Row(
@@ -274,14 +264,12 @@ fun LoginScreen(
                             },
                         imageVector = Icons.Default.Smartphone,
                         isError = isPhoneNumberError,
-                        isKeyboardPasswordType = false,
                         isIconClickableParam = true,
                         visualTransformation = VisualTransformation.None,
                         trailingImageVector = Icons.Default.Transform,
                         phoneNumberTFOuterLabel = {
                             phoneLabelMessage = it
                         },
-
                     )
                 }
 

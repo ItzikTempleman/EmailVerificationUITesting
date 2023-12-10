@@ -99,13 +99,11 @@ fun CreateAccountScreen(
         )
 
         CreateUserBottomHalf(
-            coroutineScope = coroutineScope,
             modifier = Modifier
                 .constrainAs(dateAndPhoneLayout) {
                     top.linkTo(basicInfoCard.bottom)
                 }
                 .padding(horizontal = 20.dp),
-            navHostController = navHostController,
             userViewModel = userViewModel,
 
             )

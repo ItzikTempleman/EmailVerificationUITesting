@@ -21,10 +21,6 @@ import kotlinx.coroutines.CoroutineScope
 @Composable
 fun HomeScreen(
     //user: User?,
-    coroutineScope: CoroutineScope,
-    modifier: Modifier,
-    navHostController: NavHostController,
-    userViewModel: UserViewModel
 ) {
 
     ConstraintLayout(

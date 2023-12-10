@@ -83,7 +83,6 @@ fun CreateUserTopHalf(
             val (userName, email, password, genderBox) = createRefs()
 
             GenericOutlinedTextField(
-                isTrailingIconExist = false,
                 value = fullName,
                 thisValueChange = {
                     fullName = it
@@ -98,18 +97,14 @@ fun CreateUserTopHalf(
                     }
                     .padding(vertical = 8.dp),
                 imageVector = Icons.Default.Person,
-                isKeyboardPasswordType = false,
-                isIconClickableParam = false,
                 isError = isFullNameError, visualTransformation = VisualTransformation.None,
                 tint = Light_Green,
                 trailingImageVector = Icons.Default.Image,
-                phoneNumberTFOuterLabel = {},
 
             )
 
 
             GenericOutlinedTextField(
-                isTrailingIconExist = false,
                 value = createEmail,
                 thisValueChange = {
                     createEmail = it
@@ -122,13 +117,10 @@ fun CreateUserTopHalf(
                     }
                     .padding(vertical = 8.dp),
                 imageVector = Icons.Default.Email,
-                isKeyboardPasswordType = false,
-                isIconClickableParam = false,
                 isError = isNewEmailError,
                 visualTransformation = VisualTransformation.None,
                 tint = Light_Green,
                 trailingImageVector = Icons.Default.Image,
-                phoneNumberTFOuterLabel = {},
 
             )
 
@@ -147,7 +139,6 @@ fun CreateUserTopHalf(
                 imageVector = if (isCreatedPasswordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
                 isError = isCreatePasswordError,
                 isKeyboardPasswordType = true,
-                isTrailingIconExist = false,
                 isIconClickableParam = true,
                 isPasswordToggleClicked = isCreatedPasswordVisible,
                 isPasswordIconShowing = {

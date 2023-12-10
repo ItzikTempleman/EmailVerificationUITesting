@@ -26,21 +26,21 @@ import com.itzik.user_with_testing.project.navigation.Dark_Green
 fun GenericOutlinedTextField(
     data: String? = null,
     tint: Color,
-    isTrailingIconExist: Boolean,
+    isTrailingIconExist: Boolean = false,
     value: String,
     thisValueChange: (String) -> Unit,
     label: String,
     modifier: Modifier,
     imageVector: ImageVector,
     trailingImageVector: ImageVector,
-    isError: Boolean,
-    isKeyboardPasswordType: Boolean,
-    isIconClickableParam: Boolean,
+    isError: Boolean = false,
+    isKeyboardPasswordType: Boolean = false,
+    isIconClickableParam: Boolean = false,
     phoneNumberValue: String? = null,
     visualTransformation: VisualTransformation,
     isPasswordIconShowing: ((Boolean) -> Unit)? = null,
     isPasswordToggleClicked: Boolean? = null,
-    phoneNumberTFOuterLabel: (String) -> Unit,
+    phoneNumberTFOuterLabel: ((String) -> Unit)? = null,
 ) {
 
 
@@ -88,7 +88,7 @@ fun GenericOutlinedTextField(
         trailingIcon = {
             if (isTrailingIconExist) {
                 IconButton(onClick = {
-                    phoneNumberTFOuterLabel("Enter reset code sent to you")
+                    phoneNumberTFOuterLabel?.invoke("Enter reset code sent to you")
                 }) {
                     Icon(
                         imageVector = Icons.Default.Send,

@@ -50,8 +50,6 @@ fun SetupNavGraph(
             ) {
                 SplashScreen(
                     navHostController = navHostController,
-                    userViewModel = userViewModel,
-                    coroutineScope = coroutineScope,
                     modifier = Modifier
                 )
             }
@@ -68,8 +66,6 @@ fun SetupNavGraph(
             ) {
                 LoginScreen(
                     navHostController = navHostController,
-                    userViewModel = userViewModel,
-                    coroutineScope = coroutineScope,
                     modifier = Modifier
                 )
             }
@@ -101,10 +97,6 @@ fun SetupNavGraph(
                 exitTransition = null
             ) {
                 HomeScreen(
-                    navHostController = navHostController,
-                    userViewModel = userViewModel,
-                    coroutineScope = coroutineScope,
-                    modifier = Modifier,
                     //user=user
                 )
             }

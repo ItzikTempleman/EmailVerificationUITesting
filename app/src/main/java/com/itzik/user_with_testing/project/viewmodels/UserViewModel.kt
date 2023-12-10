@@ -22,9 +22,6 @@ class UserViewModel : ViewModel(), InterfaceAgeAndDateVerification {
         ageValidationInterface?.updateIsAgeValid(isAgeValid)
     }
 
-    override fun updateIsFutureDate(isDateValid: Boolean) {
-        ageValidationInterface?.updateIsFutureDate(isDateValid)
-    }
     private lateinit var user:User
     private var _fullName = ""
     private var firstName = listOf<String>()
@@ -73,18 +70,10 @@ class UserViewModel : ViewModel(), InterfaceAgeAndDateVerification {
         return phoneNumber
     }
 
-    fun validateDate(chosenDate: Calendar) {
-
+    fun validateAge(chosenDate: Calendar): Boolean {
         dateSelected = formattedDate(chosenDate)
-
-        val result = compareDates(today, dateSelected)
-        extractAgeFromDate(dateSelected)
-        if (result < 0) {
-            ageValidationInterface?.updateIsFutureDate(false)
-            logD("Can't choose future birth date ")
-        } else if (result > 0) {
-            logD("$dateSelected comes earlier")
-        } else logD("Both dates are equal")
+        age = extractAgeFromDate(dateSelected)
+        return age >= 18
     }
 
     private fun formattedDate(calendar: Calendar): String {
@@ -101,20 +90,13 @@ class UserViewModel : ViewModel(), InterfaceAgeAndDateVerification {
         val thisDayOfMonth = LocalDate.parse(today, formatter).dayOfMonth
         val selectedDayOfMonth = LocalDate.parse(dateSelected, formatter).dayOfMonth
 
-        age = thisYear - selectedYear
+        var tempAge = thisYear - selectedYear
         if (thisDayOfMonth < selectedDayOfMonth) {
-            age--
+            tempAge--
         }
-        logD("$age")
-        if (age < 18) ageValidationInterface?.updateIsAgeValid(false)
-        return age
-    }
-
-    private fun compareDates(todayString: String, selectedDateString: String): Int {
-        val dateFormat = timeFormat
-        val today = dateFormat.parse(todayString)
-        val selectedDate = dateFormat.parse(selectedDateString)
-        return today.compareTo(selectedDate)
+        logD("$tempAge")
+        if (tempAge < 18) ageValidationInterface?.updateIsAgeValid(false)
+        return tempAge
     }
 
 
@@ -155,15 +137,14 @@ class UserViewModel : ViewModel(), InterfaceAgeAndDateVerification {
 
     }
 
-    private fun isPhoneNumberOk(phoneNumber: String): Boolean = phoneNumber.isNotBlank()
+    private fun isPhoneNumberOk(): Boolean = phoneNumber.isNotBlank()
 
 
-    private fun isNameFieldEmpty(_full_name: String): Boolean = _full_name.isNotEmpty()
+    private fun isNameFieldEmpty(): Boolean = _fullName.isNotEmpty()
 
     fun isAllFieldsOk(): Boolean =
-        isNameFieldEmpty(_fullName) && isValidEmail(email) && isValidPassword(password) && isPhoneNumberOk(
-            phoneNumber
-        )
+        !isNameFieldEmpty() && isValidEmail(email) && isValidPassword(password)
+                && isPhoneNumberOk() && age >= 18
 
     fun createUser(): User {
          user = User(
