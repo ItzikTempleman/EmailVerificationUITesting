@@ -105,7 +105,7 @@ fun CreateAccountScreen(
                 .fillMaxWidth()
                 .padding(start = 32.dp, end = 32.dp, top = 60.dp),
             onClick = {
-               if (userViewModel.isAllFieldsOk()) {
+               //if (userViewModel.isAllFieldsOk()) {
                     userViewModel.createUser()
                   //val user=userViewModel.user
                     navHostController.popBackStack()
@@ -113,7 +113,7 @@ fun CreateAccountScreen(
 //                       putSerializable("user", user)
 //                   }
                     navHostController.navigate(HomeGraph.HomePage.route)
-               } else userViewModel.setErrors()
+              // } else userViewModel.setErrors()
             },
             buttonColor = Yellow,
             text = stringResource(id = R.string.create_account),

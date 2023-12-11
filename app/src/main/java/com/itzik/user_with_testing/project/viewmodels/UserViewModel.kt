@@ -130,10 +130,10 @@ class UserViewModel : ViewModel(){
 
     private fun isPhoneNumberOk(): Boolean = phoneNumber.isNotBlank()
 
-    private fun isNameFieldEmpty(): Boolean = _fullName.isNotEmpty()
+    private fun isNameFieldNotEmpty(): Boolean = _fullName.isNotEmpty()
 
     fun isAllFieldsOk(): Boolean =
-        !isNameFieldEmpty() && isValidEmail() && isValidPassword()
+        isNameFieldNotEmpty() && isValidEmail() && isValidPassword()
                 && isPhoneNumberOk() && age >= 9
 
     fun createUser(): User {

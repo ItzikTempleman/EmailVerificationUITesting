@@ -66,7 +66,7 @@ fun DatePickerDialogScreen(
         },
         textStyle = TextStyle(
             color = Black,
-            fontSize = 22.sp,
+            fontSize = 16.sp,
         ),
         keyboardOptions = KeyboardOptions.Default.copy(
             imeAction = ImeAction.Done,
@@ -103,7 +103,6 @@ fun DatePickerDialogScreen(
         }
 
         datePickerDialog = DatePickerDialog(
-
             LocalContext.current,
             { _, year, month, dayOfMonth ->
                 val updatedDate = Calendar.getInstance().apply {
@@ -120,7 +119,5 @@ fun DatePickerDialogScreen(
         datePickerDialog.setOnDismissListener {
             isDatePickerVisible = false
         }
-
     }
-
 }
