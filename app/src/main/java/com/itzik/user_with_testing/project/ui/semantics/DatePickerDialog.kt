@@ -89,7 +89,7 @@ fun DatePickerDialogScreen(
                     color = Color.Red
                 )
             }
-        },
+        }
     )
 
     if (isDatePickerVisible) {
