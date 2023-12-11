@@ -13,19 +13,18 @@ import java.util.Locale
 import java.util.regex.Pattern
 
 @HiltViewModel
-class UserViewModel : ViewModel(){
+class UserViewModel : ViewModel() {
 
-    private lateinit var user:User
+    private lateinit var user: User
     private var _fullName = ""
-    private var firstName = listOf<String>()
+    private var firstAndMiddleNameList = listOf<String>()
     private var familyName = ""
-    private var gender = ""
     private var email = ""
     private var password = ""
     private var phoneNumber = ""
     private var dateSelected = ""
     private var age = 0
-
+    private lateinit var gender: String
     private val pattern = "dd/MM/yyyy"
     private val timeFormat = SimpleDateFormat(pattern, Locale.US)
     private var today = timeFormat.format(Calendar.getInstance().time)
@@ -34,7 +33,7 @@ class UserViewModel : ViewModel(){
     fun splitUserNameIntoFirstAndFamilyName(fullName: String): Pair<List<String>, String> {
         val nameParts = fullName.split(" ")
         _fullName = fullName
-        firstName = if (nameParts.size > 1) {
+        firstAndMiddleNameList = if (nameParts.size > 1) {
             nameParts.subList(0, nameParts.size - 1)
         } else {
             listOf(fullName)
@@ -45,7 +44,17 @@ class UserViewModel : ViewModel(){
         } else {
             ""
         }
-        return Pair(firstName, familyName)
+        val namePairs = Pair(firstAndMiddleNameList, familyName)
+
+        return namePairs
+    }
+
+    private fun formatFirstNameIndex0(firstName: List<String>): String {
+        return firstName[0]
+    }
+
+    private fun formatFirstNameIndex1(firstName: List<String>): String {
+        return firstName[1]
     }
 
     fun updateEmail(createEmail: String): String {
@@ -92,7 +101,6 @@ class UserViewModel : ViewModel(){
 
 
     fun getGenderString(selectedGender: Gender): String {
-
         gender = when (selectedGender) {
             is Gender.MALE -> "Male"
             is Gender.FEMALE -> "Female"
@@ -115,7 +123,7 @@ class UserViewModel : ViewModel(){
         (?=.*[A-Z]) # an upper case letter must occur at least once
         (?=.*[@#$%^&+=]) # a special character must occur at least once replace with your special characters
         (?=\\S+$) # no whitespace allowed in the entire string
-       33 .{8,} # anything, at least six places though
+        33 .{8,} # anything, at least six places though
         $ # end-of-string
          **/
 
@@ -137,7 +145,8 @@ class UserViewModel : ViewModel(){
                 && isPhoneNumberOk() && age >= 9
 
     fun createUser(): User {
-        user = User(0, firstName, familyName, age, gender, email, password, phoneNumber, dateSelected)
+        user =
+            User(0, firstAndMiddleNameList, familyName, age, gender, email, password, phoneNumber, dateSelected)
         Log.d("TAG", "$user")
         return user
     }

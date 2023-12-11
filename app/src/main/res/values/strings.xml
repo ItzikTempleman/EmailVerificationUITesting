@@ -11,8 +11,8 @@
     <string name="enter_email">Your user name or Email</string>
     <string name="create_email">Create Email</string>
     <string name="enter_password">Enter your password</string>
-    <string name="log_in">Log in</string>
-    <string name="sign_up">Sign up</string>
+    <string name="log_in">Sign in</string>
+    <string name="sign_up">Register</string>
     <string name="home_screen">Home screen</string>
     <string name="success">Successfully logged in</string>
     <string name="fail">Incorrect data, please fix</string>
@@ -24,7 +24,7 @@
     <string name="reenter_password">Re-enter password</string>
     <string name="age">Age</string>
     <string name="gender">Gender</string>
-    <string name="alternative">or</string>
+    <string name="alternative">No account?</string>
     <string name="choose_gender">Choose gender</string>
     <string name="birthdate">Select birth date</string>
     <string name="day">DD</string>
