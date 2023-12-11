@@ -113,7 +113,7 @@ fun CreateAccountScreen(
 //                       putSerializable("user", user)
 //                   }
                     navHostController.navigate(HomeGraph.HomePage.route)
-                } else userViewModel.setErrors()
+               } else userViewModel.setErrors()
             },
             buttonColor = Yellow,
             text = stringResource(id = R.string.create_account),

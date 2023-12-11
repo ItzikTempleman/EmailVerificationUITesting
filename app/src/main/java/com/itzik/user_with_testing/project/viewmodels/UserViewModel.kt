@@ -101,13 +101,13 @@ class UserViewModel : ViewModel(){
         return gender
     }
 
-    private fun isValidEmail(email: String): Boolean {
+    private fun isValidEmail(): Boolean {
         val emailRegex = "^[A-Za-z](.*)([@]{1})(.{1,})([.]{1})(.{1,})$"
         val pattern = Pattern.compile(emailRegex)
         return pattern.matcher(email).matches()
     }
 
-    private fun isValidPassword(password: String): Boolean {
+    private fun isValidPassword(): Boolean {
         /**
         ^ # start-of-string
         (?=.*[0-9]) # a digit must occur at least once
@@ -115,7 +115,7 @@ class UserViewModel : ViewModel(){
         (?=.*[A-Z]) # an upper case letter must occur at least once
         (?=.*[@#$%^&+=]) # a special character must occur at least once replace with your special characters
         (?=\\S+$) # no whitespace allowed in the entire string
-        .{8,} # anything, at least six places though
+       33 .{8,} # anything, at least six places though
         $ # end-of-string
          **/
 
@@ -133,21 +133,11 @@ class UserViewModel : ViewModel(){
     private fun isNameFieldEmpty(): Boolean = _fullName.isNotEmpty()
 
     fun isAllFieldsOk(): Boolean =
-        !isNameFieldEmpty() && isValidEmail(email) && isValidPassword(password)
+        !isNameFieldEmpty() && isValidEmail() && isValidPassword()
                 && isPhoneNumberOk() && age >= 9
 
     fun createUser(): User {
-         user = User(
-             0,
-            firstName,
-            familyName,
-            age,
-            gender,
-            email,
-            password,
-            phoneNumber,
-            dateSelected
-        )
+        user = User(0, firstName, familyName, age, gender, email, password, phoneNumber, dateSelected)
         Log.d("TAG", "$user")
         return user
     }

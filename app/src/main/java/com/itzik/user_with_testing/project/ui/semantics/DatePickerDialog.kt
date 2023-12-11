@@ -59,9 +59,9 @@ fun DatePickerDialogScreen(
                     isDatePickerVisible = true
                 },
                 outerTint = Light_Green,
-                iconTint=White,
-                innerIconColor = Light_Green,
-                borderWidth = 0.dp
+                iconTint= Light_Green,
+                innerIconColor = White,
+                borderWidth = 1.dp
             )
         },
         textStyle = TextStyle(
@@ -77,7 +77,7 @@ fun DatePickerDialogScreen(
         },
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = Light_Green,
-            unfocusedBorderColor = Color.DarkGray,
+            unfocusedBorderColor = Black,
             backgroundColor = White
         ),
         isError = isValidAge,
