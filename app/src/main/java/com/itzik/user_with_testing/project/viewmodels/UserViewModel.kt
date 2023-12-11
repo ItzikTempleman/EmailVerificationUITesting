@@ -49,13 +49,10 @@ class UserViewModel : ViewModel() {
         return namePairs
     }
 
-    private fun formatFirstNameIndex0(firstName: List<String>): String {
-        return firstName[0]
-    }
+    private fun formatFirstNameIndex0(firstName: List<String>): String = firstName[0]
 
-    private fun formatFirstNameIndex1(firstName: List<String>): String {
-        return firstName[1]
-    }
+    private fun formatFirstNameIndex1(firstName: List<String>): String =firstName[1]
+
 
     fun updateEmail(createEmail: String): String {
         email = createEmail
@@ -110,7 +107,7 @@ class UserViewModel : ViewModel() {
     }
 
     private fun isValidEmail(): Boolean {
-        val emailRegex = "^[A-Za-z](.*)([@]{1})(.{1,})([.]{1})(.{1,})$"
+        val emailRegex = "^[a-zA-Z0-9.!#\$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*\$"
         val pattern = Pattern.compile(emailRegex)
         return pattern.matcher(email).matches()
     }
@@ -142,7 +139,7 @@ class UserViewModel : ViewModel() {
 
     fun isAllFieldsOk(): Boolean =
         isNameFieldNotEmpty() && isValidEmail() && isValidPassword()
-                && isPhoneNumberOk() && age >= 9
+                && isPhoneNumberOk() && age > 9
 
     fun createUser(): User {
         user =
