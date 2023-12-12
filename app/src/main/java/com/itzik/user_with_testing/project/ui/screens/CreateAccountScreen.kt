@@ -1,6 +1,5 @@
 package com.itzik.user_with_testing.project.ui.screens
 
-import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -106,8 +105,6 @@ fun CreateAccountScreen(
                 .fillMaxWidth()
                 .padding(start = 32.dp, end = 32.dp, top = 60.dp),
             onClick = {
-                Log.d("TAG", " isAllFieldsOk(): ${userViewModel.isValidPassword()}")
-
                if (userViewModel.isAllFieldsOk()) {
                     userViewModel.createUser()
                   //val user=userViewModel.user

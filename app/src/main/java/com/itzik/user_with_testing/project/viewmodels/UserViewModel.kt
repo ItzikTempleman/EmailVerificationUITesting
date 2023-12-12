@@ -101,7 +101,7 @@ class UserViewModel : ViewModel() {
         return gender
     }
 
-    fun isValidEmail(): Boolean = email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\$".toRegex())
+    private fun isValidEmail(): Boolean = email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\$".toRegex())
 
      fun isValidPassword(): Boolean =
         /**
