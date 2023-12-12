@@ -10,7 +10,6 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Locale
-import java.util.regex.Pattern
 
 @HiltViewModel
 class UserViewModel : ViewModel() {
@@ -44,11 +43,10 @@ class UserViewModel : ViewModel() {
         } else {
             ""
         }
-
         return Pair(firstAndMiddleNameList, familyName)
     }
 
-    private fun isValidName(): Boolean = firstAndMiddleNameList.isNotEmpty() && familyName.isNotEmpty()
+    fun isValidName(): Boolean = fullName.isNotEmpty()
 
 
     fun updateEmail(createEmail: String): String {
@@ -103,13 +101,9 @@ class UserViewModel : ViewModel() {
         return gender
     }
 
-    private fun isValidEmail(): Boolean {
-        val emailRegex = "^[a-zA-Z0-9.!#\$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*\$"
-        val pattern = Pattern.compile(emailRegex)
-        return pattern.matcher(email).matches()
-    }
+    fun isValidEmail(): Boolean = email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\$".toRegex())
 
-    private fun isValidPassword(): Boolean {
+     fun isValidPassword(): Boolean =
         /**
         ^ # start-of-string
         (?=.*[0-9]) # a digit must occur at least once
@@ -121,11 +115,11 @@ class UserViewModel : ViewModel() {
         $ # end-of-string
          **/
 
-        val passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#\$%^&+=])(?=\\\\S+\$).{4,}\$"
-        val pattern = Pattern.compile(passwordRegex)
-        return pattern.matcher(password).matches()
-    }
+//        val passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#\$%^&+=])(?=\\\\S+\$).{4,}\$"
+//        val pattern = Pattern.compile(passwordRegex)
+//        return pattern.matcher(password).matches()
 
+    password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$".toRegex())
     fun setErrors() {
 
     }

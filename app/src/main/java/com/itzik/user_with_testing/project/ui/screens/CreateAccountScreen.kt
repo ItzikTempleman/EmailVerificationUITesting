@@ -106,7 +106,8 @@ fun CreateAccountScreen(
                 .fillMaxWidth()
                 .padding(start = 32.dp, end = 32.dp, top = 60.dp),
             onClick = {
-                Log.d("TAG", "isAllFieldsOk: ${userViewModel.isAllFieldsOk()}")
+                Log.d("TAG", " isAllFieldsOk(): ${userViewModel.isValidPassword()}")
+
                if (userViewModel.isAllFieldsOk()) {
                     userViewModel.createUser()
                   //val user=userViewModel.user
