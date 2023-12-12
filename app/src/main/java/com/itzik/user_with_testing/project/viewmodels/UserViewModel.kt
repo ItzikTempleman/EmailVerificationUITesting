@@ -16,7 +16,7 @@ import java.util.regex.Pattern
 class UserViewModel : ViewModel() {
 
     private lateinit var user: User
-    private var _fullName = ""
+    private var fullName = ""
     private var firstAndMiddleNameList = listOf<String>()
     private var familyName = ""
     private var email = ""
@@ -30,13 +30,13 @@ class UserViewModel : ViewModel() {
     private var today = timeFormat.format(Calendar.getInstance().time)
 
 
-    fun splitUserNameIntoFirstAndFamilyName(fullName: String): Pair<List<String>, String> {
-        val nameParts = fullName.split(" ")
-        _fullName = fullName
+    fun splitUserNameIntoFirstAndFamilyName(nameList: String): Pair<List<String>, String> {
+        val nameParts = nameList.split(" ")
+        fullName = nameList
         firstAndMiddleNameList = if (nameParts.size > 1) {
             nameParts.subList(0, nameParts.size - 1)
         } else {
-            listOf(fullName)
+            listOf(nameList)
         }
 
         familyName = if (nameParts.size > 1) {
@@ -135,10 +135,10 @@ class UserViewModel : ViewModel() {
 
     private fun isPhoneNumberOk(): Boolean = phoneNumber.isNotBlank()
 
-    private fun isNameFieldNotEmpty(): Boolean = _fullName.isNotEmpty()
+    private fun isValidName(): Boolean = fullName.isNotEmpty()
 
     fun isAllFieldsOk(): Boolean =
-        isNameFieldNotEmpty() && isValidEmail() && isValidPassword()
+        isValidName() && isValidEmail() && isValidPassword()
                 && isPhoneNumberOk() && age > 9
 
     fun createUser(): User {
