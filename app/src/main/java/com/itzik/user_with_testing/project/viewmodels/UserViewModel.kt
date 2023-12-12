@@ -30,13 +30,13 @@ class UserViewModel : ViewModel() {
     private var today = timeFormat.format(Calendar.getInstance().time)
 
 
-    fun splitUserNameIntoFirstAndFamilyName(nameList: String): Pair<List<String>, String> {
-        val nameParts = nameList.split(" ")
-        fullName = nameList
+    fun splitUserNameIntoFirstAndFamilyName(fullNameAsParam: String): Pair<List<String>, String> {
+        val nameParts = fullNameAsParam.split(" ")
+        fullName = fullNameAsParam
         firstAndMiddleNameList = if (nameParts.size > 1) {
             nameParts.subList(0, nameParts.size - 1)
         } else {
-            listOf(nameList)
+            listOf(fullNameAsParam)
         }
 
         familyName = if (nameParts.size > 1) {
@@ -44,14 +44,11 @@ class UserViewModel : ViewModel() {
         } else {
             ""
         }
-        val namePairs = Pair(firstAndMiddleNameList, familyName)
 
-        return namePairs
+        return Pair(firstAndMiddleNameList, familyName)
     }
 
-    private fun formatFirstNameIndex0(firstName: List<String>): String = firstName[0]
-
-    private fun formatFirstNameIndex1(firstName: List<String>): String =firstName[1]
+    private fun isValidName(): Boolean = firstAndMiddleNameList.isNotEmpty() && familyName.isNotEmpty()
 
 
     fun updateEmail(createEmail: String): String {
@@ -135,7 +132,6 @@ class UserViewModel : ViewModel() {
 
     private fun isPhoneNumberOk(): Boolean = phoneNumber.isNotBlank()
 
-    private fun isValidName(): Boolean = fullName.isNotEmpty()
 
     fun isAllFieldsOk(): Boolean =
         isValidName() && isValidEmail() && isValidPassword()
@@ -143,7 +139,17 @@ class UserViewModel : ViewModel() {
 
     fun createUser(): User {
         user =
-            User(0, firstAndMiddleNameList, familyName, age, gender, email, password, phoneNumber, dateSelected)
+            User(
+                0,
+                firstAndMiddleNameList,
+                familyName,
+                age,
+                gender,
+                email,
+                password,
+                phoneNumber,
+                dateSelected
+            )
         Log.d("TAG", "$user")
         return user
     }
