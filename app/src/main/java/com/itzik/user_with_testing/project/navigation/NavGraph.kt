@@ -1,5 +1,6 @@
 package com.itzik.user_with_testing.project.navigation
 
+import android.util.Log
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -10,6 +11,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.itzik.user_with_testing.project.models.User
 import com.itzik.user_with_testing.project.ui.screens.CreateAccountScreen
 import com.itzik.user_with_testing.project.ui.screens.HomeScreen
 import com.itzik.user_with_testing.project.ui.screens.LoginScreen
@@ -18,8 +20,8 @@ import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 
 val Dark_Green = Color(0xFF007d74)
-val Light_Green= Color(0xFF64DB95)
-val Yellow= Color(0xFFFFC107)
+val Light_Green = Color(0xFF64DB95)
+val Yellow = Color(0xFFFFC107)
 
 
 const val SPLASH_GRAPH = "splashGraph"
@@ -31,7 +33,7 @@ const val HOME_GRAPH = "homeGraph"
 fun SetupNavGraph(
     navHostController: NavHostController,
     userViewModel: UserViewModel,
-    coroutineScope: CoroutineScope
+    coroutineScope: CoroutineScope,
 ) {
     NavHost(
         navController = navHostController,
@@ -74,14 +76,11 @@ fun SetupNavGraph(
                 enterTransition = null,
                 exitTransition = null
             ) {
-
                 CreateAccountScreen(
-
                     navHostController = navHostController,
                     userViewModel = userViewModel,
                     coroutineScope = coroutineScope,
-                    modifier = Modifier,
-
+                    modifier = Modifier
                 )
             }
         }
@@ -90,15 +89,20 @@ fun SetupNavGraph(
             startDestination = HomeGraph.HomePage.route,
             route = HOME_GRAPH
         ) {
-            //val user = navHostController.previousBackStackEntry?.savedStateHandle?.get<User>("user")
             composable(
                 route = HomeGraph.HomePage.route,
                 enterTransition = null,
                 exitTransition = null
             ) {
+                val user = navHostController.previousBackStackEntry?.savedStateHandle?.get<User>("user")
+                Log.d("TAG", "user from nav graph: $user")
+
                 HomeScreen(
-                    //user=user
+                    navHostController = navHostController,
+                    modifier = Modifier,
+                    user = user
                 )
+
             }
         }
     }

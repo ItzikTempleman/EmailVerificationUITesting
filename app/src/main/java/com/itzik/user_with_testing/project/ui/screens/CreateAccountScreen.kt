@@ -33,8 +33,8 @@ fun CreateAccountScreen(
     coroutineScope: CoroutineScope,
     modifier: Modifier,
     navHostController: NavHostController,
-    userViewModel: UserViewModel
-    ) {
+    userViewModel: UserViewModel,
+) {
     RoundedBackGround(
         topColor = Dark_Green,
         bottomColor = White
@@ -105,15 +105,15 @@ fun CreateAccountScreen(
                 .fillMaxWidth()
                 .padding(start = 32.dp, end = 32.dp, top = 60.dp),
             onClick = {
-               if (userViewModel.isAllFieldsOk()) {
+                if (userViewModel.isAllFieldsOk()) {
                     userViewModel.createUser()
-                  //val user=userViewModel.user
+                    navHostController.currentBackStackEntry?.arguments?.apply {
+                        putSerializable("user", userViewModel.user)
+                    }
                     navHostController.popBackStack()
-//                   navHostController.currentBackStackEntry?.arguments?.apply {
-//                       putSerializable("user", user)
-                  // }
                     navHostController.navigate(HomeGraph.HomePage.route)
-               } else userViewModel.setErrors()
+
+                } else userViewModel.setErrors()
             },
             buttonColor = Yellow,
             text = stringResource(id = R.string.create_account),

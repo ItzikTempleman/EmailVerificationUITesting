@@ -14,7 +14,7 @@ import java.util.Locale
 @HiltViewModel
 class UserViewModel : ViewModel() {
 
-    private lateinit var user: User
+    lateinit var user: User
     private var fullName = ""
     private var firstAndMiddleNameList = listOf<String>()
     private var familyName = ""
@@ -46,7 +46,7 @@ class UserViewModel : ViewModel() {
         return Pair(firstAndMiddleNameList, familyName)
     }
 
-    fun isValidName(): Boolean = fullName.isNotEmpty()
+    private fun isValidName(): Boolean = fullName.isNotEmpty()
 
 
     fun updateEmail(createEmail: String): String {
@@ -103,7 +103,7 @@ class UserViewModel : ViewModel() {
 
     private fun isValidEmail(): Boolean = email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\$".toRegex())
 
-     fun isValidPassword(): Boolean =
+
         /**
         ^ # start-of-string
         (?=.*[0-9]) # a digit must occur at least once
@@ -114,12 +114,7 @@ class UserViewModel : ViewModel() {
         33 .{8,} # anything, at least six places though
         $ # end-of-string
          **/
-
-//        val passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#\$%^&+=])(?=\\\\S+\$).{4,}\$"
-//        val pattern = Pattern.compile(passwordRegex)
-//        return pattern.matcher(password).matches()
-
-    password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$".toRegex())
+        private fun isValidPassword(): Boolean = password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$".toRegex())
     fun setErrors() {
 
     }
