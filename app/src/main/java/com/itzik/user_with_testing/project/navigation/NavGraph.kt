@@ -1,6 +1,5 @@
 package com.itzik.user_with_testing.project.navigation
 
-import android.util.Log
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -33,7 +32,7 @@ const val HOME_GRAPH = "homeGraph"
 fun SetupNavGraph(
     navHostController: NavHostController,
     userViewModel: UserViewModel,
-    coroutineScope: CoroutineScope,
+    coroutineScope: CoroutineScope
 ) {
     NavHost(
         navController = navHostController,
@@ -94,15 +93,12 @@ fun SetupNavGraph(
                 enterTransition = null,
                 exitTransition = null
             ) {
-                val user = navHostController.previousBackStackEntry?.savedStateHandle?.get<User>("user")
-                Log.d("TAG", "user from nav graph: $user")
-
+                val userModel = navHostController.previousBackStackEntry?.savedStateHandle?.get<User>("user")
                 HomeScreen(
                     navHostController = navHostController,
                     modifier = Modifier,
-                    user = user
+                    user = userModel
                 )
-
             }
         }
     }

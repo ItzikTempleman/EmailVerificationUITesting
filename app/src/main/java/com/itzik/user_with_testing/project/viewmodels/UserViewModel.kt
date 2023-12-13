@@ -1,6 +1,5 @@
 package com.itzik.user_with_testing.project.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.itzik.user_with_testing.project.models.Gender
 import com.itzik.user_with_testing.project.models.User
@@ -46,9 +45,6 @@ class UserViewModel : ViewModel() {
         return Pair(firstAndMiddleNameList, familyName)
     }
 
-    private fun isValidName(): Boolean = fullName.isNotEmpty()
-
-
     fun updateEmail(createEmail: String): String {
         email = createEmail
         return email
@@ -91,7 +87,6 @@ class UserViewModel : ViewModel() {
         return tempAge
     }
 
-
     fun getGenderString(selectedGender: Gender): String {
         gender = when (selectedGender) {
             is Gender.MALE -> "Male"
@@ -101,30 +96,11 @@ class UserViewModel : ViewModel() {
         return gender
     }
 
+    private fun isValidName(): Boolean = fullName.isNotEmpty()
     private fun isValidEmail(): Boolean = email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\$".toRegex())
-
-
-        /**
-        ^ # start-of-string
-        (?=.*[0-9]) # a digit must occur at least once
-        (?=.*[a-z]) # a lower case letter must occur at least once
-        (?=.*[A-Z]) # an upper case letter must occur at least once
-        (?=.*[@#$%^&+=]) # a special character must occur at least once replace with your special characters
-        (?=\\S+$) # no whitespace allowed in the entire string
-        33 .{8,} # anything, at least six places though
-        $ # end-of-string
-         **/
-        private fun isValidPassword(): Boolean = password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$".toRegex())
-    fun setErrors() {
-
-    }
-
+    private fun isValidPassword(): Boolean = password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$".toRegex())
     private fun isPhoneNumberOk(): Boolean = phoneNumber.isNotBlank()
-
-
-    fun isAllFieldsOk(): Boolean =
-        isValidName() && isValidEmail() && isValidPassword()
-                && isPhoneNumberOk() && age > 9
+    fun isAllFieldsOk(): Boolean = isValidName() && isValidEmail() && isValidPassword() && isPhoneNumberOk() && age > 9
 
     fun createUser(): User {
         user =
@@ -139,8 +115,10 @@ class UserViewModel : ViewModel() {
                 phoneNumber,
                 dateSelected
             )
-        Log.d("TAG", "$user")
         return user
+    }
+    fun setErrors() {
+
     }
 }
 

@@ -43,6 +43,6 @@ fun HomeScreen(
             fontStyle = FontStyle.Italic,
             fontWeight = FontWeight.Bold
         )
-         Log.d("TAG", "user from home screen: $user")
+        Log.d("TAG", "user from home screen: $user")
     }
 }

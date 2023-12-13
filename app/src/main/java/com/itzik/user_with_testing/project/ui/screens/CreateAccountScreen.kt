@@ -107,10 +107,11 @@ fun CreateAccountScreen(
             onClick = {
                 if (userViewModel.isAllFieldsOk()) {
                     userViewModel.createUser()
-                    navHostController.currentBackStackEntry?.arguments?.apply {
-                        putSerializable("user", userViewModel.user)
-                    }
-                    navHostController.popBackStack()
+                    val userBundle =userViewModel.user
+                    navHostController.currentBackStackEntry?.savedStateHandle?.set(
+                        key="user",
+                        value=userBundle
+                    )
                     navHostController.navigate(HomeGraph.HomePage.route)
 
                 } else userViewModel.setErrors()
