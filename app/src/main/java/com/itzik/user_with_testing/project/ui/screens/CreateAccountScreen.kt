@@ -20,11 +20,11 @@ import com.itzik.user_with_testing.project.navigation.Dark_Green
 import com.itzik.user_with_testing.project.navigation.HomeGraph
 import com.itzik.user_with_testing.project.navigation.LoginGraph
 import com.itzik.user_with_testing.project.navigation.Yellow
-import com.itzik.user_with_testing.project.ui.screen_sections.CreateUserBottomHalf
-import com.itzik.user_with_testing.project.ui.screen_sections.CreateUserTopHalf
+
 import com.itzik.user_with_testing.project.ui.semantics.GenericButton
 import com.itzik.user_with_testing.project.ui.semantics.GenericRoundedButton
-import com.itzik.user_with_testing.project.ui.shapes.RoundedBackGround
+import com.itzik.user_with_testing.project.ui.semantics.RoundedBackGround
+
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 
@@ -107,11 +107,11 @@ fun CreateAccountScreen(
             onClick = {
                 if (userViewModel.isAllFieldsOk()) {
                     userViewModel.createUser()
-                    val userBundle =userViewModel.user
-                    navHostController.currentBackStackEntry?.savedStateHandle?.set(
-                        key="user",
-                        value=userBundle
-                    )
+                    val userModel=userViewModel.user
+                    if (userModel != null) {
+                        userViewModel.updateUser(userModel)
+                    }
+                    navHostController.popBackStack()
                     navHostController.navigate(HomeGraph.HomePage.route)
 
                 } else userViewModel.setErrors()

@@ -10,7 +10,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import com.itzik.user_with_testing.project.models.User
 import com.itzik.user_with_testing.project.ui.screens.CreateAccountScreen
 import com.itzik.user_with_testing.project.ui.screens.HomeScreen
 import com.itzik.user_with_testing.project.ui.screens.LoginScreen
@@ -32,8 +31,9 @@ const val HOME_GRAPH = "homeGraph"
 fun SetupNavGraph(
     navHostController: NavHostController,
     userViewModel: UserViewModel,
-    coroutineScope: CoroutineScope
+    coroutineScope: CoroutineScope,
 ) {
+
     NavHost(
         navController = navHostController,
         startDestination = SPLASH_GRAPH
@@ -67,7 +67,8 @@ fun SetupNavGraph(
             ) {
                 LoginScreen(
                     navHostController = navHostController,
-                    modifier = Modifier
+                    modifier = Modifier,
+                    userViewModel=userViewModel
                 )
             }
             composable(
@@ -93,11 +94,11 @@ fun SetupNavGraph(
                 enterTransition = null,
                 exitTransition = null
             ) {
-                val userModel = navHostController.previousBackStackEntry?.savedStateHandle?.get<User>("user")
+
                 HomeScreen(
                     navHostController = navHostController,
                     modifier = Modifier,
-                    user = userModel
+                    userViewModel = userViewModel
                 )
             }
         }

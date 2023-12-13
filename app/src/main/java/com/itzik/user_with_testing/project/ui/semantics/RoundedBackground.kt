@@ -1,4 +1,4 @@
-package com.itzik.user_with_testing.project.ui.shapes
+package com.itzik.user_with_testing.project.ui.semantics
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background

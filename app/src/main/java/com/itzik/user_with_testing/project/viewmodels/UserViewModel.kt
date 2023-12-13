@@ -1,8 +1,13 @@
 package com.itzik.user_with_testing.project.viewmodels
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.project.models.Gender
 import com.itzik.user_with_testing.project.models.User
+import com.itzik.user_with_testing.project.navigation.HomeGraph
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -13,7 +18,7 @@ import java.util.Locale
 @HiltViewModel
 class UserViewModel : ViewModel() {
 
-    lateinit var user: User
+    var user by mutableStateOf<User?>(null)
     private var fullName = ""
     private var firstAndMiddleNameList = listOf<String>()
     private var familyName = ""
@@ -97,10 +102,25 @@ class UserViewModel : ViewModel() {
     }
 
     private fun isValidName(): Boolean = fullName.isNotEmpty()
-    private fun isValidEmail(): Boolean = email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\$".toRegex())
-    private fun isValidPassword(): Boolean = password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$".toRegex())
+     fun isValidEmail(): Boolean =
+         email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\$".toRegex())
+
+
+     fun isValidPassword(): Boolean =
+        password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$".toRegex())
+
+
+
+    fun isValidLoginEmail(email:String): Boolean =
+        email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\$".toRegex())
+
+
+    fun isValidLoginPassword(password:String): Boolean =
+        password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$".toRegex())
+
     private fun isPhoneNumberOk(): Boolean = phoneNumber.isNotBlank()
-    fun isAllFieldsOk(): Boolean = isValidName() && isValidEmail() && isValidPassword() && isPhoneNumberOk() && age > 9
+    fun isAllFieldsOk(): Boolean =
+        isValidName() && isValidEmail() && isValidPassword() && isPhoneNumberOk() && age > 9
 
     fun createUser(): User {
         user =
@@ -115,10 +135,20 @@ class UserViewModel : ViewModel() {
                 phoneNumber,
                 dateSelected
             )
-        return user
+        return user as User
     }
+    fun updateUser(newUser:User){
+        user=newUser
+    }
+
     fun setErrors() {
 
+    }
+
+    fun moveToHomeScreen(isSuccessfulData: Boolean, navHostController: NavHostController) {
+        if (isSuccessfulData) {
+            navHostController.navigate(HomeGraph.HomePage.route)
+        }
     }
 }
 

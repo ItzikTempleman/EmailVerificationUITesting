@@ -1,4 +1,4 @@
-package com.itzik.user_with_testing.project.ui.screen_sections
+package com.itzik.user_with_testing.project.ui.screens
 
 import DatePickerDialogScreen
 import androidx.compose.foundation.layout.fillMaxWidth

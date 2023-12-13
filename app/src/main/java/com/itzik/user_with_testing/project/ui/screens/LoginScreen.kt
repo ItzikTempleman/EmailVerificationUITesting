@@ -1,6 +1,8 @@
 package com.itzik.user_with_testing.project.ui.screens
 
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -50,13 +52,8 @@ import com.itzik.user_with_testing.project.navigation.Yellow
 import com.itzik.user_with_testing.project.ui.semantics.GenericButton
 import com.itzik.user_with_testing.project.ui.semantics.GenericOutlinedTextField
 import com.itzik.user_with_testing.project.ui.semantics.GenericRoundedButton
-import com.itzik.user_with_testing.project.ui.shapes.RoundedBackGround
-import com.itzik.user_with_testing.project.utils.isEmailValid
-import com.itzik.user_with_testing.project.utils.isPasswordValid
-import com.itzik.user_with_testing.project.utils.loginMessage
-import com.itzik.user_with_testing.project.utils.moveToHomeScreen
+import com.itzik.user_with_testing.project.ui.semantics.RoundedBackGround
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
-import kotlinx.coroutines.CoroutineScope
 
 
 @ExperimentalMaterial3Api
@@ -64,6 +61,7 @@ import kotlinx.coroutines.CoroutineScope
 fun LoginScreen(
     modifier: Modifier,
     navHostController: NavHostController,
+    userViewModel: UserViewModel
 ) {
     RoundedBackGround(topColor = Dark_Green, bottomColor = White)
     ConstraintLayout(
@@ -208,19 +206,23 @@ fun LoginScreen(
                         .fillMaxWidth()
                         .padding(start = 20.dp, top = 8.dp, end = 20.dp),
                     onClick = {
-                        if (!isEmailValid(email)) {
+
+
+                        if (!userViewModel.isValidLoginEmail(email)) {
                             isEmailError = true
                             emailLabelMessage = "Invalid email"
                         } else isEmailError = false
-                        if (!isPasswordValid(password)) {
+
+
+
+                        if (!userViewModel.isValidLoginPassword(password)) {
                             isPasswordError = true
                             passwordLabelMessage = "Invalid password"
                         } else isPasswordError = false
-                        loginMessage(context, isEmailValid(email) && isPasswordValid(password))
-                        moveToHomeScreen(
-                            isEmailValid(email) && isPasswordValid(password),
-                            navHostController
-                        )
+
+
+                        Toast.makeText(context, if (userViewModel.isValidLoginEmail(email) && userViewModel.isValidLoginPassword(password)) "Successfully logged in" else "Incorrect data, please fix", Toast.LENGTH_SHORT).show()
+                        userViewModel.moveToHomeScreen(userViewModel.isValidLoginEmail(email) && userViewModel.isValidLoginPassword(password), navHostController)
                     },
                     buttonColor = Yellow,
                     text = stringResource(id = R.string.go),
@@ -324,7 +326,13 @@ fun LoginScreen(
                     innerIconColor = White,
                     1.2.dp
                 )
+
             }
+
         }
+
     }
+}
+fun loginMessage(context: Context, isSuccessfulData: Boolean) {
+    Toast.makeText(context, if (isSuccessfulData) "Successfully logged in" else "Incorrect data, please fix", Toast.LENGTH_SHORT).show()
 }
