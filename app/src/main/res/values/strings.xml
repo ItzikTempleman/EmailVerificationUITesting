@@ -13,7 +13,7 @@
     <string name="enter_password">Enter your password</string>
     <string name="log_in">Sign in</string>
     <string name="sign_up">Register</string>
-    <string name="home_screen">Home screen</string>
+    <string name="home_screen">Profile info</string>
     <string name="success">Successfully logged in</string>
     <string name="fail">Incorrect data, please fix</string>
     <string name="full_name">Enter full name</string>

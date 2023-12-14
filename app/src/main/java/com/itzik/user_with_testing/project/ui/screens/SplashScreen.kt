@@ -28,7 +28,6 @@ import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.navigation.Dark_Green
 import com.itzik.user_with_testing.project.navigation.LoginGraph
 import com.itzik.user_with_testing.project.ui.semantics.RoundedBackGround
-
 import kotlinx.coroutines.delay
 
 
@@ -54,6 +53,7 @@ fun SplashScreen(
 
         navHostController.popBackStack()
         navHostController.navigate(LoginGraph.LoginPage.route)
+        //navHostController.navigate(HomeGraph.HomePage.route)
     }
     RoundedBackGround(Dark_Green, White)
     ConstraintLayout(

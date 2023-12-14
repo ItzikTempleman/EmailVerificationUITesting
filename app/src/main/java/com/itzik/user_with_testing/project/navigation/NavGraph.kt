@@ -20,7 +20,7 @@ import kotlinx.coroutines.CoroutineScope
 val Dark_Green = Color(0xFF007d74)
 val Light_Green = Color(0xFF64DB95)
 val Yellow = Color(0xFFFFC107)
-
+val Light_Blue = Color(0xFF00BCD4)
 
 const val SPLASH_GRAPH = "splashGraph"
 const val LOGIN_GRAPH = "loginGraph"
