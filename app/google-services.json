@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "388626544561",
+    "project_id": "fir-realtimekotlin-b5dfb",
+    "storage_bucket": "fir-realtimekotlin-b5dfb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:388626544561:android:d1da6262e8db4ebc666f90",
+        "android_client_info": {
+          "package_name": "com.itzik.user_with_testing"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDroi3rH-u8KzowyfPHo6d9gqBf0fnBlK4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

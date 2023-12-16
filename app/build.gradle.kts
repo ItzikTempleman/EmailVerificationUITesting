@@ -1,5 +1,6 @@
 plugins {
     id("com.android.application")
+    id("com.google.gms.google-services")
     id("org.jetbrains.kotlin.android")
     id ("kotlin-parcelize")
 }
@@ -68,6 +69,12 @@ dependencies {
     implementation ("androidx.navigation:navigation-compose:2.7.5")
     implementation ("me.onebone:toolbar-compose:2.3.5")
     implementation ("androidx.compose.runtime:runtime-livedata:1.6.0-beta02")
+
+
+    //firebase
+    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
+    implementation("com.google.firebase:firebase-database-ktx:20.3.0")
+
 
     //coroutines
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")

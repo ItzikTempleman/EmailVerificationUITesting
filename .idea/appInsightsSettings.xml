@@ -27,10 +27,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.itzik.user_with_testing" />
+                  <option name="mobileSdkAppId" value="1:388626544561:android:d1da6262e8db4ebc666f90" />
+                  <option name="projectId" value="fir-realtimekotlin-b5dfb" />
+                  <option name="projectNumber" value="388626544561" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
