@@ -20,13 +20,12 @@ import com.itzik.user_with_testing.project.navigation.Dark_Green
 import com.itzik.user_with_testing.project.navigation.HomeGraph
 import com.itzik.user_with_testing.project.navigation.LoginGraph
 import com.itzik.user_with_testing.project.navigation.Yellow
-
 import com.itzik.user_with_testing.project.ui.semantics.GenericButton
 import com.itzik.user_with_testing.project.ui.semantics.GenericRoundedButton
 import com.itzik.user_with_testing.project.ui.semantics.RoundedBackGround
-
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun CreateAccountScreen(
@@ -105,16 +104,19 @@ fun CreateAccountScreen(
                 .fillMaxWidth()
                 .padding(start = 32.dp, end = 32.dp, top = 60.dp),
             onClick = {
-                if (userViewModel.isAllFieldsOk()) {
-                    userViewModel.createUser()
-                    val userModel=userViewModel.user
-                    if (userModel != null) {
-                        userViewModel.updateUser(userModel)
-                    }
-                    navHostController.popBackStack()
-                    navHostController.navigate(HomeGraph.HomePage.route)
+                coroutineScope.launch {
+                    if (userViewModel.isAllFieldsOk()) {
+                        userViewModel.createUser()
+                        val userModel = userViewModel.user
+                        if (userModel != null) {
+                            userViewModel.updateUser(userModel)
+                           // userViewModel.saveUser(userModel)
+                        }
+                        navHostController.popBackStack()
+                        navHostController.navigate(HomeGraph.HomePage.route)
 
-                } else userViewModel.setErrors()
+                    } else userViewModel.setErrors()
+                }
             },
             buttonColor = Yellow,
             text = stringResource(id = R.string.create_account),

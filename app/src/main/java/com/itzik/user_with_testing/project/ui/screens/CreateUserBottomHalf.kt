@@ -30,7 +30,7 @@ fun CreateUserBottomHalf(
     modifier: Modifier,
     userViewModel: UserViewModel,
 
-) {
+    ) {
     var newPhoneNumber by remember { mutableStateOf("") }
     val newPhoneNumberText = stringResource(id = R.string.enter_new_phone_number)
     val newPhoneNumberMessage by remember { mutableStateOf(newPhoneNumberText) }

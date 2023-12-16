@@ -32,7 +32,8 @@ fun SetupNavGraph(
     navHostController: NavHostController,
     userViewModel: UserViewModel,
     coroutineScope: CoroutineScope,
-) {
+
+    ) {
 
     NavHost(
         navController = navHostController,

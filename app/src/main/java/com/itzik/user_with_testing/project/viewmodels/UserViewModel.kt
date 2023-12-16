@@ -14,9 +14,14 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Locale
+import javax.inject.Inject
+
 
 @HiltViewModel
-class UserViewModel : ViewModel() {
+class UserViewModel
+@Inject constructor(
+   // private val repository: UserRepository
+) : ViewModel() {
 
     var user by mutableStateOf<User?>(null)
     private var fullName = ""
@@ -141,6 +146,10 @@ class UserViewModel : ViewModel() {
         user=newUser
     }
 
+
+    //suspend fun saveUser(user: User)= repository.saveUser(user)
+
+
     fun setErrors() {
 
     }
@@ -151,5 +160,3 @@ class UserViewModel : ViewModel() {
         }
     }
 }
-
-

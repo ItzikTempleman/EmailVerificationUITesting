@@ -8,12 +8,13 @@ import androidx.compose.material.icons.filled.Transgender
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.itzik.user_with_testing.project.utils.Constants.USER_TABLE
 import kotlinx.parcelize.Parcelize
 import java.io.Serializable
 
 
 @Parcelize
-@Entity(tableName = "user_table")
+@Entity(tableName = USER_TABLE)
 data class User(
     @PrimaryKey(autoGenerate = true)
     val id:Long=0,
