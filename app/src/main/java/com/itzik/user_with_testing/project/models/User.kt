@@ -10,14 +10,13 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.itzik.user_with_testing.project.utils.Constants.USER_TABLE
 import kotlinx.parcelize.Parcelize
-import java.io.Serializable
 
 
 @Parcelize
 @Entity(tableName = USER_TABLE)
 data class User(
     @PrimaryKey(autoGenerate = true)
-    val id:Long=0,
+    val id:Int=0,
     val firstName: List<String>,
     val familyName: String,
     val age: Int,
@@ -26,7 +25,7 @@ data class User(
     val password: String,
     val phoneNumber:String,
     val birthDate:String
-): Parcelable, Serializable
+): Parcelable
 
 sealed class Gender(val name:String, val icon: ImageVector) {
     object MALE : Gender(name="Male", icon = Icons.Default.Male)
