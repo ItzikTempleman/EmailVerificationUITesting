@@ -9,7 +9,7 @@ import com.itzik.user_with_testing.project.utils.Constants.USER_TABLE
 @Dao
 interface UserDao {
     @Query ("SELECT*FROM $USER_TABLE")
-    suspend fun getUser(): MutableList<User>
+    suspend fun getUsers(): MutableList<User>
 
     @Insert
     suspend fun saveUser(user:User)

@@ -20,7 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class UserViewModel
 @Inject constructor(
- //  private val repository: UserRepository
+    //private val repository: UserRepository
 ) : ViewModel() {
 
     var user by mutableStateOf<User?>(null)
@@ -37,6 +37,18 @@ class UserViewModel
     private val timeFormat = SimpleDateFormat(pattern, Locale.US)
     private var today = timeFormat.format(Calendar.getInstance().time)
 
+
+//    suspend fun saveUser(user: User) = repository.saveUser(user)
+//
+//    suspend fun getAllUsers(): Flow<MutableList<User>> {
+//        val userList = flow {
+//            val updatedUserList = repository.getUsers()
+//            if (updatedUserList.isNotEmpty()) {
+//                emit(updatedUserList)
+//            } else return@flow
+//        }
+//        return userList
+//    }
 
     fun splitUserNameIntoFirstAndFamilyName(fullNameAsParam: String): Pair<List<String>, String> {
         val nameParts = fullNameAsParam.split(" ")
@@ -107,20 +119,19 @@ class UserViewModel
     }
 
     private fun isValidName(): Boolean = fullName.isNotEmpty()
-     fun isValidEmail(): Boolean =
-         email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\$".toRegex())
-
-
-     fun isValidPassword(): Boolean =
-        password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$".toRegex())
-
-
-
-    fun isValidLoginEmail(email:String): Boolean =
+    fun isValidEmail(): Boolean =
         email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\$".toRegex())
 
 
-    fun isValidLoginPassword(password:String): Boolean =
+    fun isValidPassword(): Boolean =
+        password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$".toRegex())
+
+
+    fun isValidLoginEmail(email: String): Boolean =
+        email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\$".toRegex())
+
+
+    fun isValidLoginPassword(password: String): Boolean =
         password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$".toRegex())
 
     private fun isPhoneNumberOk(): Boolean = phoneNumber.isNotBlank()
@@ -142,12 +153,10 @@ class UserViewModel
             )
         return user as User
     }
-    fun updateUser(newUser:User){
-        user=newUser
+
+    fun updateUser(newUser: User) {
+        user = newUser
     }
-
-
-    //suspend fun saveUser(user: User)= repository.saveUser(user)
 
 
     fun setErrors() {

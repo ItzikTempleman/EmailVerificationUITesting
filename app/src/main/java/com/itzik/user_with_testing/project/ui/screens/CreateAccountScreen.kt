@@ -9,17 +9,18 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
-import com.itzik.user_with_testing.project.navigation.Dark_Green
 import com.itzik.user_with_testing.project.navigation.HomeGraph
+import com.itzik.user_with_testing.project.navigation.Light_Green
 import com.itzik.user_with_testing.project.navigation.LoginGraph
-import com.itzik.user_with_testing.project.navigation.Yellow
 import com.itzik.user_with_testing.project.ui.semantics.GenericButton
 import com.itzik.user_with_testing.project.ui.semantics.GenericRoundedButton
 import com.itzik.user_with_testing.project.ui.semantics.RoundedBackGround
@@ -32,10 +33,10 @@ fun CreateAccountScreen(
     coroutineScope: CoroutineScope,
     modifier: Modifier,
     navHostController: NavHostController,
-    userViewModel: UserViewModel,
+    userViewModel: UserViewModel
 ) {
     RoundedBackGround(
-        topColor = Dark_Green,
+        topColor = White,
         bottomColor = White
     )
 
@@ -57,20 +58,20 @@ fun CreateAccountScreen(
             },
             outerTint = White,
             iconTint = White,
-            innerIconColor = Dark_Green,
+            innerIconColor = Light_Green,
             1.2.dp
         )
         Text(
             text = stringResource(id = R.string.create_new),
             modifier = modifier
                 .constrainAs(title) {
-                    start.linkTo(parent.start)
+                    start.linkTo(backBtn.end)
                     top.linkTo(backBtn.top)
-                    end.linkTo(parent.end)
                 }
-                .padding(start = 20.dp, end = 20.dp, top = 20.dp),
-            color = White,
-            fontSize = 32.sp
+                .padding( top = 20.dp),
+            color = Black,
+            fontSize = 24.sp,
+            fontStyle = FontStyle.Italic
         )
 
         CreateUserTopHalf(
@@ -81,7 +82,7 @@ fun CreateAccountScreen(
                 }
                 .height(420.dp)
                 .fillMaxWidth()
-                .padding(top = 20.dp, start = 20.dp, end = 20.dp),
+                .padding(top = 20.dp, start = 12.dp, end = 12.dp),
             navHostController = navHostController,
             userViewModel = userViewModel
         )
@@ -91,7 +92,7 @@ fun CreateAccountScreen(
                 .constrainAs(dateAndPhoneLayout) {
                     top.linkTo(basicInfoCard.bottom)
                 }
-                .padding(horizontal = 20.dp),
+                .padding(horizontal = 12.dp),
             userViewModel = userViewModel,
 
             )
@@ -118,10 +119,10 @@ fun CreateAccountScreen(
                     } else userViewModel.setErrors()
                 }
             },
-            buttonColor = Yellow,
+            buttonColor = Light_Green,
             text = stringResource(id = R.string.create_account),
             textColor = White,
-            roundedRadius = 4.dp
+            roundedRadius = 36.dp
         )
     }
 

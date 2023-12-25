@@ -17,7 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
-import com.itzik.user_with_testing.project.navigation.Dark_Green
 import com.itzik.user_with_testing.project.navigation.LoginGraph
 import com.itzik.user_with_testing.project.ui.semantics.RoundedBackGround
 import kotlinx.coroutines.delay
@@ -55,7 +54,7 @@ fun SplashScreen(
         navHostController.navigate(LoginGraph.LoginPage.route)
         //navHostController.navigate(HomeGraph.HomePage.route)
     }
-    RoundedBackGround(Dark_Green, White)
+    RoundedBackGround(White, White)
     ConstraintLayout(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -72,7 +71,7 @@ fun SplashScreen(
                 }
                 .padding(top = 20.dp)
                 .alpha(alpha = alphaAnim.value),
-            color = Color.White,
+            color = Black,
             fontSize = 36.sp,
 
         )
@@ -87,7 +86,7 @@ fun SplashScreen(
                 }
                 .padding(8.dp)
                 .alpha(alpha = alphaAnim.value),
-            color = Color.White,
+            color = Black,
             fontSize = 32.sp,
 
         )
@@ -95,9 +94,9 @@ fun SplashScreen(
         Card(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 20.dp, vertical = 130.dp),
+                .padding(horizontal = 12.dp, vertical = 130.dp),
             colors = CardDefaults.cardColors(
-                containerColor = Color.White
+                containerColor = White
             ),
             elevation = CardDefaults.cardElevation(
                 defaultElevation = 10.dp

@@ -1,7 +1,6 @@
 package com.itzik.user_with_testing.project.ui.screens
 
 
-import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -31,6 +30,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
@@ -48,7 +48,6 @@ import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.navigation.Dark_Green
 import com.itzik.user_with_testing.project.navigation.Light_Green
 import com.itzik.user_with_testing.project.navigation.LoginGraph
-import com.itzik.user_with_testing.project.navigation.Yellow
 import com.itzik.user_with_testing.project.ui.semantics.GenericButton
 import com.itzik.user_with_testing.project.ui.semantics.GenericOutlinedTextField
 import com.itzik.user_with_testing.project.ui.semantics.GenericRoundedButton
@@ -63,7 +62,7 @@ fun LoginScreen(
     navHostController: NavHostController,
     userViewModel: UserViewModel
 ) {
-    RoundedBackGround(topColor = Dark_Green, bottomColor = White)
+    RoundedBackGround(topColor = White, bottomColor = White)
     ConstraintLayout(
         modifier = modifier.fillMaxSize()
     ) {
@@ -78,13 +77,13 @@ fun LoginScreen(
                     top.linkTo(parent.top)
                 },
             text = stringResource(id = R.string.log_in),
-            color = White,
+            color = Black,
             fontSize = 32.sp
         )
         Card(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 20.dp, vertical = 130.dp),
+                .padding(horizontal = 12.dp, vertical = 130.dp),
             colors = CardDefaults.cardColors(
                 containerColor = White
             ),
@@ -224,9 +223,9 @@ fun LoginScreen(
                         Toast.makeText(context, if (userViewModel.isValidLoginEmail(email) && userViewModel.isValidLoginPassword(password)) "Successfully logged in" else "Incorrect data, please fix", Toast.LENGTH_SHORT).show()
                         userViewModel.moveToHomeScreen(userViewModel.isValidLoginEmail(email) && userViewModel.isValidLoginPassword(password), navHostController)
                     },
-                    buttonColor = Yellow,
+                    buttonColor = Light_Green,
                     text = stringResource(id = R.string.go),
-                    roundedRadius = 4.dp,
+                    roundedRadius = 36.dp,
                     textColor = White
                     )
                 TextButton(
@@ -332,7 +331,4 @@ fun LoginScreen(
         }
 
     }
-}
-fun loginMessage(context: Context, isSuccessfulData: Boolean) {
-    Toast.makeText(context, if (isSuccessfulData) "Successfully logged in" else "Incorrect data, please fix", Toast.LENGTH_SHORT).show()
 }

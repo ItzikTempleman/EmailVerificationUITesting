@@ -22,10 +22,12 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             userViewModel = viewModel()
+
+
             val coroutineScope = rememberCoroutineScope()
 
             EmailVerificationUITestingTheme {
-                SetupNavGraph(navHostController = rememberNavController(), userViewModel = userViewModel, coroutineScope = coroutineScope,)
+                SetupNavGraph(navHostController = rememberNavController(), userViewModel = userViewModel, coroutineScope = coroutineScope)
             }
         }
     }

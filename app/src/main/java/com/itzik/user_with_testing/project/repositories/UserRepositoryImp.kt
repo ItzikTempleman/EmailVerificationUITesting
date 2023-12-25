@@ -11,7 +11,7 @@ class UserRepositoryImp @Inject constructor(
     private val userDao: UserDao
 ) : UserRepository {
 
-    override suspend fun getUser(): MutableList<User> = userDao.getUser()
+    override suspend fun getUsers(): MutableList<User> = userDao.getUsers()
 
     override suspend fun saveUser(user: User) =userDao.saveUser(user)
 

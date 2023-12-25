@@ -24,6 +24,8 @@ android {
         }
     }
 
+
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -40,6 +42,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -58,7 +61,6 @@ android {
 }
 
 dependencies {
-
 
     implementation ("com.google.android.material:material:1.11.0")
     implementation ("androidx.compose.material:material:1.5.4")
@@ -92,9 +94,14 @@ dependencies {
     implementation ("com.squareup.okhttp3:logging-interceptor:4.2.1")
 
     //view model
-    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
-    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.2")
+    implementation ("androidx.lifecycle:lifecycle-common-java8:*version*")
+
 
     //coil
     implementation ("io.coil-kt:coil-compose:2.5.0")
@@ -102,18 +109,14 @@ dependencies {
     //room
     implementation ("androidx.room:room-ktx:2.6.1")
     implementation ("androidx.room:room-runtime:2.6.1")
-
+    annotationProcessor("androidx.room:room-compiler:2.6.1")
 
     //dagger hilt
     implementation ("com.google.dagger:hilt-android:2.48.1")
-    
-//    implementation ("androidx.hilt:hilt-compiler:1.1.0")
-//    implementation  ("com.google.dagger:hilt-android-compiler:2.44")
+    annotationProcessor ("androidx.hilt:hilt-compiler:1.1.0")
+    annotationProcessor  ("com.google.dagger:hilt-android-compiler:2.44")
 
-
-
-
-
+    //datepicker
     implementation("io.github.vanpra.compose-material-dialogs:datetime:0.9.0")
 
 

@@ -39,7 +39,7 @@ fun GenericButton(
         shape = RoundedCornerShape(roundedRadius),
         colors = ButtonDefaults.buttonColors(
             containerColor = buttonColor,
-            contentColor = Color.White
+            contentColor = White
         )
     ) {
         if (imageVector != null) {
