@@ -8,6 +8,7 @@ import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.project.models.Gender
 import com.itzik.user_with_testing.project.models.User
 import com.itzik.user_with_testing.project.navigation.HomeGraph
+import com.itzik.user_with_testing.project.repositories.UserRepositoryImp
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -20,7 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class UserViewModel
 @Inject constructor(
-    //private val repository: UserRepository
+    private val repository: UserRepositoryImp
 ) : ViewModel() {
 
     var user by mutableStateOf<User?>(null)

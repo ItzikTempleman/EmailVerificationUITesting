@@ -24,7 +24,7 @@ object UserModule {
 
     @Provides
     @Singleton
-    fun provideUserRepository(userDao: UserDao): UserRepository = UserRepositoryImp(userDao)
+    fun provideUserRepositoryImp(userDao: UserDao): UserRepository = UserRepositoryImp(userDao)
 
 
     @Provides
