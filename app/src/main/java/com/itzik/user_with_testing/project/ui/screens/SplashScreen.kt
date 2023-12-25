@@ -4,9 +4,6 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -52,74 +49,36 @@ fun SplashScreen(
 
         navHostController.popBackStack()
         navHostController.navigate(LoginGraph.LoginPage.route)
-        //navHostController.navigate(HomeGraph.HomePage.route)
     }
     RoundedBackGround(White, White)
     ConstraintLayout(
         modifier = Modifier.fillMaxSize()
     ) {
 
-        val (title, title2) = createRefs()
-
-        Text(
-            text = stringResource(id = R.string.app_name),
-            modifier = modifier
-                .constrainAs(title) {
-                    start.linkTo(parent.start)
-                    top.linkTo(parent.top)
-                    end.linkTo(parent.end)
-                }
-                .padding(top = 20.dp)
-                .alpha(alpha = alphaAnim.value),
-            color = Black,
-            fontSize = 36.sp,
-
-        )
+        val (title, progressBar) = createRefs()
 
         Text(
             text = stringResource(id = R.string.welcome),
             modifier = modifier
-                .constrainAs(title2) {
+                .constrainAs(title) {
                     start.linkTo(parent.start)
-                    top.linkTo(title.bottom)
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
                     end.linkTo(parent.end)
                 }
-                .padding(8.dp)
                 .alpha(alpha = alphaAnim.value),
             color = Black,
-            fontSize = 32.sp,
-
+            fontSize = 32.sp
         )
 
-        Card(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 12.dp, vertical = 130.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = White
-            ),
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 10.dp
-            ),
-            shape = RoundedCornerShape(20.dp)
-        ) {
-
-            ConstraintLayout(
-                modifier = Modifier.fillMaxSize()
-            ) {
-                val (progressBar) = createRefs()
-
-
-                CircularProgressIndicator(
-                    modifier = modifier
-                        .constrainAs(progressBar) {
-                            start.linkTo(parent.start)
-                            end.linkTo(parent.end)
-                            top.linkTo(parent.top)
-                            bottom.linkTo(parent.bottom)
-                        }
-                )
-            }
-        }
+        CircularProgressIndicator(
+            modifier = modifier
+                .constrainAs(progressBar) {
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    top.linkTo(title.bottom)
+                }
+                .padding(top = 30.dp)
+        )
     }
 }
