@@ -18,21 +18,27 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class AppModule {
+object AppModule {
 
-    @Singleton
     @Provides
-    fun provideUserRepository(userDao: UserDao): IUserRepository = UserRepositoryImp(userDao)
-
     @Singleton
-    @Provides
-    fun provideAppDatabase(@ApplicationContext context: Context): UserDatabase =
-        Room.databaseBuilder(context, UserDatabase::class.java, USER_DATABASE)
-            .addTypeConverter(UserConverter::class.java).allowMainThreadQueries()
-            .fallbackToDestructiveMigration().build()
+    fun provideUserConverter(): UserConverter = UserConverter()
 
+//    @Singleton
+//    @Provides
+//    fun provideUserRepository(userDao: UserDao): IUserRepository = UserRepositoryImp(userDao)
+
+    @Provides
+    @Singleton
+    fun provideUserRepository(repositoryImpl: UserRepositoryImp): IUserRepository = repositoryImpl
+
+    
     @Singleton
     @Provides
     fun provideDao(userDatabase: UserDatabase): UserDao = userDatabase.getDao()
+    @Singleton
+    @Provides
+    fun provideAppDatabase(@ApplicationContext context: Context) =
+        Room.databaseBuilder(context, UserDatabase::class.java, USER_DATABASE).build()
 
 }

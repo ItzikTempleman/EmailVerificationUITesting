@@ -21,6 +21,6 @@ class UserConverter {
     fun fromUser(user: User): String = Gson().toJson(user)
 
     @TypeConverter
-    fun toUser(user: String): User = Gson().fromJson(user, object : TypeToken<User>() {}.type)
+    fun toUser(userString: String): User = Gson().fromJson(userString, User::class.java)
 
 }
