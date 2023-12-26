@@ -4,11 +4,10 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.itzik.user_with_testing.project.models.User
-import com.itzik.user_with_testing.project.utils.Converters
+import com.itzik.user_with_testing.project.utils.UserConverter
 
-@Database(entities = [User::class], version = 1)
-
-@TypeConverters(Converters::class)
+@Database(entities = [User::class], version = 1, exportSchema = false)
+@TypeConverters(UserConverter::class)
 
 abstract class UserDatabase :RoomDatabase(){
     abstract fun getDao() :UserDao

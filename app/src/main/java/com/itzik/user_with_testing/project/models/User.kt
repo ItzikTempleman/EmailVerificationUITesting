@@ -28,8 +28,8 @@ data class User(
 ): Parcelable
 
 sealed class Gender(val name:String, val icon: ImageVector) {
-    object MALE : Gender(name="Male", icon = Icons.Default.Male)
-    object FEMALE : Gender(name="Female", icon = Icons.Default.Female)
-    object OTHER : Gender(name="Other", icon = Icons.Default.Transgender)
+    data object MALE : Gender(name="Male", icon = Icons.Default.Male)
+    data object FEMALE : Gender(name="Female", icon = Icons.Default.Female)
+    data object OTHER : Gender(name="Other", icon = Icons.Default.Transgender)
 }
 

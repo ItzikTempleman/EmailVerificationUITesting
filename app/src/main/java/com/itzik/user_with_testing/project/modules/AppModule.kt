@@ -4,10 +4,10 @@ import android.content.Context
 import androidx.room.Room
 import com.itzik.user_with_testing.project.data.UserDao
 import com.itzik.user_with_testing.project.data.UserDatabase
-import com.itzik.user_with_testing.project.repositories.UserRepository
+import com.itzik.user_with_testing.project.repositories.IUserRepository
 import com.itzik.user_with_testing.project.repositories.UserRepositoryImp
 import com.itzik.user_with_testing.project.utils.Constants.USER_DATABASE
-import com.itzik.user_with_testing.project.utils.Converters
+import com.itzik.user_with_testing.project.utils.UserConverter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,24 +18,21 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object UserModule {
+class AppModule {
 
-    private val typeConverter = Converters()
-
-    @Provides
     @Singleton
-    fun provideUserRepositoryImp(userDao: UserDao): UserRepository = UserRepositoryImp(userDao)
-
-
     @Provides
+    fun provideUserRepository(userDao: UserDao): IUserRepository = UserRepositoryImp(userDao)
+
     @Singleton
-    fun provideDatabase(@ApplicationContext context: Context) =
+    @Provides
+    fun provideAppDatabase(@ApplicationContext context: Context): UserDatabase =
         Room.databaseBuilder(context, UserDatabase::class.java, USER_DATABASE)
-            .allowMainThreadQueries().fallbackToDestructiveMigration().build()
+            .addTypeConverter(UserConverter::class.java).allowMainThreadQueries()
+            .fallbackToDestructiveMigration().build()
 
-
-    @Provides
     @Singleton
+    @Provides
     fun provideDao(userDatabase: UserDatabase): UserDao = userDatabase.getDao()
 
 }
