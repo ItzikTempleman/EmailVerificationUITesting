@@ -6,7 +6,6 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.itzik.user_with_testing.project.models.User
 
-
 @ProvidedTypeConverter
 class UserConverter {
 
@@ -21,6 +20,6 @@ class UserConverter {
     fun fromUser(user: User): String = Gson().toJson(user)
 
     @TypeConverter
-    fun toUser(userString: String): User = Gson().fromJson(userString, User::class.java)
+    fun toUser(userString: String): User = Gson().fromJson(userString, object : TypeToken<User>() {}.type)
 
 }

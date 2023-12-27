@@ -111,7 +111,7 @@ fun CreateAccountScreen(
                         val userModel = userViewModel.user
                         if (userModel != null) {
                             userViewModel.updateUser(userModel)
-                           // userViewModel.saveUser(userModel)
+                            userViewModel.saveUser(userModel)
                         }
                         navHostController.popBackStack()
                         navHostController.navigate(HomeGraph.HomePage.route)

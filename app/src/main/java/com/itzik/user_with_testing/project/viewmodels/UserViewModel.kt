@@ -10,6 +10,8 @@ import com.itzik.user_with_testing.project.models.User
 import com.itzik.user_with_testing.project.navigation.HomeGraph
 import com.itzik.user_with_testing.project.repositories.IUserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -39,17 +41,17 @@ class UserViewModel
     private var today = timeFormat.format(Calendar.getInstance().time)
 
 
-//    suspend fun saveUser(user: User) = repository.saveUser(user)
-//
-//    suspend fun getAllUsers(): Flow<MutableList<User>> {
-//        val userList = flow {
-//            val updatedUserList = repository.getUsers()
-//            if (updatedUserList.isNotEmpty()) {
-//                emit(updatedUserList)
-//            } else return@flow
-//        }
-//        return userList
-//    }
+    suspend fun saveUser(user: User) = repository.saveUser(user)
+
+    suspend fun getAllUsers(): Flow<List<User>> {
+        val userList = flow {
+            val updatedUserList = repository.getUsers()
+            if (updatedUserList.isNotEmpty()) {
+                emit(updatedUserList)
+            } else return@flow
+        }
+        return userList
+    }
 
     fun splitUserNameIntoFirstAndFamilyName(fullNameAsParam: String): Pair<List<String>, String> {
         val nameParts = fullNameAsParam.split(" ")

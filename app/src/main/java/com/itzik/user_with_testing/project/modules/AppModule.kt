@@ -24,9 +24,6 @@ object AppModule {
     @Singleton
     fun provideUserConverter(): UserConverter = UserConverter()
 
-//    @Singleton
-//    @Provides
-//    fun provideUserRepository(userDao: UserDao): IUserRepository = UserRepositoryImp(userDao)
 
     @Provides
     @Singleton
@@ -36,9 +33,11 @@ object AppModule {
     @Singleton
     @Provides
     fun provideDao(userDatabase: UserDatabase): UserDao = userDatabase.getDao()
+
     @Singleton
     @Provides
-    fun provideAppDatabase(@ApplicationContext context: Context) =
-        Room.databaseBuilder(context, UserDatabase::class.java, USER_DATABASE).build()
+    fun provideDatabase(@ApplicationContext applicationContext: Context) =
+        Room.databaseBuilder(applicationContext, UserDatabase::class.java, USER_DATABASE)
+            .addTypeConverter(UserConverter()).build()
 
 }

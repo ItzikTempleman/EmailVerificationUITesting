@@ -61,7 +61,8 @@ fun HomeScreen(
                 modifier = modifier
                     .constrainAs(familyName) {
                         start.linkTo(fullFirstName.end)
-                        top.linkTo(parent.top)
+                        top.linkTo(fullFirstName.top)
+                        bottom.linkTo(fullFirstName.bottom)
                     }
                     .padding(8.dp),
                 text = user.familyName

@@ -8,7 +8,6 @@ import com.itzik.user_with_testing.project.utils.UserConverter
 
 @Database(entities = [User::class], version = 1)
 @TypeConverters(UserConverter::class)
-
 abstract class UserDatabase :RoomDatabase(){
     abstract fun getDao() :UserDao
 }
