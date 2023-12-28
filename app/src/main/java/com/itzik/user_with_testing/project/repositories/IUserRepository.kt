@@ -6,4 +6,6 @@ interface IUserRepository {
     suspend fun getUsers(): List<User>
 
     suspend fun saveUser(user: User)
+
+    suspend fun updateIsSignedIn(user:User)
 }

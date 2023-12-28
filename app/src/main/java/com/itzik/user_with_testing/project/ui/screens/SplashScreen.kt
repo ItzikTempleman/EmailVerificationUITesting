@@ -1,5 +1,6 @@
 package com.itzik.user_with_testing.project.ui.screens
 
+import android.util.Log
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.fillMaxSize
@@ -60,12 +61,14 @@ fun SplashScreen(
         coroutineScope.launch {
             userViewModel.getUsers().collect {
                 userList = it
+                Log.d("TAG", "$it")
             }
-                if(userList.isEmpty()){
-                    navHostController.navigate(LoginGraph.LoginPage.route)
-                }else navHostController.navigate(HomeGraph.HomePage.route)
+            if (userList.isNotEmpty() && userList.first().isSignedIn) {
+                navHostController.navigate(HomeGraph.HomePage.route)
+            } else
+                navHostController.navigate(LoginGraph.LoginPage.route)
             }
-        }
+    }
 
 
     RoundedBackGround(White, White)

@@ -23,7 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class UserViewModel
 @Inject constructor(
-    private val repository: IUserRepository
+    private val repository: IUserRepository,
 ) : ViewModel() {
 
     var user by mutableStateOf<User?>(null)
@@ -53,6 +53,9 @@ class UserViewModel
         return userList
     }
 
+    suspend fun updateIsSignIn(user: User) = repository.updateIsSignedIn(user)
+
+
     fun splitUserNameIntoFirstAndFamilyName(fullNameAsParam: String): Pair<List<String>, String> {
         val nameParts = fullNameAsParam.split(" ")
         fullName = fullNameAsParam
@@ -69,6 +72,7 @@ class UserViewModel
         }
         return Pair(firstAndMiddleNameList, familyName)
     }
+
 
     fun updateEmail(createEmail: String): String {
         email = createEmail

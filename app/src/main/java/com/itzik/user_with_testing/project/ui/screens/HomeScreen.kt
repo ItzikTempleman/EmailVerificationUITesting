@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -15,12 +16,15 @@ import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.models.User
+import com.itzik.user_with_testing.project.navigation.Light_Green
+import com.itzik.user_with_testing.project.navigation.LoginGraph
 import com.itzik.user_with_testing.project.ui.semantics.RoundedBackGround
 import com.itzik.user_with_testing.project.utils.mockEmptyUser
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
@@ -50,7 +54,7 @@ fun HomeScreen(
     ConstraintLayout(
         modifier = Modifier.fillMaxSize()
     ) {
-        val (title, fullFirstName, familyName, age, birthDate, email, gender, phoneNumber) = createRefs()
+        val (title, logOut, fullFirstName, familyName, age, birthDate, email, gender, phoneNumber) = createRefs()
 
         Text(
             text = stringResource(id = R.string.home),
@@ -64,6 +68,30 @@ fun HomeScreen(
             fontSize = 24.sp,
             fontStyle = FontStyle.Italic
         )
+        TextButton(
+
+            onClick = {
+                navHostController.navigate(LoginGraph.LoginPage.route)
+                coroutineScope.launch {
+                    user.isSignedIn = false
+                    userViewModel.updateIsSignIn(user)
+                }
+            },
+            modifier = modifier
+                .constrainAs(logOut) {
+                    end.linkTo(parent.end)
+                    top.linkTo(parent.top)
+                }
+                .padding(16.dp)
+        ) {
+            Text(
+                text = stringResource(id = R.string.sign_out),
+                color = Light_Green,
+                fontSize = 20.sp,
+                fontStyle = FontStyle.Italic,
+                fontWeight = FontWeight.Bold
+            )
+        }
 
         if (userList.isNotEmpty()) {
             user = userList[0]
@@ -75,7 +103,7 @@ fun HomeScreen(
                     top.linkTo(title.bottom)
                 }
                 .padding(8.dp),
-            text = user.firstName[0] + " " + user.firstName[1]
+            text = user.firstName.first() + " " + user.firstName[1]
         )
         Text(
             modifier = modifier

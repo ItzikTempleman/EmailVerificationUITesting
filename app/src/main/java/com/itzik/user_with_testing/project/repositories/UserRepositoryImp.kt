@@ -14,5 +14,6 @@ class UserRepositoryImp @Inject constructor(
     override suspend fun getUsers(): List<User> = userDao.getUsers()
 
     override suspend fun saveUser(user: User) =userDao.saveUser(user)
+    override suspend fun updateIsSignedIn(user: User) =userDao.updateIsSigneIn(user)
 
 }

@@ -16,19 +16,21 @@ import kotlinx.parcelize.Parcelize
 @Entity(tableName = USER_TABLE)
 data class User(
     @PrimaryKey(autoGenerate = true)
-    val id:Int=0,
+    val id: Int = 0,
     val firstName: List<String>,
     val familyName: String,
     val age: Int,
     val gender: String,
     val email: String,
     val password: String,
-    val phoneNumber:String,
-    val birthDate:String
-): Parcelable
-sealed class Gender(val name:String, val icon: ImageVector) {
-    data object MALE : Gender(name="Male", icon = Icons.Default.Male)
-    data object FEMALE : Gender(name="Female", icon = Icons.Default.Female)
-    data object OTHER : Gender(name="Other", icon = Icons.Default.Transgender)
+    val phoneNumber: String,
+    val birthDate: String,
+    var isSignedIn: Boolean = false,
+) : Parcelable
+
+sealed class Gender(val name: String, val icon: ImageVector) {
+    data object MALE : Gender(name = "Male", icon = Icons.Default.Male)
+    data object FEMALE : Gender(name = "Female", icon = Icons.Default.Female)
+    data object OTHER : Gender(name = "Other", icon = Icons.Default.Transgender)
 }
 
