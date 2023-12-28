@@ -43,7 +43,7 @@ class UserViewModel
 
     suspend fun saveUser(user: User) = repository.saveUser(user)
 
-    suspend fun getAllUsers(): Flow<List<User>> {
+    suspend fun getUsers(): Flow<List<User>> {
         val userList = flow {
             val updatedUserList = repository.getUsers()
             if (updatedUserList.isNotEmpty()) {

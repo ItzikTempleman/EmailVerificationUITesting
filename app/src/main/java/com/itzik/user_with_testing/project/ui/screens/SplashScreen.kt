@@ -22,17 +22,26 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
+import com.itzik.user_with_testing.project.models.User
+import com.itzik.user_with_testing.project.navigation.HomeGraph
 import com.itzik.user_with_testing.project.navigation.LoginGraph
 import com.itzik.user_with_testing.project.ui.semantics.RoundedBackGround
+import com.itzik.user_with_testing.project.viewmodels.UserViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 @Composable
 fun SplashScreen(
+    coroutineScope: CoroutineScope,
+    userViewModel: UserViewModel,
     modifier: Modifier,
     navHostController: NavHostController,
 ) {
-
+    var userList by remember {
+        mutableStateOf(listOf<User>())
+    }
     var startAnim by remember {
         mutableStateOf(false)
     }
@@ -48,8 +57,17 @@ fun SplashScreen(
         delay(2000)
 
         navHostController.popBackStack()
-        navHostController.navigate(LoginGraph.LoginPage.route)
-    }
+        coroutineScope.launch {
+            userViewModel.getUsers().collect {
+                userList = it
+            }
+                if(userList.isEmpty()){
+                    navHostController.navigate(LoginGraph.LoginPage.route)
+                }else navHostController.navigate(HomeGraph.HomePage.route)
+            }
+        }
+
+
     RoundedBackGround(White, White)
     ConstraintLayout(
         modifier = Modifier.fillMaxSize()

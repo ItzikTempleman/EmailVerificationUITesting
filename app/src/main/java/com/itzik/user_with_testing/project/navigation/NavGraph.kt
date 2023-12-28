@@ -19,10 +19,6 @@ import kotlinx.coroutines.CoroutineScope
 
 val Dark_Green = Color(0xFF007d74)
 val Light_Green = Color(0xFF64DB95)
-val Light_Gray = Color(0xFFE9E9E9)
-val Yellow = Color(0xFFFFC107)
-
-
 
 const val SPLASH_GRAPH = "splashGraph"
 const val LOGIN_GRAPH = "loginGraph"
@@ -52,6 +48,8 @@ fun SetupNavGraph(
                 exitTransition = null
             ) {
                 SplashScreen(
+                    coroutineScope=coroutineScope,
+                    userViewModel= userViewModel,
                     navHostController = navHostController,
                     modifier = Modifier
                 )
@@ -98,6 +96,7 @@ fun SetupNavGraph(
             ) {
 
                 HomeScreen(
+                    coroutineScope=coroutineScope,
                     navHostController = navHostController,
                     modifier = Modifier,
                     userViewModel = userViewModel

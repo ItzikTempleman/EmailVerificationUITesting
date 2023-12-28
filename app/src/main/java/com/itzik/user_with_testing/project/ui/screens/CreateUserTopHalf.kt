@@ -1,6 +1,5 @@
 package com.itzik.user_with_testing.project.ui.screens
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -166,9 +165,9 @@ fun CreateUserTopHalf(
                 genders.forEach {
                     Card(
                         modifier = Modifier
-                            .clickable {
-                                selectedGender = it
-                            }
+//                            .clickable {
+//                                selectedGender = it
+//                            }
                             .padding(4.dp)
                             .size(100.dp),
                         elevation = CardDefaults.cardElevation(
@@ -191,10 +190,7 @@ fun CreateUserTopHalf(
                                 modifier = Modifier.constrainAs(genderButton) {
                                     top.linkTo(parent.top)
                                     start.linkTo(parent.start)
-                                }, selected = (
-                                        it == selectedGender
-
-                                        ),
+                                }, selected = (it == selectedGender),
                                 onClick = {
                                     selectedGender = it
                                     userViewModel.getGenderString(selectedGender)
