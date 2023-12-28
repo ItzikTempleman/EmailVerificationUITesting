@@ -38,6 +38,6 @@ object AppModule {
     @Provides
     fun provideDatabase(@ApplicationContext applicationContext: Context) =
         Room.databaseBuilder(applicationContext, UserDatabase::class.java, USER_DATABASE)
-            .addTypeConverter(UserConverter()).build()
+            .addTypeConverter(UserConverter()).fallbackToDestructiveMigration().build()
 
 }

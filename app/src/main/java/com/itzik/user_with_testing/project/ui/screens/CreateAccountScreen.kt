@@ -125,7 +125,6 @@ fun CreateAccountScreen(
             roundedRadius = 36.dp
         )
     }
-
 }
 
 

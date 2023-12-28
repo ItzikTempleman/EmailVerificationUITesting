@@ -26,7 +26,6 @@ data class User(
     val phoneNumber:String,
     val birthDate:String
 ): Parcelable
-
 sealed class Gender(val name:String, val icon: ImageVector) {
     data object MALE : Gender(name="Male", icon = Icons.Default.Male)
     data object FEMALE : Gender(name="Female", icon = Icons.Default.Female)
