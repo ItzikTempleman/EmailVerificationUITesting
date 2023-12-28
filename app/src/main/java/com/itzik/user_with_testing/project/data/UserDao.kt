@@ -16,9 +16,12 @@ interface UserDao {
     @Query("SELECT*FROM $USER_TABLE WHERE isSignedIn=1")
     suspend fun getUsers(): List<User>
 
+    @Query("SELECT*FROM $USER_TABLE WHERE email = :userName AND password = :password")
+    suspend fun getUserFromUserNameAndPassword(userName: String, password: String): User
+
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveUser(user:User)
+    suspend fun saveUser(user: User)
 
 
     @Update

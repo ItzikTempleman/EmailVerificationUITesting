@@ -8,4 +8,6 @@ interface IUserRepository {
     suspend fun saveUser(user: User)
 
     suspend fun updateIsSignedIn(user:User)
+
+    suspend fun getUserFromUserNameAndPassword(userName:String, password:String):User
 }

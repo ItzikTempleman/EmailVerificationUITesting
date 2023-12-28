@@ -55,6 +55,8 @@ class UserViewModel
 
     suspend fun updateIsSignIn(user: User) = repository.updateIsSignedIn(user)
 
+    suspend fun getUserFromUserNameAndPassword(userName: String, password: String) =
+        repository.getUserFromUserNameAndPassword(userName, password)
 
     fun splitUserNameIntoFirstAndFamilyName(fullNameAsParam: String): Pair<List<String>, String> {
         val nameParts = fullNameAsParam.split(" ")
