@@ -1,6 +1,7 @@
 package com.itzik.user_with_testing.project.ui.screens
 
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -50,6 +51,8 @@ import com.itzik.user_with_testing.project.ui.semantics.GenericOutlinedTextField
 import com.itzik.user_with_testing.project.ui.semantics.GenericRoundedButton
 import com.itzik.user_with_testing.project.ui.semantics.RoundedBackGround
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 
 @ExperimentalMaterial3Api
@@ -58,6 +61,7 @@ fun LoginScreen(
     modifier: Modifier,
     navHostController: NavHostController,
     userViewModel: UserViewModel,
+    coroutineScope: CoroutineScope
 ) {
     RoundedBackGround(topColor = White, bottomColor = White)
     ConstraintLayout(
@@ -211,11 +215,20 @@ fun LoginScreen(
                     ) "Successfully logged in" else "Incorrect data, please fix",
                     Toast.LENGTH_SHORT
                 ).show()
-                userViewModel.moveToHomeScreen(
-                    userViewModel.isValidLoginEmail(email) && userViewModel.isValidLoginPassword(
-                        password
-                    ), navHostController
-                )
+                coroutineScope.launch {
+                    userViewModel.getUserFromUserNameAndPassword(email,password).collect{
+                        if (it != null) {
+                            it.isSignedIn=true
+                            userViewModel.updateUser(it)
+                            Log.d("TAG", "$it")
+
+                            userViewModel.moveToHomeScreen(userViewModel.isValidLoginEmail(email) && userViewModel.isValidLoginPassword(password), navHostController , it)
+                        }else Toast.makeText(
+                            context,
+                            "User does not exist",
+                            Toast.LENGTH_SHORT).show()
+                    }
+                }
             },
             buttonColor = Light_Green,
             text = stringResource(id = R.string.go),

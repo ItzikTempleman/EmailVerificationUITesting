@@ -94,8 +94,13 @@ fun HomeScreen(
         }
 
         if (userList.isNotEmpty()) {
-            user = userList[0]
+            user = userList.first()
         }
+//        else {
+//            coroutineScope.launch {
+//
+//            }
+//        }
         Text(
             modifier = modifier
                 .constrainAs(fullFirstName) {

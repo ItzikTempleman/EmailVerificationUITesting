@@ -43,6 +43,7 @@ class UserViewModel
 
     suspend fun saveUser(user: User) = repository.saveUser(user)
 
+
     suspend fun getUsers(): Flow<List<User>> {
         val userList = flow {
             val updatedUserList = repository.getUsers()
@@ -53,10 +54,18 @@ class UserViewModel
         return userList
     }
 
+    suspend fun getUserFromUserNameAndPassword(userName: String, password: String): Flow<User?> {
+        val user = flow{
+            val updatedUser=repository.getUserFromUserNameAndPassword(userName, password)
+            emit(updatedUser)
+        }
+        return user
+    }
+
+
+
     suspend fun updateIsSignIn(user: User) = repository.updateIsSignedIn(user)
 
-    suspend fun getUserFromUserNameAndPassword(userName: String, password: String) =
-        repository.getUserFromUserNameAndPassword(userName, password)
 
     fun splitUserNameIntoFirstAndFamilyName(fullNameAsParam: String): Pair<List<String>, String> {
         val nameParts = fullNameAsParam.split(" ")
@@ -163,7 +172,7 @@ class UserViewModel
         return user as User
     }
 
-    fun updateUser(newUser: User) {
+     fun updateUser(newUser: User) {
         user = newUser
     }
 
@@ -172,7 +181,11 @@ class UserViewModel
 
     }
 
-    fun moveToHomeScreen(isSuccessfulData: Boolean, navHostController: NavHostController) {
+    fun moveToHomeScreen(
+        isSuccessfulData: Boolean,
+        navHostController: NavHostController,
+        user: User
+    ) {
         if (isSuccessfulData) {
             navHostController.navigate(HomeGraph.HomePage.route)
         }

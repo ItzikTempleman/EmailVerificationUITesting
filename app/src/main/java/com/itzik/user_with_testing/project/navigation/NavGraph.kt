@@ -68,7 +68,8 @@ fun SetupNavGraph(
                 LoginScreen(
                     navHostController = navHostController,
                     modifier = Modifier,
-                    userViewModel=userViewModel
+                    userViewModel=userViewModel,
+                    coroutineScope = coroutineScope
                 )
             }
             composable(
