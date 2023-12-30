@@ -12,18 +12,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.models.User
-import com.itzik.user_with_testing.project.navigation.Light_Green
 import com.itzik.user_with_testing.project.navigation.LoginGraph
 import com.itzik.user_with_testing.project.ui.semantics.RoundedBackGround
 import com.itzik.user_with_testing.project.utils.mockEmptyUser
@@ -50,6 +46,7 @@ fun HomeScreen(
             userList = it
         }
     }
+
     RoundedBackGround(White, White)
     ConstraintLayout(
         modifier = Modifier.fillMaxSize()
@@ -64,9 +61,9 @@ fun HomeScreen(
                     top.linkTo(parent.top)
                 }
                 .padding(16.dp),
-            color = Black,
-            fontSize = 24.sp,
-            fontStyle = FontStyle.Italic
+
+            fontSize = 20.sp,
+
         )
         TextButton(
 
@@ -86,10 +83,7 @@ fun HomeScreen(
         ) {
             Text(
                 text = stringResource(id = R.string.sign_out),
-                color = Light_Green,
                 fontSize = 20.sp,
-                fontStyle = FontStyle.Italic,
-                fontWeight = FontWeight.Bold
             )
         }
 

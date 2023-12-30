@@ -222,7 +222,7 @@ fun LoginScreen(
                             userViewModel.updateUser(it)
                             Log.d("TAG", "$it")
 
-                            userViewModel.moveToHomeScreen(userViewModel.isValidLoginEmail(email) && userViewModel.isValidLoginPassword(password), navHostController , it)
+                            userViewModel.moveToHomeScreen(userViewModel.isTextFieldsLoginValidFormat(), navHostController , it)
                         }else Toast.makeText(
                             context,
                             "User does not exist",

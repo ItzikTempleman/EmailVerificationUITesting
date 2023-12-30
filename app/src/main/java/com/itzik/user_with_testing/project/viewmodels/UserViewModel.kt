@@ -137,11 +137,11 @@ class UserViewModel
     }
 
     private fun isValidName(): Boolean = fullName.isNotEmpty()
-    fun isValidEmail(): Boolean =
+    private fun isValidEmail(): Boolean =
         email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\$".toRegex())
 
 
-    fun isValidPassword(): Boolean =
+    private fun isValidPassword(): Boolean =
         password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$".toRegex())
 
 
@@ -190,4 +190,6 @@ class UserViewModel
             navHostController.navigate(HomeGraph.HomePage.route)
         }
     }
+
+    fun isTextFieldsLoginValidFormat()=isValidLoginEmail(email) && isValidLoginPassword(password)
 }

@@ -91,17 +91,20 @@ fun SetupNavGraph(
             route = HOME_GRAPH
         ) {
             composable(
+
                 route = HomeGraph.HomePage.route,
                 enterTransition = null,
                 exitTransition = null
             ) {
 
-                HomeScreen(
-                    coroutineScope=coroutineScope,
-                    navHostController = navHostController,
-                    modifier = Modifier,
-                    userViewModel = userViewModel
-                )
+                    HomeScreen(
+
+                        coroutineScope=coroutineScope,
+                        navHostController = navHostController,
+                        modifier = Modifier,
+                        userViewModel = userViewModel
+                    )
+
             }
         }
     }
