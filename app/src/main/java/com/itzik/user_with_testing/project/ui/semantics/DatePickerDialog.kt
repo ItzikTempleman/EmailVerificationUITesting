@@ -24,8 +24,9 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.itzik.user_with_testing.project.navigation.Light_Green
+
 import com.itzik.user_with_testing.project.ui.semantics.GenericRoundedButton
+import com.itzik.user_with_testing.project.utils.Constants.Light_Green
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar

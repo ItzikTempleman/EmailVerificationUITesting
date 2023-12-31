@@ -20,8 +20,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.itzik.user_with_testing.R
-import com.itzik.user_with_testing.project.navigation.Light_Green
+
 import com.itzik.user_with_testing.project.ui.semantics.GenericOutlinedTextField
+import com.itzik.user_with_testing.project.utils.Constants.Light_Green
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 
 

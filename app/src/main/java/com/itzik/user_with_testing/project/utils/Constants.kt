@@ -1,8 +1,13 @@
 package com.itzik.user_with_testing.project.utils
 
+import androidx.compose.ui.graphics.Color
 import com.itzik.user_with_testing.project.models.User
 
 object Constants  {
+
+    val Dark_Green = Color(0xFF007d74)
+    val Light_Green = Color(0xFF64DB95)
+
     const val USER_TABLE="userTable"
     const val USER_DATABASE="userDatabase"
 

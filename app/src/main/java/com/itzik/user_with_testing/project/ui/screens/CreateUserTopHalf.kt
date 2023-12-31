@@ -36,8 +36,9 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.models.Gender
-import com.itzik.user_with_testing.project.navigation.Light_Green
+
 import com.itzik.user_with_testing.project.ui.semantics.GenericOutlinedTextField
+import com.itzik.user_with_testing.project.utils.Constants.Light_Green
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 

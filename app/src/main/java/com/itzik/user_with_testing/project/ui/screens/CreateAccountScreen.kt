@@ -19,11 +19,12 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.navigation.HomeGraph
-import com.itzik.user_with_testing.project.navigation.Light_Green
+
 import com.itzik.user_with_testing.project.navigation.LoginGraph
 import com.itzik.user_with_testing.project.ui.semantics.GenericButton
 import com.itzik.user_with_testing.project.ui.semantics.GenericRoundedButton
 import com.itzik.user_with_testing.project.ui.semantics.RoundedBackGround
+import com.itzik.user_with_testing.project.utils.Constants.Light_Green
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -68,7 +69,7 @@ fun CreateAccountScreen(
                     start.linkTo(backBtn.end)
                     top.linkTo(backBtn.top)
                 }
-                .padding( top = 20.dp),
+                .padding(top = 20.dp),
             color = Black,
             fontSize = 24.sp,
             fontStyle = FontStyle.Italic
@@ -116,7 +117,7 @@ fun CreateAccountScreen(
 
                         }
                         navHostController.popBackStack()
-                        navHostController.navigate(HomeGraph.HomePage.route)
+                        navHostController.navigate(HomeGraph.HomeAndSearchPage.route)
 
                     } else userViewModel.setErrors()
                 }

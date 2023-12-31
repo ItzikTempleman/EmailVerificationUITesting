@@ -64,7 +64,7 @@ fun SplashScreen(
                 Log.d("TAG", "$it")
             }
             if (userList.isNotEmpty() && userList.first().isSignedIn) {
-                navHostController.navigate(HomeGraph.HomePage.route)
+                navHostController.navigate(HomeGraph.HomeAndSearchPage.route)
             } else
                 navHostController.navigate(LoginGraph.LoginPage.route)
             }

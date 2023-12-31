@@ -240,7 +240,7 @@ class UserViewModel
         user: User,
     ) {
         if (isSuccessfulData) {
-            navHostController.navigate(HomeGraph.HomePage.route)
+            navHostController.navigate(HomeGraph.HomeAndSearchPage.route)
         }
     }
 
