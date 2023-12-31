@@ -11,8 +11,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.itzik.user_with_testing.project.ui.screens.CreateAccountScreen
-import com.itzik.user_with_testing.project.ui.screens.HomeScreen
 import com.itzik.user_with_testing.project.ui.screens.LoginScreen
+import com.itzik.user_with_testing.project.ui.screens.SearchFlightScreen
 import com.itzik.user_with_testing.project.ui.screens.SplashScreen
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -29,8 +29,8 @@ const val HOME_GRAPH = "homeGraph"
 fun SetupNavGraph(
     navHostController: NavHostController,
     userViewModel: UserViewModel,
-    coroutineScope: CoroutineScope
-    ) {
+    coroutineScope: CoroutineScope,
+) {
 
     NavHost(
         navController = navHostController,
@@ -48,8 +48,8 @@ fun SetupNavGraph(
                 exitTransition = null
             ) {
                 SplashScreen(
-                    coroutineScope=coroutineScope,
-                    userViewModel= userViewModel,
+                    coroutineScope = coroutineScope,
+                    userViewModel = userViewModel,
                     navHostController = navHostController,
                     modifier = Modifier
                 )
@@ -68,7 +68,7 @@ fun SetupNavGraph(
                 LoginScreen(
                     navHostController = navHostController,
                     modifier = Modifier,
-                    userViewModel=userViewModel,
+                    userViewModel = userViewModel,
                     coroutineScope = coroutineScope
                 )
             }
@@ -87,23 +87,22 @@ fun SetupNavGraph(
         }
 
         navigation(
-            startDestination = HomeGraph.HomePage.route,
+            startDestination = HomeGraph.SearchFlightPage.route,
             route = HOME_GRAPH
         ) {
             composable(
-
-                route = HomeGraph.HomePage.route,
+                route = HomeGraph.SearchFlightPage.route,
                 enterTransition = null,
                 exitTransition = null
             ) {
+                SearchFlightScreen(
+                    coroutineScope = coroutineScope,
+                    navHostController = navHostController,
+                    modifier = Modifier,
+                    userViewModel = userViewModel
+                )
 
-                    HomeScreen(
 
-                        coroutineScope=coroutineScope,
-                        navHostController = navHostController,
-                        modifier = Modifier,
-                        userViewModel = userViewModel
-                    )
 
             }
         }

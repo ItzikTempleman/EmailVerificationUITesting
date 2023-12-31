@@ -2,6 +2,7 @@ package com.itzik.user_with_testing.project.repositories
 
 import com.itzik.user_with_testing.project.data.UserDao
 import com.itzik.user_with_testing.project.models.User
+import com.itzik.user_with_testing.project.models.airport_model.SearchAirportResponse
 import com.itzik.user_with_testing.project.models.flight_model.FlightResponse
 import com.itzik.user_with_testing.project.requests.FlightService
 import retrofit2.Response
@@ -45,5 +46,7 @@ class UserRepositoryImp @Inject constructor(
         returnDate
     )
 
+    override suspend fun getAirportCodeName(query: String): Response<SearchAirportResponse> =
+        flightService.getAirportCodeName(query)
 
 }

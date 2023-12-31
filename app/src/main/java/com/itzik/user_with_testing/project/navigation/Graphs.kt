@@ -19,5 +19,6 @@ sealed class LoginGraph(
 sealed class HomeGraph(
     val route: String
 ) {
-    data object HomePage : HomeGraph(route = "homePage")
+    data object SearchFlightPage : HomeGraph(route = "searchFlightPage")
+    data object ProfilePage : HomeGraph(route = "profilePage")
 }

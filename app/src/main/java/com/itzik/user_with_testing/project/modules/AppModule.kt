@@ -47,6 +47,8 @@ object AppModule {
             .addTypeConverter(UserConverter()).fallbackToDestructiveMigration().build()
 
 
+
+
     @Provides
     @Singleton
     fun provideRetrofitService(): FlightService {
@@ -61,5 +63,6 @@ object AppModule {
             .build()
         return retrofit.create(FlightService::class.java)
     }
+
 
 }

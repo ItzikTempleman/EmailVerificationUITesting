@@ -29,7 +29,7 @@ import kotlinx.coroutines.launch
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
-fun HomeScreen(
+fun ProfileScreen(
     coroutineScope: CoroutineScope,
     navHostController: NavHostController,
     modifier: Modifier,

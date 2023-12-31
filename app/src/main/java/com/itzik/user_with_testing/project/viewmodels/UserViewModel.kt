@@ -1,5 +1,6 @@
 package com.itzik.user_with_testing.project.viewmodels
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -7,6 +8,8 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.project.models.Gender
 import com.itzik.user_with_testing.project.models.User
+import com.itzik.user_with_testing.project.models.airport_model.SearchAirportResponse
+import com.itzik.user_with_testing.project.models.flight_model.FlightResponse
 import com.itzik.user_with_testing.project.navigation.HomeGraph
 import com.itzik.user_with_testing.project.repositories.IUserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -55,11 +58,61 @@ class UserViewModel
     }
 
     suspend fun getUserFromUserNameAndPassword(userName: String, password: String): Flow<User?> {
-        val user = flow{
-            val updatedUser=repository.getUserFromUserNameAndPassword(userName, password)
+        val user = flow {
+            val updatedUser = repository.getUserFromUserNameAndPassword(userName, password)
             emit(updatedUser)
         }
         return user
+    }
+
+
+    suspend fun getAirportCodeName(query: String): Flow<SearchAirportResponse> {
+        val nameCodeResponseList = flow {
+            val response = repository.getAirportCodeName(query)
+            if (response.isSuccessful) {
+                val responseBody = response.body()
+                if (responseBody != null) {
+                    emit(responseBody)
+                } else Log.d("TAG", "Failure message: " + response.message())
+                return@flow
+            } else Log.d("TAG", "Failure message: " + response.message())
+            return@flow
+        }
+        return nameCodeResponseList
+    }
+
+
+    suspend fun getFlightInfo(
+        sourceAirportCode: String,
+        destinationAirportCode: String,
+        takeoffDate: String,
+        roundOrDirect: String,
+        numberOfAdults: Int,
+        classOfService: String,
+        currency: String,
+        returnDate: String,
+    ): Flow<FlightResponse> {
+        val flightInfo = flow {
+            val response = repository.getFlight(
+                sourceAirportCode,
+                destinationAirportCode,
+                takeoffDate,
+                roundOrDirect,
+                numberOfAdults,
+                classOfService,
+                currency,
+                returnDate
+            )
+            if (response.isSuccessful) {
+                val responseBody = response.body()
+                if (responseBody != null) {
+                    emit(responseBody)
+                } else Log.d("TAG", "Failure message: " + response.message())
+                return@flow
+            } else Log.d("TAG", "Failure message: " + response.message())
+            return@flow
+        }
+        return flightInfo
     }
 
 
@@ -172,7 +225,7 @@ class UserViewModel
         return user as User
     }
 
-     fun updateUser(newUser: User) {
+    fun updateUser(newUser: User) {
         user = newUser
     }
 
@@ -184,12 +237,12 @@ class UserViewModel
     fun moveToHomeScreen(
         isSuccessfulData: Boolean,
         navHostController: NavHostController,
-        user: User
+        user: User,
     ) {
         if (isSuccessfulData) {
             navHostController.navigate(HomeGraph.HomePage.route)
         }
     }
 
-    fun isTextFieldsLoginValidFormat()=isValidLoginEmail(email) && isValidLoginPassword(password)
+    fun isTextFieldsLoginValidFormat() = isValidLoginEmail(email) && isValidLoginPassword(password)
 }

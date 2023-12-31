@@ -1,9 +1,11 @@
 package com.itzik.user_with_testing.project.requests
 
+import com.itzik.user_with_testing.project.models.airport_model.SearchAirportResponse
 import com.itzik.user_with_testing.project.models.flight_model.FlightResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface FlightService {
 
@@ -28,4 +30,10 @@ interface FlightService {
         @Path("currency") currency: String,
         @Path("returnDate") returnDate: String,
     ): Response<FlightResponse>
+
+
+    @GET("api/v1/flights/searchAirport?")
+    suspend fun getAirportCodeName(
+        @Query("query") airportName:String
+    ):Response<SearchAirportResponse>
 }

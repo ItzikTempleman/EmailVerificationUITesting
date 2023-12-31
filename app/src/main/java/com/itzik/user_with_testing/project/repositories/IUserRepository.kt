@@ -1,6 +1,7 @@
 package com.itzik.user_with_testing.project.repositories
 
 import com.itzik.user_with_testing.project.models.User
+import com.itzik.user_with_testing.project.models.airport_model.SearchAirportResponse
 import com.itzik.user_with_testing.project.models.flight_model.FlightResponse
 import retrofit2.Response
 
@@ -23,4 +24,8 @@ interface IUserRepository {
         currency: String,
         returnDate: String,
     ):Response<FlightResponse>
+
+    suspend fun getAirportCodeName(
+        query:String
+    ):Response<SearchAirportResponse>
 }
