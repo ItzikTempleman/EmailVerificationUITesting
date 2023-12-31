@@ -2,6 +2,9 @@ package com.itzik.user_with_testing.project.repositories
 
 import com.itzik.user_with_testing.project.data.UserDao
 import com.itzik.user_with_testing.project.models.User
+import com.itzik.user_with_testing.project.models.flight_model.FlightResponse
+import com.itzik.user_with_testing.project.requests.FlightService
+import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -9,7 +12,11 @@ class UserRepositoryImp @Inject constructor(
 
     @Singleton
     private val userDao: UserDao,
-) : IUserRepository {
+
+    @Singleton
+    private val flightService: FlightService,
+
+    ) : IUserRepository {
 
     override suspend fun getUsers(): List<User> = userDao.getUsers()
 
@@ -17,5 +24,26 @@ class UserRepositoryImp @Inject constructor(
     override suspend fun updateIsSignedIn(user: User) = userDao.updateIsSigneIn(user)
     override suspend fun getUserFromUserNameAndPassword(userName: String, password: String): User =
         userDao.getUserFromUserNameAndPassword(userName, password)
+
+    override suspend fun getFlight(
+        sourceAirportCode: String,
+        destinationAirportCode: String,
+        takeoffDate: String,
+        roundOrDirect: String,
+        numberOfAdults: Int,
+        classOfService: String,
+        currency: String,
+        returnDate: String,
+    ): Response<FlightResponse> = flightService.getFlight(
+        sourceAirportCode,
+        destinationAirportCode,
+        takeoffDate,
+        roundOrDirect,
+        numberOfAdults,
+        classOfService,
+        currency,
+        returnDate
+    )
+
 
 }
