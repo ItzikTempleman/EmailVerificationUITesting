@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
-import com.itzik.user_with_testing.project.navigation.SetupNavGraph
+import com.itzik.user_with_testing.project.navigation.AppNavGraph
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import com.itzik.user_with_testing.theme.EmailVerificationUITestingTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,13 +21,16 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            userViewModel = viewModel()
 
+            userViewModel = viewModel()
+            //val viewModelStore = remember { ViewModelStore() }
+            val navHostController = rememberNavController()
+                //.apply { this.setViewModelStore(viewModelStore)}
 
             val coroutineScope = rememberCoroutineScope()
 
             EmailVerificationUITestingTheme {
-                SetupNavGraph(navHostController = rememberNavController(), userViewModel = userViewModel, coroutineScope = coroutineScope)
+                AppNavGraph(navHostController, userViewModel, coroutineScope)
             }
         }
     }

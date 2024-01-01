@@ -10,7 +10,9 @@ import com.itzik.user_with_testing.project.models.Gender
 import com.itzik.user_with_testing.project.models.User
 import com.itzik.user_with_testing.project.models.airport_model.SearchAirportResponse
 import com.itzik.user_with_testing.project.models.flight_model.FlightResponse
-import com.itzik.user_with_testing.project.navigation.HomeGraph
+import com.itzik.user_with_testing.project.navigation.BottomNavGraph
+
+
 import com.itzik.user_with_testing.project.repositories.IUserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -240,7 +242,7 @@ class UserViewModel
         user: User,
     ) {
         if (isSuccessfulData) {
-            navHostController.navigate(HomeGraph.HomeAndSearchPage.route)
+            navHostController.navigate(BottomNavGraph.HomePage.route)
         }
     }
 

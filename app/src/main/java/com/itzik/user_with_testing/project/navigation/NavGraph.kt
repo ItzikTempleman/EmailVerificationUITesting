@@ -1,39 +1,43 @@
 package com.itzik.user_with_testing.project.navigation
 
 import android.annotation.SuppressLint
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Text
+import androidx.compose.material.ContentAlpha
+import androidx.compose.material.Icon
+import androidx.compose.material.LocalContentColor
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigation
 import com.itzik.user_with_testing.project.ui.screens.CreateAccountScreen
+import com.itzik.user_with_testing.project.ui.screens.HomeScreen
 import com.itzik.user_with_testing.project.ui.screens.LoginScreen
 import com.itzik.user_with_testing.project.ui.screens.ProfileScreen
-import com.itzik.user_with_testing.project.ui.screens.SearchFlightScreen
 import com.itzik.user_with_testing.project.ui.screens.SplashScreen
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 
-
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@SuppressLint(
+    "SuspiciousIndentation", "UnusedMaterial3ScaffoldPaddingParameter",
+    "ComposableNavGraphInComposeScope"
+)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SetupNavGraph(
+fun AppNavGraph(
     navHostController: NavHostController,
     userViewModel: UserViewModel,
     coroutineScope: CoroutineScope,
@@ -44,14 +48,10 @@ fun SetupNavGraph(
     ) {
         navigation(
             startDestination = SplashGraph.SplashPage.route,
-            route = SPLASH_GRAPH,
-            enterTransition = { EnterTransition.None },
-            exitTransition = { ExitTransition.None }
+            route = SPLASH_GRAPH
         ) {
             composable(
-                route = SplashGraph.SplashPage.route,
-                enterTransition = null,
-                exitTransition = null
+                route = SplashGraph.SplashPage.route
             ) {
                 SplashScreen(
                     coroutineScope = coroutineScope,
@@ -67,9 +67,7 @@ fun SetupNavGraph(
             route = LOGIN_GRAPH
         ) {
             composable(
-                route = LoginGraph.LoginPage.route,
-                enterTransition = null,
-                exitTransition = null
+                route = LoginGraph.LoginPage.route
             ) {
                 LoginScreen(
                     navHostController = navHostController,
@@ -79,9 +77,7 @@ fun SetupNavGraph(
                 )
             }
             composable(
-                route = LoginGraph.CreateAccountPage.route,
-                enterTransition = null,
-                exitTransition = null
+                route = LoginGraph.CreateAccountPage.route
             ) {
                 CreateAccountScreen(
                     navHostController = navHostController,
@@ -91,35 +87,43 @@ fun SetupNavGraph(
                 )
             }
         }
+
         navigation(
-            startDestination = HomeGraph.HomeAndSearchPage.route,
+            startDestination = BottomNavGraph.HomePage.route,
             route = HOME_GRAPH
         ) {
             composable(
-                route = HomeGraph.HomeAndSearchPage.route,
-                enterTransition = null,
-                exitTransition = null
+                route = BottomNavGraph.HomePage.route
+
             ) {
+                val screens = listOf(BottomNavGraph.HomePage, BottomNavGraph.ProfilePage)
+
+                val navBackStackEntry by navHostController.currentBackStackEntryAsState()
+                val currentDestination = navBackStackEntry?.destination
                 Scaffold(
                     bottomBar = {
                         BottomNavigation {
-                            val items = listOf(HomeGraph.HomeAndSearchPage, HomeGraph.ProfilePage)
-                            val navBackStackEntry by navHostController.currentBackStackEntryAsState()
-                            val currentDestination = navBackStackEntry?.destination
-                            items.forEach { screen ->
+                            screens.forEach { screen ->
                                 BottomNavigationItem(
-                                    selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
                                     label = {
-                                        Text(text = screen.route)
+                                        Text(text = screen.title)
                                     },
-                                    icon = {},
+                                    icon = {
+                                        Icon(
+                                            imageVector = screen.icon,
+                                            contentDescription = null
+                                        )
+                                    },
+                                    selected = currentDestination?.hierarchy?.any {
+                                        it.route == screen.route
+                                    } == true,
+                                    unselectedContentColor = LocalContentColor.current.copy(
+                                        alpha = ContentAlpha.disabled
+                                    ),
                                     onClick = {
                                         navHostController.navigate(screen.route) {
-                                            popUpTo(navHostController.graph.startDestinationId) {
-                                                saveState = true
-                                            }
+                                            popUpTo(navHostController.graph.findStartDestination().id)
                                             launchSingleTop = true
-                                            restoreState = true
                                         }
                                     }
                                 )
@@ -127,20 +131,19 @@ fun SetupNavGraph(
                         }
                     }
                 ) {
-                    NavHost(
-                        navController = navHostController,
-                        route = HomeGraph.HomeAndSearchPage.route,
-                        startDestination = HomeGraph.HomeAndSearchPage.route
+                    navigation(
+                        route = HOME_GRAPH,
+                        startDestination = BottomNavGraph.HomePage.route,
                     ) {
-                        composable(route = HomeGraph.HomeAndSearchPage.route) {
-                            SearchFlightScreen(
+                        composable(BottomNavGraph.HomePage.route) {
+                            HomeScreen(
                                 coroutineScope = coroutineScope,
                                 navHostController = navHostController,
                                 modifier = Modifier,
                                 userViewModel = userViewModel
                             )
                         }
-                        composable(route = HomeGraph.ProfilePage.route) {
+                        composable(BottomNavGraph.ProfilePage.route) {
                             ProfileScreen(
                                 coroutineScope = coroutineScope,
                                 navHostController = navHostController,
@@ -164,30 +167,52 @@ fun SetupNavGraph(
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 const val SPLASH_GRAPH = "splashGraph"
 const val LOGIN_GRAPH = "loginGraph"
 const val HOME_GRAPH = "homeGraph"
 
-
 sealed class SplashGraph(
-    val route: String
+    val route: String,
 ) {
     data object SplashPage : SplashGraph(route = "splashPage")
 }
 
 
 sealed class LoginGraph(
-    val route: String
+    val route: String,
 ) {
     data object LoginPage : LoginGraph(route = "loginPage")
     data object CreateAccountPage : LoginGraph(route = "createAccountPage")
 }
 
 
-sealed class HomeGraph(
-    val route: String, val icon: ImageVector, val name: String
+sealed class BottomNavGraph(
+    val route: String,
+    val title: String,
+    val icon: ImageVector,
 ) {
-    data object HomeAndSearchPage : HomeGraph(route = "homeAndSearch", icon = Icons.Default.Home, name = "Home and search")
+    data object HomePage : BottomNavGraph(
+        route = "homePage",
+        title = "Home",
+        icon = Icons.Default.Home
+    )
 
-    data object ProfilePage : HomeGraph(route = "profile", icon = Icons.Default.Info, name = "Profile")
+    data object ProfilePage : BottomNavGraph(
+        route = "profilePage",
+        title = "Profile",
+        icon = Icons.Default.Person
+    )
+
 }

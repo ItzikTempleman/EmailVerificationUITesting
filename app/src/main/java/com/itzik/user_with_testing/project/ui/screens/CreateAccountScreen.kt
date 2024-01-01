@@ -18,7 +18,8 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
-import com.itzik.user_with_testing.project.navigation.HomeGraph
+import com.itzik.user_with_testing.project.navigation.BottomNavGraph
+
 
 import com.itzik.user_with_testing.project.navigation.LoginGraph
 import com.itzik.user_with_testing.project.ui.semantics.GenericButton
@@ -117,7 +118,7 @@ fun CreateAccountScreen(
 
                         }
                         navHostController.popBackStack()
-                        navHostController.navigate(HomeGraph.HomeAndSearchPage.route)
+                        navHostController.navigate(BottomNavGraph.HomePage.route)
 
                     } else userViewModel.setErrors()
                 }
