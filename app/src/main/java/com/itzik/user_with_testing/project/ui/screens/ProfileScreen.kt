@@ -4,6 +4,7 @@ package com.itzik.user_with_testing.project.ui.screens
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -17,15 +18,12 @@ import kotlinx.coroutines.CoroutineScope
 fun ProfileScreen(
     coroutineScope: CoroutineScope,
     navHostController: NavHostController,
-    modifier: Modifier,
     userViewModel: UserViewModel,
 ) {
     ConstraintLayout(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize().background(Color.Yellow)
     ) {
-        modifier
-            .fillMaxSize()
-            .background(Color.Blue)
+        Text(text ="Profile")
     }
 
 //

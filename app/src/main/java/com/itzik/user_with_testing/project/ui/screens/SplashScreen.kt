@@ -1,5 +1,6 @@
 package com.itzik.user_with_testing.project.ui.screens
 
+
 import android.util.Log
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -24,9 +25,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.models.User
-import com.itzik.user_with_testing.project.navigation.BottomNavGraph
-
-
+import com.itzik.user_with_testing.project.navigation.BottomBarScreen
 import com.itzik.user_with_testing.project.navigation.LoginGraph
 import com.itzik.user_with_testing.project.ui.semantics.RoundedBackGround
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
@@ -39,7 +38,6 @@ import kotlinx.coroutines.launch
 fun SplashScreen(
     coroutineScope: CoroutineScope,
     userViewModel: UserViewModel,
-    modifier: Modifier,
     navHostController: NavHostController,
 ) {
     var userList by remember {
@@ -66,7 +64,7 @@ fun SplashScreen(
                 Log.d("TAG", "$it")
             }
             if (userList.isNotEmpty() && userList.first().isSignedIn) {
-                navHostController.navigate(BottomNavGraph.HomePage.route)
+                navHostController.navigate(BottomBarScreen.HomePage.route)
             } else
                 navHostController.navigate(LoginGraph.LoginPage.route)
             }
@@ -82,7 +80,7 @@ fun SplashScreen(
 
         Text(
             text = stringResource(id = R.string.welcome),
-            modifier = modifier
+            modifier = Modifier
                 .constrainAs(title) {
                     start.linkTo(parent.start)
                     top.linkTo(parent.top)
@@ -95,7 +93,7 @@ fun SplashScreen(
         )
 
         CircularProgressIndicator(
-            modifier = modifier
+            modifier = Modifier
                 .constrainAs(progressBar) {
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)

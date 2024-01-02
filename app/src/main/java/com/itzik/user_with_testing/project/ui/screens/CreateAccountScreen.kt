@@ -1,5 +1,6 @@
 package com.itzik.user_with_testing.project.ui.screens
 
+
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,9 +19,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
-import com.itzik.user_with_testing.project.navigation.BottomNavGraph
-
-
+import com.itzik.user_with_testing.project.navigation.BottomBarScreen
 import com.itzik.user_with_testing.project.navigation.LoginGraph
 import com.itzik.user_with_testing.project.ui.semantics.GenericButton
 import com.itzik.user_with_testing.project.ui.semantics.GenericRoundedButton
@@ -33,7 +32,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun CreateAccountScreen(
     coroutineScope: CoroutineScope,
-    modifier: Modifier,
     navHostController: NavHostController,
     userViewModel: UserViewModel
 ) {
@@ -43,12 +41,12 @@ fun CreateAccountScreen(
     )
 
     ConstraintLayout(
-        modifier = modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize()
     ) {
         val (backBtn, title, basicInfoCard, dateAndPhoneLayout, createUserBtn) = createRefs()
 
         GenericRoundedButton(
-            modifier = modifier
+            modifier = Modifier
                 .constrainAs(backBtn) {
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)
@@ -65,7 +63,7 @@ fun CreateAccountScreen(
         )
         Text(
             text = stringResource(id = R.string.create_new),
-            modifier = modifier
+            modifier = Modifier
                 .constrainAs(title) {
                     start.linkTo(backBtn.end)
                     top.linkTo(backBtn.top)
@@ -118,7 +116,7 @@ fun CreateAccountScreen(
 
                         }
                         navHostController.popBackStack()
-                        navHostController.navigate(BottomNavGraph.HomePage.route)
+                        navHostController.navigate(BottomBarScreen.HomePage.route)
 
                     } else userViewModel.setErrors()
                 }

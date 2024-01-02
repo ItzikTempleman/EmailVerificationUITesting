@@ -43,7 +43,6 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
-
 import com.itzik.user_with_testing.project.navigation.LoginGraph
 import com.itzik.user_with_testing.project.ui.semantics.GenericButton
 import com.itzik.user_with_testing.project.ui.semantics.GenericOutlinedTextField
@@ -59,14 +58,13 @@ import kotlinx.coroutines.launch
 @ExperimentalMaterial3Api
 @Composable
 fun LoginScreen(
-    modifier: Modifier,
     navHostController: NavHostController,
     userViewModel: UserViewModel,
     coroutineScope: CoroutineScope
 ) {
     RoundedBackGround(topColor = White, bottomColor = White)
     ConstraintLayout(
-        modifier = modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize()
     ) {
 
         val context = LocalContext.current
@@ -88,7 +86,7 @@ fun LoginScreen(
         val (title, emailTF, passwordTF, loginBtn, forgotPasswordText, iconRow, signUp, phoneNumberOutlinedTF, or, signUpBtn) = createRefs()
 
         Text(
-            modifier = modifier
+            modifier = Modifier
                 .padding(top = 70.dp)
                 .constrainAs(title) {
                     start.linkTo(parent.start)
@@ -108,7 +106,7 @@ fun LoginScreen(
                 email = it
             },
             label = emailLabelMessage,
-            modifier = modifier
+            modifier = Modifier
                 .constrainAs(emailTF) {
                     top.linkTo(title.bottom)
                 }
@@ -127,7 +125,7 @@ fun LoginScreen(
                 password = it
             },
             label = passwordLabelMessage,
-            modifier = modifier
+            modifier = Modifier
                 .constrainAs(passwordTF) {
                     top.linkTo(emailTF.bottom)
                 }
@@ -150,7 +148,7 @@ fun LoginScreen(
 
         Row(
             horizontalArrangement = Arrangement.SpaceEvenly,
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .constrainAs(iconRow) {
                     top.linkTo(passwordTF.bottom)
@@ -161,7 +159,7 @@ fun LoginScreen(
                 onClick = {
 
                 },
-                modifier = modifier
+                modifier = Modifier
                     .width(40.dp)
             ) {
                 Image(
@@ -173,7 +171,7 @@ fun LoginScreen(
                 onClick = {
 
                 },
-                modifier = modifier
+                modifier = Modifier
                     .width(40.dp)
             ) {
                 Image(
@@ -185,7 +183,7 @@ fun LoginScreen(
 
 
         GenericButton(
-            modifier = modifier
+            modifier = Modifier
                 .constrainAs(loginBtn) {
                     top.linkTo(iconRow.bottom)
                 }
@@ -240,7 +238,7 @@ fun LoginScreen(
             onClick = {
                 isEnterPhoneNumberDisplayed = !isEnterPhoneNumberDisplayed
             },
-            modifier = modifier
+            modifier = Modifier
                 .constrainAs(forgotPasswordText) {
                     top.linkTo(loginBtn.bottom)
                     end.linkTo(parent.end)
@@ -266,7 +264,7 @@ fun LoginScreen(
                     phone = it
                 },
                 label = phoneLabelMessage,
-                modifier = modifier
+                modifier = Modifier
                     .padding(horizontal = 20.dp, vertical = 8.dp)
                     .constrainAs(phoneNumberOutlinedTF) {
                         top.linkTo(forgotPasswordText.bottom)
@@ -283,7 +281,7 @@ fun LoginScreen(
         }
 
         Text(
-            modifier = modifier
+            modifier = Modifier
                 .constrainAs(or) {
                     top.linkTo(loginBtn.bottom)
                     end.linkTo(parent.end)
@@ -301,7 +299,7 @@ fun LoginScreen(
             onClick = {
                 navHostController.navigate(LoginGraph.CreateAccountPage.route)
             },
-            modifier = modifier
+            modifier = Modifier
                 .constrainAs(signUp) {
                     top.linkTo(or.bottom)
                     end.linkTo(parent.end)
@@ -318,7 +316,7 @@ fun LoginScreen(
         }
 
         GenericRoundedButton(
-            modifier = modifier
+            modifier = Modifier
                 .constrainAs(signUpBtn) {
                     top.linkTo(signUp.top)
                     bottom.linkTo(signUp.bottom)

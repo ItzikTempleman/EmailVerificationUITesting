@@ -3,26 +3,23 @@ package com.itzik.user_with_testing.project.navigation
 import android.annotation.SuppressLint
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.ContentAlpha
-import androidx.compose.material.Icon
-import androidx.compose.material.LocalContentColor
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigation
+import androidx.navigation.compose.rememberNavController
 import com.itzik.user_with_testing.project.ui.screens.CreateAccountScreen
 import com.itzik.user_with_testing.project.ui.screens.HomeScreen
 import com.itzik.user_with_testing.project.ui.screens.LoginScreen
@@ -31,19 +28,22 @@ import com.itzik.user_with_testing.project.ui.screens.SplashScreen
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 
+
 @SuppressLint(
-    "SuspiciousIndentation", "UnusedMaterial3ScaffoldPaddingParameter",
+    "SuspiciousIndentation",
+    "UnusedMaterial3ScaffoldPaddingParameter",
     "ComposableNavGraphInComposeScope"
 )
 @OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
-fun AppNavGraph(
-    navHostController: NavHostController,
+fun AppGraph(
     userViewModel: UserViewModel,
     coroutineScope: CoroutineScope,
 ) {
+    val navController = rememberNavController()
     NavHost(
-        navController = navHostController,
+        navController = navController,
         startDestination = SPLASH_GRAPH
     ) {
         navigation(
@@ -56,8 +56,7 @@ fun AppNavGraph(
                 SplashScreen(
                     coroutineScope = coroutineScope,
                     userViewModel = userViewModel,
-                    navHostController = navHostController,
-                    modifier = Modifier
+                    navHostController = navController
                 )
             }
         }
@@ -70,59 +69,43 @@ fun AppNavGraph(
                 route = LoginGraph.LoginPage.route
             ) {
                 LoginScreen(
-                    navHostController = navHostController,
-                    modifier = Modifier,
+                    navHostController = navController,
                     userViewModel = userViewModel,
                     coroutineScope = coroutineScope
                 )
             }
+
             composable(
                 route = LoginGraph.CreateAccountPage.route
             ) {
                 CreateAccountScreen(
-                    navHostController = navHostController,
+                    navHostController = navController,
                     userViewModel = userViewModel,
-                    coroutineScope = coroutineScope,
-                    modifier = Modifier
+                    coroutineScope = coroutineScope
                 )
             }
         }
 
         navigation(
-            startDestination = BottomNavGraph.HomePage.route,
+            startDestination = BottomBarScreen.HomePage.route,
             route = HOME_GRAPH
-        ) {
-            composable(
-                route = BottomNavGraph.HomePage.route
-
-            ) {
-                val screens = listOf(BottomNavGraph.HomePage, BottomNavGraph.ProfilePage)
-
-                val navBackStackEntry by navHostController.currentBackStackEntryAsState()
-                val currentDestination = navBackStackEntry?.destination
+        ){
+            composable( route = BottomBarScreen.HomePage.route) {
                 Scaffold(
                     bottomBar = {
+                        val bottomNavigationItems =
+                            listOf(BottomBarScreen.HomePage, BottomBarScreen.ProfilePage)
                         BottomNavigation {
-                            screens.forEach { screen ->
+                            val navBackStackEntry by navController.currentBackStackEntryAsState()
+                            val currentDestination = navBackStackEntry?.destination
+                            bottomNavigationItems.forEach { item ->
                                 BottomNavigationItem(
-                                    label = {
-                                        Text(text = screen.title)
-                                    },
-                                    icon = {
-                                        Icon(
-                                            imageVector = screen.icon,
-                                            contentDescription = null
-                                        )
-                                    },
-                                    selected = currentDestination?.hierarchy?.any {
-                                        it.route == screen.route
-                                    } == true,
-                                    unselectedContentColor = LocalContentColor.current.copy(
-                                        alpha = ContentAlpha.disabled
-                                    ),
+                                    icon = { Icon(item.icon, contentDescription = null) },
+                                    label = { Text(text = item.title) },
+                                    selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
                                     onClick = {
-                                        navHostController.navigate(screen.route) {
-                                            popUpTo(navHostController.graph.findStartDestination().id)
+                                        navController.navigate(item.route) {
+                                            popUpTo(navController.graph.findStartDestination().id)
                                             launchSingleTop = true
                                         }
                                     }
@@ -131,23 +114,21 @@ fun AppNavGraph(
                         }
                     }
                 ) {
-                    navigation(
-                        route = HOME_GRAPH,
-                        startDestination = BottomNavGraph.HomePage.route,
+                    NavHost(
+                        navController = navController,
+                        startDestination = HOME_GRAPH
                     ) {
-                        composable(BottomNavGraph.HomePage.route) {
+                        composable(BottomBarScreen.HomePage.route) {
                             HomeScreen(
                                 coroutineScope = coroutineScope,
-                                navHostController = navHostController,
-                                modifier = Modifier,
+                                navHostController = navController,
                                 userViewModel = userViewModel
                             )
                         }
-                        composable(BottomNavGraph.ProfilePage.route) {
+                        composable(BottomBarScreen.ProfilePage.route) {
                             ProfileScreen(
                                 coroutineScope = coroutineScope,
-                                navHostController = navHostController,
-                                modifier = Modifier,
+                                navHostController = navController,
                                 userViewModel = userViewModel
                             )
                         }
@@ -157,26 +138,6 @@ fun AppNavGraph(
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 const val SPLASH_GRAPH = "splashGraph"
@@ -198,21 +159,20 @@ sealed class LoginGraph(
 }
 
 
-sealed class BottomNavGraph(
+sealed class BottomBarScreen(
     val route: String,
     val title: String,
     val icon: ImageVector,
 ) {
-    data object HomePage : BottomNavGraph(
+    data object HomePage : BottomBarScreen(
         route = "homePage",
         title = "Home",
         icon = Icons.Default.Home
     )
 
-    data object ProfilePage : BottomNavGraph(
+    data object ProfilePage : BottomBarScreen(
         route = "profilePage",
         title = "Profile",
         icon = Icons.Default.Person
     )
-
 }
