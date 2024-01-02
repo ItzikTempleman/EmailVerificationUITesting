@@ -10,7 +10,7 @@ import com.itzik.user_with_testing.project.models.Gender
 import com.itzik.user_with_testing.project.models.User
 import com.itzik.user_with_testing.project.models.airport_model.SearchAirportResponse
 import com.itzik.user_with_testing.project.models.flight_model.FlightResponse
-import com.itzik.user_with_testing.project.navigation.BottomBarScreen
+import com.itzik.user_with_testing.project.navigation.BottomBar
 
 
 import com.itzik.user_with_testing.project.repositories.IUserRepository
@@ -242,7 +242,7 @@ class UserViewModel
         user: User,
     ) {
         if (isSuccessfulData) {
-            navHostController.navigate(BottomBarScreen.HomePage.route)
+            navHostController.navigate(BottomBar.Home.route)
         }
     }
 

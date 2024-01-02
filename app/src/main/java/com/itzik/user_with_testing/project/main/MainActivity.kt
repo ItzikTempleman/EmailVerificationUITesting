@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.itzik.user_with_testing.project.navigation.AppGraph
+import com.itzik.user_with_testing.project.navigation.RootNavigationGraph
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import com.itzik.user_with_testing.theme.EmailVerificationUITestingTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
             userViewModel = viewModel()
             val coroutineScope = rememberCoroutineScope()
             EmailVerificationUITestingTheme {
-                AppGraph(userViewModel, coroutineScope)
+                RootNavigationGraph(userViewModel, coroutineScope)
             }
         }
     }
