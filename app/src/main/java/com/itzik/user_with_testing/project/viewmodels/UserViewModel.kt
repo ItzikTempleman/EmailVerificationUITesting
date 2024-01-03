@@ -242,7 +242,7 @@ class UserViewModel
         user: User,
     ) {
         if (isSuccessfulData) {
-            navHostController.navigate(BottomBar.Home.route)
+            navHostController.navigate(BottomBar.SearchFlights.route)
         }
     }
 

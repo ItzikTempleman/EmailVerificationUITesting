@@ -34,7 +34,7 @@ fun MainScreen(
     ) {
         MainScreenNavGraph(
             userViewModel = userViewModel,
-            navHostController = navController,
+            navController = navController,
             coroutineScope = coroutineScope
         )
     }
@@ -45,7 +45,7 @@ fun MainScreen(
 @Composable
 fun BottomBar(navController: NavHostController) {
     val screens = listOf(
-        BottomBar.Home,
+        BottomBar.SearchFlights,
         BottomBar.Profile
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()

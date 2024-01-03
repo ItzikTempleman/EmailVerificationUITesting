@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.rememberNavController
 import com.itzik.user_with_testing.project.navigation.RootNavigationGraph
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import com.itzik.user_with_testing.theme.EmailVerificationUITestingTheme
@@ -22,7 +23,7 @@ class MainActivity : ComponentActivity() {
             userViewModel = viewModel()
             val coroutineScope = rememberCoroutineScope()
             EmailVerificationUITestingTheme {
-                RootNavigationGraph(userViewModel, coroutineScope)
+                RootNavigationGraph(userViewModel, coroutineScope, navController = rememberNavController())
             }
         }
     }

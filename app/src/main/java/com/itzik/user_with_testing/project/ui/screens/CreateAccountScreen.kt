@@ -116,7 +116,7 @@ fun CreateAccountScreen(
 
                         }
                         navController.popBackStack()
-                        navController.navigate(BottomBar.Home.route)
+                        navController.navigate(BottomBar.SearchFlights.route)
 
                     } else userViewModel.setErrors()
                 }

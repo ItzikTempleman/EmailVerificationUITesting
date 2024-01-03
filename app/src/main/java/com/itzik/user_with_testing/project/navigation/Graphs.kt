@@ -1,7 +1,7 @@
 package com.itzik.user_with_testing.project.navigation
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Flight
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.ui.graphics.vector.ImageVector
 
@@ -26,15 +26,15 @@ sealed class BottomBar(
     val title: String,
     val icon: ImageVector
 ) {
-    data object Home : BottomBar(
-        route = "HOME",
-        title = "HOME",
-        icon = Icons.Default.Home
+    data object SearchFlights : BottomBar(
+        route = "SEARCH",
+        title = "Search",
+        icon = Icons.Default.Flight
     )
 
     data object Profile : BottomBar(
         route = "PROFILE",
-        title = "PROFILE",
+        title = "Profile",
         icon = Icons.Default.Person
     )
 }

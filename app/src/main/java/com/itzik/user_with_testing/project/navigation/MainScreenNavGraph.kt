@@ -14,9 +14,9 @@ fun MainScreenNavGraph(navController: NavHostController, userViewModel: UserView
     NavHost(
         navController = navController,
         route = Graph.HOME,
-        startDestination = BottomBar.Home.route
+        startDestination = BottomBar.SearchFlights.route
     ) {
-        composable(route = BottomBar.Home.route) {
+        composable(route = BottomBar.SearchFlights.route) {
            SearchScreen(
                navController = navController,
                userViewModel = userViewModel,

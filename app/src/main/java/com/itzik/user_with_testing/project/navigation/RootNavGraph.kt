@@ -59,7 +59,7 @@ fun RootNavigationGraph(
             }
         }
 
-        composable(route = BottomBar.Home.route) {
+        composable(route = BottomBar.SearchFlights.route) {
             MainScreen(
                 userViewModel = userViewModel,
                 coroutineScope = coroutineScope
