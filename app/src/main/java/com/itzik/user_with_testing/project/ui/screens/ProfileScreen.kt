@@ -17,7 +17,7 @@ import kotlinx.coroutines.CoroutineScope
 @Composable
 fun ProfileScreen(
     coroutineScope: CoroutineScope,
-    navHostController: NavHostController,
+    navController: NavHostController,
     userViewModel: UserViewModel,
 ) {
     ConstraintLayout(

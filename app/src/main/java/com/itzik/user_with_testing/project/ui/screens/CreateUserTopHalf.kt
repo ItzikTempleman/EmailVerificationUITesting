@@ -47,7 +47,7 @@ fun CreateUserTopHalf(
 
     coroutineScope: CoroutineScope,
     modifier: Modifier,
-    navHostController: NavHostController,
+    navController: NavHostController,
     userViewModel: UserViewModel,
 ) {
 

@@ -1,7 +1,6 @@
-package com.itzik.user_with_testing.project.navigation
+package com.itzik.user_with_testing.project.ui.screens
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.ContentAlpha
@@ -11,31 +10,37 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.itzik.user_with_testing.project.navigation.BottomBar
+import com.itzik.user_with_testing.project.navigation.MainScreenNavGraph
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun HomeScreen(
+fun MainScreen(
     navController: NavHostController = rememberNavController(),
     userViewModel: UserViewModel,
-    coroutineScope: CoroutineScope) {
+    coroutineScope: CoroutineScope)
+{
     Scaffold(
-        bottomBar = { BottomBar(navController = navController) }
+        bottomBar = {
+            BottomBar(navController = navController)
+        }
     ) {
-        HomeNavGraph(
+        MainScreenNavGraph(
             userViewModel = userViewModel,
             navHostController = navController,
             coroutineScope = coroutineScope
         )
     }
 }
+
+
 
 @Composable
 fun BottomBar(navController: NavHostController) {
@@ -50,41 +55,29 @@ fun BottomBar(navController: NavHostController) {
     if (bottomBarDestination) {
         BottomNavigation {
             screens.forEach { screen ->
-                AddItem(
-                    screen = screen,
-                    currentDestination = currentDestination,
-                    navController = navController
+                BottomNavigationItem(
+                    label = {
+                        Text(text = screen.title)
+                    },
+                    icon = {
+                        Icon(
+                            imageVector = screen.icon,
+                            contentDescription = "Navigation Icon"
+                        )
+                    },
+                    selected = currentDestination?.hierarchy?.any {
+                        it.route == screen.route
+                    } == true,
+                    unselectedContentColor = LocalContentColor.current.copy(alpha = ContentAlpha.disabled),
+                    onClick = {
+                        navController.navigate(screen.route) {
+                            popUpTo(navController.graph.findStartDestination().id)
+                            launchSingleTop = true
+                        }
+                    }
                 )
             }
         }
     }
 }
 
-@Composable
-fun RowScope.AddItem(
-    screen: BottomBar,
-    currentDestination: NavDestination?,
-    navController: NavHostController,
-) {
-    BottomNavigationItem(
-        label = {
-            Text(text = screen.title)
-        },
-        icon = {
-            Icon(
-                imageVector = screen.icon,
-                contentDescription = "Navigation Icon"
-            )
-        },
-        selected = currentDestination?.hierarchy?.any {
-            it.route == screen.route
-        } == true,
-        unselectedContentColor = LocalContentColor.current.copy(alpha = ContentAlpha.disabled),
-        onClick = {
-            navController.navigate(screen.route) {
-                popUpTo(navController.graph.findStartDestination().id)
-                launchSingleTop = true
-            }
-        }
-    )
-}

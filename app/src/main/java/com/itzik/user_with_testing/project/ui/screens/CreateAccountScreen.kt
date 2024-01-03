@@ -32,7 +32,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun CreateAccountScreen(
     coroutineScope: CoroutineScope,
-    navHostController: NavHostController,
+    navController: NavHostController,
     userViewModel: UserViewModel
 ) {
     RoundedBackGround(
@@ -54,7 +54,7 @@ fun CreateAccountScreen(
                 .padding(20.dp),
             imageVector = Icons.Default.ArrowBack,
             onClickFunction = {
-                navHostController.navigate(AuthScreen.SignUp.route)
+                navController.navigate(AuthScreen.SignUp.route)
             },
             outerTint = White,
             iconTint = White,
@@ -83,7 +83,7 @@ fun CreateAccountScreen(
                 .height(420.dp)
                 .fillMaxWidth()
                 .padding(top = 20.dp, start = 12.dp, end = 12.dp),
-            navHostController = navHostController,
+            navController = navController,
             userViewModel = userViewModel
         )
 
@@ -115,8 +115,8 @@ fun CreateAccountScreen(
                             userViewModel.saveUser(userModel)
 
                         }
-                        navHostController.popBackStack()
-                        navHostController.navigate(BottomBar.Home.route)
+                        navController.popBackStack()
+                        navController.navigate(BottomBar.Home.route)
 
                     } else userViewModel.setErrors()
                 }

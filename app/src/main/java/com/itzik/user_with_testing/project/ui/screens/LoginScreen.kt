@@ -58,7 +58,7 @@ import kotlinx.coroutines.launch
 @ExperimentalMaterial3Api
 @Composable
 fun LoginScreen(
-    navHostController: NavHostController,
+    navController: NavHostController,
     userViewModel: UserViewModel,
     coroutineScope: CoroutineScope
 ) {
@@ -221,7 +221,7 @@ fun LoginScreen(
                             userViewModel.updateUser(it)
                             Log.d("TAG", "$it")
 
-                            userViewModel.moveToHomeScreen(userViewModel.isTextFieldsLoginValidFormat(), navHostController , it)
+                            userViewModel.moveToHomeScreen(userViewModel.isTextFieldsLoginValidFormat(), navController , it)
                         }else Toast.makeText(
                             context,
                             "User does not exist",
@@ -297,7 +297,7 @@ fun LoginScreen(
 
         TextButton(
             onClick = {
-                navHostController.navigate(AuthScreen.SignUp.route)
+                navController.navigate(AuthScreen.SignUp.route)
             },
             modifier = Modifier
                 .constrainAs(signUp) {
@@ -324,7 +324,7 @@ fun LoginScreen(
                 },
             imageVector = Icons.Default.ArrowForward,
             onClickFunction = {
-                navHostController.navigate(AuthScreen.SignUp.route)
+                navController.navigate(AuthScreen.SignUp.route)
             },
             outerTint = Dark_Green,
             iconTint = Dark_Green,

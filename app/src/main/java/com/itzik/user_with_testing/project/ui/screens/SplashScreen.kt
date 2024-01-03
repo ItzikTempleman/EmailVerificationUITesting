@@ -38,7 +38,7 @@ import kotlinx.coroutines.launch
 fun SplashScreen(
     coroutineScope: CoroutineScope,
     userViewModel: UserViewModel,
-    navHostController: NavHostController,
+    navController: NavHostController,
 ) {
     var userList by remember {
         mutableStateOf(listOf<User>())
@@ -57,16 +57,16 @@ fun SplashScreen(
         startAnim = true
         delay(2000)
 
-        navHostController.popBackStack()
+        navController.popBackStack()
         coroutineScope.launch {
             userViewModel.getUsers().collect {
                 userList = it
                 Log.d("TAG", "$it")
             }
             if (userList.isNotEmpty() && userList.first().isSignedIn) {
-                navHostController.navigate(BottomBar.Home.route)
+                navController.navigate(BottomBar.Home.route)
             } else
-                navHostController.navigate(AuthScreen.Login.route)
+                navController.navigate(AuthScreen.Login.route)
             }
     }
 

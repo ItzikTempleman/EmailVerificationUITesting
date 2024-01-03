@@ -6,9 +6,8 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.ui.graphics.vector.ImageVector
 
 object Graph {
-    const val ROOT = "root_graph"
     const val SPLASH = "splash_graph"
-    const val AUTHENTICATION = "auth_graph"
+    const val LOGIN = "login_graph"
     const val HOME = "home_graph"
 }
 

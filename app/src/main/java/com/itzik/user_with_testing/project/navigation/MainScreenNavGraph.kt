@@ -10,26 +10,22 @@ import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
-fun HomeNavGraph(
-    navHostController: NavHostController,
-    userViewModel: UserViewModel,
-    coroutineScope: CoroutineScope
-) {
+fun MainScreenNavGraph(navController: NavHostController, userViewModel: UserViewModel, coroutineScope: CoroutineScope) {
     NavHost(
-        navController = navHostController,
+        navController = navController,
         route = Graph.HOME,
         startDestination = BottomBar.Home.route
     ) {
         composable(route = BottomBar.Home.route) {
            SearchScreen(
-               navController = navHostController,
+               navController = navController,
                userViewModel = userViewModel,
                coroutineScope = coroutineScope
            )
         }
         composable(route = BottomBar.Profile.route) {
             ProfileScreen(
-                navHostController = navHostController,
+                navController = navController,
                 userViewModel = userViewModel,
                 coroutineScope = coroutineScope
             )
