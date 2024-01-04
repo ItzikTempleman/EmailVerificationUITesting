@@ -29,7 +29,7 @@ fun MainScreen(
 {
     Scaffold(
         bottomBar = {
-            BottomBar(navController = navController)
+            NavBarScreen(navController = navController)
         }
     ) {
         MainScreenNavGraph(
@@ -43,7 +43,7 @@ fun MainScreen(
 
 
 @Composable
-fun BottomBar(navController: NavHostController) {
+fun NavBarScreen(navController: NavHostController) {
     val screens = listOf(
         BottomBarGraph.SearchFlights,
         BottomBarGraph.Profile
