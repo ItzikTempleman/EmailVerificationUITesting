@@ -25,8 +25,8 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.models.User
-import com.itzik.user_with_testing.project.navigation.AuthScreen
-import com.itzik.user_with_testing.project.navigation.BottomBar
+import com.itzik.user_with_testing.project.navigation.BottomBarGraph
+import com.itzik.user_with_testing.project.navigation.LoginGraph
 import com.itzik.user_with_testing.project.ui.semantics.RoundedBackGround
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -64,9 +64,9 @@ fun SplashScreen(
                 Log.d("TAG", "$it")
             }
             if (userList.isNotEmpty() && userList.first().isSignedIn) {
-                navController.navigate(BottomBar.SearchFlights.route)
+                navController.navigate(BottomBarGraph.SearchFlights.route)
             } else
-                navController.navigate(AuthScreen.Login.route)
+                navController.navigate(LoginGraph.Login.route)
             }
     }
 

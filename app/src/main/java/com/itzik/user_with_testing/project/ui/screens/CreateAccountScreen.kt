@@ -19,8 +19,8 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
-import com.itzik.user_with_testing.project.navigation.AuthScreen
-import com.itzik.user_with_testing.project.navigation.BottomBar
+import com.itzik.user_with_testing.project.navigation.BottomBarGraph
+import com.itzik.user_with_testing.project.navigation.LoginGraph
 import com.itzik.user_with_testing.project.ui.semantics.GenericButton
 import com.itzik.user_with_testing.project.ui.semantics.GenericRoundedButton
 import com.itzik.user_with_testing.project.ui.semantics.RoundedBackGround
@@ -54,7 +54,7 @@ fun CreateAccountScreen(
                 .padding(20.dp),
             imageVector = Icons.Default.ArrowBack,
             onClickFunction = {
-                navController.navigate(AuthScreen.SignUp.route)
+                navController.navigate(LoginGraph.SignUp.route)
             },
             outerTint = White,
             iconTint = White,
@@ -116,7 +116,7 @@ fun CreateAccountScreen(
 
                         }
                         navController.popBackStack()
-                        navController.navigate(BottomBar.SearchFlights.route)
+                        navController.navigate(BottomBarGraph.SearchFlights.route)
 
                     } else userViewModel.setErrors()
                 }

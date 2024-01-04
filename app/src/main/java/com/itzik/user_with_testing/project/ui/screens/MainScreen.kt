@@ -15,7 +15,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.itzik.user_with_testing.project.navigation.BottomBar
+import com.itzik.user_with_testing.project.navigation.BottomBarGraph
 import com.itzik.user_with_testing.project.navigation.MainScreenNavGraph
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -45,8 +45,8 @@ fun MainScreen(
 @Composable
 fun BottomBar(navController: NavHostController) {
     val screens = listOf(
-        BottomBar.SearchFlights,
-        BottomBar.Profile
+        BottomBarGraph.SearchFlights,
+        BottomBarGraph.Profile
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination

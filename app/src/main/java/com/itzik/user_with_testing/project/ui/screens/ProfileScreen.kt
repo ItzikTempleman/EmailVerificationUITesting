@@ -20,7 +20,8 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.models.User
-import com.itzik.user_with_testing.project.navigation.AuthScreen
+import com.itzik.user_with_testing.project.navigation.LoginGraph
+
 import com.itzik.user_with_testing.project.ui.semantics.RoundedBackGround
 import com.itzik.user_with_testing.project.utils.mockEmptyUser
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
@@ -63,9 +64,8 @@ fun ProfileScreen(
 
         )
         TextButton(
-
             onClick = {
-                navController.navigate(AuthScreen.Login.route)
+                navController.navigate(LoginGraph.Login.route)
                 coroutineScope.launch {
                     user.isSignedIn = false
                     userViewModel.updateIsSignIn(user)
@@ -108,7 +108,7 @@ fun ProfileScreen(
                     top.linkTo(fullFirstName.top)
                     bottom.linkTo(fullFirstName.bottom)
                 }
-                .padding(start=2.dp, top=12.dp),
+                .padding(start=6.dp, top=12.dp),
             text = user.familyName
         )
         Text(

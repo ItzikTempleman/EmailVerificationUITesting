@@ -6,34 +6,34 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.ui.graphics.vector.ImageVector
 
 object Graph {
-    const val SPLASH = "splash_graph"
-    const val LOGIN = "login_graph"
-    const val HOME = "home_graph"
+    const val SPLASH = "splashGraph"
+    const val LOGIN = "loginGraph"
+    const val BOTTOM_BAR = "bottomBarGraph"
 }
 
 sealed class SplashGraph(val route: String) {
-    data object Splash : SplashGraph(route = "SPLASH")
+    data object Splash : SplashGraph(route = "splash")
 }
 
-sealed class AuthScreen(val route: String) {
-    data object Login : AuthScreen(route = "LOGIN")
-    data object SignUp : AuthScreen(route = "SIGN_UP")
+sealed class LoginGraph(val route: String) {
+    data object Login : LoginGraph(route = "login")
+    data object SignUp : LoginGraph(route = "signUp")
 }
 
 
-sealed class BottomBar(
+sealed class BottomBarGraph(
     val route: String,
     val title: String,
     val icon: ImageVector
 ) {
-    data object SearchFlights : BottomBar(
-        route = "SEARCH",
+    data object SearchFlights : BottomBarGraph(
+        route = "search",
         title = "Search",
         icon = Icons.Default.Flight
     )
 
-    data object Profile : BottomBar(
-        route = "PROFILE",
+    data object Profile : BottomBarGraph(
+        route = "profile",
         title = "Profile",
         icon = Icons.Default.Person
     )

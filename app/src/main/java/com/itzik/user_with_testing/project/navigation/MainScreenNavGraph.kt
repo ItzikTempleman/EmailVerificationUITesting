@@ -13,17 +13,17 @@ import kotlinx.coroutines.CoroutineScope
 fun MainScreenNavGraph(navController: NavHostController, userViewModel: UserViewModel, coroutineScope: CoroutineScope) {
     NavHost(
         navController = navController,
-        route = Graph.HOME,
-        startDestination = BottomBar.SearchFlights.route
+        route = Graph.BOTTOM_BAR,
+        startDestination = BottomBarGraph.SearchFlights.route
     ) {
-        composable(route = BottomBar.SearchFlights.route) {
+        composable(route = BottomBarGraph.SearchFlights.route) {
            SearchScreen(
                navController = navController,
                userViewModel = userViewModel,
                coroutineScope = coroutineScope
            )
         }
-        composable(route = BottomBar.Profile.route) {
+        composable(route = BottomBarGraph.Profile.route) {
             ProfileScreen(
                 navController = navController,
                 userViewModel = userViewModel,

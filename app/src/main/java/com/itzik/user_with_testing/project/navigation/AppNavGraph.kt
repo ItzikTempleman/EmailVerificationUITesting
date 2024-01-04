@@ -17,7 +17,7 @@ import kotlinx.coroutines.CoroutineScope
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RootNavigationGraph(
+fun AppNavGraph(
     userViewModel: UserViewModel,
     coroutineScope: CoroutineScope,
     navController: NavHostController,
@@ -41,16 +41,16 @@ fun RootNavigationGraph(
 
         navigation(
             route = Graph.LOGIN,
-            startDestination = AuthScreen.Login.route
+            startDestination = LoginGraph.Login.route
         ) {
-            composable(route = AuthScreen.Login.route) {
+            composable(route = LoginGraph.Login.route) {
                 LoginScreen(
                     navController = navController,
                     userViewModel = userViewModel,
                     coroutineScope = coroutineScope
                 )
             }
-            composable(route = AuthScreen.SignUp.route) {
+            composable(route = LoginGraph.SignUp.route) {
                 CreateAccountScreen(
                     navController = navController,
                     userViewModel = userViewModel,
@@ -59,7 +59,7 @@ fun RootNavigationGraph(
             }
         }
 
-        composable(route = BottomBar.SearchFlights.route) {
+        composable(route = BottomBarGraph.SearchFlights.route) {
             MainScreen(
                 userViewModel = userViewModel,
                 coroutineScope = coroutineScope
