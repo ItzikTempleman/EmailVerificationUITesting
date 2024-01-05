@@ -5,8 +5,8 @@ import com.itzik.user_with_testing.project.models.User
 
 object Constants  {
 
-    val Dark_Green = Color(0xFF007d74)
-    val Light_Green = Color(0xFF64DB95)
+    val Dark_Blue = Color(0xFF1c3456)
+    val Light_Blue = Color(0xFF7db9be)
 
     const val USER_TABLE="userTable"
     const val USER_DATABASE="userDatabase"

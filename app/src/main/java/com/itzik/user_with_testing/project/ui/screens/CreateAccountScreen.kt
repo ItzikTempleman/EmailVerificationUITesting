@@ -24,7 +24,7 @@ import com.itzik.user_with_testing.project.navigation.LoginGraph
 import com.itzik.user_with_testing.project.ui.semantics.GenericButton
 import com.itzik.user_with_testing.project.ui.semantics.GenericRoundedButton
 import com.itzik.user_with_testing.project.ui.semantics.RoundedBackGround
-import com.itzik.user_with_testing.project.utils.Constants.Light_Green
+import com.itzik.user_with_testing.project.utils.Constants.Dark_Blue
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -58,7 +58,7 @@ fun CreateAccountScreen(
             },
             outerTint = White,
             iconTint = White,
-            innerIconColor = Light_Green,
+            innerIconColor = Dark_Blue,
             1.2.dp
         )
         Text(
@@ -121,7 +121,7 @@ fun CreateAccountScreen(
                     } else userViewModel.setErrors()
                 }
             },
-            buttonColor = Light_Green,
+            buttonColor = Dark_Blue,
             text = stringResource(id = R.string.create_account),
             textColor = White,
             roundedRadius = 36.dp

@@ -1,4 +1,5 @@
 
+
 import android.app.DatePickerDialog
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.size
@@ -24,9 +25,9 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
 import com.itzik.user_with_testing.project.ui.semantics.GenericRoundedButton
-import com.itzik.user_with_testing.project.utils.Constants.Light_Green
+import com.itzik.user_with_testing.project.utils.Constants.Dark_Blue
+import com.itzik.user_with_testing.project.utils.Constants.Light_Blue
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -59,8 +60,8 @@ fun DatePickerDialogScreen(
                 onClickFunction = {
                     isDatePickerVisible = true
                 },
-                outerTint = Light_Green,
-                iconTint= Light_Green,
+                outerTint = Dark_Blue,
+                iconTint= Dark_Blue,
                 innerIconColor = White,
                 borderWidth = 1.dp
             )
@@ -77,7 +78,7 @@ fun DatePickerDialogScreen(
           isDatePickerVisible = true
         },
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = Light_Green,
+            focusedBorderColor = Light_Blue,
             unfocusedBorderColor = Black,
             backgroundColor = White
         ),

@@ -19,7 +19,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.sp
-import com.itzik.user_with_testing.project.utils.Constants.Dark_Green
+import com.itzik.user_with_testing.project.utils.Constants.Dark_Blue
 
 
 @Composable
@@ -93,7 +93,7 @@ fun GenericOutlinedTextField(
                     Icon(
                         imageVector = Icons.Default.Send,
                         contentDescription = null,
-                        tint = Dark_Green
+                        tint = Dark_Blue
                     )
                 }
             }

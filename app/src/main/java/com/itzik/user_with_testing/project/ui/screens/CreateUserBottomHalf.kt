@@ -20,9 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.itzik.user_with_testing.R
-
 import com.itzik.user_with_testing.project.ui.semantics.GenericOutlinedTextField
-import com.itzik.user_with_testing.project.utils.Constants.Light_Green
+import com.itzik.user_with_testing.project.utils.Constants.Dark_Blue
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 
 
@@ -71,7 +70,7 @@ fun CreateUserBottomHalf(
 
 
         GenericOutlinedTextField(
-            tint = Light_Green,
+            tint = Dark_Blue,
             value = newPhoneNumber,
             thisValueChange = {
                 newPhoneNumber = it

@@ -44,13 +44,12 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.navigation.LoginGraph
-
 import com.itzik.user_with_testing.project.ui.semantics.GenericButton
 import com.itzik.user_with_testing.project.ui.semantics.GenericOutlinedTextField
 import com.itzik.user_with_testing.project.ui.semantics.GenericRoundedButton
 import com.itzik.user_with_testing.project.ui.semantics.RoundedBackGround
-import com.itzik.user_with_testing.project.utils.Constants.Dark_Green
-import com.itzik.user_with_testing.project.utils.Constants.Light_Green
+import com.itzik.user_with_testing.project.utils.Constants.Dark_Blue
+import com.itzik.user_with_testing.project.utils.Constants.Light_Blue
 import com.itzik.user_with_testing.project.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -116,7 +115,7 @@ fun LoginScreen(
             imageVector = Icons.Default.Email,
             isError = isEmailError,
             visualTransformation = VisualTransformation.None,
-            tint = Light_Green,
+            tint = Light_Blue,
             trailingImageVector = Icons.Default.Image,
         )
 
@@ -143,7 +142,7 @@ fun LoginScreen(
             },
             visualTransformation = if (isPasswordVisible) VisualTransformation.None
             else PasswordVisualTransformation(),
-            tint = Light_Green,
+            tint = Light_Blue,
             trailingImageVector = Icons.Default.Image,
         )
 
@@ -230,7 +229,7 @@ fun LoginScreen(
                     }
                 }
             },
-            buttonColor = Light_Green,
+            buttonColor = Light_Blue,
             text = stringResource(id = R.string.go),
             roundedRadius = 36.dp,
             textColor = White
@@ -249,7 +248,7 @@ fun LoginScreen(
         ) {
             Text(
                 text = stringResource(id = R.string.forgot),
-                color = Dark_Green,
+                color = Dark_Blue,
                 fontSize = 20.sp,
                 fontStyle = FontStyle.Italic,
                 fontWeight = FontWeight.Bold
@@ -258,7 +257,7 @@ fun LoginScreen(
 
         if (isEnterPhoneNumberDisplayed) {
             GenericOutlinedTextField(
-                tint = Dark_Green,
+                tint = Dark_Blue,
                 isTrailingIconExist = true,
                 value = phone,
                 thisValueChange = {
@@ -290,7 +289,7 @@ fun LoginScreen(
                 }
                 .padding(top = 240.dp),
             text = stringResource(id = R.string.alternative),
-            color = Dark_Green,
+            color = Dark_Blue,
             fontSize = 20.sp,
             fontStyle = FontStyle.Italic,
             fontWeight = FontWeight.Bold
@@ -309,7 +308,7 @@ fun LoginScreen(
         ) {
             Text(
                 text = stringResource(id = R.string.sign_up),
-                color = Dark_Green,
+                color = Dark_Blue,
                 fontSize = 20.sp,
                 fontStyle = FontStyle.Italic,
                 fontWeight = FontWeight.Bold
@@ -327,8 +326,8 @@ fun LoginScreen(
             onClickFunction = {
                 navController.navigate(LoginGraph.SignUp.route)
             },
-            outerTint = Dark_Green,
-            iconTint = Dark_Green,
+            outerTint = Dark_Blue,
+            iconTint = Dark_Blue,
             innerIconColor = White,
             1.2.dp
         )
