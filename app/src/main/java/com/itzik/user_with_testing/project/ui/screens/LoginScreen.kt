@@ -50,7 +50,7 @@ import com.itzik.user_with_testing.project.ui.semantics.GenericRoundedButton
 import com.itzik.user_with_testing.project.ui.semantics.RoundedBackGround
 import com.itzik.user_with_testing.project.utils.Constants.Dark_Blue
 import com.itzik.user_with_testing.project.utils.Constants.Light_Blue
-import com.itzik.user_with_testing.project.viewmodels.UserViewModel
+import com.itzik.user_with_testing.project.viewmodels.AppViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -59,7 +59,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun LoginScreen(
     navController: NavHostController,
-    userViewModel: UserViewModel,
+    appViewModel: AppViewModel,
     coroutineScope: CoroutineScope
 ) {
     RoundedBackGround(topColor = White, bottomColor = White)
@@ -193,14 +193,14 @@ fun LoginScreen(
             onClick = {
 
 
-                if (!userViewModel.isValidLoginEmail(email)) {
+                if (!appViewModel.isValidLoginEmail(email)) {
                     isEmailError = true
                     emailLabelMessage = "Invalid email"
                 } else isEmailError = false
 
 
 
-                if (!userViewModel.isValidLoginPassword(password)) {
+                if (!appViewModel.isValidLoginPassword(password)) {
                     isPasswordError = true
                     passwordLabelMessage = "Invalid password"
                 } else isPasswordError = false
@@ -208,20 +208,20 @@ fun LoginScreen(
 
                 Toast.makeText(
                     context,
-                    if (userViewModel.isValidLoginEmail(email) && userViewModel.isValidLoginPassword(
+                    if (appViewModel.isValidLoginEmail(email) && appViewModel.isValidLoginPassword(
                             password
                         )
                     ) "Successfully logged in" else "Incorrect data, please fix",
                     Toast.LENGTH_SHORT
                 ).show()
                 coroutineScope.launch {
-                    userViewModel.getUserFromUserNameAndPassword(email,password).collect{
+                    appViewModel.getUserFromUserNameAndPassword(email,password).collect{
                         if (it != null) {
                             it.isSignedIn=true
-                            userViewModel.updateUser(it)
+                            appViewModel.updateUser(it)
                             Log.d("TAG", "$it")
 
-                            userViewModel.moveToHomeScreen(userViewModel.isTextFieldsLoginValidFormat(), navController , it)
+                            appViewModel.moveToHomeScreen(appViewModel.isTextFieldsLoginValidFormat(), navController , it)
                         }else Toast.makeText(
                             context,
                             "User does not exist",

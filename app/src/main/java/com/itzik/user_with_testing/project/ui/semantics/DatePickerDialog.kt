@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.sp
 import com.itzik.user_with_testing.project.ui.semantics.GenericRoundedButton
 import com.itzik.user_with_testing.project.utils.Constants.Dark_Blue
 import com.itzik.user_with_testing.project.utils.Constants.Light_Blue
-import com.itzik.user_with_testing.project.viewmodels.UserViewModel
+import com.itzik.user_with_testing.project.viewmodels.AppViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -36,7 +36,7 @@ import java.util.Locale
 @Composable
 fun DatePickerDialogScreen(
     modifier: Modifier,
-    userViewModel: UserViewModel,
+    appViewModel: AppViewModel,
 ) {
 
     var isValidAge by remember { mutableStateOf(false) }
@@ -100,7 +100,7 @@ fun DatePickerDialogScreen(
             selectedDate = Calendar.getInstance().apply {
                 timeInMillis = it
             }
-            isValidAge = userViewModel.validateAge(selectedDate ?: Calendar.getInstance())
+            isValidAge = appViewModel.validateAge(selectedDate ?: Calendar.getInstance())
             onDismissDateSelector()
         }
 

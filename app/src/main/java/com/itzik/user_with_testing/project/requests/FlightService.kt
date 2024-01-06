@@ -1,6 +1,6 @@
 package com.itzik.user_with_testing.project.requests
 
-import com.itzik.user_with_testing.project.models.airport_model.SearchAirportResponse
+import com.itzik.user_with_testing.project.models.AirportCodeName
 import com.itzik.user_with_testing.project.models.flight_model.FlightResponse
 import retrofit2.Response
 import retrofit2.http.GET
@@ -35,5 +35,5 @@ interface FlightService {
     @GET("api/v1/flights/searchAirport?")
     suspend fun getAirportCodeName(
         @Query("query") airportName:String
-    ):Response<SearchAirportResponse>
+    ):Response<AirportCodeName>
 }

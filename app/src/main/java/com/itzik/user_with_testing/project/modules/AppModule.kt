@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import com.itzik.user_with_testing.project.data.UserDao
 import com.itzik.user_with_testing.project.data.UserDatabase
-import com.itzik.user_with_testing.project.repositories.IUserRepository
-import com.itzik.user_with_testing.project.repositories.UserRepositoryImp
+import com.itzik.user_with_testing.project.repositories.IRepository
+import com.itzik.user_with_testing.project.repositories.RepositoryImp
 import com.itzik.user_with_testing.project.requests.FlightService
 import com.itzik.user_with_testing.project.utils.Constants.BASE_URL
 import com.itzik.user_with_testing.project.utils.Constants.USER_DATABASE
@@ -33,7 +33,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideUserRepository(repositoryImpl: UserRepositoryImp): IUserRepository = repositoryImpl
+    fun provideUserRepository(repositoryImpl: RepositoryImp): IRepository = repositoryImpl
 
 
     @Singleton

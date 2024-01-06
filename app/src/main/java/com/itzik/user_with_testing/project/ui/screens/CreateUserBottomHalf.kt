@@ -22,13 +22,13 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.ui.semantics.GenericOutlinedTextField
 import com.itzik.user_with_testing.project.utils.Constants.Dark_Blue
-import com.itzik.user_with_testing.project.viewmodels.UserViewModel
+import com.itzik.user_with_testing.project.viewmodels.AppViewModel
 
 
 @Composable
 fun CreateUserBottomHalf(
     modifier: Modifier,
-    userViewModel: UserViewModel,
+    appViewModel: AppViewModel,
 
     ) {
     var newPhoneNumber by remember { mutableStateOf("") }
@@ -57,7 +57,7 @@ fun CreateUserBottomHalf(
         )
 
         DatePickerDialogScreen(
-            userViewModel = userViewModel,
+            appViewModel = appViewModel,
             modifier = Modifier
                 .constrainAs(birthDateTF) {
                     top.linkTo(birthDateTitle.bottom)
@@ -74,7 +74,7 @@ fun CreateUserBottomHalf(
             value = newPhoneNumber,
             thisValueChange = {
                 newPhoneNumber = it
-                userViewModel.updatePhoneNumber(newPhoneNumber)
+                appViewModel.updatePhoneNumber(newPhoneNumber)
             },
             label = newPhoneNumberMessage,
             modifier = Modifier

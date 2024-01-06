@@ -21,10 +21,9 @@ import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.models.User
 import com.itzik.user_with_testing.project.navigation.LoginGraph
-
 import com.itzik.user_with_testing.project.ui.semantics.RoundedBackGround
 import com.itzik.user_with_testing.project.utils.mockEmptyUser
-import com.itzik.user_with_testing.project.viewmodels.UserViewModel
+import com.itzik.user_with_testing.project.viewmodels.AppViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -33,14 +32,14 @@ import kotlinx.coroutines.launch
 fun ProfileScreen(
     coroutineScope: CoroutineScope,
     navController: NavHostController,
-    userViewModel: UserViewModel,
+    appViewModel: AppViewModel,
 ) {
     var userList by remember {
         mutableStateOf(listOf<User>())
     }
     var user = mockEmptyUser()
     coroutineScope.launch {
-        userViewModel.getUsers().collect {
+        appViewModel.getUsers().collect {
             userList = it
         }
     }
@@ -65,10 +64,12 @@ fun ProfileScreen(
         )
         TextButton(
             onClick = {
-                navController.navigate(LoginGraph.Login.route)
+                navController.navigate(
+                    LoginGraph.Login.route
+                )
                 coroutineScope.launch {
                     user.isSignedIn = false
-                    userViewModel.updateIsSignIn(user)
+                    appViewModel.updateIsSignIn(user)
                 }
             },
             modifier = Modifier

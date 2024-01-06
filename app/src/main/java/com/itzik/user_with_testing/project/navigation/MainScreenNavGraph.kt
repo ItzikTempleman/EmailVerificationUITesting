@@ -6,11 +6,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.itzik.user_with_testing.project.ui.screens.ProfileScreen
 import com.itzik.user_with_testing.project.ui.screens.SearchScreen
-import com.itzik.user_with_testing.project.viewmodels.UserViewModel
+import com.itzik.user_with_testing.project.viewmodels.AppViewModel
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
-fun MainScreenNavGraph(navController: NavHostController, userViewModel: UserViewModel, coroutineScope: CoroutineScope) {
+fun MainScreenNavGraph(navController: NavHostController, appViewModel: AppViewModel, coroutineScope: CoroutineScope) {
     NavHost(
         navController = navController,
         route = Graph.BOTTOM_BAR,
@@ -19,14 +19,14 @@ fun MainScreenNavGraph(navController: NavHostController, userViewModel: UserView
         composable(route = BottomBarGraph.SearchFlights.route) {
            SearchScreen(
                navController = navController,
-               userViewModel = userViewModel,
+               appViewModel = appViewModel,
                coroutineScope = coroutineScope
            )
         }
         composable(route = BottomBarGraph.Profile.route) {
             ProfileScreen(
                 navController = navController,
-                userViewModel = userViewModel,
+                appViewModel = appViewModel,
                 coroutineScope = coroutineScope
             )
         }

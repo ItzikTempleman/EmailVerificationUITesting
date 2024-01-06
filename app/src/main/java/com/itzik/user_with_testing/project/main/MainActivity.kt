@@ -7,23 +7,23 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.itzik.user_with_testing.project.navigation.AppNavGraph
-import com.itzik.user_with_testing.project.viewmodels.UserViewModel
+import com.itzik.user_with_testing.project.viewmodels.AppViewModel
 import com.itzik.user_with_testing.theme.EmailVerificationUITestingTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private lateinit var userViewModel: UserViewModel
+    private lateinit var appViewModel: AppViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
-            userViewModel = viewModel()
+            appViewModel = viewModel()
             val coroutineScope = rememberCoroutineScope()
             EmailVerificationUITestingTheme {
-                AppNavGraph(userViewModel, coroutineScope, navController = rememberNavController())
+                AppNavGraph(appViewModel, coroutineScope, navController = rememberNavController())
             }
         }
     }

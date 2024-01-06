@@ -11,14 +11,14 @@ import com.itzik.user_with_testing.project.ui.screens.CreateAccountScreen
 import com.itzik.user_with_testing.project.ui.screens.LoginScreen
 import com.itzik.user_with_testing.project.ui.screens.MainScreen
 import com.itzik.user_with_testing.project.ui.screens.SplashScreen
-import com.itzik.user_with_testing.project.viewmodels.UserViewModel
+import com.itzik.user_with_testing.project.viewmodels.AppViewModel
 import kotlinx.coroutines.CoroutineScope
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppNavGraph(
-    userViewModel: UserViewModel,
+    appViewModel: AppViewModel,
     coroutineScope: CoroutineScope,
     navController: NavHostController,
 ) {
@@ -33,11 +33,12 @@ fun AppNavGraph(
             composable(route = SplashGraph.Splash.route) {
                 SplashScreen(
                     navController = navController,
-                    userViewModel = userViewModel,
+                    appViewModel = appViewModel,
                     coroutineScope = coroutineScope
                 )
             }
         }
+
 
         navigation(
             route = Graph.LOGIN,
@@ -46,25 +47,29 @@ fun AppNavGraph(
             composable(route = LoginGraph.Login.route) {
                 LoginScreen(
                     navController = navController,
-                    userViewModel = userViewModel,
+                    appViewModel = appViewModel,
                     coroutineScope = coroutineScope
                 )
             }
             composable(route = LoginGraph.SignUp.route) {
                 CreateAccountScreen(
                     navController = navController,
-                    userViewModel = userViewModel,
+                    appViewModel = appViewModel,
                     coroutineScope = coroutineScope
                 )
             }
         }
 
-        composable(route = BottomBarGraph.SearchFlights.route) {
-            MainScreen(
-                userViewModel = userViewModel,
-                coroutineScope = coroutineScope
-            )
+        navigation(
+            route = Graph.LOGIN,
+            startDestination = BottomBarGraph.SearchFlights.route
+        ) {
+            composable(route = BottomBarGraph.SearchFlights.route) {
+                MainScreen(
+                    appViewModel = appViewModel,
+                    coroutineScope = coroutineScope
+                )
+            }
         }
-        
     }
 }

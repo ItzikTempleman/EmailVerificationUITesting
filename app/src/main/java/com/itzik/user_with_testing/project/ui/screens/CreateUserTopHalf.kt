@@ -39,7 +39,7 @@ import com.itzik.user_with_testing.project.models.Gender
 import com.itzik.user_with_testing.project.ui.semantics.GenericOutlinedTextField
 import com.itzik.user_with_testing.project.utils.Constants.Dark_Blue
 import com.itzik.user_with_testing.project.utils.Constants.Light_Blue
-import com.itzik.user_with_testing.project.viewmodels.UserViewModel
+import com.itzik.user_with_testing.project.viewmodels.AppViewModel
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
@@ -48,7 +48,7 @@ fun CreateUserTopHalf(
     coroutineScope: CoroutineScope,
     modifier: Modifier,
     navController: NavHostController,
-    userViewModel: UserViewModel,
+    appViewModel: AppViewModel,
 ) {
 
 
@@ -87,7 +87,7 @@ fun CreateUserTopHalf(
                 thisValueChange = {
                     fullName = it
                     if (fullName.isNotEmpty()) {
-                        userViewModel.splitUserNameIntoFirstAndFamilyName(fullName)
+                        appViewModel.splitUserNameIntoFirstAndFamilyName(fullName)
                     }
                 },
                 label = fullNameLabelMessage,
@@ -108,7 +108,7 @@ fun CreateUserTopHalf(
                 value = createEmail,
                 thisValueChange = {
                     createEmail = it
-                    userViewModel.updateEmail(createEmail)
+                    appViewModel.updateEmail(createEmail)
                 },
                 label = createEmailLabelMessage,
                 modifier = Modifier
@@ -128,7 +128,7 @@ fun CreateUserTopHalf(
                 value = createPassword,
                 thisValueChange = {
                     createPassword = it
-                    userViewModel.updatePassword(createPassword)
+                    appViewModel.updatePassword(createPassword)
                 },
                 label = createPasswordLabelMessage,
                 modifier = Modifier
@@ -194,7 +194,7 @@ fun CreateUserTopHalf(
                                 }, selected = (it == selectedGender),
                                 onClick = {
                                     selectedGender = it
-                                    userViewModel.getGenderString(selectedGender)
+                                    appViewModel.getGenderString(selectedGender)
                                 }
                             )
                             Text(

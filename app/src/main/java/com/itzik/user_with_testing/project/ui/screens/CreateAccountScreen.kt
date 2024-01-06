@@ -25,7 +25,7 @@ import com.itzik.user_with_testing.project.ui.semantics.GenericButton
 import com.itzik.user_with_testing.project.ui.semantics.GenericRoundedButton
 import com.itzik.user_with_testing.project.ui.semantics.RoundedBackGround
 import com.itzik.user_with_testing.project.utils.Constants.Dark_Blue
-import com.itzik.user_with_testing.project.viewmodels.UserViewModel
+import com.itzik.user_with_testing.project.viewmodels.AppViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -33,7 +33,7 @@ import kotlinx.coroutines.launch
 fun CreateAccountScreen(
     coroutineScope: CoroutineScope,
     navController: NavHostController,
-    userViewModel: UserViewModel
+    appViewModel: AppViewModel
 ) {
     RoundedBackGround(
         topColor = White,
@@ -84,7 +84,7 @@ fun CreateAccountScreen(
                 .fillMaxWidth()
                 .padding(top = 20.dp, start = 12.dp, end = 12.dp),
             navController = navController,
-            userViewModel = userViewModel
+            appViewModel = appViewModel
         )
 
         CreateUserBottomHalf(
@@ -93,7 +93,7 @@ fun CreateAccountScreen(
                     top.linkTo(basicInfoCard.bottom)
                 }
                 .padding(horizontal = 12.dp),
-            userViewModel = userViewModel,
+            appViewModel = appViewModel,
 
             )
 
@@ -106,19 +106,19 @@ fun CreateAccountScreen(
                 .padding(start = 32.dp, end = 32.dp, top = 60.dp),
             onClick = {
                 coroutineScope.launch {
-                    if (userViewModel.isAllFieldsOk()) {
-                        userViewModel.createUser()
-                        val userModel = userViewModel.user
+                    if (appViewModel.isAllFieldsOk()) {
+                        appViewModel.createUser()
+                        val userModel = appViewModel.user
                         if (userModel != null) {
                             userModel.isSignedIn=true
-                            userViewModel.updateIsSignIn(userModel)
-                            userViewModel.saveUser(userModel)
+                            appViewModel.updateIsSignIn(userModel)
+                            appViewModel.saveUser(userModel)
 
                         }
                         navController.popBackStack()
                         navController.navigate(BottomBarGraph.SearchFlights.route)
 
-                    } else userViewModel.setErrors()
+                    } else appViewModel.setErrors()
                 }
             },
             buttonColor = Dark_Blue,

@@ -6,12 +6,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
+import com.itzik.user_with_testing.project.models.AirportCodeName
 import com.itzik.user_with_testing.project.models.Gender
 import com.itzik.user_with_testing.project.models.User
-import com.itzik.user_with_testing.project.models.airport_model.SearchAirportResponse
 import com.itzik.user_with_testing.project.models.flight_model.FlightResponse
 import com.itzik.user_with_testing.project.navigation.BottomBarGraph
-import com.itzik.user_with_testing.project.repositories.IUserRepository
+import com.itzik.user_with_testing.project.repositories.IRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -24,9 +24,9 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class UserViewModel
+class AppViewModel
 @Inject constructor(
-    private val repository: IUserRepository,
+    private val repository: IRepository,
 ) : ViewModel() {
 
     var user by mutableStateOf<User?>(null)
@@ -66,8 +66,8 @@ class UserViewModel
     }
 
 
-    suspend fun getAirportCodeName(query: String): Flow<SearchAirportResponse> {
-        val nameCodeResponseList = flow {
+    suspend fun getAirportCodeName(query: String): Flow<AirportCodeName> {
+        val codeNameResponseList = flow {
             val response = repository.getAirportCodeName(query)
             if (response.isSuccessful) {
                 val responseBody = response.body()
@@ -78,7 +78,7 @@ class UserViewModel
             } else Log.d("TAG", "Failure message: " + response.message())
             return@flow
         }
-        return nameCodeResponseList
+        return codeNameResponseList
     }
 
 

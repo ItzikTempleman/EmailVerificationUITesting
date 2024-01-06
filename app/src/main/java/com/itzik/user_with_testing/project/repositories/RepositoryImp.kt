@@ -1,15 +1,15 @@
 package com.itzik.user_with_testing.project.repositories
 
 import com.itzik.user_with_testing.project.data.UserDao
+import com.itzik.user_with_testing.project.models.AirportCodeName
 import com.itzik.user_with_testing.project.models.User
-import com.itzik.user_with_testing.project.models.airport_model.SearchAirportResponse
 import com.itzik.user_with_testing.project.models.flight_model.FlightResponse
 import com.itzik.user_with_testing.project.requests.FlightService
 import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
 
-class UserRepositoryImp @Inject constructor(
+class RepositoryImp @Inject constructor(
 
     @Singleton
     private val userDao: UserDao,
@@ -17,7 +17,7 @@ class UserRepositoryImp @Inject constructor(
     @Singleton
     private val flightService: FlightService,
 
-    ) : IUserRepository {
+    ) : IRepository {
 
     override suspend fun getUsers(): List<User> = userDao.getUsers()
 
@@ -46,7 +46,7 @@ class UserRepositoryImp @Inject constructor(
         returnDate
     )
 
-    override suspend fun getAirportCodeName(query: String): Response<SearchAirportResponse> =
+    override suspend fun getAirportCodeName(query: String): Response<AirportCodeName> =
         flightService.getAirportCodeName(query)
 
 }

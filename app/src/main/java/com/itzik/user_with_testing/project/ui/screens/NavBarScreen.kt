@@ -8,9 +8,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,8 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color.Companion.Black
-import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -43,10 +42,10 @@ fun NavBarScreen(navController: NavHostController) {
 
     Row(
         modifier = Modifier
-            .padding(2.dp).clip(RoundedCornerShape(16.dp))
-            .background(Light_Blue.copy(alpha = 0.5f))
+            .height(50.dp)
+            .background(Light_Blue)
             .fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
+        horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = Alignment.CenterVertically
     ) {
         screens.forEach { screen ->
@@ -68,9 +67,8 @@ fun RowScope.AddItem(
     val selected = currentDestination?.hierarchy?.any {
         it.route == screen.route
     } == true
-    val contentColor = if (selected) White else Black
-
-    val background = if (selected) Dark_Blue else Light_Blue
+    val contentColor = Dark_Blue
+    val background = Light_Blue
     Box(
         modifier = Modifier
             .clip(CircleShape)
@@ -95,6 +93,7 @@ fun RowScope.AddItem(
 
             AnimatedVisibility(visible = selected) {
                 Text(
+                    fontWeight = FontWeight.Bold,
                     text = screen.title,
                     color = contentColor
                 )

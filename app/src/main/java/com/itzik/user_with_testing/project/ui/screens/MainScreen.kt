@@ -6,14 +6,14 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.itzik.user_with_testing.project.navigation.MainScreenNavGraph
-import com.itzik.user_with_testing.project.viewmodels.UserViewModel
+import com.itzik.user_with_testing.project.viewmodels.AppViewModel
 import kotlinx.coroutines.CoroutineScope
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun MainScreen(
     navController: NavHostController = rememberNavController(),
-    userViewModel: UserViewModel,
+    appViewModel: AppViewModel,
     coroutineScope: CoroutineScope
 )
 {
@@ -23,7 +23,7 @@ fun MainScreen(
         }
     ) {
         MainScreenNavGraph(
-            userViewModel = userViewModel,
+            appViewModel = appViewModel,
             navController = navController,
             coroutineScope = coroutineScope
         )

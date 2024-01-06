@@ -28,7 +28,7 @@ import com.itzik.user_with_testing.project.models.User
 import com.itzik.user_with_testing.project.navigation.BottomBarGraph
 import com.itzik.user_with_testing.project.navigation.LoginGraph
 import com.itzik.user_with_testing.project.ui.semantics.RoundedBackGround
-import com.itzik.user_with_testing.project.viewmodels.UserViewModel
+import com.itzik.user_with_testing.project.viewmodels.AppViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -37,7 +37,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun SplashScreen(
     coroutineScope: CoroutineScope,
-    userViewModel: UserViewModel,
+    appViewModel: AppViewModel,
     navController: NavHostController,
 ) {
     var userList by remember {
@@ -59,7 +59,7 @@ fun SplashScreen(
 
         navController.popBackStack()
         coroutineScope.launch {
-            userViewModel.getUsers().collect {
+            appViewModel.getUsers().collect {
                 userList = it
                 Log.d("TAG", "$it")
             }
