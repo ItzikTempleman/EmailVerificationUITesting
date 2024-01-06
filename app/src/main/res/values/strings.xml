@@ -15,8 +15,9 @@
     <string name="sign_up">Register</string>
     <string name="sign_out">Sign out</string>
     <string name="search">Search</string>
+    <string name="find_flights">Find flights</string>
     <string name="search_departure_city">Flying from</string>
-    <string name="search_destination_city">Flying to</string>
+    <string name="search_destination_city">To</string>
     <string name="profile">Profile</string>
     <string name="success">Successfully logged in</string>
     <string name="fail">Incorrect data, please fix</string>

@@ -30,6 +30,7 @@ import kotlinx.coroutines.launch
 @SuppressLint("SuspiciousIndentation")
 @Composable
 fun ProfileScreen(
+    modifier: Modifier,
     coroutineScope: CoroutineScope,
     navController: NavHostController,
     appViewModel: AppViewModel,
@@ -46,13 +47,13 @@ fun ProfileScreen(
 
     RoundedBackGround(White, White)
     ConstraintLayout(
-        modifier = Modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize()
     ) {
         val (title, logOut, fullFirstName, familyName, age, birthDate, email, gender, phoneNumber) = createRefs()
 
         Text(
             text = stringResource(id = R.string.profile),
-            modifier = Modifier
+            modifier = modifier
                 .constrainAs(title) {
                     start.linkTo(parent.start)
                     top.linkTo(parent.top)
@@ -72,7 +73,7 @@ fun ProfileScreen(
                     appViewModel.updateIsSignIn(user)
                 }
             },
-            modifier = Modifier
+            modifier = modifier
                 .constrainAs(logOut) {
                     end.linkTo(parent.end)
                     top.linkTo(parent.top)
@@ -94,7 +95,7 @@ fun ProfileScreen(
 //            }
 //        }
         Text(
-            modifier = Modifier
+            modifier = modifier
                 .constrainAs(fullFirstName) {
                     start.linkTo(parent.start)
                     top.linkTo(title.bottom)
@@ -103,7 +104,7 @@ fun ProfileScreen(
             text = user.firstName.first() + " " + user.firstName[1]
         )
         Text(
-            modifier = Modifier
+            modifier = modifier
                 .constrainAs(familyName) {
                     start.linkTo(fullFirstName.end)
                     top.linkTo(fullFirstName.top)
@@ -113,7 +114,7 @@ fun ProfileScreen(
             text = user.familyName
         )
         Text(
-            modifier = Modifier
+            modifier = modifier
                 .constrainAs(birthDate) {
                     start.linkTo(parent.start)
                     top.linkTo(fullFirstName.bottom)
@@ -122,7 +123,7 @@ fun ProfileScreen(
             text = user.birthDate
         )
         Text(
-            modifier = Modifier
+            modifier = modifier
                 .constrainAs(age) {
                     start.linkTo(parent.start)
                     top.linkTo(birthDate.bottom)
@@ -132,7 +133,7 @@ fun ProfileScreen(
         )
 
         Text(
-            modifier = Modifier
+            modifier = modifier
                 .constrainAs(email) {
                     start.linkTo(parent.start)
                     top.linkTo(age.bottom)
@@ -143,7 +144,7 @@ fun ProfileScreen(
 
 
         Text(
-            modifier = Modifier
+            modifier = modifier
                 .constrainAs(gender) {
                     start.linkTo(parent.start)
                     top.linkTo(email.bottom)
@@ -153,7 +154,7 @@ fun ProfileScreen(
         )
 
         Text(
-            modifier = Modifier
+            modifier = modifier
                 .constrainAs(phoneNumber) {
                     start.linkTo(parent.start)
                     top.linkTo(gender.bottom)
