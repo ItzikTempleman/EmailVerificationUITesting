@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
@@ -50,15 +52,23 @@ fun SearchScreen(
         modifier = modifier
             .fillMaxSize()
     ) {
+        var showDepartureDropdown by remember {
+            mutableStateOf(false)
+        }
+        var showDestinationDropdown by remember {
+            mutableStateOf(false)
+        }
         var searchDeparture by remember {
             mutableStateOf("")
         }
         var searchDestination by remember {
             mutableStateOf("")
         }
+        var departureCodeNameList = emptyList<String>().toMutableList()
+        var destinationCodeNameList = emptyList<String>().toMutableList()
 
 
-        val (title, searchRow, searchButton, resultsLazyColumn) = createRefs()
+        val (title, searchRow, searchButton, dropDownDepartureMenu, dropDownDestinationMenu,resultsLazyColumn) = createRefs()
         Text(
             text = stringResource(id = R.string.find_flights),
             modifier = Modifier
@@ -71,7 +81,7 @@ fun SearchScreen(
             fontSize = 24.sp,
             fontFamily = FontFamily.Monospace,
             fontWeight = FontWeight.Bold
-            )
+        )
 
         Row(
             modifier = Modifier
@@ -87,6 +97,7 @@ fun SearchScreen(
                 value = searchDeparture,
                 onValueChange = {
                     searchDeparture = it
+                    showDepartureDropdown = searchDeparture.length >= 5
                 },
                 placeholder = {
                     Text(
@@ -118,6 +129,7 @@ fun SearchScreen(
                 value = searchDestination,
                 onValueChange = {
                     searchDestination = it
+                    showDestinationDropdown=searchDestination.length>=5
                 },
                 placeholder = {
                     Text(
@@ -140,6 +152,49 @@ fun SearchScreen(
                 ), singleLine = true
             )
         }
+
+        DropdownMenu(
+            expanded = showDepartureDropdown,
+            onDismissRequest = { showDepartureDropdown = false },
+            modifier = Modifier.constrainAs(dropDownDepartureMenu) {
+                top.linkTo(searchRow.bottom)
+                start.linkTo(parent.start)
+            }.width(200.dp)
+        ) {
+            departureCodeNameList.forEach { item ->
+                    DropdownMenuItem(onClick = {
+                        //onItemSelected(item)
+                        showDepartureDropdown = false
+                    }) {
+                     Text(item)
+                    }
+                }
+            }
+
+        DropdownMenu(
+            expanded = showDestinationDropdown,
+            onDismissRequest = { showDestinationDropdown = false },
+            modifier = Modifier.constrainAs(dropDownDestinationMenu) {
+                top.linkTo(searchRow.bottom)
+                end.linkTo(parent.end)
+            }.width(200.dp)
+        ) {
+            destinationCodeNameList.forEach { item ->
+                DropdownMenuItem(onClick = {
+                    //onItemSelected(item)
+                    showDestinationDropdown = false
+                }) {
+                    Text(item)
+                }
+            }
+        }
+
+
+
+
+
+
+
         GenericButton(
             modifier = Modifier
                 .constrainAs(searchButton) {
@@ -149,11 +204,11 @@ fun SearchScreen(
                 .padding(8.dp),
             onClick = {
                 coroutineScope.launch {
-                    val departure = getDeparture(searchDeparture, appViewModel)
-                    val destination = getDestination(searchDestination, appViewModel)
+                    departureCodeNameList = getDeparture(searchDeparture, appViewModel)
+                    destinationCodeNameList = getDestination(searchDestination, appViewModel)
                     Log.d(
                         "TAG",
-                        "List of departure airport codes:$departure, and list of destination airport codes:$destination"
+                        "List of departure airport codes:$departureCodeNameList, and list of destination airport codes:$destinationCodeNameList"
                     )
                 }
             },
