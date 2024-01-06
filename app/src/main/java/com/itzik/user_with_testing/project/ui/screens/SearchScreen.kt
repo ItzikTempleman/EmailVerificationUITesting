@@ -32,17 +32,20 @@ fun SearchScreen(
     appViewModel: AppViewModel,
     coroutineScope: CoroutineScope,
 ) {
+
+
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
     ) {
+        var searchDeparture by remember {
+            mutableStateOf("")
+        }
+        var searchDestination by remember {
+            mutableStateOf("")
+        }
 
-        var searchDepartureCityQuery by remember {
-            mutableStateOf("")
-        }
-        var searchDestinationCityQuery by remember {
-            mutableStateOf("")
-        }
+
         val (searchRow, searchButton, resultsLazyColumn) = createRefs()
         Row(
             modifier = Modifier
@@ -56,9 +59,9 @@ fun SearchScreen(
                 modifier = Modifier
                     .width(200.dp)
                     .padding(horizontal = 2.dp),
-                value = searchDepartureCityQuery,
+                value = searchDeparture,
                 onValueChange = {
-                    searchDepartureCityQuery = it
+                    searchDeparture = it
                 },
                 placeholder = {
                     Text(text = stringResource(id = R.string.search_departure_city))
@@ -70,9 +73,9 @@ fun SearchScreen(
                 modifier = Modifier
                     .width(200.dp)
                     .padding(horizontal = 2.dp),
-                value = searchDepartureCityQuery,
+                value = searchDestination,
                 onValueChange = {
-                    searchDepartureCityQuery = it
+                    searchDestination = it
                 },
                 placeholder = {
                     Text(text = stringResource(id = R.string.search_destination_city))
@@ -88,14 +91,9 @@ fun SearchScreen(
                 .padding(8.dp),
             onClick = {
                 coroutineScope.launch {
-                    appViewModel.getAirportCodeName(searchDepartureCityQuery)
-                        .collect { departureAirportNameCode ->
-                            Log.d("TAG", "Airport Codename: $departureAirportNameCode")
-                        }
-                    appViewModel.getAirportCodeName(searchDestinationCityQuery)
-                        .collect { destinationAirportNameCode ->
-                            Log.d("TAG", "Airport Codename: $destinationAirportNameCode")
-                        }
+                    val departure = getDeparture(searchDeparture, appViewModel)
+                    val destination = getDestination(searchDestination, appViewModel)
+                    Log.d("TAG", "List of departure airport codes:$departure, and list of destination airport codes:$destination")
                 }
             },
             buttonColor = Dark_Blue,
@@ -105,3 +103,33 @@ fun SearchScreen(
         )
     }
 }
+
+
+suspend fun getDeparture(
+    searchDepartureCityQuery: String,
+    appViewModel: AppViewModel,
+): MutableList<String> {
+    val departureAirportCodeName = mutableListOf<String>()
+    appViewModel.getAirportCodeName(searchDepartureCityQuery)
+        .collect {
+            it.data.forEach { singleAirportCode ->
+                departureAirportCodeName.add(singleAirportCode.shortName)
+            }
+        }
+    return departureAirportCodeName
+}
+
+suspend fun getDestination(
+    searchDestinationCityQuery: String,
+    appViewModel: AppViewModel,
+): MutableList<String> {
+    val destinationAirportCodeName = mutableListOf<String>()
+    appViewModel.getAirportCodeName(searchDestinationCityQuery)
+        .collect {
+            it.data.forEach { singleAirportCode ->
+                destinationAirportCodeName.add(singleAirportCode.shortName)
+            }
+        }
+    return destinationAirportCodeName
+}
+

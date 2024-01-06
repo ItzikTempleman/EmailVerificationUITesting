@@ -9,6 +9,9 @@ import retrofit2.http.Query
 
 interface FlightService {
 
+    @GET("api/v1/flights/searchAirport?")
+    suspend fun getAirportCodeName(@Query("query") query:String):Response<AirportCodeName>
+
     @GET(
         "api/v1/flights/searchFlights?" +
                 "sourceAirportCode={takeOff}" +
@@ -31,9 +34,4 @@ interface FlightService {
         @Path("returnDate") returnDate: String,
     ): Response<FlightResponse>
 
-
-    @GET("api/v1/flights/searchAirport?")
-    suspend fun getAirportCodeName(
-        @Query("query") airportName:String
-    ):Response<AirportCodeName>
 }

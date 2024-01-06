@@ -9,15 +9,7 @@ import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
 
-class RepositoryImp @Inject constructor(
-
-    @Singleton
-    private val userDao: UserDao,
-
-    @Singleton
-    private val flightService: FlightService,
-
-    ) : IRepository {
+class RepositoryImp @Inject constructor(@Singleton private val userDao: UserDao,@Singleton private val flightService: FlightService) : IRepository {
 
     override suspend fun getUsers(): List<User> = userDao.getUsers()
 

@@ -47,22 +47,12 @@ object AppModule {
             .addTypeConverter(UserConverter()).fallbackToDestructiveMigration().build()
 
 
-
-
     @Provides
     @Singleton
     fun provideRetrofitService(): FlightService {
-        val retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create())
-            .client(
-                OkHttpClient.Builder()
-                    .addInterceptor(
-                        FlightInterceptor()
-                    ).build()
-            )
-            .build()
+        val retrofit =
+            Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create())
+                .client(OkHttpClient.Builder().addInterceptor(FlightInterceptor()).build()).build()
         return retrofit.create(FlightService::class.java)
     }
-
-
 }
