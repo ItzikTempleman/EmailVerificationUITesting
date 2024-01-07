@@ -1,5 +1,8 @@
 package com.itzik.user_with_testing.project.ui.screens
 
+import android.annotation.SuppressLint
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,6 +25,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.DarkGray
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.Color.Companion.White
@@ -35,10 +39,10 @@ import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.ui.semantics.GenericButton
 import com.itzik.user_with_testing.project.utils.Constants.Dark_Blue
-import com.itzik.user_with_testing.project.utils.Constants.Light_Blue
 import com.itzik.user_with_testing.project.viewmodels.AppViewModel
 import kotlinx.coroutines.CoroutineScope
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun SearchScreen(
     modifier: Modifier,
@@ -47,11 +51,11 @@ fun SearchScreen(
     coroutineScope: CoroutineScope,
 ) {
 
-
     ConstraintLayout(
-        modifier = modifier
-            .fillMaxSize()
+        modifier = modifier.fillMaxSize()
     ) {
+        val (text, searchRow, dropDownListColumn, button) = createRefs()
+
         var isDropdownMenuVisible by remember {
             mutableStateOf(false)
         }
@@ -66,15 +70,15 @@ fun SearchScreen(
             mutableStateOf(emptyList<String>())
         }
 
-        val (title, searchRow, searchButton, dropDownMenu, resultsLazyColumn) = createRefs()
+
         Text(
             text = stringResource(id = R.string.find_flights),
             modifier = Modifier
-                .constrainAs(title) {
+                .padding(8.dp)
+                .constrainAs(text) {
                     start.linkTo(parent.start)
                     top.linkTo(parent.top)
-                }
-                .padding(8.dp),
+                },
             color = Dark_Blue,
             fontSize = 24.sp,
             fontFamily = FontFamily.Monospace,
@@ -83,10 +87,11 @@ fun SearchScreen(
 
         Row(
             modifier = Modifier
-                .fillMaxWidth().height(50.dp)
                 .constrainAs(searchRow) {
-                    top.linkTo(title.bottom)
+                    top.linkTo(text.bottom)
                 }
+                .fillMaxWidth()
+                .height(50.dp)
         ) {
             TextField(
                 modifier = Modifier
@@ -99,20 +104,20 @@ fun SearchScreen(
                 placeholder = {
                     Text(
                         text = stringResource(id = R.string.search_departure_city),
-                        color = Light_Blue
+                        color = Dark_Blue
                     )
                 },
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.FlightTakeoff,
                         contentDescription = null,
-                        tint = Light_Blue
+                        tint = Dark_Blue
                     )
                 },
                 colors = TextFieldDefaults.textFieldColors(
                     backgroundColor = Transparent,
-                    cursorColor = Light_Blue,
-                    focusedIndicatorColor = Light_Blue,
+                    cursorColor = Dark_Blue,
+                    focusedIndicatorColor = Dark_Blue,
                     unfocusedIndicatorColor = DarkGray.copy(0.3f),
 
                     ),
@@ -131,61 +136,64 @@ fun SearchScreen(
                 placeholder = {
                     Text(
                         text = stringResource(id = R.string.search_destination_city),
-                        color = Light_Blue
+                        color = Dark_Blue
                     )
                 },
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.FlightLand,
                         contentDescription = null,
-                        tint = Light_Blue
+                        tint = Dark_Blue
                     )
                 },
                 colors = TextFieldDefaults.textFieldColors(
-                    cursorColor = Light_Blue,
+                    cursorColor = Dark_Blue,
                     backgroundColor = Transparent,
-                    focusedIndicatorColor = Light_Blue,
+                    focusedIndicatorColor = Dark_Blue,
                     unfocusedIndicatorColor = DarkGray.copy(0.3f)
                 ), singleLine = true
             )
         }
-
-        DropdownMenu(
-            expanded = isDropdownMenuVisible,
-            onDismissRequest = { isDropdownMenuVisible = false },
+        Column(
             modifier = Modifier
-                .constrainAs(dropDownMenu) {
+                .fillMaxWidth()
+                .constrainAs(dropDownListColumn) {
                     top.linkTo(searchRow.bottom)
                 }
-                .fillMaxWidth().height(200.dp)
         ) {
-            LaunchedEffect(Unit) {
-                val data = getCodeName(searchDeparture, appViewModel)
-                airportCodeNameList.value = data
-            }
-            val updatedList = airportCodeNameList.value
-            updatedList.forEach { item ->
-                DropdownMenuItem(onClick = {
-                    val regex = Regex("\\(([^)]+)\\)")
-                    val matchResult = regex.find(item)
-                    val codeName=matchResult?.groups?.get(1)?.value
-                    if (codeName != null) {
-                        searchDeparture = codeName
+            DropdownMenu(
+                modifier=Modifier.background(Color.LightGray),
+                expanded = isDropdownMenuVisible,
+                onDismissRequest = { isDropdownMenuVisible = false },
+            ) {
+                LaunchedEffect(Unit) {
+                    val data = getCodeName(searchDeparture, appViewModel)
+                    airportCodeNameList.value = data
+                }
+                val updatedList = airportCodeNameList.value
+                updatedList.forEach { item ->
+                    DropdownMenuItem(onClick = {
+                        val regex = Regex("\\(([^)]+)\\)")
+                        val matchResult = regex.find(item)
+                        val codeName = matchResult?.groups?.get(1)?.value
+                        if (codeName != null) {
+                            searchDeparture = codeName
+                        }
+                        isDropdownMenuVisible = false
                     }
-                    isDropdownMenuVisible = false
-                }
-                ) {
-                    Text(text = item)
+                    ) {
+                        Text(text = item)
+                    }
                 }
             }
-        }
 
+        }
 
 
 
         GenericButton(
             modifier = Modifier
-                .constrainAs(searchButton) {
+                .constrainAs(button) {
                     bottom.linkTo(parent.bottom)
                 }
                 .fillMaxWidth()
