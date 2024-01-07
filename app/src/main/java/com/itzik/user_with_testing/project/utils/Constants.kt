@@ -13,7 +13,7 @@ object Constants  {
 
     const val BASE_URL = "https://tripadvisor16.p.rapidapi.com/"
     const val API_KEY_NAME = "X-RapidAPI-Key"
-    const val API_KEY_VALUE = "1efcdfbbe9mshb72149862079f25p13b0afjsne6cce1f4c14d"
+    const val API_KEY_VALUE = "be8b987f5dmshf1dd12bfaeec996p1597b9jsn98ccd70b59ca"
     const val API_HOST_NAME = "X-RapidAPI-Host"
     const val API_HOST_VALUE = "tripadvisor16.p.rapidapi.com"
 }

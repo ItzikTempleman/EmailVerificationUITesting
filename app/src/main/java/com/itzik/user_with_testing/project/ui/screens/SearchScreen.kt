@@ -1,9 +1,9 @@
 package com.itzik.user_with_testing.project.ui.screens
 
-import android.util.Log
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.DropdownMenu
@@ -16,6 +16,7 @@ import androidx.compose.material.icons.filled.FlightTakeoff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,7 +38,6 @@ import com.itzik.user_with_testing.project.utils.Constants.Dark_Blue
 import com.itzik.user_with_testing.project.utils.Constants.Light_Blue
 import com.itzik.user_with_testing.project.viewmodels.AppViewModel
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 @Composable
 fun SearchScreen(
@@ -52,23 +52,21 @@ fun SearchScreen(
         modifier = modifier
             .fillMaxSize()
     ) {
-        var showDepartureDropdown by remember {
+        var isDropdownMenuVisible by remember {
             mutableStateOf(false)
         }
-        var showDestinationDropdown by remember {
-            mutableStateOf(false)
-        }
+
         var searchDeparture by remember {
             mutableStateOf("")
         }
         var searchDestination by remember {
             mutableStateOf("")
         }
-        var departureCodeNameList = emptyList<String>().toMutableList()
-        var destinationCodeNameList = emptyList<String>().toMutableList()
+        val airportCodeNameList = remember {
+            mutableStateOf(emptyList<String>())
+        }
 
-
-        val (title, searchRow, searchButton, dropDownDepartureMenu, dropDownDestinationMenu,resultsLazyColumn) = createRefs()
+        val (title, searchRow, searchButton, dropDownMenu, resultsLazyColumn) = createRefs()
         Text(
             text = stringResource(id = R.string.find_flights),
             modifier = Modifier
@@ -85,11 +83,10 @@ fun SearchScreen(
 
         Row(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxWidth().height(50.dp)
                 .constrainAs(searchRow) {
                     top.linkTo(title.bottom)
                 }
-
         ) {
             TextField(
                 modifier = Modifier
@@ -97,7 +94,7 @@ fun SearchScreen(
                 value = searchDeparture,
                 onValueChange = {
                     searchDeparture = it
-                    showDepartureDropdown = searchDeparture.length >= 5
+                    isDropdownMenuVisible = searchDeparture.length >= 5
                 },
                 placeholder = {
                     Text(
@@ -129,7 +126,7 @@ fun SearchScreen(
                 value = searchDestination,
                 onValueChange = {
                     searchDestination = it
-                    showDestinationDropdown=searchDestination.length>=5
+                    isDropdownMenuVisible = searchDestination.length >= 5
                 },
                 placeholder = {
                     Text(
@@ -154,43 +151,34 @@ fun SearchScreen(
         }
 
         DropdownMenu(
-            expanded = showDepartureDropdown,
-            onDismissRequest = { showDepartureDropdown = false },
-            modifier = Modifier.constrainAs(dropDownDepartureMenu) {
-                top.linkTo(searchRow.bottom)
-                start.linkTo(parent.start)
-            }.width(200.dp)
-        ) {
-            departureCodeNameList.forEach { item ->
-                    DropdownMenuItem(onClick = {
-                        //onItemSelected(item)
-                        showDepartureDropdown = false
-                    }) {
-                     Text(item)
-                    }
+            expanded = isDropdownMenuVisible,
+            onDismissRequest = { isDropdownMenuVisible = false },
+            modifier = Modifier
+                .constrainAs(dropDownMenu) {
+                    top.linkTo(searchRow.bottom)
                 }
-            }
-
-        DropdownMenu(
-            expanded = showDestinationDropdown,
-            onDismissRequest = { showDestinationDropdown = false },
-            modifier = Modifier.constrainAs(dropDownDestinationMenu) {
-                top.linkTo(searchRow.bottom)
-                end.linkTo(parent.end)
-            }.width(200.dp)
+                .fillMaxWidth().height(200.dp)
         ) {
-            destinationCodeNameList.forEach { item ->
+            LaunchedEffect(Unit) {
+                val data = getCodeName(searchDeparture, appViewModel)
+                airportCodeNameList.value = data
+            }
+            val updatedList = airportCodeNameList.value
+            updatedList.forEach { item ->
                 DropdownMenuItem(onClick = {
-                    //onItemSelected(item)
-                    showDestinationDropdown = false
-                }) {
-                    Text(item)
+                    val regex = Regex("\\(([^)]+)\\)")
+                    val matchResult = regex.find(item)
+                    val codeName=matchResult?.groups?.get(1)?.value
+                    if (codeName != null) {
+                        searchDeparture = codeName
+                    }
+                    isDropdownMenuVisible = false
+                }
+                ) {
+                    Text(text = item)
                 }
             }
         }
-
-
-
 
 
 
@@ -203,14 +191,7 @@ fun SearchScreen(
                 .fillMaxWidth()
                 .padding(8.dp),
             onClick = {
-                coroutineScope.launch {
-                    departureCodeNameList = getDeparture(searchDeparture, appViewModel)
-                    destinationCodeNameList = getDestination(searchDestination, appViewModel)
-                    Log.d(
-                        "TAG",
-                        "List of departure airport codes:$departureCodeNameList, and list of destination airport codes:$destinationCodeNameList"
-                    )
-                }
+
             },
             buttonColor = Dark_Blue,
             text = "Search flights",
@@ -221,31 +202,18 @@ fun SearchScreen(
 }
 
 
-suspend fun getDeparture(
-    searchDepartureCityQuery: String,
+suspend fun getCodeName(
+    searchCityQuery: String,
     appViewModel: AppViewModel,
 ): MutableList<String> {
-    val departureAirportCodeName = mutableListOf<String>()
-    appViewModel.getAirportCodeName(searchDepartureCityQuery)
+    val airportCodeName = mutableListOf<String>()
+    appViewModel.getAirportCodeName(searchCityQuery)
         .collect {
             it.data.forEach { singleAirportCode ->
-                departureAirportCodeName.add(singleAirportCode.shortName)
+                airportCodeName.add(singleAirportCode.shortName)
             }
         }
-    return departureAirportCodeName
+    return airportCodeName
 }
 
-suspend fun getDestination(
-    searchDestinationCityQuery: String,
-    appViewModel: AppViewModel,
-): MutableList<String> {
-    val destinationAirportCodeName = mutableListOf<String>()
-    appViewModel.getAirportCodeName(searchDestinationCityQuery)
-        .collect {
-            it.data.forEach { singleAirportCode ->
-                destinationAirportCodeName.add(singleAirportCode.shortName)
-            }
-        }
-    return destinationAirportCodeName
-}
 
