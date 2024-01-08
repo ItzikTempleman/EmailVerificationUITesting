@@ -21,7 +21,7 @@ fun DropDownMenuScreen(
     appViewModel: AppViewModel,
     isDropdownMenuVisible: MutableState<Boolean>,
     airportCodeNameList: MutableState<List<String>>,
-) {
+): String {
 
 
     Column(
@@ -30,9 +30,9 @@ fun DropDownMenuScreen(
         DropdownMenu(
             expanded = isDropdownMenuVisible.value,
             onDismissRequest = {
-                isDropdownMenuVisible.value=false
+                isDropdownMenuVisible.value = false
             },
-            modifier =Modifier.background(Color.LightGray),
+            modifier = Modifier.background(Color.LightGray),
         ) {
             LaunchedEffect(Unit) {
                 val data = appViewModel.getCodeName(searchParam.value)
@@ -57,5 +57,6 @@ fun DropDownMenuScreen(
             }
         }
     }
+    return searchParam.value
 }
 

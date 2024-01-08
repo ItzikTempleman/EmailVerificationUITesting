@@ -4,7 +4,6 @@ import com.itzik.user_with_testing.project.models.AirportCodeName
 import com.itzik.user_with_testing.project.models.flight_model.FlightResponse
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface FlightService {
@@ -24,14 +23,14 @@ interface FlightService {
                 "&returnDate={returnDate}"
     )
     suspend fun getFlight(
-        @Path("takeOff") takeOffAirport: String,
-        @Path("landing") landingAirport: String,
-        @Path("takeoffDate") takeOffDate: String,
-        @Path("itinerary") roundOrDirect: String,
-        @Path("numAdults") numberOfAdults: Int,
-        @Path("classOfService") classOfService: String,
-        @Path("currency") currency: String,
-        @Path("returnDate") returnDate: String,
+        @Query("takeOff") takeOffAirport: String,
+        @Query("landing") landingAirport: String,
+        @Query("takeoffDate") takeOffDate: String,
+        @Query("itinerary") roundOrDirect: String,
+        @Query("numAdults") numberOfAdults: Int,
+        @Query("classOfService") classOfService: String,
+        @Query("currency") currency: String,
+        @Query("returnDate") returnDate: String,
     ): Response<FlightResponse>
 
 }

@@ -1,7 +1,7 @@
 package com.itzik.user_with_testing.project.ui.screens
 
 import android.annotation.SuppressLint
-
+import android.util.Log
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,12 +26,14 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
+import com.itzik.user_with_testing.project.models.flight_model.FlightResponse
 import com.itzik.user_with_testing.project.ui.semantics.DropDownMenuScreen
 import com.itzik.user_with_testing.project.ui.semantics.GenericButton
 import com.itzik.user_with_testing.project.ui.semantics.TextFieldScreen
 import com.itzik.user_with_testing.project.utils.Constants.Dark_Blue
 import com.itzik.user_with_testing.project.viewmodels.AppViewModel
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -90,32 +92,33 @@ fun SearchScreen(
                 .height(50.dp)
         ) {
             TextFieldScreen(
-                value =searchDeparture,
-                modifier =Modifier,
+                value = searchDeparture,
+                modifier = Modifier,
                 onValueChange = {
-                    searchDeparture=it
+                    searchDeparture = it
                     isDropdownDepartureMenuVisible = searchDeparture.length == 5
                 },
                 iconImage = Icons.Default.FlightTakeoff,
-                label =stringResource(id = R.string.search_departure_city)
+                label = stringResource(id = R.string.search_departure_city)
             )
 
             TextFieldScreen(
-                value =searchDestination,
-                modifier =Modifier,
+                value = searchDestination,
+                modifier = Modifier,
                 onValueChange = {
-                    searchDestination=it
+                    searchDestination = it
                     isDropdownDestinationMenuVisible = searchDestination.length == 5
                 },
                 iconImage = Icons.Default.FlightLand,
-                label =stringResource(id = R.string.search_destination_city)
+                label = stringResource(id = R.string.search_destination_city)
             )
         }
 
         DropDownMenuScreen(
             modifier = modifier.constrainAs(dropDownDepartureListColumn) {
-                    top.linkTo(searchRow.bottom)
-                    start.linkTo(parent.start) },
+                top.linkTo(searchRow.bottom)
+                start.linkTo(parent.start)
+            },
             searchParam = mutableStateOf(searchDeparture),
             appViewModel = appViewModel,
             isDropdownMenuVisible = mutableStateOf(isDropdownDepartureMenuVisible),
@@ -124,8 +127,9 @@ fun SearchScreen(
 
         DropDownMenuScreen(
             modifier = modifier.constrainAs(dropDownLandingListColumn) {
-                    top.linkTo(searchRow.bottom)
-                    end.linkTo(parent.end) },
+                top.linkTo(searchRow.bottom)
+                end.linkTo(parent.end)
+            },
             searchParam = mutableStateOf(searchDestination),
             appViewModel = appViewModel,
             isDropdownMenuVisible = mutableStateOf(isDropdownDestinationMenuVisible),
@@ -140,7 +144,21 @@ fun SearchScreen(
                 .fillMaxWidth()
                 .padding(8.dp),
             onClick = {
-
+                coroutineScope.launch {
+                    appViewModel.getFlightInfo(
+                        sourceAirportCode=searchDeparture,
+                        destinationAirportCode = searchDestination,
+                        takeoffDate="2024-01-06",
+                        roundOrDirect="ROUND_TRIP",
+                        numberOfAdults = 1,
+                        classOfService = "ECONOMY",
+                        currency = "USD",
+                        returnDate = "12-01-12"
+                    ).collect{
+                        val flight: FlightResponse =it
+                        Log.d("TAGD", "FLIGHT INFO: $flight")
+                    }
+                }
             },
             buttonColor = Dark_Blue,
             text = "Search flights",
