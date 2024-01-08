@@ -1,16 +1,12 @@
 package com.itzik.user_with_testing.project.ui.screens
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
@@ -19,13 +15,11 @@ import androidx.compose.material.icons.filled.FlightTakeoff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.DarkGray
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.Color.Companion.White
@@ -37,6 +31,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
+import com.itzik.user_with_testing.project.ui.semantics.DropDownMenuScreen
 import com.itzik.user_with_testing.project.ui.semantics.GenericButton
 import com.itzik.user_with_testing.project.utils.Constants.Dark_Blue
 import com.itzik.user_with_testing.project.viewmodels.AppViewModel
@@ -54,18 +49,24 @@ fun SearchScreen(
     ConstraintLayout(
         modifier = modifier.fillMaxSize()
     ) {
-        val (text, searchRow, dropDownListColumn, button) = createRefs()
-        val regex = Regex("\\(([^)]+)\\)")
-        var isDropdownMenuVisible by remember {
+        val (text, searchRow, dropDownDepartureListColumn, dropDownLandingListColumn, button) = createRefs()
+
+        var isDropdownDepartureMenuVisible by remember {
+            mutableStateOf(false)
+        }
+
+        var isDropdownDestinationMenuVisible by remember {
             mutableStateOf(false)
         }
 
         var searchDeparture by remember {
             mutableStateOf("")
         }
+
         var searchDestination by remember {
             mutableStateOf("")
         }
+
         val airportCodeNameList = remember {
             mutableStateOf(emptyList<String>())
         }
@@ -95,11 +96,12 @@ fun SearchScreen(
         ) {
             TextField(
                 modifier = Modifier
-                    .width(205.dp),
+                    .width(200.dp),
                 value = searchDeparture,
                 onValueChange = {
                     searchDeparture = it
-                    isDropdownMenuVisible = searchDeparture.length == 5 || searchDeparture.length == 8
+                    isDropdownDepartureMenuVisible =
+                        searchDeparture.length == 5 || searchDeparture.length == 10
                 },
                 placeholder = {
                     Text(
@@ -118,20 +120,20 @@ fun SearchScreen(
                     backgroundColor = Transparent,
                     cursorColor = Dark_Blue,
                     focusedIndicatorColor = Dark_Blue,
-                    unfocusedIndicatorColor = DarkGray.copy(0.3f),
-
-                    ),
+                    unfocusedIndicatorColor = DarkGray.copy(0.3f)
+                ),
                 singleLine = true
             )
 
 
             TextField(
                 modifier = Modifier
-                    .width(205.dp),
+                    .width(200.dp),
                 value = searchDestination,
                 onValueChange = {
                     searchDestination = it
-                    isDropdownMenuVisible = searchDestination.length == 5 || searchDestination.length == 8
+                    isDropdownDestinationMenuVisible =
+                        searchDestination.length == 5 || searchDestination.length == 10
                 },
                 placeholder = {
                     Text(
@@ -154,40 +156,27 @@ fun SearchScreen(
                 ), singleLine = true
             )
         }
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .constrainAs(dropDownListColumn) {
+
+        DropDownMenuScreen(
+            modifier = modifier.constrainAs(dropDownDepartureListColumn) {
                     top.linkTo(searchRow.bottom)
-                }
-        ) {
-            DropdownMenu(
-                modifier=Modifier.background(Color.LightGray),
-                expanded = isDropdownMenuVisible,
-                onDismissRequest = { isDropdownMenuVisible = false },
-            ) {
-                LaunchedEffect(Unit) {
-                    val data = getCodeName(searchDeparture, appViewModel)
-                    airportCodeNameList.value = data
-                }
-                val updatedList = airportCodeNameList.value
-                updatedList.forEach { item ->
-                    DropdownMenuItem(onClick = {
-                        val matchResult = regex.find(item)
-                        val codeName = matchResult?.groups?.get(1)?.value
-                        if (codeName != null) {
-                            searchDeparture = codeName
-                        }
-                        isDropdownMenuVisible = false
-                    }
-                    ) {
-                        Text(text = item)
-                    }
-                }
-            }
+                    start.linkTo(parent.start) },
+            searchParam = mutableStateOf(searchDeparture),
+            appViewModel = appViewModel,
+            isDropdownMenuVisible = mutableStateOf(isDropdownDepartureMenuVisible),
+            airportCodeNameList = airportCodeNameList
+        )
 
-        }
 
+        DropDownMenuScreen(
+            modifier = modifier.constrainAs(dropDownLandingListColumn) {
+                    top.linkTo(searchRow.bottom)
+                    end.linkTo(parent.end) },
+            searchParam = mutableStateOf(searchDestination),
+            appViewModel = appViewModel,
+            isDropdownMenuVisible = mutableStateOf(isDropdownDestinationMenuVisible),
+            airportCodeNameList = airportCodeNameList
+        )
 
 
         GenericButton(
@@ -209,18 +198,9 @@ fun SearchScreen(
 }
 
 
-suspend fun getCodeName(
-    searchCityQuery: String,
-    appViewModel: AppViewModel,
-): MutableList<String> {
-    val airportCodeName = mutableListOf<String>()
-    appViewModel.getAirportCodeName(searchCityQuery)
-        .collect {
-            it.data.forEach { singleAirportCode ->
-                airportCodeName.add(singleAirportCode.shortName)
-            }
-        }
-    return airportCodeName
-}
+
+
+
+
 
 

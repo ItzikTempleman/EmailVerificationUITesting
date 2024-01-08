@@ -65,8 +65,20 @@ class AppViewModel
         return user
     }
 
+    suspend fun getAirportCodeName(
+        searchCityQuery: String
+    ): MutableList<String> {
+        val airportCodeName = mutableListOf<String>()
+        getAirportCodeNameList(searchCityQuery)
+            .collect {
+                it.data.forEach { singleAirportCode ->
+                    airportCodeName.add(singleAirportCode.shortName)
+                }
+            }
+        return airportCodeName
+    }
 
-    suspend fun getAirportCodeName(query: String): Flow<AirportCodeName> {
+    private suspend fun getAirportCodeNameList(query: String): Flow<AirportCodeName> {
         val codeNameResponseList = flow {
             val response = repository.getAirportCodeName(query)
             if (response.isSuccessful) {
