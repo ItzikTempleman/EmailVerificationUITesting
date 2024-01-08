@@ -164,7 +164,10 @@ fun SearchScreen(
             searchParam = mutableStateOf(searchDeparture),
             appViewModel = appViewModel,
             isDropdownMenuVisible = mutableStateOf(isDropdownDepartureMenuVisible),
-            airportCodeNameList = airportCodeNameList
+            airportCodeNameList = airportCodeNameList,
+            onSelectedItem = {
+                searchDeparture=it.value
+            }
         )
 
 
@@ -175,10 +178,13 @@ fun SearchScreen(
             searchParam = mutableStateOf(searchDestination),
             appViewModel = appViewModel,
             isDropdownMenuVisible = mutableStateOf(isDropdownDestinationMenuVisible),
-            airportCodeNameList = airportCodeNameList
+            airportCodeNameList = airportCodeNameList,
+            onSelectedItem = {
+                searchDestination=it.value
+            }
         )
 
-        
+
 
         GenericButton(
             modifier = Modifier
