@@ -178,6 +178,7 @@ fun SearchScreen(
             airportCodeNameList = airportCodeNameList
         )
 
+        
 
         GenericButton(
             modifier = Modifier
