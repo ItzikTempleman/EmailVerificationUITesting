@@ -55,7 +55,7 @@ fun SearchScreen(
         modifier = modifier.fillMaxSize()
     ) {
         val (text, searchRow, dropDownListColumn, button) = createRefs()
-
+        val regex = Regex("\\(([^)]+)\\)")
         var isDropdownMenuVisible by remember {
             mutableStateOf(false)
         }
@@ -99,7 +99,7 @@ fun SearchScreen(
                 value = searchDeparture,
                 onValueChange = {
                     searchDeparture = it
-                    isDropdownMenuVisible = searchDeparture.length >= 5
+                    isDropdownMenuVisible = searchDeparture.length == 5 || searchDeparture.length == 8
                 },
                 placeholder = {
                     Text(
@@ -131,7 +131,7 @@ fun SearchScreen(
                 value = searchDestination,
                 onValueChange = {
                     searchDestination = it
-                    isDropdownMenuVisible = searchDestination.length >= 5
+                    isDropdownMenuVisible = searchDestination.length == 5 || searchDestination.length == 8
                 },
                 placeholder = {
                     Text(
@@ -173,7 +173,6 @@ fun SearchScreen(
                 val updatedList = airportCodeNameList.value
                 updatedList.forEach { item ->
                     DropdownMenuItem(onClick = {
-                        val regex = Regex("\\(([^)]+)\\)")
                         val matchResult = regex.find(item)
                         val codeName = matchResult?.groups?.get(1)?.value
                         if (codeName != null) {
