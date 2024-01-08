@@ -34,8 +34,7 @@ fun DropDownMenuScreen(
             modifier =Modifier.background(Color.LightGray),
         ) {
             LaunchedEffect(Unit) {
-                val data = appViewModel.getAirportCodeName(searchParam.value)
-                airportCodeNameList.value = data
+                airportCodeNameList.value = appViewModel.getAirportCodeName(searchParam.value)
             }
             val updatedList = airportCodeNameList.value
             updatedList.forEach { item ->

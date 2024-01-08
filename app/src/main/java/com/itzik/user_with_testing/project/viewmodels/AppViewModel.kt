@@ -68,14 +68,14 @@ class AppViewModel
     suspend fun getAirportCodeName(
         searchCityQuery: String
     ): MutableList<String> {
-        val airportCodeName = mutableListOf<String>()
+        val airportCodeNameList = mutableListOf<String>()
         getAirportCodeNameList(searchCityQuery)
             .collect {
                 it.data.forEach { singleAirportCode ->
-                    airportCodeName.add(singleAirportCode.shortName)
+                    airportCodeNameList.add(singleAirportCode.shortName)
                 }
             }
-        return airportCodeName
+        return airportCodeNameList
     }
 
     private suspend fun getAirportCodeNameList(query: String): Flow<AirportCodeName> {
