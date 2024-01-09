@@ -1,6 +1,7 @@
 package com.itzik.user_with_testing.project.ui.screens
 
 
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -107,6 +108,7 @@ fun CreateAccountScreen(
             onClick = {
                 coroutineScope.launch {
                     if (appViewModel.isAllFieldsOk()) {
+                        Log.d("GA", "$appViewModel.isAllFieldsOk()")
                         appViewModel.createUser()
                         val userModel = appViewModel.user
                         if (userModel != null) {

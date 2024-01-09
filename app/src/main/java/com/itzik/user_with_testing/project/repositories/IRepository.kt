@@ -2,7 +2,7 @@ package com.itzik.user_with_testing.project.repositories
 
 import com.itzik.user_with_testing.project.models.AirportCodeName
 import com.itzik.user_with_testing.project.models.User
-import com.itzik.user_with_testing.project.models.flight_model.FlightResponse
+import com.itzik.user_with_testing.project.models.flight_models.FlightInfoResponse
 import retrofit2.Response
 
 interface IRepository {
@@ -23,7 +23,7 @@ interface IRepository {
         classOfService: String,
         currency: String,
         returnDate: String,
-    ):Response<FlightResponse>
+    ):Response<FlightInfoResponse>
 
     suspend fun getAirportCodeName(
         query:String

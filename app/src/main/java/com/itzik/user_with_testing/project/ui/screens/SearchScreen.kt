@@ -26,8 +26,6 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
-import com.itzik.user_with_testing.project.models.flight_model.FlightResponse
-import com.itzik.user_with_testing.project.ui.semantics.DropDownMenuScreen
 import com.itzik.user_with_testing.project.ui.semantics.GenericButton
 import com.itzik.user_with_testing.project.ui.semantics.TextFieldScreen
 import com.itzik.user_with_testing.project.utils.Constants.Dark_Blue
@@ -114,27 +112,27 @@ fun SearchScreen(
             )
         }
 
-        DropDownMenuScreen(
-            modifier = modifier.constrainAs(dropDownDepartureListColumn) {
-                top.linkTo(searchRow.bottom)
-                start.linkTo(parent.start)
-            },
-            searchParam = mutableStateOf(searchDeparture),
-            appViewModel = appViewModel,
-            isDropdownMenuVisible = mutableStateOf(isDropdownDepartureMenuVisible),
-            airportCodeNameList = airportCodeNameList
-        )
-
-        DropDownMenuScreen(
-            modifier = modifier.constrainAs(dropDownLandingListColumn) {
-                top.linkTo(searchRow.bottom)
-                end.linkTo(parent.end)
-            },
-            searchParam = mutableStateOf(searchDestination),
-            appViewModel = appViewModel,
-            isDropdownMenuVisible = mutableStateOf(isDropdownDestinationMenuVisible),
-            airportCodeNameList = airportCodeNameList
-        )
+//        DropDownMenuScreen(
+//            modifier = modifier.constrainAs(dropDownDepartureListColumn) {
+//                top.linkTo(searchRow.bottom)
+//                start.linkTo(parent.start)
+//            },
+//            searchParam = mutableStateOf(searchDeparture),
+//            appViewModel = appViewModel,
+//            isDropdownMenuVisible = mutableStateOf(isDropdownDepartureMenuVisible),
+//            airportCodeNameList = airportCodeNameList
+//        )
+//
+//        DropDownMenuScreen(
+//            modifier = modifier.constrainAs(dropDownLandingListColumn) {
+//                top.linkTo(searchRow.bottom)
+//                end.linkTo(parent.end)
+//            },
+//            searchParam = mutableStateOf(searchDestination),
+//            appViewModel = appViewModel,
+//            isDropdownMenuVisible = mutableStateOf(isDropdownDestinationMenuVisible),
+//            airportCodeNameList = airportCodeNameList
+//        )
 
         GenericButton(
             modifier = Modifier
@@ -146,8 +144,8 @@ fun SearchScreen(
             onClick = {
                 coroutineScope.launch {
                     appViewModel.getFlightInfo(
-                        sourceAirportCode=searchDeparture,
-                        destinationAirportCode = searchDestination,
+                        sourceAirportCode="BOM",
+                        destinationAirportCode = "DEL",
                         takeoffDate="2024-01-06",
                         roundOrDirect="ROUND_TRIP",
                         numberOfAdults = 1,
@@ -155,7 +153,7 @@ fun SearchScreen(
                         currency = "USD",
                         returnDate = "12-01-12"
                     ).collect{
-                        val flight: FlightResponse =it
+                        val flight =it
                         Log.d("TAGD", "FLIGHT INFO: $flight")
                     }
                 }

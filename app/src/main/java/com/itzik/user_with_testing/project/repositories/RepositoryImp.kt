@@ -3,7 +3,7 @@ package com.itzik.user_with_testing.project.repositories
 import com.itzik.user_with_testing.project.data.UserDao
 import com.itzik.user_with_testing.project.models.AirportCodeName
 import com.itzik.user_with_testing.project.models.User
-import com.itzik.user_with_testing.project.models.flight_model.FlightResponse
+import com.itzik.user_with_testing.project.models.flight_models.FlightInfoResponse
 import com.itzik.user_with_testing.project.requests.FlightService
 import retrofit2.Response
 import javax.inject.Inject
@@ -27,7 +27,7 @@ class RepositoryImp @Inject constructor(@Singleton private val userDao: UserDao,
         classOfService: String,
         currency: String,
         returnDate: String,
-    ): Response<FlightResponse> = flightService.getFlight(
+    ): Response<FlightInfoResponse> = flightService.getFlight(
         sourceAirportCode,
         destinationAirportCode,
         takeoffDate,

@@ -9,7 +9,7 @@ import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.project.models.AirportCodeName
 import com.itzik.user_with_testing.project.models.Gender
 import com.itzik.user_with_testing.project.models.User
-import com.itzik.user_with_testing.project.models.flight_model.FlightResponse
+import com.itzik.user_with_testing.project.models.flight_models.FlightInfoResponse
 import com.itzik.user_with_testing.project.navigation.BottomBarGraph
 import com.itzik.user_with_testing.project.repositories.IRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -97,7 +97,7 @@ class AppViewModel
 
 
     suspend fun getFlightInfo(sourceAirportCode: String, destinationAirportCode: String, takeoffDate: String, roundOrDirect: String, numberOfAdults: Int, classOfService: String, currency: String, returnDate: String,
-    ): Flow<FlightResponse> {
+    ): Flow<FlightInfoResponse> {
         val flightInfo = flow {
             val response = repository.getFlight(
                 sourceAirportCode,

@@ -51,6 +51,7 @@ fun AppNavGraph(
                     coroutineScope = coroutineScope
                 )
             }
+
             composable(route = LoginGraph.SignUp.route) {
                 CreateAccountScreen(
                     navController = navController,
@@ -61,7 +62,7 @@ fun AppNavGraph(
         }
 
         navigation(
-            route = Graph.LOGIN,
+            route = Graph.BOTTOM_BAR,
             startDestination = BottomBarGraph.SearchFlights.route
         ) {
             composable(route = BottomBarGraph.SearchFlights.route) {
