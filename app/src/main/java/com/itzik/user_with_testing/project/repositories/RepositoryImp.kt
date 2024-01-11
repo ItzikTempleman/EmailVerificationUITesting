@@ -7,14 +7,17 @@ import com.itzik.user_with_testing.project.models.flight_models.FlightInfoRespon
 import com.itzik.user_with_testing.project.requests.FlightService
 import retrofit2.Response
 import javax.inject.Inject
+import javax.inject.Named
 import javax.inject.Singleton
 
 class RepositoryImp @Inject constructor(
     @Singleton
     private val userDao: UserDao,
+
     @Singleton
-    private val flightService: FlightService,
-) : IRepository {
+    @Named("Flights") private val flightService: FlightService,
+
+    ) : IRepository {
 
     override suspend fun getUsers(): List<User> = userDao.getUsers()
 
@@ -22,13 +25,6 @@ class RepositoryImp @Inject constructor(
     override suspend fun updateIsSignedIn(user: User) = userDao.updateIsSigneIn(user)
     override suspend fun getUserFromUserNameAndPassword(userName: String, password: String): User =
         userDao.getUserFromUserNameAndPassword(userName, password)
-
-
-
-
-
-
-
 
 
     override suspend fun getFlightInfo(
@@ -50,24 +46,6 @@ class RepositoryImp @Inject constructor(
         currency,
         returnDate
     )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     override suspend fun getAirportCodeName(query: String): Response<AirportCodeName> =

@@ -19,6 +19,7 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
 
@@ -40,6 +41,7 @@ object AppModule {
     @Provides
     fun provideDao(userDatabase: UserDatabase): UserDao = userDatabase.getDao()
 
+
     @Singleton
     @Provides
     fun provideDatabase(@ApplicationContext applicationContext: Context) =
@@ -47,8 +49,12 @@ object AppModule {
             .addTypeConverter(UserConverter()).fallbackToDestructiveMigration().build()
 
 
+
+
+
     @Provides
     @Singleton
+    @Named("Flights")
     fun provideRetrofitService(): FlightService {
         val retrofit =
             Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create())

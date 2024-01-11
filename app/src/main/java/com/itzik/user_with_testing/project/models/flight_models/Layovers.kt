@@ -4,7 +4,9 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Segments(
-	val legs: List<Legs>,
-	val layovers: List<Layovers>
+
+data class Layovers(
+    val durationType: String,
+    val hasStationChanged: Boolean,
+    val durationInMinutes: Int,
 ) : Parcelable
