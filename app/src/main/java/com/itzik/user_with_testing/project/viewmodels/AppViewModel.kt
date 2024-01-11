@@ -80,7 +80,7 @@ class AppViewModel
     }
 
 
-     private suspend fun getAirportCodeName(query: String): Flow<AirportCodeName> {
+    private suspend fun getAirportCodeName(query: String): Flow<AirportCodeName> {
         val codeNameResponseList = flow {
             val response = repository.getAirportCodeName(query)
             if (response.isSuccessful) {
@@ -96,10 +96,20 @@ class AppViewModel
     }
 
 
-    suspend fun getFlightInfo(sourceAirportCode: String, destinationAirportCode: String, takeoffDate: String, roundOrDirect: String, numberOfAdults: Int, classOfService: String, currency: String, returnDate: String,
+
+
+    suspend fun getFlightInfo(
+        sourceAirportCode: String,
+        destinationAirportCode: String,
+        takeoffDate: String,
+        roundOrDirect: String,
+        numberOfAdults: Int,
+        classOfService: String,
+        currency: String,
+        returnDate: String,
     ): Flow<FlightInfoResponse> {
         val flightInfo = flow {
-            val response = repository.getFlight(
+            val response = repository.getFlightInfo(
                 sourceAirportCode,
                 destinationAirportCode,
                 takeoffDate,
@@ -120,6 +130,11 @@ class AppViewModel
         }
         return flightInfo
     }
+
+
+
+
+
 
 
 

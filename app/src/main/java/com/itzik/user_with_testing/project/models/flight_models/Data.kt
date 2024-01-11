@@ -5,8 +5,5 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Data(
-	val session: Session,
-	val complete: Boolean,
-	val flights: List<FlightsItem>,
-	val totalNumResults: Int
+	val flights: List<Flights>
 ) : Parcelable

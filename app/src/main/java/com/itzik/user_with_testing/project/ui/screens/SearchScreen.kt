@@ -144,17 +144,17 @@ fun SearchScreen(
             onClick = {
                 coroutineScope.launch {
                     appViewModel.getFlightInfo(
-                        sourceAirportCode="BOM",
-                        destinationAirportCode = "DEL",
-                        takeoffDate="2024-01-06",
+                        sourceAirportCode="BER",
+                        destinationAirportCode ="SFO",
+                        takeoffDate="2024-01-12",
                         roundOrDirect="ROUND_TRIP",
                         numberOfAdults = 1,
                         classOfService = "ECONOMY",
                         currency = "USD",
-                        returnDate = "12-01-12"
+                        returnDate = "2024-01-21"
                     ).collect{
                         val flight =it
-                        Log.d("TAGD", "FLIGHT INFO: $flight")
+                        Log.d("TAG", "FLIGHT INFO: $flight")
                     }
                 }
             },

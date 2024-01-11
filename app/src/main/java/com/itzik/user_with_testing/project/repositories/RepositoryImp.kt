@@ -9,7 +9,12 @@ import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
 
-class RepositoryImp @Inject constructor(@Singleton private val userDao: UserDao,@Singleton private val flightService: FlightService) : IRepository {
+class RepositoryImp @Inject constructor(
+    @Singleton
+    private val userDao: UserDao,
+    @Singleton
+    private val flightService: FlightService,
+) : IRepository {
 
     override suspend fun getUsers(): List<User> = userDao.getUsers()
 
@@ -18,7 +23,15 @@ class RepositoryImp @Inject constructor(@Singleton private val userDao: UserDao,
     override suspend fun getUserFromUserNameAndPassword(userName: String, password: String): User =
         userDao.getUserFromUserNameAndPassword(userName, password)
 
-    override suspend fun getFlight(
+
+
+
+
+
+
+
+
+    override suspend fun getFlightInfo(
         sourceAirportCode: String,
         destinationAirportCode: String,
         takeoffDate: String,
@@ -37,6 +50,25 @@ class RepositoryImp @Inject constructor(@Singleton private val userDao: UserDao,
         currency,
         returnDate
     )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     override suspend fun getAirportCodeName(query: String): Response<AirportCodeName> =
         flightService.getAirportCodeName(query)

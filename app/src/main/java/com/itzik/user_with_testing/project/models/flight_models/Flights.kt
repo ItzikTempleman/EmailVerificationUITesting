@@ -4,6 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Session(
-	val searchId: String
+data class Flights(
+	val segments: List<Segments>,
+	val purchaseLinks: List<PurchaseLinks>
 ) : Parcelable
