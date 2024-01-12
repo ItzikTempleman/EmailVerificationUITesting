@@ -108,7 +108,9 @@ fun SearchScreen(
             ) {
                 OutlinedTextField(
                     value = searchDeparture,
-                    onValueChange = { searchDeparture = it },
+                    onValueChange = {
+                        searchDeparture = it
+                                    },
                     modifier = Modifier,
                     placeholder = {
                         Text(
@@ -225,6 +227,7 @@ fun SearchScreen(
                 }
             }
         }
+
 
 
 

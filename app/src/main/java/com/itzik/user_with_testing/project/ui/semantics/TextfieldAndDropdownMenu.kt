@@ -4,21 +4,20 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
-import androidx.compose.material.TextField
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.itzik.user_with_testing.project.utils.Constants
@@ -31,7 +30,39 @@ fun DropDownMenuScreen(
     appViewModel: AppViewModel,
     isExpanded: MutableState<Boolean>,
     list: MutableState<List<String>>,
+    thisValueChange: (String) -> Unit,
+    label: String,
 ) {
+
+    val expansionIcon = if (isExpanded.value) Icons.Filled.KeyboardArrowUp
+    else Icons.Filled.KeyboardArrowDown
+
+
+    OutlinedTextField(
+        modifier = modifier,
+        value = searchParam.value,
+        onValueChange = {
+            thisValueChange(it)
+        },
+        trailingIcon = {
+            Icon(imageVector = expansionIcon, null,
+                Modifier.clickable { isExpanded.value = !isExpanded.value })
+        },
+        placeholder = {
+            Text(
+                text = label,
+                color = Constants.Dark_Blue,
+                fontSize = 14.sp
+            )
+        }, colors = TextFieldDefaults.textFieldColors(
+            backgroundColor = Color.Transparent,
+            cursorColor = Constants.Dark_Blue,
+            focusedIndicatorColor = Constants.Dark_Blue,
+            unfocusedIndicatorColor = Color.DarkGray.copy(0.3f)
+        ),
+        singleLine = true
+    )
+
     Column(
         modifier = modifier.width(200.dp)
     ) {
@@ -67,101 +98,3 @@ fun DropDownMenuScreen(
     }
 }
 
-
-
-
-@Composable
-fun TextFieldScreen(
-    value: String,
-    modifier: Modifier,
-    onValueChange: (String) -> Unit,
-    iconImage: ImageVector,
-    label: String,
-    isExpanded: MutableState<Boolean>,
-
-    ) {
-    val icon = if (isExpanded.value) {
-        Icons.Default.KeyboardArrowUp
-    } else {
-        Icons.Default.KeyboardArrowDown
-    }
-
-    TextField(
-        modifier = modifier.width(200.dp),
-        value = value,
-        onValueChange = {
-            onValueChange(it)
-        },
-        placeholder = {
-            Text(
-                text = label,
-                color = Constants.Dark_Blue,
-                fontSize = 14.sp
-            )
-        },
-        leadingIcon = {
-            Icon(
-                imageVector = iconImage,
-                contentDescription = null,
-                tint = Constants.Dark_Blue
-            )
-        },
-        trailingIcon = {
-            Icon(imageVector = icon, contentDescription = null, modifier = Modifier.clickable {
-                isExpanded.value = !isExpanded.value
-            })
-        },
-        colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = Color.Transparent,
-            cursorColor = Constants.Dark_Blue,
-            focusedIndicatorColor = Constants.Dark_Blue,
-            unfocusedIndicatorColor = Color.DarkGray.copy(0.3f)
-        ),
-        singleLine = true
-    )
-}
-////        }
-////            TextFieldScreen(
-////                value = searchDeparture,
-////                modifier = Modifier,
-////                onValueChange = {
-////                    searchDeparture = it
-////                },
-////                iconImage = Icons.Default.FlightTakeoff,
-////                label = stringResource(id = R.string.search_departure_city),
-////                isExpanded = mutableStateOf(isDropdownDepartureMenuVisible)
-////            )
-////
-////            TextFieldScreen(
-////                value = searchDestination,
-////                modifier = Modifier,
-////                onValueChange = {
-////                    searchDestination = it
-////                },
-////                iconImage = Icons.Default.FlightLand,
-////                label = stringResource(id = R.string.search_destination_city),
-////                isExpanded = mutableStateOf(isDropdownDestinationMenuVisible)
-////            )
-////        }
-////
-////        DropDownMenuScreen(
-////            modifier = modifier.constrainAs(dropDownDepartureListColumn) {
-////                top.linkTo(searchRow.bottom)
-////                start.linkTo(parent.start)
-////            },
-////            searchParam = mutableStateOf(searchDeparture),
-////            appViewModel = appViewModel,
-////            isExpanded = mutableStateOf(isDropdownDepartureMenuVisible),
-////            list = airportCodeNameList
-////        )
-////
-////        DropDownMenuScreen(
-////            modifier = modifier.constrainAs(dropDownLandingListColumn) {
-////                top.linkTo(searchRow.bottom)
-////                end.linkTo(parent.end)
-////            },
-////            searchParam = mutableStateOf(searchDestination),
-////            appViewModel = appViewModel,
-////            isExpanded = mutableStateOf(isDropdownDestinationMenuVisible),
-////            list = airportCodeNameList
-////        )
