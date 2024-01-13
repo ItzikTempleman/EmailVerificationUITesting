@@ -37,4 +37,6 @@
     <string name="year">YYYY</string>
     <string name="departure_date">Departure date</string>
     <string name="return_date">Return date</string>
+    <string name="one_way">ONE_WAY</string>
+    <string name="round_trip">ROUND_TRIP</string>
 </resources>

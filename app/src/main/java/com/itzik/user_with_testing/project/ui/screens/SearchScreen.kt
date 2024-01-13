@@ -9,9 +9,14 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.RadioButton
+import androidx.compose.material.RadioButtonDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FlightLand
 import androidx.compose.material.icons.filled.FlightTakeoff
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -19,6 +24,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
@@ -48,10 +54,16 @@ fun SearchScreen(
     ConstraintLayout(
         modifier = modifier.fillMaxSize()
     ) {
-        val (text, searchRow, chooseDateRow, button) = createRefs()
+        val (text, searchRow, chooseDateRow, itineraryType, button) = createRefs()
 
         var isDepartureExpanded by remember { mutableStateOf(false) }
         var isDestinationExpanded by remember { mutableStateOf(false) }
+
+        val itineraryOptions = listOf(
+            stringResource(id = R.string.round_trip),
+            stringResource(id = R.string.one_way),
+        )
+        var defaultItineraryOption by remember { mutableStateOf(itineraryOptions[0]) }
 
         var searchDeparture by remember {
             mutableStateOf("")
@@ -91,7 +103,9 @@ fun SearchScreen(
             }
         ) {
             DropDownMenuScreen(
-                modifier = Modifier.weight(1f).padding(start = 8.dp, end = 2.dp),
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(start = 8.dp, end = 2.dp),
                 searchParam = mutableStateOf(searchDeparture),
                 appViewModel = appViewModel,
                 isExpanded = mutableStateOf(isDepartureExpanded),
@@ -106,7 +120,9 @@ fun SearchScreen(
                 })
 
             DropDownMenuScreen(
-                modifier = Modifier.weight(1f).padding(end=8.dp, start = 2.dp),
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(end = 8.dp, start = 2.dp),
                 searchParam = mutableStateOf(searchDestination),
                 appViewModel = appViewModel,
                 isExpanded = mutableStateOf(isDestinationExpanded),
@@ -129,14 +145,16 @@ fun SearchScreen(
             horizontalArrangement = Arrangement.Center
         ) {
             Column(
-                modifier=Modifier.weight(1f).padding(start = 8.dp, end = 2.dp),
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(start = 8.dp, end = 2.dp),
 
-            ){
+                ) {
                 Text(
                     text = stringResource(id = R.string.departure_date),
                     fontFamily = FontFamily.Monospace,
                     fontSize = 20.sp,
-                    modifier=Modifier.padding(8.dp)
+                    modifier = Modifier.padding(8.dp)
                 )
 
 
@@ -152,13 +170,15 @@ fun SearchScreen(
             }
 
             Column(
-                modifier = Modifier.weight(1f).padding(end=8.dp, start = 2.dp)
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(end = 8.dp, start = 2.dp)
             ) {
                 Text(
                     text = stringResource(id = R.string.return_date),
                     fontFamily = FontFamily.Monospace,
                     fontSize = 20.sp,
-                    modifier=Modifier.padding(8.dp)
+                    modifier = Modifier.padding(8.dp)
                 )
 
                 DatePickerDialogScreen(
@@ -169,6 +189,54 @@ fun SearchScreen(
                     insertedDate = {
                         returnDate = it
                     })
+            }
+        }
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .constrainAs(itineraryType) {
+                    top.linkTo(chooseDateRow.bottom)
+                }
+        ) {
+            itineraryOptions.forEach {
+                Card(
+                    modifier = Modifier
+                        .padding(8.dp),
+                    elevation = CardDefaults.cardElevation(
+                        defaultElevation = 4.dp
+                    ),
+                    colors = CardDefaults.cardColors(
+                        containerColor = White
+                    ),
+                    shape = RoundedCornerShape(8.dp)
+                ) {
+                    Row(
+                        modifier = Modifier.padding(10.dp)
+                    ) {
+                        RadioButton(
+                            colors = RadioButtonDefaults.colors(
+                                selectedColor = Dark_Blue,
+                                unselectedColor = Dark_Blue
+                            ),
+                            selected = (it == defaultItineraryOption),
+                            onClick = {
+                                defaultItineraryOption = it
+
+                            }
+                        )
+                        Text(
+                            text = when (it) {
+                                stringResource(id = R.string.one_way) -> "One way"
+                                else -> "Round trip"
+                            },
+                            modifier = Modifier.padding(top = 10.dp, end = 8.dp),
+                            fontSize = 18.sp,
+                            color = Color.Black
+                        )
+
+                    }
+                }
             }
         }
 
@@ -184,7 +252,7 @@ fun SearchScreen(
                         sourceAirportCode = searchDeparture,
                         destinationAirportCode = searchDestination,
                         takeoffDate = takeOffDate,
-                        roundOrDirect = "ROUND_TRIP",
+                        itineraryType = defaultItineraryOption,
                         numberOfAdults = 1,
                         classOfService = "ECONOMY",
                         currency = "USD",
@@ -202,6 +270,3 @@ fun SearchScreen(
         )
     }
 }
-
-
-

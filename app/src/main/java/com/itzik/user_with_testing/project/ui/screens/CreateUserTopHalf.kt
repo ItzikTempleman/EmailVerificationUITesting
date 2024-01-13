@@ -191,7 +191,8 @@ fun CreateUserTopHalf(
                                 modifier = Modifier.constrainAs(genderButton) {
                                     top.linkTo(parent.top)
                                     start.linkTo(parent.start)
-                                }, selected = (it == selectedGender),
+                                },
+                                selected = (it == selectedGender),
                                 onClick = {
                                     selectedGender = it
                                     appViewModel.getGenderString(selectedGender)

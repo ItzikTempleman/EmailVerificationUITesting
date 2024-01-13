@@ -12,30 +12,6 @@ interface FlightService {
     suspend fun getAirportCodeName(@Query("query") query: String): Response<AirportCodeName>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @GET("api/v1/flights/searchFlights?")
     suspend fun getFlight(
         @Query("sourceAirportCode") sourceAirportCode: String,

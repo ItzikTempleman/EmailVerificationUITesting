@@ -14,29 +14,11 @@ interface IRepository {
 
     suspend fun getUserFromUserNameAndPassword(userName: String, password: String): User
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     suspend fun getFlightInfo(
         sourceAirportCode: String,
         destinationAirportCode: String,
         takeoffDate: String,
-        roundOrDirect: String,
+        itineraryType: String,
         numberOfAdults: Int,
         classOfService: String,
         currency: String,
