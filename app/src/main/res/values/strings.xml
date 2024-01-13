@@ -35,4 +35,6 @@
     <string name="day">DD</string>
     <string name="month">MM</string>
     <string name="year">YYYY</string>
+    <string name="departure_date">Select departure date</string>
+    <string name="return_date">Select return date</string>
 </resources>

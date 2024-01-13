@@ -3,6 +3,7 @@ package com.itzik.user_with_testing.project.ui.screens
 import DatePickerDialogScreen
 import android.annotation.SuppressLint
 import android.util.Log
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,6 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.stringResource
@@ -63,6 +65,12 @@ fun SearchScreen(
         val list = remember {
             mutableStateOf(emptyList<String>())
         }
+        var takeOffDate by remember {
+            mutableStateOf("")
+        }
+        var returnDate by remember {
+            mutableStateOf("")
+        }
 
         Text(
             text = stringResource(R.string.find_flights),
@@ -78,15 +86,12 @@ fun SearchScreen(
             fontWeight = FontWeight.Bold
         )
 
-        Row(
-            modifier = Modifier
-                .constrainAs(searchRow) {
-                    top.linkTo(text.bottom)
-                }
-                .fillMaxWidth()
-        ) {
-            DropDownMenuScreen(
-                modifier = modifier,
+        Row(modifier = Modifier
+            .constrainAs(searchRow) {
+                top.linkTo(text.bottom)
+            }
+            .fillMaxWidth()) {
+            DropDownMenuScreen(modifier = modifier,
                 searchParam = mutableStateOf(searchDeparture),
                 appViewModel = appViewModel,
                 isExpanded = mutableStateOf(isDepartureExpanded),
@@ -98,11 +103,9 @@ fun SearchScreen(
                 leadingIcon = Icons.Default.FlightTakeoff,
                 updatedValue = {
                     searchDeparture = it
-                }
-            )
+                })
 
-            DropDownMenuScreen(
-                modifier = modifier,
+            DropDownMenuScreen(modifier = modifier,
                 searchParam = mutableStateOf(searchDestination),
                 appViewModel = appViewModel,
                 isExpanded = mutableStateOf(isDestinationExpanded),
@@ -114,45 +117,78 @@ fun SearchScreen(
                 leadingIcon = Icons.Default.FlightLand,
                 updatedValue = {
                     searchDestination = it
-                }
-            )
+                })
         }
 
-        Row(
-            modifier = Modifier
-                .constrainAs(chooseDateRow) {
-                    top.linkTo(searchRow.bottom)
-                }
-                .fillMaxWidth()
-        ) {
-            DatePickerDialogScreen(
+        Row(modifier = Modifier
+            .constrainAs(chooseDateRow) {
+                top.linkTo(searchRow.bottom)
+            }
+            .fillMaxWidth()) {
+            Column(
                 modifier = modifier
                     .width(200.dp)
                     .padding(2.dp),
-                appViewModel = appViewModel,
-                errorMessage = "can find flights up to a year ahead",
-                isSelectionOfDatesAvailableReversed = false
-            )
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = stringResource(id = R.string.departure_date),
+                    fontFamily = FontFamily.Monospace,
+                    fontSize = 12.sp
+                )
+
+
+                DatePickerDialogScreen(
+                    modifier = modifier,
+                    appViewModel = appViewModel,
+                    errorMessage = "",
+                    isSelectionOfDatesAvailableReversed = false,
+                    insertedDate = {
+                        takeOffDate = it
+                    }
+                )
+            }
+
+            Column(
+                modifier = modifier
+                    .width(200.dp)
+                    .padding(2.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = stringResource(id = R.string.return_date),
+                    fontFamily = FontFamily.Monospace,
+                    fontSize = 12.sp
+                )
+
+                DatePickerDialogScreen(
+                    modifier = modifier,
+                    appViewModel = appViewModel,
+                    errorMessage = "",
+                    isSelectionOfDatesAvailableReversed = false,
+                    insertedDate = {
+                        returnDate = it
+                    })
+            }
         }
 
-        GenericButton(
-            modifier = Modifier
-                .constrainAs(button) {
-                    bottom.linkTo(parent.bottom)
-                }
-                .fillMaxWidth()
-                .padding(8.dp),
+        GenericButton(modifier = Modifier
+            .constrainAs(button) {
+                bottom.linkTo(parent.bottom)
+            }
+            .fillMaxWidth()
+            .padding(8.dp),
             onClick = {
                 coroutineScope.launch {
                     appViewModel.getFlightInfo(
                         sourceAirportCode = searchDeparture,
                         destinationAirportCode = searchDestination,
-                        takeoffDate = "2024-01-20",
+                        takeoffDate = takeOffDate,
                         roundOrDirect = "ROUND_TRIP",
                         numberOfAdults = 1,
                         classOfService = "ECONOMY",
                         currency = "USD",
-                        returnDate = "2024-01-31"
+                        returnDate = returnDate
                     ).collect {
                         val flightInfo = it
                         Log.d("TAG", "flightInfo: $flightInfo")

@@ -1,4 +1,7 @@
+
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -23,6 +26,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.ui.semantics.GenericRoundedButton
 import com.itzik.user_with_testing.project.utils.Constants.Dark_Blue
 import com.itzik.user_with_testing.project.utils.Constants.Light_Blue
@@ -36,7 +40,8 @@ fun DatePickerDialogScreen(
     modifier: Modifier,
     appViewModel: AppViewModel,
     errorMessage: String,
-    isSelectionOfDatesAvailableReversed: Boolean
+    isSelectionOfDatesAvailableReversed: Boolean,
+    insertedDate : (String) -> Unit
 ) {
 
     var isValidEnteredDate by remember { mutableStateOf(false) }
@@ -101,6 +106,8 @@ fun DatePickerDialogScreen(
             selectedDate = Calendar.getInstance().apply {
                 timeInMillis = it
             }
+            insertedDate(parseDateToStringFormat(selectedDate).toString())
+            Log.d("TAG", "selected date: ${parseDateToStringFormat(selectedDate)}")
             isValidEnteredDate = if (isSelectionOfDatesAvailableReversed) {
                 appViewModel.validateAge(selectedDate ?: Calendar.getInstance())
             }else appViewModel.maxOutAtAYearAhead(selectedDate ?: Calendar.getInstance())
@@ -110,6 +117,7 @@ fun DatePickerDialogScreen(
 
         datePickerDialog = DatePickerDialog(
             LocalContext.current,
+            R.style.DatePickerTheme,
             { _, year, month, dayOfMonth ->
                 val updatedDate = Calendar.getInstance().apply {
                     set(year, month, dayOfMonth)
@@ -118,7 +126,7 @@ fun DatePickerDialogScreen(
             },
             todayDate.get(Calendar.YEAR),
             todayDate.get(Calendar.MONTH),
-            todayDate.get(Calendar.DAY_OF_MONTH)
+            todayDate.get(Calendar.DAY_OF_MONTH),
         )
         if(isSelectionOfDatesAvailableReversed) datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
         else datePickerDialog.datePicker.minDate = System.currentTimeMillis()
@@ -128,3 +136,10 @@ fun DatePickerDialogScreen(
         }
     }
 }
+
+@SuppressLint("SimpleDateFormat", "SuspiciousIndentation")
+fun parseDateToStringFormat(selectedDate: Calendar?): String? {
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+        return selectedDate?.time?.let { dateFormat.format(it) }
+}
+

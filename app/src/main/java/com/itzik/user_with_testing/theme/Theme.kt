@@ -67,4 +67,6 @@ fun EmailVerificationUITestingTheme(
         typography = Typography,
         content = content
     )
+
 }
+
