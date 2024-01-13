@@ -3,12 +3,12 @@ package com.itzik.user_with_testing.project.ui.screens
 import DatePickerDialogScreen
 import android.annotation.SuppressLint
 import android.util.Log
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FlightLand
 import androidx.compose.material.icons.filled.FlightTakeoff
@@ -18,7 +18,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.stringResource
@@ -90,8 +89,9 @@ fun SearchScreen(
             .constrainAs(searchRow) {
                 top.linkTo(text.bottom)
             }
-            .fillMaxWidth()) {
-            DropDownMenuScreen(modifier = modifier,
+        ) {
+            DropDownMenuScreen(
+                modifier = Modifier.weight(1f).padding(start = 8.dp, end = 2.dp),
                 searchParam = mutableStateOf(searchDeparture),
                 appViewModel = appViewModel,
                 isExpanded = mutableStateOf(isDepartureExpanded),
@@ -105,7 +105,8 @@ fun SearchScreen(
                     searchDeparture = it
                 })
 
-            DropDownMenuScreen(modifier = modifier,
+            DropDownMenuScreen(
+                modifier = Modifier.weight(1f).padding(end=8.dp, start = 2.dp),
                 searchParam = mutableStateOf(searchDestination),
                 appViewModel = appViewModel,
                 isExpanded = mutableStateOf(isDestinationExpanded),
@@ -124,17 +125,18 @@ fun SearchScreen(
             .constrainAs(chooseDateRow) {
                 top.linkTo(searchRow.bottom)
             }
-            .fillMaxWidth()) {
+            .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
             Column(
-                modifier = modifier
-                    .width(200.dp)
-                    .padding(2.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
+                modifier=Modifier.weight(1f).padding(start = 8.dp, end = 2.dp),
+
+            ){
                 Text(
                     text = stringResource(id = R.string.departure_date),
                     fontFamily = FontFamily.Monospace,
-                    fontSize = 12.sp
+                    fontSize = 20.sp,
+                    modifier=Modifier.padding(8.dp)
                 )
 
 
@@ -150,15 +152,13 @@ fun SearchScreen(
             }
 
             Column(
-                modifier = modifier
-                    .width(200.dp)
-                    .padding(2.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                modifier = Modifier.weight(1f).padding(end=8.dp, start = 2.dp)
             ) {
                 Text(
                     text = stringResource(id = R.string.return_date),
                     fontFamily = FontFamily.Monospace,
-                    fontSize = 12.sp
+                    fontSize = 20.sp,
+                    modifier=Modifier.padding(8.dp)
                 )
 
                 DatePickerDialogScreen(

@@ -3,8 +3,6 @@ package com.itzik.user_with_testing.project.ui.semantics
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
@@ -20,7 +18,6 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.itzik.user_with_testing.project.utils.Constants.Dark_Blue
 import com.itzik.user_with_testing.project.viewmodels.AppViewModel
@@ -42,10 +39,10 @@ fun DropDownMenuScreen(
     else Icons.Filled.KeyboardArrowDown
 
     Column(
-        modifier = modifier.width(205.dp).padding(4.dp)
+        modifier=modifier
     ) {
     OutlinedTextField(
-        modifier = modifier,
+        modifier = Modifier,
         value = searchParam.value,
         onValueChange = {
             thisValueChange(it)
