@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.DropdownMenuItem
@@ -24,6 +25,7 @@ import androidx.compose.material.icons.filled.FlightLand
 import androidx.compose.material.icons.filled.FlightTakeoff
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.rounded.CurrencyExchange
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.KeyboardArrowUp
 import androidx.compose.material.icons.rounded.RadioButtonChecked
@@ -78,7 +80,7 @@ fun SearchScreen(
             contentScale = ContentScale.FillHeight
 
         )
-        var (text, searchRow, datesSelectionLayout, itineraryType, selectClass, button) = createRefs()
+        var (text, currencyIcon, searchRow, datesSelectionLayout, itineraryType, selectClass, button) = createRefs()
 
         val classOfServiceOptions = listOf(
             ClassOfService.economy,
@@ -129,6 +131,9 @@ fun SearchScreen(
         Text(
             text = stringResource(R.string.find_flights),
             modifier = Modifier
+                .clickable {
+
+                }
                 .padding(8.dp)
                 .constrainAs(text) {
                     start.linkTo(parent.start)
@@ -138,6 +143,19 @@ fun SearchScreen(
             fontSize = 24.sp,
             fontFamily = FontFamily.Monospace,
             fontWeight = FontWeight.Bold
+        )
+
+        Icon(
+            imageVector = Icons.Rounded.CurrencyExchange,
+            contentDescription = null,
+            modifier = Modifier
+                .size(54.dp)
+                .constrainAs(currencyIcon) {
+                    top.linkTo(parent.top)
+                    end.linkTo(parent.end)
+                }
+                .padding(12.dp),
+            tint = White
         )
 
         Row(modifier = Modifier.constrainAs(searchRow) {
@@ -338,7 +356,8 @@ fun SearchScreen(
         }
 
         Column(
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier
+                .padding(8.dp)
 
                 .constrainAs(selectClass) {
                     top.linkTo(itineraryType.bottom)
@@ -409,7 +428,7 @@ fun SearchScreen(
             text = "Search flights",
             textColor = White,
             roundedRadius = 12.dp,
-            fontSize=20.sp
+            fontSize = 20.sp
         )
     }
 }
