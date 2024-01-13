@@ -1,8 +1,10 @@
 package com.itzik.user_with_testing.project.ui.semantics
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
@@ -16,8 +18,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.itzik.user_with_testing.project.utils.Constants.Dark_Blue
 import com.itzik.user_with_testing.project.viewmodels.AppViewModel
@@ -25,10 +29,10 @@ import com.itzik.user_with_testing.project.viewmodels.AppViewModel
 @Composable
 fun DropDownMenuScreen(
     modifier: Modifier,
-    searchParam: MutableState<String>,
+    searchParam: MutableState<String>?=null,
     appViewModel: AppViewModel,
     isExpanded: MutableState<Boolean>,
-    list: MutableState<List<String>>,
+    list: MutableState<List<String>>?=null,
     thisValueChange: (String) -> Unit,
     label: String,
     leadingIcon: ImageVector,
@@ -39,11 +43,12 @@ fun DropDownMenuScreen(
     else Icons.Filled.KeyboardArrowDown
 
     Column(
-        modifier=modifier
+        modifier=modifier.clip(RoundedCornerShape(12.dp))
     ) {
-    OutlinedTextField(
-        modifier = Modifier,
-        value = searchParam.value,
+    searchParam?.value?.let {
+        OutlinedTextField(
+        modifier = Modifier.border(1.dp, Dark_Blue, RoundedCornerShape(12.dp)),
+        value = it,
         onValueChange = {
             thisValueChange(it)
         },
@@ -61,13 +66,14 @@ fun DropDownMenuScreen(
                 fontSize = 14.sp
             )
         }, colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = Color.Transparent,
+            backgroundColor = Color.White,
             cursorColor = Dark_Blue,
             focusedIndicatorColor = Dark_Blue,
             unfocusedIndicatorColor = Color.DarkGray.copy(0.3f)
         ),
         singleLine = true
     )
+    }
 
         DropdownMenu(
             expanded = isExpanded.value,
@@ -77,20 +83,22 @@ fun DropDownMenuScreen(
             modifier = Modifier.background(Color.LightGray),
         ) {
             LaunchedEffect(Unit) {
-                val data = appViewModel.getCodeName(searchParam.value)
-                list.value = data
+                val data = searchParam?.value?.let { appViewModel.getCodeName(it) }
+                if (data != null) {
+                    list?.value = data
+                }
             }
-            val updatedList = list.value
+            val updatedList = list?.value
 
-            updatedList.forEach { item ->
+            updatedList?.forEach { item ->
                 DropdownMenuItem(onClick = {
                     val regex = Regex("\\(([^)]+)\\)")
                     val matchResult = regex.find(item)
                     val codeName = matchResult?.groups?.get(1)?.value
 
                     if (codeName != null) {
-                        searchParam.value = codeName
-                        updatedValue(searchParam.value)
+                        searchParam?.value = codeName
+                        searchParam?.value?.let { updatedValue(it) }
                     }
                     isExpanded.value = false
 

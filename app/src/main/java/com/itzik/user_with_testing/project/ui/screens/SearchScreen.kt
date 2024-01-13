@@ -3,31 +3,48 @@ package com.itzik.user_with_testing.project.ui.screens
 import DatePickerDialogScreen
 import android.annotation.SuppressLint
 import android.util.Log
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.DropdownMenuItem
+import androidx.compose.material.Icon
 import androidx.compose.material.RadioButton
 import androidx.compose.material.RadioButtonDefaults
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AirplaneTicket
 import androidx.compose.material.icons.filled.FlightLand
 import androidx.compose.material.icons.filled.FlightTakeoff
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.rounded.KeyboardArrowDown
+import androidx.compose.material.icons.rounded.KeyboardArrowUp
+import androidx.compose.material.icons.rounded.RadioButtonChecked
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -54,8 +71,26 @@ fun SearchScreen(
     ConstraintLayout(
         modifier = modifier.fillMaxSize()
     ) {
-        val (text, searchRow, datesSelectionLayout, itineraryType, button) = createRefs()
+        Image(
+            painter = painterResource(id = R.drawable.wallpaper),
+            contentDescription = null,
+            modifier = modifier.fillMaxSize(),
+            contentScale = ContentScale.FillHeight
 
+        )
+        var (text, searchRow, datesSelectionLayout, itineraryType, selectClass, button) = createRefs()
+
+        val classOfServiceOptions = listOf(
+            ClassOfService.economy,
+            ClassOfService.premiumEconomy,
+            ClassOfService.business,
+            ClassOfService.firstClass
+        )
+        var defaultClass by remember {
+            mutableStateOf(classOfServiceOptions.first())
+        }
+
+        var isChooseClassExpanded by remember { mutableStateOf(false) }
         var isDepartureExpanded by remember { mutableStateOf(false) }
         var isDestinationExpanded by remember { mutableStateOf(false) }
 
@@ -64,6 +99,9 @@ fun SearchScreen(
             stringResource(id = R.string.one_way),
         )
         var defaultItineraryOption by remember { mutableStateOf(itineraryOptions[0]) }
+
+        var isSelectNumberOfTicketExpanded by remember { mutableStateOf(false) }
+
 
         var searchDeparture by remember {
             mutableStateOf("")
@@ -83,6 +121,11 @@ fun SearchScreen(
             mutableStateOf("")
         }
 
+        var selectedNumber by remember { mutableStateOf(1) }
+
+        val expansionIcon = if (isChooseClassExpanded) Icons.Filled.KeyboardArrowUp
+        else Icons.Filled.KeyboardArrowDown
+
         Text(
             text = stringResource(R.string.find_flights),
             modifier = Modifier
@@ -101,9 +144,10 @@ fun SearchScreen(
             top.linkTo(text.bottom)
         }
         ) {
-            DropDownMenuScreen(modifier = Modifier
-                .weight(1f)
-                .padding(start = 8.dp, end = 2.dp),
+            DropDownMenuScreen(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(start = 8.dp, end = 2.dp),
                 searchParam = mutableStateOf(searchDeparture),
                 appViewModel = appViewModel,
                 isExpanded = mutableStateOf(isDepartureExpanded),
@@ -112,14 +156,15 @@ fun SearchScreen(
                     searchDeparture = it
                 },
                 label = stringResource(id = R.string.search_departure_city),
-                leadingIcon = Icons.Default.FlightTakeoff,
-                updatedValue = {
-                    searchDeparture = it
-                })
+                leadingIcon = Icons.Default.FlightTakeoff
+            ) {
+                searchDeparture = it
+            }
 
-            DropDownMenuScreen(modifier = Modifier
-                .weight(1f)
-                .padding(end = 8.dp, start = 2.dp),
+            DropDownMenuScreen(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(end = 8.dp, start = 2.dp),
                 searchParam = mutableStateOf(searchDestination),
                 appViewModel = appViewModel,
                 isExpanded = mutableStateOf(isDestinationExpanded),
@@ -128,10 +173,10 @@ fun SearchScreen(
                     searchDestination = it
                 },
                 label = stringResource(id = R.string.search_destination_city),
-                leadingIcon = Icons.Default.FlightLand,
-                updatedValue = {
-                    searchDestination = it
-                })
+                leadingIcon = Icons.Default.FlightLand
+            ) {
+                searchDestination = it
+            }
         }
 
         Card(
@@ -216,7 +261,8 @@ fun SearchScreen(
                 .constrainAs(itineraryType) {
                     top.linkTo(datesSelectionLayout.bottom)
                 },
-            horizontalArrangement = Arrangement.Center) {
+            horizontalArrangement = Arrangement.Center
+        ) {
             itineraryOptions.forEach {
                 Card(
                     modifier = Modifier.padding(8.dp),
@@ -244,12 +290,97 @@ fun SearchScreen(
                             },
                             modifier = Modifier.padding(top = 10.dp, end = 8.dp),
                             fontSize = 16.sp,
-                            color = Color.Black
+                            color = Black
                         )
 
                     }
                 }
             }
+            Column(
+                modifier = Modifier.padding(10.dp)
+            ) {
+                Icon(imageVector = Icons.Default.AirplaneTicket, contentDescription = null)
+                Icon(
+                    modifier = Modifier.clickable {
+                        isSelectNumberOfTicketExpanded = !isSelectNumberOfTicketExpanded
+                    },
+                    imageVector = if (isSelectNumberOfTicketExpanded) Icons.Rounded.KeyboardArrowUp else Icons.Rounded.KeyboardArrowDown,
+                    contentDescription = null
+                )
+                Text(
+                    text = selectedNumber.toString(), modifier = Modifier.padding(start = 8.dp),
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = FontFamily.Monospace,
+                    fontSize = 20.sp
+                )
+                DropdownMenu(expanded = isSelectNumberOfTicketExpanded,
+                    onDismissRequest = {
+                        isSelectNumberOfTicketExpanded = false
+                    }) {
+                    for (i in 1..8) {
+                        DropdownMenuItem(
+                            modifier = Modifier
+                                .width(40.dp)
+                                .padding(end = 4.dp),
+                            onClick = {
+                                selectedNumber = i
+                                isSelectNumberOfTicketExpanded = false
+                            }
+                        ) {
+                            Text(
+                                text = i.toString(),
+                                color = Black
+                            )
+                        }
+                    }
+                }
+            }
+        }
+
+        Column(
+            modifier = Modifier.padding(8.dp)
+
+                .constrainAs(selectClass) {
+                    top.linkTo(itineraryType.bottom)
+                }
+                .padding(8.dp),
+            horizontalAlignment = Alignment.Start
+        ) {
+
+            Text(
+                text = defaultClass.name + " CLASS",
+                color = Dark_Blue,
+                fontStyle = FontStyle.Italic,
+                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily.SansSerif
+            )
+            Icon(imageVector = expansionIcon, contentDescription = null,
+                modifier = Modifier.clickable {
+                    isChooseClassExpanded = !isChooseClassExpanded
+                })
+            DropdownMenu(
+                expanded = isChooseClassExpanded,
+                onDismissRequest = {
+                    isChooseClassExpanded = false
+                }
+            ) {
+                classOfServiceOptions.forEach { item ->
+                    DropdownMenuItem(
+                        onClick = {
+                            defaultClass = item
+                            isChooseClassExpanded = false
+                        }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.RadioButtonChecked,
+                            contentDescription = null,
+                            tint = item.color
+                        )
+                        Text(text = item.name)
+                    }
+                }
+            }
+
         }
 
         GenericButton(modifier = Modifier
@@ -265,8 +396,8 @@ fun SearchScreen(
                         destinationAirportCode = searchDestination,
                         takeoffDate = takeOffDate,
                         itineraryType = defaultItineraryOption,
-                        numberOfAdults = 1,
-                        classOfService = "ECONOMY",
+                        numberOfAdults = selectedNumber,
+                        classOfService = defaultClass.name,
                         currency = "USD",
                         returnDate = returnDate
                     ).collect {

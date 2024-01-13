@@ -8,6 +8,16 @@ object Constants  {
     val Dark_Blue = Color(0xFF1c3456)
     val Light_Blue = Color(0xFF7db9be)
     val Light_gray = Color(0xFFDFDFDF)
+    val Bronze = Color(0xFFB87333)
+    val Silver = Color(0xFFC0C0C0)
+    val Gold = Color(0xFFE5b80b)
+    val Platinum = Color(0xFF373d65)
+
+
+
+
+
+
 
     const val USER_TABLE="userTable"
     const val USER_DATABASE="userDatabase"
