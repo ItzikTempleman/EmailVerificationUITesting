@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -30,11 +31,12 @@ fun GenericButton(
     textColor: Color,
     roundedRadius: Dp,
     imageVector: ImageVector? = null,
-    buttonBorder:BorderStroke?=null
+    buttonBorder:BorderStroke?=null,
+    fontSize: TextUnit
 ) {
     Button(
         border = buttonBorder,
-        modifier = modifier,
+        modifier = modifier.height(45.dp),
         onClick = onClick,
         shape = RoundedCornerShape(roundedRadius),
         colors = ButtonDefaults.buttonColors(
@@ -74,7 +76,7 @@ fun GenericButton(
         } else {
             Text(
                 text = text,
-                fontSize = 24.sp,
+                fontSize = fontSize,
                 color = textColor
             )
         }

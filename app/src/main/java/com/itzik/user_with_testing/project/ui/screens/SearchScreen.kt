@@ -380,7 +380,6 @@ fun SearchScreen(
                     }
                 }
             }
-
         }
 
         GenericButton(modifier = Modifier
@@ -409,7 +408,8 @@ fun SearchScreen(
             buttonColor = Dark_Blue,
             text = "Search flights",
             textColor = White,
-            roundedRadius = 12.dp
+            roundedRadius = 12.dp,
+            fontSize=20.sp
         )
     }
 }

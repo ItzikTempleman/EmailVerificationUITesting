@@ -99,7 +99,7 @@ fun CreateAccountScreen(
             )
 
         GenericButton(
-            modifier = Modifier
+            modifier = Modifier.height(70.dp)
                 .constrainAs(createUserBtn) {
                     top.linkTo(dateAndPhoneLayout.bottom)
                 }
@@ -126,7 +126,8 @@ fun CreateAccountScreen(
             buttonColor = Dark_Blue,
             text = stringResource(id = R.string.create_account),
             textColor = White,
-            roundedRadius = 36.dp
+            roundedRadius = 36.dp,
+            fontSize = 24.sp
         )
     }
 }

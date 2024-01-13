@@ -232,7 +232,8 @@ fun LoginScreen(
             buttonColor = Light_Blue,
             text = stringResource(id = R.string.go),
             roundedRadius = 36.dp,
-            textColor = White
+            textColor = White,
+            fontSize=24.sp
         )
         TextButton(
             onClick = {
