@@ -7,6 +7,7 @@ object Constants  {
 
     val Dark_Blue = Color(0xFF1c3456)
     val Light_Blue = Color(0xFF7db9be)
+    val Light_gray = Color(0xFFDFDFDF)
 
     const val USER_TABLE="userTable"
     const val USER_DATABASE="userDatabase"
