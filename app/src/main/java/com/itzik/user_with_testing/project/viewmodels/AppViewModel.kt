@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.time.Year
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Locale
@@ -180,6 +181,15 @@ class AppViewModel
         return age > 9
     }
 
+    fun maxOutAtAYearAhead(chosenDate: Calendar): Boolean {
+        dateSelected = formattedDate(chosenDate)
+        val chosenYear=chosenDate.get(Calendar.YEAR)
+        val currentYear=Year.now().value
+        Log.d("TAG", "chosenYear: $chosenYear, and currentYear: $currentYear")
+        return chosenYear > currentYear
+    }
+
+
     private fun formattedDate(calendar: Calendar): String {
         val dateFormat = timeFormat
 
@@ -266,4 +276,5 @@ class AppViewModel
     }
 
     fun isTextFieldsLoginValidFormat() = isValidLoginEmail(email) && isValidLoginPassword(password)
+
 }

@@ -1,5 +1,3 @@
-
-
 import android.app.DatePickerDialog
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.size
@@ -37,9 +35,11 @@ import java.util.Locale
 fun DatePickerDialogScreen(
     modifier: Modifier,
     appViewModel: AppViewModel,
+    errorMessage: String,
+    isSelectionOfDatesAvailableReversed: Boolean
 ) {
 
-    var isValidAge by remember { mutableStateOf(false) }
+    var isValidEnteredDate by remember { mutableStateOf(false) }
     val todayDate by remember { mutableStateOf(Calendar.getInstance()) }
     var selectedDate by remember { mutableStateOf<Calendar?>(null) }
     var isDatePickerVisible by remember { mutableStateOf(false) }
@@ -47,9 +47,10 @@ fun DatePickerDialogScreen(
 
     OutlinedTextField(
         value = SimpleDateFormat("dd/MM/yyyy", Locale.US).format(
-            if(selectedDate != null)
+            if (selectedDate != null)
                 selectedDate!!.time
-            else todayDate.time),
+            else todayDate.time
+        ),
         onValueChange = {},
         enabled = false,
         shape = RoundedCornerShape(6.dp),
@@ -61,7 +62,7 @@ fun DatePickerDialogScreen(
                     isDatePickerVisible = true
                 },
                 outerTint = Dark_Blue,
-                iconTint= Dark_Blue,
+                iconTint = Dark_Blue,
                 innerIconColor = White,
                 borderWidth = 1.dp
             )
@@ -75,18 +76,18 @@ fun DatePickerDialogScreen(
             keyboardType = KeyboardType.Text
         ),
         modifier = modifier.clickable {
-          isDatePickerVisible = true
+            isDatePickerVisible = true
         },
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = Light_Blue,
             unfocusedBorderColor = Black,
             backgroundColor = White
         ),
-        isError = isValidAge,
+        isError = isValidEnteredDate,
         label = {
-            if (!isValidAge && selectedDate != null) {
+            if (!isValidEnteredDate && selectedDate != null) {
                 Text(
-                    text = "Must be at least 9 years old to sign up",
+                    text = errorMessage,
                     fontSize = 16.sp,
                     color = Color.Red
                 )
@@ -100,8 +101,11 @@ fun DatePickerDialogScreen(
             selectedDate = Calendar.getInstance().apply {
                 timeInMillis = it
             }
-            isValidAge = appViewModel.validateAge(selectedDate ?: Calendar.getInstance())
+            isValidEnteredDate = if (isSelectionOfDatesAvailableReversed) {
+                appViewModel.validateAge(selectedDate ?: Calendar.getInstance())
+            }else appViewModel.maxOutAtAYearAhead(selectedDate ?: Calendar.getInstance())
             onDismissDateSelector()
+
         }
 
         datePickerDialog = DatePickerDialog(
@@ -116,7 +120,8 @@ fun DatePickerDialogScreen(
             todayDate.get(Calendar.MONTH),
             todayDate.get(Calendar.DAY_OF_MONTH)
         )
-        datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
+        if(isSelectionOfDatesAvailableReversed) datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
+        else datePickerDialog.datePicker.minDate = System.currentTimeMillis()
         datePickerDialog.show()
         datePickerDialog.setOnDismissListener {
             isDatePickerVisible = false

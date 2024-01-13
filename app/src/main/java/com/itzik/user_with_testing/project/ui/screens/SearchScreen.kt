@@ -1,11 +1,13 @@
 package com.itzik.user_with_testing.project.ui.screens
 
+import DatePickerDialogScreen
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FlightLand
 import androidx.compose.material.icons.filled.FlightTakeoff
@@ -45,7 +47,7 @@ fun SearchScreen(
     ConstraintLayout(
         modifier = modifier.fillMaxSize()
     ) {
-        val (text, searchRow, button) = createRefs()
+        val (text, searchRow, chooseDateRow, button) = createRefs()
 
         var isDepartureExpanded by remember { mutableStateOf(false) }
         var isDestinationExpanded by remember { mutableStateOf(false) }
@@ -95,7 +97,7 @@ fun SearchScreen(
                 label = stringResource(id = R.string.search_departure_city),
                 leadingIcon = Icons.Default.FlightTakeoff,
                 updatedValue = {
-                    searchDeparture=it
+                    searchDeparture = it
                 }
             )
 
@@ -111,8 +113,25 @@ fun SearchScreen(
                 label = stringResource(id = R.string.search_destination_city),
                 leadingIcon = Icons.Default.FlightLand,
                 updatedValue = {
-                    searchDestination=it
+                    searchDestination = it
                 }
+            )
+        }
+
+        Row(
+            modifier = Modifier
+                .constrainAs(chooseDateRow) {
+                    top.linkTo(searchRow.bottom)
+                }
+                .fillMaxWidth()
+        ) {
+            DatePickerDialogScreen(
+                modifier = modifier
+                    .width(200.dp)
+                    .padding(2.dp),
+                appViewModel = appViewModel,
+                errorMessage = "can find flights up to a year ahead",
+                isSelectionOfDatesAvailableReversed = false
             )
         }
 
