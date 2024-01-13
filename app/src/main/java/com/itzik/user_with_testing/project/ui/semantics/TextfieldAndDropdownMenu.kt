@@ -3,6 +3,7 @@ package com.itzik.user_with_testing.project.ui.semantics
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
@@ -18,9 +19,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.itzik.user_with_testing.project.utils.Constants
+import com.itzik.user_with_testing.project.utils.Constants.Dark_Blue
 import com.itzik.user_with_testing.project.viewmodels.AppViewModel
 
 @Composable
@@ -32,12 +34,16 @@ fun DropDownMenuScreen(
     list: MutableState<List<String>>,
     thisValueChange: (String) -> Unit,
     label: String,
+    leadingIcon: ImageVector,
+    updatedValue: (String) -> Unit,
 ) {
 
     val expansionIcon = if (isExpanded.value) Icons.Filled.KeyboardArrowUp
     else Icons.Filled.KeyboardArrowDown
 
-
+    Column(
+        modifier = modifier.width(205.dp).padding(4.dp)
+    ) {
     OutlinedTextField(
         modifier = modifier,
         value = searchParam.value,
@@ -48,24 +54,24 @@ fun DropDownMenuScreen(
             Icon(imageVector = expansionIcon, null,
                 Modifier.clickable { isExpanded.value = !isExpanded.value })
         },
+        leadingIcon = {
+            Icon(imageVector = leadingIcon, contentDescription = null, tint = Dark_Blue)
+        },
         placeholder = {
             Text(
                 text = label,
-                color = Constants.Dark_Blue,
+                color = Dark_Blue,
                 fontSize = 14.sp
             )
         }, colors = TextFieldDefaults.textFieldColors(
             backgroundColor = Color.Transparent,
-            cursorColor = Constants.Dark_Blue,
-            focusedIndicatorColor = Constants.Dark_Blue,
+            cursorColor = Dark_Blue,
+            focusedIndicatorColor = Dark_Blue,
             unfocusedIndicatorColor = Color.DarkGray.copy(0.3f)
         ),
         singleLine = true
     )
 
-    Column(
-        modifier = modifier.width(200.dp)
-    ) {
         DropdownMenu(
             expanded = isExpanded.value,
             onDismissRequest = {
@@ -87,8 +93,10 @@ fun DropDownMenuScreen(
 
                     if (codeName != null) {
                         searchParam.value = codeName
+                        updatedValue(searchParam.value)
                     }
                     isExpanded.value = false
+
                 }
                 ) {
                     Text(text = item)
