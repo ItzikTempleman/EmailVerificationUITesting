@@ -99,7 +99,7 @@ fun CreateAccountScreen(
             )
 
         GenericButton(
-            modifier = Modifier.height(70.dp)
+            modifier = Modifier
                 .constrainAs(createUserBtn) {
                     top.linkTo(dateAndPhoneLayout.bottom)
                 }

@@ -66,7 +66,8 @@ fun CreateUserBottomHalf(
                 .padding(top = 8.dp, start = 12.dp, end = 12.dp),
             errorMessage = "User must be at least 9",
             isSelectionOfDatesAvailableReversed =true,
-            insertedDate = {}
+            insertedDate = {},
+            isTextFieldValid = mutableStateOf(true)
         )
 
 

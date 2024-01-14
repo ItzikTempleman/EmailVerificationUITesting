@@ -12,6 +12,7 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,7 +42,8 @@ fun DatePickerDialogScreen(
     appViewModel: AppViewModel,
     errorMessage: String,
     isSelectionOfDatesAvailableReversed: Boolean,
-    insertedDate : (String) -> Unit
+    insertedDate : (String) -> Unit,
+    isTextFieldValid: MutableState<Boolean>
 ) {
 
     var isValidEnteredDate by remember { mutableStateOf(false) }
@@ -51,11 +53,15 @@ fun DatePickerDialogScreen(
     val datePickerDialog: DatePickerDialog?
 
     OutlinedTextField(
-        value = SimpleDateFormat("dd/MM/yyyy", Locale.US).format(
-            if (selectedDate != null)
-                selectedDate!!.time
-            else todayDate.time
-        ),
+        value = if(isTextFieldValid.value) {
+            SimpleDateFormat("dd/MM/yyyy", Locale.US).format(
+                if (selectedDate != null)
+                    selectedDate!!.time
+                else todayDate.time
+            )
+        } else {
+              "XXXX"
+        },
         onValueChange = {},
         enabled = false,
         shape = RoundedCornerShape(6.dp),

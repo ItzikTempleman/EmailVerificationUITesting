@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
@@ -56,6 +57,8 @@ import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.ui.semantics.DropDownMenuScreen
 import com.itzik.user_with_testing.project.ui.semantics.GenericButton
 import com.itzik.user_with_testing.project.utils.Constants.Dark_Blue
+import com.itzik.user_with_testing.project.utils.getCurrencyNames
+import com.itzik.user_with_testing.project.utils.removeParenthesis
 import com.itzik.user_with_testing.project.viewmodels.AppViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -82,6 +85,11 @@ fun SearchScreen(
         )
         var (text, currencyIcon, searchRow, datesSelectionLayout, itineraryType, selectClass, button) = createRefs()
 
+
+        var isReturnDateValid by remember {
+            mutableStateOf(true)
+        }
+
         val classOfServiceOptions = listOf(
             ClassOfService.economy,
             ClassOfService.premiumEconomy,
@@ -91,7 +99,7 @@ fun SearchScreen(
         var defaultClass by remember {
             mutableStateOf(classOfServiceOptions.first())
         }
-
+        var selectedCurrency by remember { mutableStateOf("USD") }
         var isChooseClassExpanded by remember { mutableStateOf(false) }
         var isDepartureExpanded by remember { mutableStateOf(false) }
         var isDestinationExpanded by remember { mutableStateOf(false) }
@@ -103,6 +111,8 @@ fun SearchScreen(
         var defaultItineraryOption by remember { mutableStateOf(itineraryOptions[0]) }
 
         var isSelectNumberOfTicketExpanded by remember { mutableStateOf(false) }
+
+        var isContextMenuVisible by remember { mutableStateOf(false) }
 
 
         var searchDeparture by remember {
@@ -131,9 +141,6 @@ fun SearchScreen(
         Text(
             text = stringResource(R.string.find_flights),
             modifier = Modifier
-                .clickable {
-
-                }
                 .padding(8.dp)
                 .constrainAs(text) {
                     start.linkTo(parent.start)
@@ -149,6 +156,9 @@ fun SearchScreen(
             imageVector = Icons.Rounded.CurrencyExchange,
             contentDescription = null,
             modifier = Modifier
+                .clickable {
+                    isContextMenuVisible = !isContextMenuVisible
+                }
                 .size(54.dp)
                 .constrainAs(currencyIcon) {
                     top.linkTo(parent.top)
@@ -157,6 +167,26 @@ fun SearchScreen(
                 .padding(12.dp),
             tint = White
         )
+        DropdownMenu(
+            expanded = isContextMenuVisible,
+            onDismissRequest = {
+                isContextMenuVisible = false
+            },
+            modifier = Modifier
+                .wrapContentWidth()
+
+        ) {
+            getCurrencyNames.forEach {
+                DropdownMenuItem(onClick = {
+                    selectedCurrency = it.first
+                    Log.d("TAG", "selectedCurrency: " + selectedCurrency)
+                    isContextMenuVisible = false
+                }) {
+                    Text(text = removeParenthesis(it.toString()))
+                }
+            }
+        }
+
 
         Row(modifier = Modifier.constrainAs(searchRow) {
             top.linkTo(text.bottom)
@@ -255,7 +285,8 @@ fun SearchScreen(
                         isSelectionOfDatesAvailableReversed = false,
                         insertedDate = {
                             takeOffDate = it
-                        }
+                        },
+                        isTextFieldValid = mutableStateOf(true)
                     )
 
                     DatePickerDialogScreen(
@@ -267,7 +298,8 @@ fun SearchScreen(
                         isSelectionOfDatesAvailableReversed = false,
                         insertedDate = {
                             returnDate = it
-                        }
+                        },
+                        isTextFieldValid = mutableStateOf(isReturnDateValid)
                     )
                 }
             }
@@ -299,8 +331,9 @@ fun SearchScreen(
                             selectedColor = Dark_Blue, unselectedColor = Dark_Blue
                         ), selected = (it == defaultItineraryOption), onClick = {
                             defaultItineraryOption = it
+                        }
+                        )
 
-                        })
                         Text(
                             text = when (it) {
                                 stringResource(id = R.string.one_way) -> "One way"
@@ -314,6 +347,10 @@ fun SearchScreen(
                     }
                 }
             }
+            if (defaultItineraryOption == "ONE_WAY") isReturnDateValid = false
+            else if (defaultItineraryOption == "ROUND_TRIP") isReturnDateValid = true
+
+
             Column(
                 modifier = Modifier.padding(10.dp)
             ) {
@@ -354,7 +391,6 @@ fun SearchScreen(
                 }
             }
         }
-
         Column(
             modifier = Modifier
                 .padding(8.dp)
@@ -416,7 +452,7 @@ fun SearchScreen(
                         itineraryType = defaultItineraryOption,
                         numberOfAdults = selectedNumber,
                         classOfService = defaultClass.name,
-                        currency = "USD",
+                        currency = selectedCurrency,
                         returnDate = returnDate
                     ).collect {
                         val flightInfo = it
