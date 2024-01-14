@@ -3,10 +3,12 @@ package com.itzik.user_with_testing.project.navigation
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.itzik.user_with_testing.project.models.flight_models.FlightInfoResponse
 import com.itzik.user_with_testing.project.ui.screens.CreateAccountScreen
 import com.itzik.user_with_testing.project.ui.screens.FlightResultScreen
 import com.itzik.user_with_testing.project.ui.screens.LoginScreen
@@ -76,14 +78,22 @@ fun AppNavGraph(
 
         navigation(
             route = Graph.DETAILS,
-            startDestination = DetailsGraph.FlightInfo.route
+            startDestination = BottomBarGraph.SearchFlights.route
         ) {
             composable(route = DetailsGraph.FlightInfo.route) {
-                FlightResultScreen(
-                    navController = navController,
-                    appViewModel = appViewModel,
-                    coroutineScope = coroutineScope
-                )
+                LaunchedEffect(key1 = it) {
+
+                }
+                val result = navController.previousBackStackEntry?.savedStateHandle?.get<FlightInfoResponse>("flightInfo")
+                if (result != null) {
+
+                    FlightResultScreen(
+                        result = result,
+                        navController = navController,
+                        appViewModel = appViewModel,
+                        coroutineScope = coroutineScope
+                    )
+                }
             }
         }
     }

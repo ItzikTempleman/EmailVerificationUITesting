@@ -268,8 +268,6 @@ class AppViewModel
     }
 
     fun isTextFieldsLoginValidFormat() = isValidLoginEmail(email) && isValidLoginPassword(password)
-    fun saveFlightInfo(flightInfo: FlightInfoResponse) {
 
-    }
 
 }
