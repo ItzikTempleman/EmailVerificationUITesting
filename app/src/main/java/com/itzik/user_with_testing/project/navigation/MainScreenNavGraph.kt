@@ -1,9 +1,7 @@
 package com.itzik.user_with_testing.project.navigation
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -22,9 +20,9 @@ fun MainScreenNavGraph(navController: NavHostController, appViewModel: AppViewMo
         composable(route = BottomBarGraph.SearchFlights.route) {
            SearchScreen(
                modifier=modifier,
-               navController = navController,
                appViewModel = appViewModel,
-               coroutineScope = coroutineScope
+               coroutineScope = coroutineScope,
+               navController = navController
            )
         }
         composable(route = BottomBarGraph.Profile.route) {

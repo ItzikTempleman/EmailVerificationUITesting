@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.itzik.user_with_testing.project.ui.screens.CreateAccountScreen
+import com.itzik.user_with_testing.project.ui.screens.FlightResultScreen
 import com.itzik.user_with_testing.project.ui.screens.LoginScreen
 import com.itzik.user_with_testing.project.ui.screens.MainScreen
 import com.itzik.user_with_testing.project.ui.screens.SplashScreen
@@ -72,5 +73,19 @@ fun AppNavGraph(
                 )
             }
         }
+
+        navigation(
+            route = Graph.DETAILS,
+            startDestination = DetailsGraph.FlightInfo.route
+        ) {
+            composable(route = DetailsGraph.FlightInfo.route) {
+                FlightResultScreen(
+                    navController = navController,
+                    appViewModel = appViewModel,
+                    coroutineScope = coroutineScope
+                )
+            }
+        }
     }
 }
+

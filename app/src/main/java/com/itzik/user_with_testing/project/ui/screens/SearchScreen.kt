@@ -54,6 +54,8 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
+import com.itzik.user_with_testing.project.models.flight_models.getEmptyResponse
+import com.itzik.user_with_testing.project.navigation.DetailsGraph
 import com.itzik.user_with_testing.project.ui.semantics.DropDownMenuScreen
 import com.itzik.user_with_testing.project.ui.semantics.GenericButton
 import com.itzik.user_with_testing.project.utils.Constants.Dark_Blue
@@ -72,6 +74,7 @@ fun SearchScreen(
     coroutineScope: CoroutineScope,
 ) {
 
+    var flightInfo = getEmptyResponse()
 
     ConstraintLayout(
         modifier = modifier.fillMaxSize()
@@ -99,6 +102,7 @@ fun SearchScreen(
         var defaultClass by remember {
             mutableStateOf(classOfServiceOptions.first())
         }
+
         var selectedCurrency by remember { mutableStateOf("USD") }
         var isChooseClassExpanded by remember { mutableStateOf(false) }
         var isDepartureExpanded by remember { mutableStateOf(false) }
@@ -455,10 +459,13 @@ fun SearchScreen(
                         currency = selectedCurrency,
                         returnDate = returnDate
                     ).collect {
-                        val flightInfo = it
+                        flightInfo = it
                         Log.d("TAG", "flightInfo: $flightInfo")
                     }
                 }
+                navController.navigate(DetailsGraph.FlightInfo.route)
+                //appViewModel.saveFlightInfo(flightInfo)
+
             },
             buttonColor = Dark_Blue,
             text = "Search flights",

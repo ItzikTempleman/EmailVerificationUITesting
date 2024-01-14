@@ -9,6 +9,7 @@ object Graph {
     const val SPLASH = "splashGraph"
     const val LOGIN = "loginGraph"
     const val BOTTOM_BAR = "bottomBarGraph"
+    const val DETAILS = "detailsGraph"
 }
 
 sealed class SplashGraph(val route: String) {
@@ -20,11 +21,15 @@ sealed class LoginGraph(val route: String) {
     data object SignUp : LoginGraph(route = "signUp")
 }
 
+sealed class DetailsGraph(val route: String) {
+    data object FlightInfo : DetailsGraph(route = "info")
+}
+
 
 sealed class BottomBarGraph(
     val route: String,
     val title: String,
-    val icon: ImageVector
+    val icon: ImageVector,
 ) {
     data object SearchFlights : BottomBarGraph(
         route = "search",
@@ -37,6 +42,7 @@ sealed class BottomBarGraph(
         title = "Profile",
         icon = Icons.Default.Person
     )
+
 }
 
 

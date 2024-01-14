@@ -97,8 +97,6 @@ class AppViewModel
     }
 
 
-
-
     suspend fun getFlightInfo(
         sourceAirportCode: String,
         destinationAirportCode: String,
@@ -131,12 +129,6 @@ class AppViewModel
         }
         return flightInfo
     }
-
-
-
-
-
-
 
 
     suspend fun updateIsSignIn(user: User) = repository.updateIsSignedIn(user)
@@ -183,8 +175,8 @@ class AppViewModel
 
     fun maxOutAtAYearAhead(chosenDate: Calendar): Boolean {
         dateSelected = formattedDate(chosenDate)
-        val chosenYear=chosenDate.get(Calendar.YEAR)
-        val currentYear=Year.now().value
+        val chosenYear = chosenDate.get(Calendar.YEAR)
+        val currentYear = Year.now().value
         Log.d("TAG", "chosenYear: $chosenYear, and currentYear: $currentYear")
         return chosenYear > currentYear
     }
@@ -276,5 +268,8 @@ class AppViewModel
     }
 
     fun isTextFieldsLoginValidFormat() = isValidLoginEmail(email) && isValidLoginPassword(password)
+    fun saveFlightInfo(flightInfo: FlightInfoResponse) {
+
+    }
 
 }
