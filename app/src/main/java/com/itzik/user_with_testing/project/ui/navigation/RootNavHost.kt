@@ -7,12 +7,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.itzik.user_with_testing.project.models.flight_models.FlightInfoResponse
 import com.itzik.user_with_testing.project.ui.navigation.Graph.AUTHENTICATION
-import com.itzik.user_with_testing.project.ui.navigation.Graph.DETAILS
 import com.itzik.user_with_testing.project.ui.navigation.Graph.HOME
 import com.itzik.user_with_testing.project.ui.navigation.Graph.ROOT
-import com.itzik.user_with_testing.project.ui.screens.DetailsScreen
 import com.itzik.user_with_testing.project.ui.screens.SplashScreen
 import com.itzik.user_with_testing.project.ui.screens.authentication.LoginScreen
 import com.itzik.user_with_testing.project.ui.screens.authentication.registration.RegistrationScreen
@@ -76,23 +73,7 @@ fun RootNavHost(
                 )
             }
         }
-
-        navigation(
-            startDestination =ScreenContainer.Details.route,
-            route = DETAILS
-        ) {
-            composable(route = ScreenContainer.Details.route) {
-                val result =
-                    navController.previousBackStackEntry?.savedStateHandle?.get<FlightInfoResponse>(
-                        "flight_info"
-                    )
-                DetailsScreen(
-                    result = result,
-                    navController = navController,
-                    appViewModel = appViewModel,
-                    coroutineScope = coroutineScope
-                )
-            }
-        }
     }
 }
+
+

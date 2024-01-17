@@ -31,7 +31,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
+import com.itzik.user_with_testing.project.models.flight_models.FlightInfoResponse
 import com.itzik.user_with_testing.project.ui.navigation.Graph.HOME
+import com.itzik.user_with_testing.project.ui.screens.DetailsScreen
 import com.itzik.user_with_testing.project.ui.screens.ProfileScreen
 import com.itzik.user_with_testing.project.ui.screens.SearchScreen
 import com.itzik.user_with_testing.project.utils.Constants
@@ -72,6 +74,18 @@ fun HomeNavHost(
                 composable(route = ScreenContainer.Profile.route) {
                     ProfileScreen(
                         modifier = Modifier,
+                        navController = navController,
+                        appViewModel = appViewModel,
+                        coroutineScope = coroutineScope
+                    )
+                }
+                composable(route = ScreenContainer.Details.route) {
+                    val result =
+                        navController.previousBackStackEntry?.savedStateHandle?.get<FlightInfoResponse>(
+                            "flight_info"
+                        )
+                    DetailsScreen(
+                        result = result,
                         navController = navController,
                         appViewModel = appViewModel,
                         coroutineScope = coroutineScope
