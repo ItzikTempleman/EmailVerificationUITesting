@@ -32,10 +32,10 @@ fun AppNavHost(
         navController = navController
     ) {
         navigation(
-            startDestination = Screen.Splash.route,
+            startDestination = ScreenHost.Splash.route,
             route = ROOT
         ) {
-            composable(route = Screen.Splash.route) {
+            composable(route = ScreenHost.Splash.route) {
                 SplashScreen(
                     navController = navController,
                     appViewModel = appViewModel,
@@ -45,10 +45,10 @@ fun AppNavHost(
         }
 
         navigation(
-            startDestination = Screen.Login.route,
+            startDestination = ScreenHost.Login.route,
             route = AUTHENTICATION
         ) {
-            composable(route = Screen.Login.route) {
+            composable(route = ScreenHost.Login.route) {
                 LoginScreen(
                     navController = navController,
                     appViewModel = appViewModel,
@@ -56,7 +56,7 @@ fun AppNavHost(
                 )
             }
 
-            composable(route = Screen.Registration.route) {
+            composable(route = ScreenHost.Registration.route) {
                 RegistrationScreen(
                     navController = navController,
                     appViewModel = appViewModel,
@@ -66,10 +66,10 @@ fun AppNavHost(
         }
 
         navigation(
-            startDestination = Screen.Search.route,
+            startDestination = ScreenHost.Search.route,
             route = HOME
         ) {
-            composable(route = Screen.Search.route) {
+            composable(route = ScreenHost.Search.route) {
                 HomeNavigation(
                     appViewModel = appViewModel,
                     coroutineScope = coroutineScope
@@ -78,10 +78,10 @@ fun AppNavHost(
         }
 
         navigation(
-            startDestination =Screen.Details.route,
+            startDestination =ScreenHost.Details.route,
             route = DETAILS
         ) {
-            composable(route = Screen.Details.route) {
+            composable(route = ScreenHost.Details.route) {
                 val result =
                     navController.previousBackStackEntry?.savedStateHandle?.get<FlightInfoResponse>(
                         "flight_info"

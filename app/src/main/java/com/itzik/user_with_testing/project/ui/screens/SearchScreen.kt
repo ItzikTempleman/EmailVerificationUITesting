@@ -86,7 +86,7 @@ fun SearchScreen(
             contentScale = ContentScale.FillHeight
 
         )
-        val (searchRow, datesSelectionLayout, itineraryType, selectClass,currencyIcon, button) = createRefs()
+        val (searchRow, datesSelectionLayout, itineraryType, selectClass, currencyIcon, button) = createRefs()
 
 
         var isReturnDateValid by remember {
@@ -146,9 +146,12 @@ fun SearchScreen(
 
 
 
-        Row(modifier = Modifier.constrainAs(searchRow) {
-            top.linkTo(parent.top)
-        }.padding(top=8.dp)
+        Row(
+            modifier = Modifier
+                .constrainAs(searchRow) {
+                    top.linkTo(parent.top)
+                }
+                .padding(top = 8.dp)
         ) {
             DropDownMenuScreen(
                 modifier = Modifier
@@ -185,7 +188,7 @@ fun SearchScreen(
             }
         }
 
-        Card(
+        ConstraintLayout(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(120.dp)
@@ -193,75 +196,66 @@ fun SearchScreen(
                     top.linkTo(searchRow.bottom)
                 }
                 .padding(8.dp),
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 16.dp
-            ),
-            colors = CardDefaults.cardColors(
-                containerColor = White
-            ),
-            shape = RoundedCornerShape(2.dp)
         ) {
-            ConstraintLayout(modifier = Modifier) {
 
-                val (textRow, datePickerRow) = createRefs()
+            val (textRow, datePickerRow) = createRefs()
 
-                Row(
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .constrainAs(textRow) {
+                        top.linkTo(parent.top)
+                    }, horizontalArrangement = Arrangement.Absolute.SpaceAround
+            ) {
+                Text(
+                    text = stringResource(id = R.string.departure_date),
+                    fontSize = 18.sp,
+                    color = Dark_Blue,
+                    fontFamily = FontFamily.Monospace,
+                    fontWeight = FontWeight.Bold
+                )
+
+                Text(
+                    text = stringResource(id = R.string.return_date),
+                    fontSize = 18.sp,
+                    color = Dark_Blue,
+                    fontFamily = FontFamily.Monospace,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .constrainAs(datePickerRow) {
+                        top.linkTo(textRow.bottom)
+                    }, horizontalArrangement = Arrangement.Absolute.SpaceAround
+            ) {
+                DatePickerDialogScreen(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .constrainAs(textRow) {
-                            top.linkTo(parent.top)
-                        }, horizontalArrangement = Arrangement.Absolute.SpaceAround
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.departure_date),
-                        fontSize = 18.sp,
-                        color = Dark_Blue,
-                        fontFamily = FontFamily.Monospace,
-                        fontWeight = FontWeight.Bold
-                    )
+                        .padding(end = 2.dp)
+                        .weight(1f),
+                    appViewModel = appViewModel,
+                    errorMessage = "",
+                    isSelectionOfDatesAvailableReversed = false,
+                    insertedDate = {
+                        takeOffDate = it
+                    },
+                    isTextFieldValid = mutableStateOf(true)
+                )
 
-                    Text(
-                        text = stringResource(id = R.string.return_date),
-                        fontSize = 18.sp,
-                        color = Dark_Blue,
-                        fontFamily = FontFamily.Monospace,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-
-                Row(
+                DatePickerDialogScreen(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .constrainAs(datePickerRow) {
-                            top.linkTo(textRow.bottom)
-                        }, horizontalArrangement = Arrangement.Absolute.SpaceAround
-                ) {
-                    DatePickerDialogScreen(
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .weight(1f),
-                        appViewModel = appViewModel,
-                        errorMessage = "",
-                        isSelectionOfDatesAvailableReversed = false,
-                        insertedDate = {
-                            takeOffDate = it
-                        },
-                        isTextFieldValid = mutableStateOf(true)
-                    )
-
-                    DatePickerDialogScreen(
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .weight(1f),
-                        appViewModel = appViewModel,
-                        errorMessage = "",
-                        isSelectionOfDatesAvailableReversed = false,
-                        insertedDate = {
-                            returnDate = it
-                        },
-                        isTextFieldValid = mutableStateOf(isReturnDateValid)
-                    )
-                }
+                        .padding(start = 2.dp)
+                        .weight(1f),
+                    appViewModel = appViewModel,
+                    errorMessage = "",
+                    isSelectionOfDatesAvailableReversed = false,
+                    insertedDate = {
+                        returnDate = it
+                    },
+                    isTextFieldValid = mutableStateOf(isReturnDateValid)
+                )
             }
         }
 
@@ -283,7 +277,7 @@ fun SearchScreen(
                     }
                     .size(48.dp)
                     .padding(12.dp),
-                tint = Constants.Light_Blue
+                tint = Constants.Dark_Blue
             )
             DropdownMenu(
                 expanded = isContextMenuVisible,
@@ -319,7 +313,8 @@ fun SearchScreen(
                         modifier = Modifier.padding(10.dp)
                     ) {
                         RadioButton(colors = RadioButtonDefaults.colors(
-                            selectedColor = Constants.Light_Blue, unselectedColor = Constants.Light_Blue
+                            selectedColor = Constants.Light_Blue,
+                            unselectedColor = Constants.Light_Blue
                         ), selected = (it == defaultItineraryOption), onClick = {
                             defaultItineraryOption = it
                         }

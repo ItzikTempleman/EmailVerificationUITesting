@@ -42,7 +42,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
-import com.itzik.user_with_testing.project.ui.navigation.Screen
+import com.itzik.user_with_testing.project.ui.navigation.ScreenHost
 import com.itzik.user_with_testing.project.ui.semantics.GenericButton
 import com.itzik.user_with_testing.project.ui.semantics.GenericOutlinedTextField
 import com.itzik.user_with_testing.project.ui.semantics.GenericRoundedButton
@@ -300,7 +300,7 @@ fun LoginScreen(
 
         TextButton(
             onClick = {
-                navController.navigate(Screen.Registration.route)
+                navController.navigate(ScreenHost.Registration.route)
             },
             modifier = Modifier
                 .constrainAs(signUp) {
@@ -327,7 +327,7 @@ fun LoginScreen(
                 },
             imageVector = Icons.Default.ArrowForward,
             onClickFunction = {
-                navController.navigate(Screen.Registration.route)
+                navController.navigate(ScreenHost.Registration.route)
             },
             outerTint = Light_Blue,
             iconTint = White,

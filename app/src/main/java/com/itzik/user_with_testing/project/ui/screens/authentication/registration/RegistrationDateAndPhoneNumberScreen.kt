@@ -51,11 +51,10 @@ fun RegistrationDateAndPhoneNumberScreen(
                 .constrainAs(birthDateTitle) {
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)
-                    end.linkTo(parent.end)
                 }
-                .padding(top = 20.dp),
+                .padding(top = 20.dp, start = 20.dp),
             color = Constants.Dark_Blue,
-            fontSize = 24.sp,
+            fontSize = 18.sp,
             fontFamily = FontFamily.Monospace,
             fontWeight = FontWeight.Bold
         )

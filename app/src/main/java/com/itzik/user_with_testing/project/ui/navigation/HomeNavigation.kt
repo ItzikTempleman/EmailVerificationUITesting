@@ -57,10 +57,10 @@ fun HomeNavigation(
         ) {
             navigation(
                 route = HOME,
-                startDestination = Screen.Search.route
+                startDestination = ScreenHost.Search.route
             ) {
 
-                composable(route = Screen.Search.route) {
+                composable(route = ScreenHost.Search.route) {
                     SearchScreen(
                         modifier = Modifier,
                         appViewModel = appViewModel,
@@ -69,7 +69,7 @@ fun HomeNavigation(
                     )
                 }
 
-                composable(route = Screen.Profile.route) {
+                composable(route = ScreenHost.Profile.route) {
                     ProfileScreen(
                         modifier = Modifier,
                         navController = navController,
@@ -85,8 +85,8 @@ fun HomeNavigation(
 @Composable
 fun NavBarScreen(navController: NavHostController) {
     val screens = listOf(
-        Screen.Search,
-        Screen.Profile
+        ScreenHost.Search,
+        ScreenHost.Profile
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -112,7 +112,7 @@ fun NavBarScreen(navController: NavHostController) {
 
 @Composable
 fun RowScope.AddItem(
-    screen: Screen,
+    screen: ScreenHost,
     currentDestination: NavDestination?,
     navController: NavHostController,
 ) {
