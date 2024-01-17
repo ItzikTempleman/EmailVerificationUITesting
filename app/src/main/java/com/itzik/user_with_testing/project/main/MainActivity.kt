@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
-import com.itzik.user_with_testing.project.ui.navigation.AppNavHost
+import com.itzik.user_with_testing.project.ui.navigation.RootNavHost
 import com.itzik.user_with_testing.project.viewmodels.AppViewModel
 import com.itzik.user_with_testing.theme.EmailVerificationUITestingTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             appViewModel = viewModel()
             EmailVerificationUITestingTheme {
-                AppNavHost(
+                RootNavHost(
                     appViewModel = appViewModel,
                     coroutineScope = rememberCoroutineScope(),
                     navController = rememberNavController()

@@ -40,7 +40,7 @@ import kotlinx.coroutines.CoroutineScope
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun HomeNavigation(
+fun HomeNavHost(
     navController: NavHostController = rememberNavController(),
     appViewModel: AppViewModel,
     coroutineScope: CoroutineScope,
@@ -57,10 +57,10 @@ fun HomeNavigation(
         ) {
             navigation(
                 route = HOME,
-                startDestination = ScreenHost.Search.route
+                startDestination = ScreenContainer.Search.route
             ) {
 
-                composable(route = ScreenHost.Search.route) {
+                composable(route = ScreenContainer.Search.route) {
                     SearchScreen(
                         modifier = Modifier,
                         appViewModel = appViewModel,
@@ -69,7 +69,7 @@ fun HomeNavigation(
                     )
                 }
 
-                composable(route = ScreenHost.Profile.route) {
+                composable(route = ScreenContainer.Profile.route) {
                     ProfileScreen(
                         modifier = Modifier,
                         navController = navController,
@@ -85,8 +85,8 @@ fun HomeNavigation(
 @Composable
 fun NavBarScreen(navController: NavHostController) {
     val screens = listOf(
-        ScreenHost.Search,
-        ScreenHost.Profile
+        ScreenContainer.Search,
+        ScreenContainer.Profile
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -112,7 +112,7 @@ fun NavBarScreen(navController: NavHostController) {
 
 @Composable
 fun RowScope.AddItem(
-    screen: ScreenHost,
+    screen: ScreenContainer,
     currentDestination: NavDestination?,
     navController: NavHostController,
 ) {

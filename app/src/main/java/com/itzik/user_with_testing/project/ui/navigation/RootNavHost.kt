@@ -22,7 +22,7 @@ import kotlinx.coroutines.CoroutineScope
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppNavHost(
+fun RootNavHost(
     navController: NavHostController,
     appViewModel: AppViewModel,
     coroutineScope: CoroutineScope,
@@ -32,10 +32,10 @@ fun AppNavHost(
         navController = navController
     ) {
         navigation(
-            startDestination = ScreenHost.Splash.route,
+            startDestination = ScreenContainer.Splash.route,
             route = ROOT
         ) {
-            composable(route = ScreenHost.Splash.route) {
+            composable(route = ScreenContainer.Splash.route) {
                 SplashScreen(
                     navController = navController,
                     appViewModel = appViewModel,
@@ -45,10 +45,10 @@ fun AppNavHost(
         }
 
         navigation(
-            startDestination = ScreenHost.Login.route,
+            startDestination = ScreenContainer.Login.route,
             route = AUTHENTICATION
         ) {
-            composable(route = ScreenHost.Login.route) {
+            composable(route = ScreenContainer.Login.route) {
                 LoginScreen(
                     navController = navController,
                     appViewModel = appViewModel,
@@ -56,7 +56,7 @@ fun AppNavHost(
                 )
             }
 
-            composable(route = ScreenHost.Registration.route) {
+            composable(route = ScreenContainer.Registration.route) {
                 RegistrationScreen(
                     navController = navController,
                     appViewModel = appViewModel,
@@ -66,11 +66,11 @@ fun AppNavHost(
         }
 
         navigation(
-            startDestination = ScreenHost.Search.route,
+            startDestination = ScreenContainer.Search.route,
             route = HOME
         ) {
-            composable(route = ScreenHost.Search.route) {
-                HomeNavigation(
+            composable(route = ScreenContainer.Search.route) {
+                HomeNavHost(
                     appViewModel = appViewModel,
                     coroutineScope = coroutineScope
                 )
@@ -78,10 +78,10 @@ fun AppNavHost(
         }
 
         navigation(
-            startDestination =ScreenHost.Details.route,
+            startDestination =ScreenContainer.Details.route,
             route = DETAILS
         ) {
-            composable(route = ScreenHost.Details.route) {
+            composable(route = ScreenContainer.Details.route) {
                 val result =
                     navController.previousBackStackEntry?.savedStateHandle?.get<FlightInfoResponse>(
                         "flight_info"

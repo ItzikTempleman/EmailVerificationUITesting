@@ -11,7 +11,7 @@ import com.itzik.user_with_testing.project.models.Gender
 import com.itzik.user_with_testing.project.models.User
 import com.itzik.user_with_testing.project.models.flight_models.FlightInfoResponse
 import com.itzik.user_with_testing.project.repositories.IRepository
-import com.itzik.user_with_testing.project.ui.navigation.ScreenHost
+import com.itzik.user_with_testing.project.ui.navigation.ScreenContainer
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -263,7 +263,7 @@ class AppViewModel
         user: User,
     ) {
         if (isSuccessfulData) {
-            navHostController.navigate(ScreenHost.Search.route)
+            navHostController.navigate(ScreenContainer.Search.route)
         }
     }
 

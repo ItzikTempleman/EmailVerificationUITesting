@@ -14,18 +14,18 @@ object Graph {
 }
 
 
-sealed class ScreenHost(
+sealed class ScreenContainer(
     val route: String,
     val title: String? = null,
     val icon: ImageVector? = null,
 ) {
-    data object Splash : ScreenHost(route = "splash")
-    data object Login : ScreenHost(route = "login")
-    data object Registration : ScreenHost(route = "registration")
-    data object Search : ScreenHost(route = "search", title = "Search", icon = Icons.Default.Flight)
-    data object Profile : ScreenHost(route = "profile", title = "Profile", icon = Icons.Default.Person)
+    data object Splash : ScreenContainer(route = "splash")
+    data object Login : ScreenContainer(route = "login")
+    data object Registration : ScreenContainer(route = "registration")
+    data object Search : ScreenContainer(route = "search", title = "Search", icon = Icons.Default.Flight)
+    data object Profile : ScreenContainer(route = "profile", title = "Profile", icon = Icons.Default.Person)
 
-    data object Details : ScreenHost(route = "details")
+    data object Details : ScreenContainer(route = "details")
 
 }
 
