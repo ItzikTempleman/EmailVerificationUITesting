@@ -47,7 +47,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -59,6 +58,7 @@ import com.itzik.user_with_testing.project.models.flight_models.getEmptyResponse
 import com.itzik.user_with_testing.project.ui.navigation.Graph.DETAILS
 import com.itzik.user_with_testing.project.ui.semantics.DropDownMenuScreen
 import com.itzik.user_with_testing.project.ui.semantics.GenericButton
+import com.itzik.user_with_testing.project.utils.Constants
 import com.itzik.user_with_testing.project.utils.Constants.Dark_Blue
 import com.itzik.user_with_testing.project.utils.getCurrencyNames
 import com.itzik.user_with_testing.project.utils.removeParenthesis
@@ -86,7 +86,7 @@ fun SearchScreen(
             contentScale = ContentScale.FillHeight
 
         )
-        var (text, currencyIcon, searchRow, datesSelectionLayout, itineraryType, selectClass, button) = createRefs()
+        val (searchRow, datesSelectionLayout, itineraryType, selectClass,currencyIcon, button) = createRefs()
 
 
         var isReturnDateValid by remember {
@@ -142,64 +142,18 @@ fun SearchScreen(
         val expansionIcon = if (isChooseClassExpanded) Icons.Filled.KeyboardArrowUp
         else Icons.Filled.KeyboardArrowDown
 
-        Text(
-            text = stringResource(R.string.find_flights),
-            modifier = Modifier
-                .padding(8.dp)
-                .constrainAs(text) {
-                    start.linkTo(parent.start)
-                    top.linkTo(parent.top)
-                },
-            color = Dark_Blue,
-            fontSize = 24.sp,
-            fontFamily = FontFamily.Monospace,
-            fontWeight = FontWeight.Bold
-        )
 
-        Icon(
-            imageVector = Icons.Rounded.CurrencyExchange,
-            contentDescription = null,
-            modifier = Modifier
-                .clickable {
-                    isContextMenuVisible = !isContextMenuVisible
-                }
-                .size(54.dp)
-                .constrainAs(currencyIcon) {
-                    top.linkTo(parent.top)
-                    end.linkTo(parent.end)
-                }
-                .padding(12.dp),
-            tint = White
-        )
-        DropdownMenu(
-            expanded = isContextMenuVisible,
-            onDismissRequest = {
-                isContextMenuVisible = false
-            },
-            modifier = Modifier
-                .wrapContentWidth()
 
-        ) {
-            getCurrencyNames.forEach {
-                DropdownMenuItem(onClick = {
-                    selectedCurrency = it.first
-                    Log.d("TAG", "selectedCurrency: " + selectedCurrency)
-                    isContextMenuVisible = false
-                }) {
-                    Text(text = removeParenthesis(it.toString()))
-                }
-            }
-        }
 
 
         Row(modifier = Modifier.constrainAs(searchRow) {
-            top.linkTo(text.bottom)
-        }
+            top.linkTo(parent.top)
+        }.padding(top=8.dp)
         ) {
             DropDownMenuScreen(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(start = 8.dp, end = 2.dp),
+                    .padding(start = 6.dp, end = 2.dp),
                 searchParam = mutableStateOf(searchDeparture),
                 appViewModel = appViewModel,
                 isExpanded = mutableStateOf(isDepartureExpanded),
@@ -216,7 +170,7 @@ fun SearchScreen(
             DropDownMenuScreen(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(end = 8.dp, start = 2.dp),
+                    .padding(end = 6.dp, start = 2.dp),
                 searchParam = mutableStateOf(searchDestination),
                 appViewModel = appViewModel,
                 isExpanded = mutableStateOf(isDestinationExpanded),
@@ -245,7 +199,7 @@ fun SearchScreen(
             colors = CardDefaults.cardColors(
                 containerColor = White
             ),
-            shape = RoundedCornerShape(8.dp)
+            shape = RoundedCornerShape(2.dp)
         ) {
             ConstraintLayout(modifier = Modifier) {
 
@@ -260,16 +214,18 @@ fun SearchScreen(
                 ) {
                     Text(
                         text = stringResource(id = R.string.departure_date),
-                        fontFamily = FontFamily.Default,
-                        fontSize = 20.sp,
-                        color = Dark_Blue
+                        fontSize = 18.sp,
+                        color = Dark_Blue,
+                        fontFamily = FontFamily.Monospace,
+                        fontWeight = FontWeight.Bold
                     )
 
                     Text(
                         text = stringResource(id = R.string.return_date),
-                        fontFamily = FontFamily.Default,
-                        fontSize = 20.sp,
-                        color = Dark_Blue
+                        fontSize = 18.sp,
+                        color = Dark_Blue,
+                        fontFamily = FontFamily.Monospace,
+                        fontWeight = FontWeight.Bold
                     )
                 }
 
@@ -317,6 +273,37 @@ fun SearchScreen(
                 },
             horizontalArrangement = Arrangement.Center
         ) {
+
+            Icon(
+                imageVector = Icons.Rounded.CurrencyExchange,
+                contentDescription = null,
+                modifier = Modifier
+                    .clickable {
+                        isContextMenuVisible = !isContextMenuVisible
+                    }
+                    .size(48.dp)
+                    .padding(12.dp),
+                tint = Constants.Light_Blue
+            )
+            DropdownMenu(
+                expanded = isContextMenuVisible,
+                onDismissRequest = {
+                    isContextMenuVisible = false
+                },
+                modifier = Modifier
+                    .wrapContentWidth()
+
+            ) {
+                getCurrencyNames.forEach {
+                    DropdownMenuItem(onClick = {
+                        selectedCurrency = it.first
+                        isContextMenuVisible = false
+                    }) {
+                        Text(text = removeParenthesis(it.toString()))
+                    }
+                }
+            }
+
             itineraryOptions.forEach {
                 Card(
                     modifier = Modifier.padding(8.dp),
@@ -326,13 +313,13 @@ fun SearchScreen(
                     colors = CardDefaults.cardColors(
                         containerColor = White
                     ),
-                    shape = RoundedCornerShape(8.dp)
+                    shape = RoundedCornerShape(4.dp)
                 ) {
                     Row(
                         modifier = Modifier.padding(10.dp)
                     ) {
                         RadioButton(colors = RadioButtonDefaults.colors(
-                            selectedColor = Dark_Blue, unselectedColor = Dark_Blue
+                            selectedColor = Constants.Light_Blue, unselectedColor = Constants.Light_Blue
                         ), selected = (it == defaultItineraryOption), onClick = {
                             defaultItineraryOption = it
                         }
@@ -351,12 +338,14 @@ fun SearchScreen(
                     }
                 }
             }
+
+
             if (defaultItineraryOption == "ONE_WAY") isReturnDateValid = false
             else if (defaultItineraryOption == "ROUND_TRIP") isReturnDateValid = true
 
 
             Column(
-                modifier = Modifier.padding(10.dp)
+                modifier = Modifier.padding(4.dp)
             ) {
                 Icon(imageVector = Icons.Default.AirplaneTicket, contentDescription = null)
                 Icon(
@@ -408,10 +397,10 @@ fun SearchScreen(
 
             Text(
                 text = defaultClass.name + " CLASS",
+                fontSize = 18.sp,
                 color = Dark_Blue,
-                fontStyle = FontStyle.Italic,
-                fontWeight = FontWeight.Bold,
-                fontFamily = FontFamily.SansSerif
+                fontFamily = FontFamily.Monospace,
+                fontWeight = FontWeight.Bold
             )
             Icon(imageVector = expansionIcon, contentDescription = null,
                 modifier = Modifier.clickable {
@@ -435,11 +424,19 @@ fun SearchScreen(
                             contentDescription = null,
                             tint = item.color
                         )
-                        Text(text = item.name)
+                        Text(
+                            text = item.name,
+                            fontSize = 18.sp,
+                            color = Dark_Blue,
+                            fontFamily = FontFamily.Monospace,
+                            fontWeight = FontWeight.Bold
+
+                        )
                     }
                 }
             }
         }
+
 
         GenericButton(modifier = Modifier
             .constrainAs(button) {
@@ -470,7 +467,7 @@ fun SearchScreen(
                 navController.navigate(DETAILS)
             },
             buttonColor = Dark_Blue,
-            text = "Search flights",
+            text = stringResource(id = R.string.find_flights),
             textColor = White,
             roundedRadius = 12.dp,
             fontSize = 20.sp

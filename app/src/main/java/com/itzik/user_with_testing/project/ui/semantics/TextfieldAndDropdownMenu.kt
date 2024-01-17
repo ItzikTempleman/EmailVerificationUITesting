@@ -1,10 +1,8 @@
 package com.itzik.user_with_testing.project.ui.semantics
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
@@ -18,12 +16,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.itzik.user_with_testing.project.utils.Constants.Dark_Blue
+import com.itzik.user_with_testing.project.utils.Constants.Light_Blue
 import com.itzik.user_with_testing.project.viewmodels.AppViewModel
 
 @Composable
@@ -43,21 +40,21 @@ fun DropDownMenuScreen(
     else Icons.Filled.KeyboardArrowDown
 
     Column(
-        modifier=modifier.clip(RoundedCornerShape(12.dp))
+        modifier=modifier
     ) {
-    searchParam?.value?.let {
+    searchParam?.value?.let {searchParam->
         OutlinedTextField(
-        modifier = Modifier.border(1.dp, Dark_Blue, RoundedCornerShape(12.dp)),
-        value = it,
+        modifier = Modifier,
+        value = searchParam,
         onValueChange = {
-            thisValueChange(it)
+            thisValueChange(searchParam)
         },
         trailingIcon = {
             Icon(imageVector = expansionIcon, null,
                 Modifier.clickable { isExpanded.value = !isExpanded.value })
         },
         leadingIcon = {
-            Icon(imageVector = leadingIcon, contentDescription = null, tint = Dark_Blue)
+            Icon(imageVector = leadingIcon, contentDescription = null, tint = Light_Blue)
         },
         placeholder = {
             Text(
@@ -67,8 +64,8 @@ fun DropDownMenuScreen(
             )
         }, colors = TextFieldDefaults.textFieldColors(
             backgroundColor = Color.White,
-            cursorColor = Dark_Blue,
-            focusedIndicatorColor = Dark_Blue,
+            cursorColor = Light_Blue,
+            focusedIndicatorColor = Light_Blue,
             unfocusedIndicatorColor = Color.DarkGray.copy(0.3f)
         ),
         singleLine = true
