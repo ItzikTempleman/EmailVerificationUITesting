@@ -1,9 +1,9 @@
 package com.itzik.user_with_testing.project.ui.screens
 
 
-import android.util.Log
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
@@ -16,18 +16,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Color.Companion.Black
-import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.models.User
-import com.itzik.user_with_testing.project.navigation.BottomBarGraph
-import com.itzik.user_with_testing.project.navigation.LoginGraph
-import com.itzik.user_with_testing.project.ui.semantics.RoundedBackGround
+import com.itzik.user_with_testing.project.ui.navigation.Graph.AUTHENTICATION
+import com.itzik.user_with_testing.project.ui.navigation.Graph.HOME
+import com.itzik.user_with_testing.project.utils.Constants
 import com.itzik.user_with_testing.project.viewmodels.AppViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
@@ -35,11 +37,19 @@ import kotlinx.coroutines.launch
 
 
 @Composable
+
 fun SplashScreen(
     coroutineScope: CoroutineScope,
     appViewModel: AppViewModel,
-    navController: NavHostController,
+    navController: NavHostController
 ) {
+    Image(
+        painter = painterResource(id = R.drawable.wallpaper2),
+        contentDescription = null,
+        modifier = Modifier.fillMaxSize(),
+        contentScale = ContentScale.FillHeight
+    )
+
     var userList by remember {
         mutableStateOf(listOf<User>())
     }
@@ -61,17 +71,17 @@ fun SplashScreen(
         coroutineScope.launch {
             appViewModel.getUsers().collect {
                 userList = it
-                Log.d("TAG", "$it")
             }
             if (userList.isNotEmpty() && userList.first().isSignedIn) {
-                navController.navigate(BottomBarGraph.SearchFlights.route)
-            } else
-                navController.navigate(LoginGraph.Login.route)
+
+                navController.navigate(HOME)
+            } else {
+                navController.navigate(AUTHENTICATION)
             }
+        }
     }
 
 
-    RoundedBackGround(White, White)
     ConstraintLayout(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -88,8 +98,10 @@ fun SplashScreen(
                     end.linkTo(parent.end)
                 }
                 .alpha(alpha = alphaAnim.value),
-            color = Black,
-            fontSize = 32.sp
+            color = Constants.Dark_Blue,
+            fontSize = 34.sp,
+            fontFamily = FontFamily.Monospace,
+            fontWeight = FontWeight.Bold
         )
 
         CircularProgressIndicator(

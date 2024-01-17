@@ -1,4 +1,4 @@
-package com.itzik.user_with_testing.project.ui.screens
+package com.itzik.user_with_testing.project.ui.screens.authentication
 
 
 import android.util.Log
@@ -28,13 +28,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -43,13 +42,14 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
-import com.itzik.user_with_testing.project.navigation.LoginGraph
+import com.itzik.user_with_testing.project.ui.navigation.Screen
 import com.itzik.user_with_testing.project.ui.semantics.GenericButton
 import com.itzik.user_with_testing.project.ui.semantics.GenericOutlinedTextField
 import com.itzik.user_with_testing.project.ui.semantics.GenericRoundedButton
 import com.itzik.user_with_testing.project.ui.semantics.RoundedBackGround
 import com.itzik.user_with_testing.project.utils.Constants.Dark_Blue
 import com.itzik.user_with_testing.project.utils.Constants.Light_Blue
+import com.itzik.user_with_testing.project.utils.Constants.Light_Turquoize
 import com.itzik.user_with_testing.project.viewmodels.AppViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -62,7 +62,7 @@ fun LoginScreen(
     appViewModel: AppViewModel,
     coroutineScope: CoroutineScope
 ) {
-    RoundedBackGround(topColor = White, bottomColor = White)
+    RoundedBackGround(topColor = Light_Turquoize, bottomColor = White)
     ConstraintLayout(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -94,8 +94,10 @@ fun LoginScreen(
                     top.linkTo(parent.top)
                 },
             text = stringResource(id = R.string.log_in),
-            color = Black,
-            fontSize = 32.sp
+            color = Dark_Blue,
+            fontSize = 34.sp,
+            fontFamily = FontFamily.Monospace,
+            fontWeight = FontWeight.Bold
         )
 
 
@@ -251,7 +253,7 @@ fun LoginScreen(
                 text = stringResource(id = R.string.forgot),
                 color = Dark_Blue,
                 fontSize = 20.sp,
-                fontStyle = FontStyle.Italic,
+                fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.Bold
             )
         }
@@ -292,13 +294,13 @@ fun LoginScreen(
             text = stringResource(id = R.string.alternative),
             color = Dark_Blue,
             fontSize = 20.sp,
-            fontStyle = FontStyle.Italic,
+            fontFamily = FontFamily.Monospace,
             fontWeight = FontWeight.Bold
         )
 
         TextButton(
             onClick = {
-                navController.navigate(LoginGraph.SignUp.route)
+                navController.navigate(Screen.Registration.route)
             },
             modifier = Modifier
                 .constrainAs(signUp) {
@@ -311,7 +313,7 @@ fun LoginScreen(
                 text = stringResource(id = R.string.sign_up),
                 color = Dark_Blue,
                 fontSize = 20.sp,
-                fontStyle = FontStyle.Italic,
+                fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.Bold
             )
         }
@@ -325,11 +327,11 @@ fun LoginScreen(
                 },
             imageVector = Icons.Default.ArrowForward,
             onClickFunction = {
-                navController.navigate(LoginGraph.SignUp.route)
+                navController.navigate(Screen.Registration.route)
             },
-            outerTint = Dark_Blue,
-            iconTint = Dark_Blue,
-            innerIconColor = White,
+            outerTint = Light_Blue,
+            iconTint = White,
+            innerIconColor = Light_Blue,
             1.2.dp
         )
     }

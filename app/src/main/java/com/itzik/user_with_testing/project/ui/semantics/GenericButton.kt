@@ -16,6 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -36,7 +38,7 @@ fun GenericButton(
 ) {
     Button(
         border = buttonBorder,
-        modifier = modifier.height(45.dp),
+        modifier = modifier.height(50.dp),
         onClick = onClick,
         shape = RoundedCornerShape(roundedRadius),
         colors = ButtonDefaults.buttonColors(
@@ -70,14 +72,18 @@ fun GenericButton(
                         .fillMaxHeight(),
                     text = text,
                     fontSize = 24.sp,
-                    color = textColor
+                    color = textColor,
+                    fontFamily = FontFamily.Monospace,
+                    fontWeight = FontWeight.Bold
                 )
             }
         } else {
             Text(
                 text = text,
                 fontSize = fontSize,
-                color = textColor
+                color = textColor,
+                fontFamily = FontFamily.Monospace,
+                fontWeight = FontWeight.Bold
             )
         }
     }

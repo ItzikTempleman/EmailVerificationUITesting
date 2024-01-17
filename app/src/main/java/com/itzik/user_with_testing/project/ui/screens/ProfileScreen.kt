@@ -2,10 +2,10 @@ package com.itzik.user_with_testing.project.ui.screens
 
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -20,6 +20,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.models.User
+import com.itzik.user_with_testing.project.ui.navigation.Graph
 import com.itzik.user_with_testing.project.ui.semantics.RoundedBackGround
 import com.itzik.user_with_testing.project.utils.mockEmptyUser
 import com.itzik.user_with_testing.project.viewmodels.AppViewModel
@@ -52,7 +53,7 @@ fun ProfileScreen(
 
         Text(
             text = stringResource(id = R.string.profile),
-            modifier = modifier
+            modifier = Modifier
                 .constrainAs(title) {
                     start.linkTo(parent.start)
                     top.linkTo(parent.top)
@@ -61,28 +62,24 @@ fun ProfileScreen(
 
             fontSize = 20.sp,
 
-        )
-        TextButton(
-            onClick = {
-                navController.navigateUp()
-               // navController.navigate(LoginGraph.Login.route)
-                coroutineScope.launch {
-                    user.isSignedIn = false
-                    appViewModel.updateIsSignIn(user)
+            )
+        Text(
+            text = stringResource(id = R.string.sign_out),
+            fontSize = 20.sp,
+            modifier = Modifier
+                .clickable {
+                    navController.navigate(Graph.AUTHENTICATION)
+                    coroutineScope.launch {
+                        user.isSignedIn = false
+                        appViewModel.updateIsSignIn(user)
+                    }
                 }
-            },
-            modifier = modifier
                 .constrainAs(logOut) {
                     end.linkTo(parent.end)
                     top.linkTo(parent.top)
                 }
                 .padding(12.dp)
-        ) {
-            Text(
-                text = stringResource(id = R.string.sign_out),
-                fontSize = 20.sp,
-            )
-        }
+        )
 
         if (userList.isNotEmpty()) {
             user = userList.first()
@@ -98,7 +95,7 @@ fun ProfileScreen(
                     start.linkTo(parent.start)
                     top.linkTo(title.bottom)
                 }
-                .padding(start=12.dp,top=12.dp),
+                .padding(start = 12.dp, top = 12.dp),
             text = user.firstName.first() + " " + user.firstName[1]
         )
         Text(
@@ -108,7 +105,7 @@ fun ProfileScreen(
                     top.linkTo(fullFirstName.top)
                     bottom.linkTo(fullFirstName.bottom)
                 }
-                .padding(start=6.dp, top=12.dp),
+                .padding(start = 6.dp, top = 12.dp),
             text = user.familyName
         )
         Text(

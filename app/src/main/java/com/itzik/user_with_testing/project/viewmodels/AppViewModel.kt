@@ -10,8 +10,8 @@ import com.itzik.user_with_testing.project.models.AirportCodeName
 import com.itzik.user_with_testing.project.models.Gender
 import com.itzik.user_with_testing.project.models.User
 import com.itzik.user_with_testing.project.models.flight_models.FlightInfoResponse
-import com.itzik.user_with_testing.project.navigation.BottomBarGraph
 import com.itzik.user_with_testing.project.repositories.IRepository
+import com.itzik.user_with_testing.project.ui.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -263,11 +263,9 @@ class AppViewModel
         user: User,
     ) {
         if (isSuccessfulData) {
-            navHostController.navigate(BottomBarGraph.SearchFlights.route)
+            navHostController.navigate(Screen.Search.route)
         }
     }
 
     fun isTextFieldsLoginValidFormat() = isValidLoginEmail(email) && isValidLoginPassword(password)
-
-
 }

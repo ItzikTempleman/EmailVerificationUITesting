@@ -6,8 +6,10 @@ import com.itzik.user_with_testing.project.models.User
 object Constants  {
 
     val Dark_Blue = Color(0xFF1c3456)
-    val Light_Blue = Color(0xFF7db9be)
-    val Light_gray = Color(0xFFDFDFDF)
+    val Light_Blue = Color(0xFF6DA0A5)
+    val Light_Turquoize =Color (0xFFa7cbd1)
+
+    //  Flight class colors
     val Bronze = Color(0xFFB87333)
     val Silver = Color(0xFFC0C0C0)
     val Gold = Color(0xFFE5b80b)

@@ -1,4 +1,4 @@
-package com.itzik.user_with_testing.project.ui.screens
+package com.itzik.user_with_testing.project.models
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FlightClass

@@ -1,4 +1,4 @@
-package com.itzik.user_with_testing.project.ui.screens
+package com.itzik.user_with_testing.project.ui.screens.authentication.registration
 
 import DatePickerDialogScreen
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,20 +13,22 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.ui.semantics.GenericOutlinedTextField
-import com.itzik.user_with_testing.project.utils.Constants.Dark_Blue
+import com.itzik.user_with_testing.project.utils.Constants
+import com.itzik.user_with_testing.project.utils.Constants.Light_Blue
 import com.itzik.user_with_testing.project.viewmodels.AppViewModel
 
 
 @Composable
-fun CreateUserBottomHalf(
+fun RegistrationDateAndPhoneNumberScreen(
     modifier: Modifier,
     appViewModel: AppViewModel,
 
@@ -52,8 +54,10 @@ fun CreateUserBottomHalf(
                     end.linkTo(parent.end)
                 }
                 .padding(top = 20.dp),
-            color = Black,
-            fontSize = 22.sp
+            color = Constants.Dark_Blue,
+            fontSize = 24.sp,
+            fontFamily = FontFamily.Monospace,
+            fontWeight = FontWeight.Bold
         )
 
         DatePickerDialogScreen(
@@ -73,7 +77,7 @@ fun CreateUserBottomHalf(
 
 
         GenericOutlinedTextField(
-            tint = Dark_Blue,
+            tint = Light_Blue,
             value = newPhoneNumber,
             thisValueChange = {
                 newPhoneNumber = it

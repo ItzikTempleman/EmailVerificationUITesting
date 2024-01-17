@@ -1,7 +1,6 @@
-package com.itzik.user_with_testing.project.ui.screens
+package com.itzik.user_with_testing.project.ui.screens.authentication.registration
 
 
-import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -11,40 +10,41 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
-import com.itzik.user_with_testing.project.navigation.BottomBarGraph
-import com.itzik.user_with_testing.project.navigation.LoginGraph
+import com.itzik.user_with_testing.project.ui.navigation.Graph.AUTHENTICATION
+import com.itzik.user_with_testing.project.ui.navigation.Graph.HOME
 import com.itzik.user_with_testing.project.ui.semantics.GenericButton
 import com.itzik.user_with_testing.project.ui.semantics.GenericRoundedButton
 import com.itzik.user_with_testing.project.ui.semantics.RoundedBackGround
 import com.itzik.user_with_testing.project.utils.Constants.Dark_Blue
+import com.itzik.user_with_testing.project.utils.Constants.Light_Blue
+import com.itzik.user_with_testing.project.utils.Constants.Light_Turquoize
 import com.itzik.user_with_testing.project.viewmodels.AppViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
-fun CreateAccountScreen(
+fun RegistrationScreen(
     coroutineScope: CoroutineScope,
     navController: NavHostController,
     appViewModel: AppViewModel
 ) {
-    RoundedBackGround(
-        topColor = White,
-        bottomColor = White
-    )
+
+    RoundedBackGround(topColor = Light_Turquoize, bottomColor = White)
 
     ConstraintLayout(
         modifier = Modifier.fillMaxSize()
     ) {
         val (backBtn, title, basicInfoCard, dateAndPhoneLayout, createUserBtn) = createRefs()
+
 
         GenericRoundedButton(
             modifier = Modifier
@@ -55,11 +55,11 @@ fun CreateAccountScreen(
                 .padding(20.dp),
             imageVector = Icons.Default.ArrowBack,
             onClickFunction = {
-                navController.navigate(LoginGraph.SignUp.route)
+                navController.navigate(AUTHENTICATION)
             },
-            outerTint = White,
+            outerTint = Light_Blue,
             iconTint = White,
-            innerIconColor = Dark_Blue,
+            innerIconColor = Light_Blue,
             1.2.dp
         )
         Text(
@@ -70,12 +70,13 @@ fun CreateAccountScreen(
                     top.linkTo(backBtn.top)
                 }
                 .padding(top = 20.dp),
-            color = Black,
+            color = Dark_Blue,
             fontSize = 24.sp,
-            fontStyle = FontStyle.Italic
+            fontFamily = FontFamily.Monospace,
+            fontWeight = FontWeight.Bold
         )
 
-        CreateUserTopHalf(
+        RegistrationCardScreen(
             coroutineScope = coroutineScope,
             modifier = Modifier
                 .constrainAs(basicInfoCard) {
@@ -88,15 +89,15 @@ fun CreateAccountScreen(
             appViewModel = appViewModel
         )
 
-        CreateUserBottomHalf(
+        RegistrationDateAndPhoneNumberScreen(
             modifier = Modifier
                 .constrainAs(dateAndPhoneLayout) {
                     top.linkTo(basicInfoCard.bottom)
                 }
-                .padding(horizontal = 12.dp),
-            appViewModel = appViewModel,
+                .padding(horizontal = 8.dp),
+            appViewModel = appViewModel
+        )
 
-            )
 
         GenericButton(
             modifier = Modifier
@@ -108,22 +109,19 @@ fun CreateAccountScreen(
             onClick = {
                 coroutineScope.launch {
                     if (appViewModel.isAllFieldsOk()) {
-                        Log.d("GA", "$appViewModel.isAllFieldsOk()")
                         appViewModel.createUser()
                         val userModel = appViewModel.user
                         if (userModel != null) {
                             userModel.isSignedIn=true
                             appViewModel.updateIsSignIn(userModel)
                             appViewModel.saveUser(userModel)
-
                         }
                         navController.popBackStack()
-                        navController.navigate(BottomBarGraph.SearchFlights.route)
-
+                        navController.navigate(HOME)
                     } else appViewModel.setErrors()
                 }
             },
-            buttonColor = Dark_Blue,
+            buttonColor = Light_Blue,
             text = stringResource(id = R.string.create_account),
             textColor = White,
             roundedRadius = 36.dp,

@@ -29,7 +29,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.ui.semantics.GenericRoundedButton
-import com.itzik.user_with_testing.project.utils.Constants.Dark_Blue
 import com.itzik.user_with_testing.project.utils.Constants.Light_Blue
 import com.itzik.user_with_testing.project.viewmodels.AppViewModel
 import java.text.SimpleDateFormat
@@ -72,8 +71,8 @@ fun DatePickerDialogScreen(
                 onClickFunction = {
                     isDatePickerVisible = true
                 },
-                outerTint = Dark_Blue,
-                iconTint = Dark_Blue,
+                outerTint = Light_Blue,
+                iconTint = Light_Blue,
                 innerIconColor = White,
                 borderWidth = 1.dp
             )

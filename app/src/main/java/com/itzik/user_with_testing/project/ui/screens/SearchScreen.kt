@@ -54,8 +54,9 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
+import com.itzik.user_with_testing.project.models.ClassOfService
 import com.itzik.user_with_testing.project.models.flight_models.getEmptyResponse
-import com.itzik.user_with_testing.project.navigation.DetailsGraph
+import com.itzik.user_with_testing.project.ui.navigation.Graph.DETAILS
 import com.itzik.user_with_testing.project.ui.semantics.DropDownMenuScreen
 import com.itzik.user_with_testing.project.ui.semantics.GenericButton
 import com.itzik.user_with_testing.project.utils.Constants.Dark_Blue
@@ -73,7 +74,6 @@ fun SearchScreen(
     appViewModel: AppViewModel,
     coroutineScope: CoroutineScope,
 ) {
-
     var flightInfo = getEmptyResponse()
 
     ConstraintLayout(
@@ -464,10 +464,10 @@ fun SearchScreen(
                     }
                 }
                 navController.currentBackStackEntry?.savedStateHandle?.set(
-                    key = "flightInfo",
+                    key = "flight_info",
                     value = flightInfo
                 )
-                navController.navigate(DetailsGraph.FlightInfo.route)
+                navController.navigate(DETAILS)
             },
             buttonColor = Dark_Blue,
             text = "Search flights",

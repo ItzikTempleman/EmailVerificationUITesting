@@ -11,8 +11,8 @@ import com.itzik.user_with_testing.project.viewmodels.AppViewModel
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
-fun FlightResultScreen(
-    result:FlightInfoResponse,
+fun DetailsScreen(
+    result: FlightInfoResponse?=null,
     navController: NavHostController,
     appViewModel: AppViewModel,
     coroutineScope: CoroutineScope,
@@ -25,7 +25,7 @@ fun FlightResultScreen(
         )
 
         Text(
-            text = result.data.flights.toString()
+            text = result?.data?.flights?.toString() ?: ""
         )
     }
 }

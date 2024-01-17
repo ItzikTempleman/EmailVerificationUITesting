@@ -27,7 +27,7 @@ fun RoundedBackGround(topColor:Color, bottomColor:Color) {
             )
     ) {}
     Canvas(modifier = Modifier.fillMaxSize()) {
-        translate(left = 0f, top = -1800f) {
+        translate(left = 0f, top = -1250f) {
             drawCircle(topColor, radius = 700.dp.toPx())
         }
     }

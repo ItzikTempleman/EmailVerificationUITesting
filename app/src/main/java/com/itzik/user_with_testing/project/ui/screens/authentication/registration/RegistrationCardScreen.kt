@@ -1,4 +1,4 @@
-package com.itzik.user_with_testing.project.ui.screens
+package com.itzik.user_with_testing.project.ui.screens.authentication.registration
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -25,8 +25,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
+import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -37,13 +37,12 @@ import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.models.Gender
 import com.itzik.user_with_testing.project.ui.semantics.GenericOutlinedTextField
-import com.itzik.user_with_testing.project.utils.Constants.Dark_Blue
 import com.itzik.user_with_testing.project.utils.Constants.Light_Blue
 import com.itzik.user_with_testing.project.viewmodels.AppViewModel
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
-fun CreateUserTopHalf(
+fun RegistrationCardScreen(
 
     coroutineScope: CoroutineScope,
     modifier: Modifier,
@@ -71,12 +70,12 @@ fun CreateUserTopHalf(
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors(
-            containerColor = Light_Blue
+            containerColor = White
         ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 10.dp
         ),
-        shape = RoundedCornerShape(20.dp)
+        shape = RoundedCornerShape(10.dp)
     ) {
 
         ConstraintLayout(modifier = modifier.fillMaxSize()) {
@@ -98,7 +97,7 @@ fun CreateUserTopHalf(
                     .padding(vertical = 8.dp),
                 imageVector = Icons.Default.Person,
                 isError = isFullNameError, visualTransformation = VisualTransformation.None,
-                tint = Dark_Blue,
+                tint = Light_Blue,
                 trailingImageVector = Icons.Default.Image,
 
             )
@@ -119,7 +118,7 @@ fun CreateUserTopHalf(
                 imageVector = Icons.Default.Email,
                 isError = isNewEmailError,
                 visualTransformation = VisualTransformation.None,
-                tint = Dark_Blue,
+                tint = Light_Blue,
                 trailingImageVector = Icons.Default.Image,
 
             )
@@ -147,7 +146,7 @@ fun CreateUserTopHalf(
                 },
                 visualTransformation = if (isCreatedPasswordVisible) VisualTransformation.None
                 else PasswordVisualTransformation(),
-                tint = Dark_Blue,
+                tint = Light_Blue,
                 trailingImageVector = Icons.Default.Image,
                 phoneNumberTFOuterLabel = {},
 
@@ -175,7 +174,7 @@ fun CreateUserTopHalf(
                             defaultElevation = 4.dp
                         ),
                         colors = CardDefaults.cardColors(
-                            containerColor = Color.White
+                            containerColor = White
                         ),
                         shape = RoundedCornerShape(8.dp)
                     ) {
@@ -185,8 +184,8 @@ fun CreateUserTopHalf(
                             val (genderButton, genderName, genderIcon) = createRefs()
                             RadioButton(
                                 colors = RadioButtonDefaults.colors(
-                                    selectedColor = Dark_Blue,
-                                    unselectedColor = Dark_Blue
+                                    selectedColor = Light_Blue,
+                                    unselectedColor = Light_Blue
                                 ),
                                 modifier = Modifier.constrainAs(genderButton) {
                                     top.linkTo(parent.top)
@@ -219,7 +218,7 @@ fun CreateUserTopHalf(
                                         start.linkTo(parent.start)
                                         end.linkTo(parent.end)
                                     },
-                                tint = Dark_Blue,
+                                tint = Light_Blue,
                                 imageVector = it.icon,
                                 contentDescription = null
                             )
