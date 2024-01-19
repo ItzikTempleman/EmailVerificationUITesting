@@ -114,6 +114,7 @@ fun RegistrationScreen(
                         if (userModel != null) {
                             userModel.isSignedIn=true
                             appViewModel.updateIsSignIn(userModel)
+
                             appViewModel.saveUser(userModel)
                         }
                         navController.popBackStack()

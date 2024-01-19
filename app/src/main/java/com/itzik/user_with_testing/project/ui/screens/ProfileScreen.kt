@@ -22,7 +22,6 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.models.User
-import com.itzik.user_with_testing.project.ui.navigation.Graph
 import com.itzik.user_with_testing.project.ui.semantics.RoundedBackGround
 import com.itzik.user_with_testing.project.utils.Constants
 import com.itzik.user_with_testing.project.utils.mockEmptyUser
@@ -30,7 +29,7 @@ import com.itzik.user_with_testing.project.viewmodels.AppViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@SuppressLint("SuspiciousIndentation")
+@SuppressLint("SuspiciousIndentation", "CoroutineCreationDuringComposition")
 @Composable
 fun ProfileScreen(
     modifier: Modifier,
@@ -76,7 +75,7 @@ fun ProfileScreen(
             fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .clickable {
-                    navController.navigate(Graph.AUTHENTICATION)
+                   // navController.navigate(AUTHENTICATION)
                     coroutineScope.launch {
                         user.isSignedIn = false
                         appViewModel.updateIsSignIn(user)

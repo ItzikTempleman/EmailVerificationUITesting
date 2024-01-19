@@ -42,12 +42,12 @@ fun DropDownMenuScreen(
     Column(
         modifier=modifier
     ) {
-    searchParam?.value?.let {searchParam->
+    searchParam?.value?.let {
         OutlinedTextField(
         modifier = Modifier,
-        value = searchParam,
+        value = it,
         onValueChange = {
-            thisValueChange(searchParam)
+            thisValueChange(it)
         },
         trailingIcon = {
             Icon(imageVector = expansionIcon, null,
