@@ -1,6 +1,7 @@
 package com.itzik.user_with_testing.project.ui.screens
 
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -36,6 +37,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
+@SuppressLint("MutableCollectionMutableState")
 @Composable
 
 fun SplashScreen(
@@ -51,8 +53,9 @@ fun SplashScreen(
     )
 
     var userList by remember {
-        mutableStateOf(listOf<User>())
+        mutableStateOf(mutableListOf<User>())
     }
+
     var startAnim by remember {
         mutableStateOf(false)
     }

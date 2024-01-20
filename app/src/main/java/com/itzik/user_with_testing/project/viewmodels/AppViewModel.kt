@@ -48,7 +48,7 @@ class AppViewModel
     suspend fun saveUser(user: User) = repository.saveUser(user)
 
 
-    suspend fun getUsers(): Flow<List<User>> {
+    suspend fun getUsers(): Flow<MutableList<User>> {
         val userList = flow {
             val updatedUserList = repository.getUsers()
             if (updatedUserList.isNotEmpty()) {
@@ -56,7 +56,6 @@ class AppViewModel
             } else return@flow
         }
         return userList
-
     }
 
     suspend fun getUserFromUserNameAndPassword(userName: String, password: String): Flow<User?> {
@@ -132,7 +131,7 @@ class AppViewModel
     }
 
 
-    suspend fun updateIsSignIn(user: User) = repository.updateIsSignedIn(user)
+    suspend fun updateIsSignIn(user:User) = repository.updateIsSignedIn(user)
 
 
     fun splitUserNameIntoFirstAndFamilyName(fullNameAsParam: String): Pair<List<String>, String> {
@@ -233,21 +232,7 @@ class AppViewModel
     fun isAllFieldsOk(): Boolean =
         isValidName() && isValidEmail() && isValidPassword() && isPhoneNumberOk() && age > 9
 
-    fun createUser(): User {
-        user =
-            User(
-                0,
-                firstAndMiddleNameList,
-                familyName,
-                age,
-                gender,
-                email,
-                password,
-                phoneNumber,
-                dateSelected
-            )
-        return user as User
-    }
+    fun createUser() = User(0, firstAndMiddleNameList, familyName, age, gender, email, password, phoneNumber, dateSelected)
 
     fun updateUser(newUser: User) {
         user = newUser

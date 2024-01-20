@@ -1,6 +1,5 @@
 package com.itzik.user_with_testing.project.repositories
 
-import android.util.Log
 import com.itzik.user_with_testing.project.data.UserDao
 import com.itzik.user_with_testing.project.models.AirportCodeName
 import com.itzik.user_with_testing.project.models.User
@@ -20,11 +19,7 @@ class RepositoryImp @Inject constructor(
 
     ) : IRepository {
 
-    override suspend fun getUsers(): MutableList<User> {
-        val userList = userDao.getUsers()
-        Log.d("TAGD", "get user list: $userList")
-        return userList
-    }
+    override suspend fun getUsers(): MutableList<User> = userDao.getUsers()
 
 
     override suspend fun saveUser(user: User) = userDao.saveUser(user)

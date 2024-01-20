@@ -2,7 +2,6 @@ package com.itzik.user_with_testing.project.data
 
 import androidx.room.Dao
 import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.TypeConverters
 import androidx.room.Update
@@ -14,7 +13,7 @@ import com.itzik.user_with_testing.project.utils.UserConverter
 @TypeConverters(UserConverter::class)
 interface UserDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     suspend fun saveUser(user: User)
 
     @Query("SELECT*FROM $USER_TABLE WHERE isSignedIn=1")

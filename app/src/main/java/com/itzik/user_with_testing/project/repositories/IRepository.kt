@@ -6,7 +6,7 @@ import com.itzik.user_with_testing.project.models.flight_models.FlightInfoRespon
 import retrofit2.Response
 
 interface IRepository {
-    suspend fun getUsers(): List<User>
+    suspend fun getUsers(): MutableList<User>
 
     suspend fun saveUser(user: User)
 

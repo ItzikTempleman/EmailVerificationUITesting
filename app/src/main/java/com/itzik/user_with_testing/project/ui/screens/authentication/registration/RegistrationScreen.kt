@@ -31,6 +31,7 @@ import com.itzik.user_with_testing.project.viewmodels.AppViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
+
 @Composable
 fun RegistrationScreen(
     coroutineScope: CoroutineScope,
@@ -106,26 +107,23 @@ fun RegistrationScreen(
                 }
                 .fillMaxWidth()
                 .padding(start = 32.dp, end = 32.dp, top = 60.dp),
-            onClick = {
-                coroutineScope.launch {
-                    if (appViewModel.isAllFieldsOk()) {
-                        appViewModel.createUser()
-                        val userModel = appViewModel.user
-                        if (userModel != null) {
-                            userModel.isSignedIn = true
-                            //appViewModel.updateIsSignIn(userModel)
-                            appViewModel.saveUser(userModel)
-                        }
-                        navController.popBackStack()
-                        navController.navigate(HOME)
-                    } else appViewModel.setErrors()
-                }
-            },
             buttonColor = Light_Blue,
             text = stringResource(id = R.string.create_account),
             textColor = White,
             roundedRadius = 36.dp,
-            fontSize = 24.sp
+            fontSize = 24.sp,
+            onClick = {
+                coroutineScope.launch {
+                    if (appViewModel.isAllFieldsOk()) {
+                        val user = appViewModel.createUser()
+                        user.isSignedIn = true
+                        appViewModel.updateIsSignIn(user)
+                        appViewModel.saveUser(user)
+                        navController.popBackStack()
+                        navController.navigate(HOME)
+                    } else appViewModel.setErrors()
+                }
+            }
         )
     }
 }
