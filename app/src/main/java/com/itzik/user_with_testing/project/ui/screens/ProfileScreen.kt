@@ -22,6 +22,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.models.User
+import com.itzik.user_with_testing.project.ui.navigation.Graph.AUTHENTICATION
 import com.itzik.user_with_testing.project.ui.semantics.RoundedBackGround
 import com.itzik.user_with_testing.project.utils.Constants
 import com.itzik.user_with_testing.project.utils.mockEmptyUser
@@ -75,10 +76,10 @@ fun ProfileScreen(
             fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .clickable {
-                   // navController.navigate(AUTHENTICATION)
+                    navController.navigate(AUTHENTICATION)
                     coroutineScope.launch {
                         user.isSignedIn = false
-                        appViewModel.updateIsSignIn(user)
+                       appViewModel.updateIsSignIn(user)
                     }
                 }
                 .constrainAs(logOut) {

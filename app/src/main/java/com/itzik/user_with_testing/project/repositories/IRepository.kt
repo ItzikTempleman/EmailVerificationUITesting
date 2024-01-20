@@ -15,11 +15,6 @@ interface IRepository {
     suspend fun getUserFromUserNameAndPassword(userName: String, password: String): User
 
 
-
-
-
-
-
     suspend fun getFlightInfo(
         sourceAirportCode: String,
         destinationAirportCode: String,
@@ -28,28 +23,11 @@ interface IRepository {
         numberOfAdults: Int,
         classOfService: String,
         currency: String,
-        returnDate: String
-    ):Response<FlightInfoResponse>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        returnDate: String,
+    ): Response<FlightInfoResponse>
 
 
     suspend fun getAirportCodeName(
-        query:String
-    ):Response<AirportCodeName>
+        query: String,
+    ): Response<AirportCodeName>
 }

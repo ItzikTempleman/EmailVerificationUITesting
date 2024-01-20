@@ -1,5 +1,6 @@
 package com.itzik.user_with_testing.project.repositories
 
+import android.util.Log
 import com.itzik.user_with_testing.project.data.UserDao
 import com.itzik.user_with_testing.project.models.AirportCodeName
 import com.itzik.user_with_testing.project.models.User
@@ -19,9 +20,16 @@ class RepositoryImp @Inject constructor(
 
     ) : IRepository {
 
-    override suspend fun getUsers(): List<User> = userDao.getUsers()
+    override suspend fun getUsers(): MutableList<User> {
+        val userList = userDao.getUsers()
+        Log.d("TAGD", "get user list: $userList")
+        return userList
+    }
+
 
     override suspend fun saveUser(user: User) = userDao.saveUser(user)
+
+
     override suspend fun updateIsSignedIn(user: User) = userDao.updateIsSigneIn(user)
     override suspend fun getUserFromUserNameAndPassword(userName: String, password: String): User =
         userDao.getUserFromUserNameAndPassword(userName, password)

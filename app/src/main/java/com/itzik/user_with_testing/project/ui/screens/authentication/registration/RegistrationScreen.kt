@@ -35,7 +35,7 @@ import kotlinx.coroutines.launch
 fun RegistrationScreen(
     coroutineScope: CoroutineScope,
     navController: NavHostController,
-    appViewModel: AppViewModel
+    appViewModel: AppViewModel,
 ) {
 
     RoundedBackGround(topColor = Light_Turquoize, bottomColor = White)
@@ -112,9 +112,8 @@ fun RegistrationScreen(
                         appViewModel.createUser()
                         val userModel = appViewModel.user
                         if (userModel != null) {
-                            userModel.isSignedIn=true
-                            appViewModel.updateIsSignIn(userModel)
-
+                            userModel.isSignedIn = true
+                            //appViewModel.updateIsSignIn(userModel)
                             appViewModel.saveUser(userModel)
                         }
                         navController.popBackStack()

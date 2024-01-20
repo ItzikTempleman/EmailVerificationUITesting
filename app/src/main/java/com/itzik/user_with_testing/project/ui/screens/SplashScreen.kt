@@ -1,7 +1,6 @@
 package com.itzik.user_with_testing.project.ui.screens
 
 
-import android.util.Log
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -74,14 +73,13 @@ fun SplashScreen(
             appViewModel.getUsers().collect {
                 userList = it
             }
-            Log.d("TAGD", "userList: $userList")
+
             if (userList.isNotEmpty() && userList.first().isSignedIn) {
                 navController.navigate(HOME)
-                Log.d("TAGD", "search")
-            } else {
 
+            } else {
                 navController.navigate(AUTHENTICATION)
-                Log.d("TAGD", "login")
+
             }
         }
     }

@@ -46,10 +46,9 @@ object AppModule {
     @Provides
     fun provideDatabase(@ApplicationContext applicationContext: Context) =
         Room.databaseBuilder(applicationContext, UserDatabase::class.java, USER_DATABASE)
+            .allowMainThreadQueries()
+            .fallbackToDestructiveMigration()
             .addTypeConverter(UserConverter()).fallbackToDestructiveMigration().build()
-
-
-
 
 
     @Provides
