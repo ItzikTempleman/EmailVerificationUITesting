@@ -6,11 +6,12 @@ import com.itzik.user_with_testing.project.models.flight_models.FlightInfoRespon
 import retrofit2.Response
 
 interface IRepository {
-    suspend fun getUsers(): MutableList<User>
+    suspend fun getAllUsers(): List<User>
 
     suspend fun saveUser(user: User)
 
-    suspend fun updateIsSignedIn(user: User)
+    suspend fun getSignedInUser(): User?
+
 
     suspend fun getUserFromUserNameAndPassword(userName: String, password: String): User
 
@@ -30,4 +31,6 @@ interface IRepository {
     suspend fun getAirportCodeName(
         query: String,
     ): Response<AirportCodeName>
+
+
 }

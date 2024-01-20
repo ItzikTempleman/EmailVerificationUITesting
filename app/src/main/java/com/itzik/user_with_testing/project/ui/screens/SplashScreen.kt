@@ -53,7 +53,7 @@ fun SplashScreen(
     )
 
     var userList by remember {
-        mutableStateOf(mutableListOf<User>())
+        mutableStateOf(listOf<User>())
     }
 
     var startAnim by remember {

@@ -76,11 +76,10 @@ fun ProfileScreen(
             fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .clickable {
-                    navController.navigate(AUTHENTICATION)
                     coroutineScope.launch {
-                        user.isSignedIn = false
-                       appViewModel.updateIsSignIn(user)
+                        appViewModel.signOut()
                     }
+                    navController.navigate(AUTHENTICATION)
                 }
                 .constrainAs(logOut) {
                     end.linkTo(parent.end)

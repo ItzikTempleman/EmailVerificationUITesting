@@ -115,10 +115,7 @@ fun RegistrationScreen(
             onClick = {
                 coroutineScope.launch {
                     if (appViewModel.isAllFieldsOk()) {
-                        val user = appViewModel.createUser()
-                        user.isSignedIn = true
-                        appViewModel.updateIsSignIn(user)
-                        appViewModel.saveUser(user)
+                       appViewModel.createUser()
                         navController.popBackStack()
                         navController.navigate(HOME)
                     } else appViewModel.setErrors()

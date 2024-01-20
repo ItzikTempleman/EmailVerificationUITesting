@@ -5,6 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.project.models.AirportCodeName
 import com.itzik.user_with_testing.project.models.Gender
@@ -14,7 +15,10 @@ import com.itzik.user_with_testing.project.repositories.IRepository
 import com.itzik.user_with_testing.project.ui.navigation.ScreenContainer
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.Year
@@ -44,13 +48,52 @@ class AppViewModel
     private val timeFormat = SimpleDateFormat(pattern, Locale.US)
     private var today = timeFormat.format(Calendar.getInstance().time)
 
+    private val _userList = MutableStateFlow<List<User>>(emptyList())
+    val userList: StateFlow<List<User>> get() = _userList
 
-    suspend fun saveUser(user: User) = repository.saveUser(user)
+    private val _isLoggedIn = MutableStateFlow(false)
+    val isLoggedIn: StateFlow<Boolean> get() = _isLoggedIn
+
+    init {
+        checkLoginStatus()
+        observeUserList()
+    }
+    private fun checkLoginStatus() {
+        viewModelScope.launch {
+            _isLoggedIn.value = repository.getSignedInUser() != null
+        }
+    }
+
+    private fun observeUserList() {
+        viewModelScope.launch {
+            _userList.value = repository.getAllUsers()
+        }
+    }
+
+    fun createUser() {
+        viewModelScope.launch {
+            val user = User(0, firstAndMiddleNameList, familyName, age, gender, email, password, phoneNumber, dateSelected, isSignedIn = true)
+            repository.saveUser(user)
+            _isLoggedIn.value = true
+        }
+    }
 
 
-    suspend fun getUsers(): Flow<MutableList<User>> {
+    fun signOut() {
+        viewModelScope.launch {
+
+            val loggedInUser = repository.getSignedInUser()
+            if (loggedInUser != null) {
+                loggedInUser.isSignedIn = false
+                repository.saveUser(loggedInUser)
+                _isLoggedIn.value = false
+            }
+        }
+    }
+
+    suspend fun getUsers(): Flow<List<User>> {
         val userList = flow {
-            val updatedUserList = repository.getUsers()
+            val updatedUserList = repository.getAllUsers()
             if (updatedUserList.isNotEmpty()) {
                 emit(updatedUserList)
             } else return@flow
@@ -131,7 +174,7 @@ class AppViewModel
     }
 
 
-    suspend fun updateIsSignIn(user:User) = repository.updateIsSignedIn(user)
+
 
 
     fun splitUserNameIntoFirstAndFamilyName(fullNameAsParam: String): Pair<List<String>, String> {
@@ -232,11 +275,8 @@ class AppViewModel
     fun isAllFieldsOk(): Boolean =
         isValidName() && isValidEmail() && isValidPassword() && isPhoneNumberOk() && age > 9
 
-    fun createUser() = User(0, firstAndMiddleNameList, familyName, age, gender, email, password, phoneNumber, dateSelected)
+    //fun createUser() = User(0, firstAndMiddleNameList, familyName, age, gender, email, password, phoneNumber, dateSelected)
 
-    fun updateUser(newUser: User) {
-        user = newUser
-    }
 
 
     fun setErrors() {

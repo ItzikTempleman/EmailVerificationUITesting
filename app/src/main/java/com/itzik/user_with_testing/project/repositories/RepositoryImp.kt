@@ -5,6 +5,7 @@ import com.itzik.user_with_testing.project.models.AirportCodeName
 import com.itzik.user_with_testing.project.models.User
 import com.itzik.user_with_testing.project.models.flight_models.FlightInfoResponse
 import com.itzik.user_with_testing.project.requests.FlightService
+import kotlinx.coroutines.runBlocking
 import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Named
@@ -18,14 +19,51 @@ class RepositoryImp @Inject constructor(
     @Named("Flights") private val flightService: FlightService,
 
     ) : IRepository {
+    private val userList: MutableList<User> = mutableListOf()
 
-    override suspend fun getUsers(): MutableList<User> = userDao.getUsers()
+    init {
+        refreshUserList()
+    }
+
+    private fun refreshUserList() {
+        runBlocking {
+            userList.clear()
+            userList.addAll(userDao.getAllUsers())
+        }
+    }
 
 
-    override suspend fun saveUser(user: User) = userDao.saveUser(user)
+    override suspend fun getAllUsers(): List<User> = userDao.getAllUsers()
 
 
-    override suspend fun updateIsSignedIn(user: User) = userDao.updateIsSigneIn(user)
+    override suspend fun saveUser(user: User) {
+        userDao.saveUser(user)
+        refreshUserList()
+    }
+
+    override suspend fun getSignedInUser(): User? = userList.find { it.isSignedIn }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     override suspend fun getUserFromUserNameAndPassword(userName: String, password: String): User =
         userDao.getUserFromUserNameAndPassword(userName, password)
 

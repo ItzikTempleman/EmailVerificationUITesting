@@ -1,7 +1,6 @@
 package com.itzik.user_with_testing.project.ui.screens.authentication
 
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -220,8 +219,6 @@ fun LoginScreen(
                     appViewModel.getUserFromUserNameAndPassword(email,password).collect{
                         if (it != null) {
                             it.isSignedIn=true
-                            appViewModel.updateUser(it)
-                            Log.d("TAG", "$it")
 
                             appViewModel.moveToHomeScreen(appViewModel.isTextFieldsLoginValidFormat(), navController , it)
                         }else Toast.makeText(
