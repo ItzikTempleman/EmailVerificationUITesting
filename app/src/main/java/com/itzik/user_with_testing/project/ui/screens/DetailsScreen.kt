@@ -13,7 +13,7 @@ import kotlinx.coroutines.CoroutineScope
 @Composable
 fun DetailsScreen(
     result: FlightInfoResponse?=null,
-    navController: NavHostController,
+    navController: NavHostController ,
     appViewModel: AppViewModel,
     coroutineScope: CoroutineScope,
 ) {

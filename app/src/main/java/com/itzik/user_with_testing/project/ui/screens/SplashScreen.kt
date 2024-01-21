@@ -72,7 +72,7 @@ fun SplashScreen(
 
 
         coroutineScope.launch {
-            navController.popBackStack()
+            //navController.popBackStack()
             appViewModel.getUsers().collect {
                 userList = it
             }

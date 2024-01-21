@@ -52,6 +52,7 @@ fun HomeNavHost(
             NavBarScreen(navController = navController)
         }
     ) {
+
         NavHost(
             modifier = Modifier.padding(it),
             navController = navController,
@@ -79,11 +80,9 @@ fun HomeNavHost(
                         coroutineScope = coroutineScope
                     )
                 }
+
                 composable(route = ScreenContainer.Details.route) {
-                    val result =
-                        navController.previousBackStackEntry?.savedStateHandle?.get<FlightInfoResponse>(
-                            "flight_info"
-                        )
+                    val result = navController.previousBackStackEntry?.savedStateHandle?.get<FlightInfoResponse>("flight_info")
                     DetailsScreen(
                         result = result,
                         navController = navController,

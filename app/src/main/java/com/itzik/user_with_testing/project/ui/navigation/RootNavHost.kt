@@ -69,10 +69,11 @@ fun RootNavHost(
             composable(route = ScreenContainer.Search.route) {
                 HomeNavHost(
                     appViewModel = appViewModel,
-                    coroutineScope = coroutineScope
+                    coroutineScope = coroutineScope,
                 )
             }
         }
+
     }
 }
 

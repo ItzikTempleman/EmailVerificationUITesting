@@ -208,6 +208,7 @@ class AppViewModel
             is Gender.MALE -> "Male"
             is Gender.FEMALE -> "Female"
             is Gender.OTHER -> "Other"
+
         }
         return gender
     }

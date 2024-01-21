@@ -2,7 +2,6 @@ package com.itzik.user_with_testing.project.ui.screens
 
 import DatePickerDialogScreen
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -66,7 +65,7 @@ import com.itzik.user_with_testing.project.viewmodels.AppViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "UnrememberedMutableState")
 @Composable
 fun SearchScreen(
     modifier: Modifier,
@@ -452,9 +451,9 @@ fun SearchScreen(
                         returnDate = returnDate
                     ).collect {
                         flightInfo = it
-                        Log.d("TAG", "flightInfo: $flightInfo")
                     }
                 }
+
                 navController.currentBackStackEntry?.savedStateHandle?.set(
                     key = "flight_info",
                     value = flightInfo
