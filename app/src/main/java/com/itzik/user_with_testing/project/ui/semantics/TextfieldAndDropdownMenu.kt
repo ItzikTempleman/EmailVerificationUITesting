@@ -28,26 +28,22 @@ import com.itzik.user_with_testing.project.viewmodels.AppViewModel
 @Composable
 fun DropDownMenuScreen(
     modifier: Modifier,
-    searchParam: MutableState<String>? = null,
+    searchParam: MutableState<String>?=null,
     appViewModel: AppViewModel,
     isExpanded: MutableState<Boolean>,
-    list: MutableState<List<String>>? = null,
+    list: MutableState<List<String>>?=null,
     thisValueChange: (String) -> Unit,
     label: String,
-    updatedNameToSearchScreen: (String) -> Unit,
     leadingIcon: ImageVector,
     updatedValue: (String) -> Unit,
 ) {
-
-
 
     val expansionIcon = if (isExpanded.value) Icons.Filled.KeyboardArrowUp
     else Icons.Filled.KeyboardArrowDown
 
     Column(
-        modifier = modifier
+        modifier=modifier
     ) {
-
         searchParam?.value?.let {
             OutlinedTextField(
                 modifier = Modifier,
@@ -98,20 +94,20 @@ fun DropDownMenuScreen(
                     val regex = Regex("\\(([^)]+)\\)")
                     val matchResult = regex.find(item)
                     val codeName = matchResult?.groups?.get(1)?.value
+
                     if (codeName != null) {
                         searchParam?.value = codeName
                         searchParam?.value?.let { updatedValue(it) }
                     }
                     isExpanded.value = false
+
                 }
                 ) {
-                  //  updatedNameToSearchScreen(item)
                     Text(text = item)
                 }
             }
         }
     }
 }
-
 
 

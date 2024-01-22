@@ -170,9 +170,7 @@ fun SearchScreen(
                 thisValueChange = {
                     searchDeparture = it
                 },
-                updatedNameToSearchScreen = {
-                    departureAirportName = it
-                },
+
                 label = stringResource(id = R.string.search_departure_city),
                 leadingIcon = Icons.Default.FlightTakeoff,
             ) {
@@ -189,9 +187,6 @@ fun SearchScreen(
                 list = list,
                 thisValueChange = {
                     searchDestination = it
-                },
-                updatedNameToSearchScreen = {
-                    destinationAirportName = it
                 },
                 label = stringResource(id = R.string.search_destination_city),
                 leadingIcon = Icons.Default.FlightLand,
@@ -450,36 +445,22 @@ fun SearchScreen(
             }
             .fillMaxWidth()
             .padding(8.dp),
+
             onClick = {
                 coroutineScope.launch {
                     appViewModel.getFlightInfo(
-                        sourceAirportCode = "NYC",
-                        destinationAirportCode = "TLV",
-                        takeoffDate = "2024-01-25",
+                        sourceAirportCode = searchDeparture,
+                        destinationAirportCode = searchDestination,
+                        takeoffDate = takeOffDate,
                         itineraryType = defaultItineraryOption,
                         numberOfAdults = selectedNumber,
                         classOfService = defaultClass.name,
                         currency = selectedCurrency,
-                        returnDate = "2024-02-19"
+                        returnDate = returnDate
                     ).collect {
                         flightInfo = it
                     }
                 }
-//            onClick = {
-//                coroutineScope.launch {
-//                    appViewModel.getFlightInfo(
-//                        sourceAirportCode = searchDeparture,
-//                        destinationAirportCode = searchDestination,
-//                        takeoffDate = takeOffDate,
-//                        itineraryType = defaultItineraryOption,
-//                        numberOfAdults = selectedNumber,
-//                        classOfService = defaultClass.name,
-//                        currency = selectedCurrency,
-//                        returnDate = returnDate
-//                    ).collect {
-//                        flightInfo = it
-//                    }
-//                }
                 Log.d("TAG", "flightInfo: $flightInfo")
                 navController.currentBackStackEntry?.savedStateHandle?.set(
                     key = "flight_info",
