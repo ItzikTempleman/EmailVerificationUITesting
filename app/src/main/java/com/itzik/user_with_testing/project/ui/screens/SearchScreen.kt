@@ -35,6 +35,7 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -54,7 +55,7 @@ import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.models.ClassOfService
 import com.itzik.user_with_testing.project.models.flight_models.getEmptyResponse
-import com.itzik.user_with_testing.project.ui.navigation.ScreenContainer
+import com.itzik.user_with_testing.project.ui.navigation.Graph.DETAILS
 import com.itzik.user_with_testing.project.ui.semantics.DropDownMenuScreen
 import com.itzik.user_with_testing.project.ui.semantics.GenericButton
 import com.itzik.user_with_testing.project.utils.Constants
@@ -86,8 +87,13 @@ fun SearchScreen(
 
         )
         val (searchRow, datesSelectionLayout, itineraryType, selectClass, currencyIcon, button) = createRefs()
+        var departureAirportName by remember {
+            mutableStateOf("")
+        }
 
-
+        var destinationAirportName by remember {
+            mutableStateOf("")
+        }
         var isReturnDateValid by remember {
             mutableStateOf(true)
         }
@@ -136,7 +142,7 @@ fun SearchScreen(
             mutableStateOf("")
         }
 
-        var selectedNumber by remember { mutableStateOf(1) }
+        var selectedNumber by remember { mutableIntStateOf(1) }
 
         val expansionIcon = if (isChooseClassExpanded) Icons.Filled.KeyboardArrowUp
         else Icons.Filled.KeyboardArrowDown
@@ -163,8 +169,11 @@ fun SearchScreen(
                 thisValueChange = {
                     searchDeparture = it
                 },
+                updatedNameToSearchScreen = {
+                    departureAirportName=it
+                },
                 label = stringResource(id = R.string.search_departure_city),
-                leadingIcon = Icons.Default.FlightTakeoff
+                leadingIcon = Icons.Default.FlightTakeoff,
             ) {
                 searchDeparture = it
             }
@@ -180,8 +189,11 @@ fun SearchScreen(
                 thisValueChange = {
                     searchDestination = it
                 },
+                updatedNameToSearchScreen = {
+                    destinationAirportName=it
+                },
                 label = stringResource(id = R.string.search_destination_city),
-                leadingIcon = Icons.Default.FlightLand
+                leadingIcon = Icons.Default.FlightLand,
             ) {
                 searchDestination = it
             }
@@ -424,7 +436,6 @@ fun SearchScreen(
                             color = Dark_Blue,
                             fontFamily = FontFamily.Monospace,
                             fontWeight = FontWeight.Bold
-
                         )
                     }
                 }
@@ -458,7 +469,9 @@ fun SearchScreen(
                     key = "flight_info",
                     value = flightInfo
                 )
-                navController.navigate(ScreenContainer.Details.route)
+                appViewModel.departureAirport=departureAirportName
+                appViewModel.destinationAirport=destinationAirportName
+                navController.navigate(DETAILS)
             },
             buttonColor = Dark_Blue,
             text = stringResource(id = R.string.find_flights),
@@ -468,3 +481,7 @@ fun SearchScreen(
         )
     }
 }
+
+
+
+

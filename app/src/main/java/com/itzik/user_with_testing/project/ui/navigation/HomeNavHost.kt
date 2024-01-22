@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -21,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -36,7 +38,8 @@ import com.itzik.user_with_testing.project.ui.navigation.Graph.HOME
 import com.itzik.user_with_testing.project.ui.screens.DetailsScreen
 import com.itzik.user_with_testing.project.ui.screens.ProfileScreen
 import com.itzik.user_with_testing.project.ui.screens.SearchScreen
-import com.itzik.user_with_testing.project.utils.Constants
+import com.itzik.user_with_testing.project.utils.Constants.Dark_Blue
+import com.itzik.user_with_testing.project.utils.Constants.Light_Blue
 import com.itzik.user_with_testing.project.viewmodels.AppViewModel
 import kotlinx.coroutines.CoroutineScope
 
@@ -49,10 +52,11 @@ fun HomeNavHost(
 ) {
     Scaffold(
         bottomBar = {
-            NavBarScreen(navController = navController)
+            NavBarScreen(
+                navController = navController
+            )
         }
     ) {
-
         NavHost(
             modifier = Modifier.padding(it),
             navController = navController,
@@ -80,16 +84,19 @@ fun HomeNavHost(
                         coroutineScope = coroutineScope
                     )
                 }
+            }
 
-                composable(route = ScreenContainer.Details.route) {
-                    val result = navController.previousBackStackEntry?.savedStateHandle?.get<FlightInfoResponse>("flight_info")
-                    DetailsScreen(
-                        result = result,
-                        navController = navController,
-                        appViewModel = appViewModel,
-                        coroutineScope = coroutineScope
+            composable(route = ScreenContainer.Details.route) {
+                val result =
+                    navController.previousBackStackEntry?.savedStateHandle?.get<FlightInfoResponse>(
+                        "flight_info"
                     )
-                }
+                DetailsScreen(
+                    result = result,
+                    navController = navController,
+                    appViewModel = appViewModel,
+                    coroutineScope = coroutineScope
+                )
             }
         }
     }
@@ -107,9 +114,8 @@ fun NavBarScreen(navController: NavHostController) {
 
     Row(
         modifier = Modifier
-            .height(50.dp)
-            .background(Constants.Light_Blue)
-            .fillMaxWidth(),
+            .height(50.dp).fillMaxWidth().padding(start = 8.dp, end=8.dp, bottom = 4.dp).clip(RoundedCornerShape(10.dp))
+            .background(Light_Blue),
         horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -123,6 +129,14 @@ fun NavBarScreen(navController: NavHostController) {
     }
 }
 
+@Preview
+@Composable
+fun showNavBarPreview() {
+    NavBarScreen(
+        navController = rememberNavController()
+    )
+}
+
 @Composable
 fun RowScope.AddItem(
     screen: ScreenContainer,
@@ -132,8 +146,8 @@ fun RowScope.AddItem(
     val selected = currentDestination?.hierarchy?.any {
         it.route == screen.route
     } == true
-    val contentColor = Constants.Dark_Blue
-    val background = Constants.Light_Blue
+    val contentColor = Dark_Blue
+    val background = Light_Blue
     Box(
         modifier = Modifier
             .clip(CircleShape)

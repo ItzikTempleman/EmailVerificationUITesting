@@ -43,7 +43,8 @@ class AppViewModel
     private val pattern = "dd/MM/yyyy"
     private val timeFormat = SimpleDateFormat(pattern, Locale.US)
     private var today = timeFormat.format(Calendar.getInstance().time)
-
+    var departureAirport = ""
+    var destinationAirport = ""
 
     suspend fun saveUser(user: User) = repository.saveUser(user)
 
@@ -131,7 +132,7 @@ class AppViewModel
     }
 
 
-    suspend fun updateIsSignIn(user:User) = repository.updateIsSignedIn(user)
+    suspend fun updateIsSignIn(user: User) = repository.updateIsSignedIn(user)
 
 
     fun splitUserNameIntoFirstAndFamilyName(fullNameAsParam: String): Pair<List<String>, String> {
@@ -233,7 +234,17 @@ class AppViewModel
     fun isAllFieldsOk(): Boolean =
         isValidName() && isValidEmail() && isValidPassword() && isPhoneNumberOk() && age > 9
 
-    fun createUser() = User(0, firstAndMiddleNameList, familyName, age, gender, email, password, phoneNumber, dateSelected)
+    fun createUser() = User(
+        0,
+        firstAndMiddleNameList,
+        familyName,
+        age,
+        gender,
+        email,
+        password,
+        phoneNumber,
+        dateSelected
+    )
 
     fun updateUser(newUser: User) {
         user = newUser
@@ -255,4 +266,6 @@ class AppViewModel
     }
 
     fun isTextFieldsLoginValidFormat() = isValidLoginEmail(email) && isValidLoginPassword(password)
+
+
 }

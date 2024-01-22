@@ -23,54 +23,60 @@ import com.itzik.user_with_testing.project.utils.Constants.Dark_Blue
 import com.itzik.user_with_testing.project.utils.Constants.Light_Blue
 import com.itzik.user_with_testing.project.viewmodels.AppViewModel
 
+
+
 @Composable
 fun DropDownMenuScreen(
     modifier: Modifier,
-    searchParam: MutableState<String>?=null,
+    searchParam: MutableState<String>? = null,
     appViewModel: AppViewModel,
     isExpanded: MutableState<Boolean>,
-    list: MutableState<List<String>>?=null,
+    list: MutableState<List<String>>? = null,
     thisValueChange: (String) -> Unit,
     label: String,
+    updatedNameToSearchScreen: (String) -> Unit,
     leadingIcon: ImageVector,
     updatedValue: (String) -> Unit,
 ) {
+
+
 
     val expansionIcon = if (isExpanded.value) Icons.Filled.KeyboardArrowUp
     else Icons.Filled.KeyboardArrowDown
 
     Column(
-        modifier=modifier
+        modifier = modifier
     ) {
-    searchParam?.value?.let {
-        OutlinedTextField(
-        modifier = Modifier,
-        value = it,
-        onValueChange = {
-            thisValueChange(it)
-        },
-        trailingIcon = {
-            Icon(imageVector = expansionIcon, null,
-                Modifier.clickable { isExpanded.value = !isExpanded.value })
-        },
-        leadingIcon = {
-            Icon(imageVector = leadingIcon, contentDescription = null, tint = Light_Blue)
-        },
-        placeholder = {
-            Text(
-                text = label,
-                color = Dark_Blue,
-                fontSize = 14.sp
+
+        searchParam?.value?.let {
+            OutlinedTextField(
+                modifier = Modifier,
+                value = it,
+                onValueChange = {
+                    thisValueChange(it)
+                },
+                trailingIcon = {
+                    Icon(imageVector = expansionIcon, null,
+                        Modifier.clickable { isExpanded.value = !isExpanded.value })
+                },
+                leadingIcon = {
+                    Icon(imageVector = leadingIcon, contentDescription = null, tint = Light_Blue)
+                },
+                placeholder = {
+                    Text(
+                        text = label,
+                        color = Dark_Blue,
+                        fontSize = 14.sp
+                    )
+                }, colors = TextFieldDefaults.textFieldColors(
+                    backgroundColor = Color.White,
+                    cursorColor = Light_Blue,
+                    focusedIndicatorColor = Light_Blue,
+                    unfocusedIndicatorColor = Color.DarkGray.copy(0.3f)
+                ),
+                singleLine = true
             )
-        }, colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = Color.White,
-            cursorColor = Light_Blue,
-            focusedIndicatorColor = Light_Blue,
-            unfocusedIndicatorColor = Color.DarkGray.copy(0.3f)
-        ),
-        singleLine = true
-    )
-    }
+        }
 
         DropdownMenu(
             expanded = isExpanded.value,
@@ -92,13 +98,15 @@ fun DropDownMenuScreen(
                     val regex = Regex("\\(([^)]+)\\)")
                     val matchResult = regex.find(item)
                     val codeName = matchResult?.groups?.get(1)?.value
-
                     if (codeName != null) {
                         searchParam?.value = codeName
                         searchParam?.value?.let { updatedValue(it) }
                     }
+                    val cityName = matchResult?.groups?.get(2)?.value
+                    if (cityName != null) {
+                        updatedNameToSearchScreen(cityName)
+                    }
                     isExpanded.value = false
-
                 }
                 ) {
                     Text(text = item)
@@ -107,4 +115,6 @@ fun DropDownMenuScreen(
         }
     }
 }
+
+
 
