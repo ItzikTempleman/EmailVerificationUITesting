@@ -128,6 +128,7 @@ class AppViewModel
             } else Log.d("TAG", "Failure message: " + response.message())
             return@flow
         }
+        Log.d("TAG", "flightInfo: $flightInfo")
         return flightInfo
     }
 
