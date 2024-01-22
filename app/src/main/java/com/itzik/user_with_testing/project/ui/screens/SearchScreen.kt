@@ -2,6 +2,7 @@ package com.itzik.user_with_testing.project.ui.screens
 
 import DatePickerDialogScreen
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -87,13 +88,7 @@ fun SearchScreen(
 
         )
         val (searchRow, datesSelectionLayout, itineraryType, selectClass, currencyIcon, button) = createRefs()
-        var departureAirportName by remember {
-            mutableStateOf("")
-        }
 
-        var destinationAirportName by remember {
-            mutableStateOf("")
-        }
         var isReturnDateValid by remember {
             mutableStateOf(true)
         }
@@ -283,7 +278,7 @@ fun SearchScreen(
                     }
                     .size(48.dp)
                     .padding(12.dp),
-                tint = Constants.Dark_Blue
+                tint = Dark_Blue
             )
             DropdownMenu(
                 expanded = isContextMenuVisible,
@@ -385,6 +380,7 @@ fun SearchScreen(
                 }
             }
         }
+
         Column(
             modifier = Modifier
                 .padding(8.dp)
@@ -444,7 +440,6 @@ fun SearchScreen(
             }
             .fillMaxWidth()
             .padding(8.dp),
-
             onClick = {
                 coroutineScope.launch {
                     appViewModel.getFlightInfo(
@@ -456,19 +451,15 @@ fun SearchScreen(
                         classOfService = defaultClass.name,
                         currency = selectedCurrency,
                         returnDate = returnDate
-
                     ).collect {
-                        //Log.d("TAG", "params: $searchDeparture $searchDestination $takeOffDate $returnDate")
                         flightInfo = it
+                        Log.d("TAG", "flightInfo: $flightInfo")
                     }
                 }
-
                 navController.currentBackStackEntry?.savedStateHandle?.set(
                     key = "flight_info",
                     value = flightInfo
                 )
-                appViewModel.departureAirport = departureAirportName
-                appViewModel.destinationAirport = destinationAirportName
                 navController.navigate(DETAILS)
             },
             buttonColor = Dark_Blue,
@@ -477,6 +468,7 @@ fun SearchScreen(
             roundedRadius = 12.dp,
             fontSize = 20.sp
         )
+
     }
 }
 

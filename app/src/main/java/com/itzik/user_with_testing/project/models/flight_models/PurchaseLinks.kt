@@ -12,4 +12,5 @@ data class PurchaseLinks(
 	val totalPricePerPassenger: Double?,
 	val currency: String?,
 	val seatAvailability: Int?,
+	val originalCurrency:String?
 ) : Parcelable

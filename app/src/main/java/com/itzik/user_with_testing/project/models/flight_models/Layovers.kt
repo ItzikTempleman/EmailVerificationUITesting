@@ -6,6 +6,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 
 data class Layovers(
+    val durationType:String,
     val hasStationChanged: Boolean,
     val durationInMinutes: Int,
 ) : Parcelable

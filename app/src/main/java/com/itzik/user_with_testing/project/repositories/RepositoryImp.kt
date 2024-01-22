@@ -13,8 +13,10 @@ import javax.inject.Singleton
 class RepositoryImp @Inject constructor(
     @Singleton
     private val userDao: UserDao,
+
     @Singleton
     @Named("Flights") private val flightService: FlightService,
+
 
     ) : IRepository {
 

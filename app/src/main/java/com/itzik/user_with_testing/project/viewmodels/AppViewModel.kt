@@ -77,7 +77,6 @@ class AppViewModel
                     airportCodeName.add(singleAirportCode.shortName)
                 }
             }
-        Log.d("TAG", "list of code names")
         return airportCodeName
     }
 
@@ -96,7 +95,6 @@ class AppViewModel
         }
         return codeNameResponseList
     }
-
 
     suspend fun getFlightInfo(
         sourceAirportCode: String,
@@ -128,10 +126,8 @@ class AppViewModel
             } else Log.d("TAG", "Failure message: " + response.message())
             return@flow
         }
-        Log.d("TAG", "flightInfo: $flightInfo")
         return flightInfo
     }
-
 
     suspend fun updateIsSignIn(user: User) = repository.updateIsSignedIn(user)
 
@@ -179,7 +175,6 @@ class AppViewModel
         dateSelected = formattedDate(chosenDate)
         val chosenYear = chosenDate.get(Calendar.YEAR)
         val currentYear = Year.now().value
-        Log.d("TAG", "chosenYear: $chosenYear, and currentYear: $currentYear")
         return chosenYear > currentYear
     }
 
