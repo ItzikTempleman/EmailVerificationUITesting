@@ -91,12 +91,14 @@ fun HomeNavHost(
                     navController.previousBackStackEntry?.savedStateHandle?.get<FlightInfoResponse>(
                         "flight_info"
                     )
-                DetailsScreen(
-                    result = result,
-                    navController = navController,
-                    appViewModel = appViewModel,
-                    coroutineScope = coroutineScope
-                )
+                result?.data?.flights?.let { it1 ->
+                    DetailsScreen(
+                        result = it1,
+                        navController = navController,
+                        appViewModel = appViewModel,
+                        coroutineScope = coroutineScope
+                    )
+                }
             }
         }
     }
@@ -131,7 +133,7 @@ fun NavBarScreen(navController: NavHostController) {
 
 @Preview
 @Composable
-fun showNavBarPreview() {
+fun ShowNavBarPreview() {
     NavBarScreen(
         navController = rememberNavController()
     )

@@ -102,13 +102,10 @@ fun DropDownMenuScreen(
                         searchParam?.value = codeName
                         searchParam?.value?.let { updatedValue(it) }
                     }
-                    val cityName = matchResult?.groups?.get(2)?.value
-                    if (cityName != null) {
-                        updatedNameToSearchScreen(cityName)
-                    }
                     isExpanded.value = false
                 }
                 ) {
+                  //  updatedNameToSearchScreen(item)
                     Text(text = item)
                 }
             }

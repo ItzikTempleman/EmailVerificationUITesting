@@ -2,6 +2,7 @@ package com.itzik.user_with_testing.project.ui.screens
 
 import DatePickerDialogScreen
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -170,7 +171,7 @@ fun SearchScreen(
                     searchDeparture = it
                 },
                 updatedNameToSearchScreen = {
-                    departureAirportName=it
+                    departureAirportName = it
                 },
                 label = stringResource(id = R.string.search_departure_city),
                 leadingIcon = Icons.Default.FlightTakeoff,
@@ -190,7 +191,7 @@ fun SearchScreen(
                     searchDestination = it
                 },
                 updatedNameToSearchScreen = {
-                    destinationAirportName=it
+                    destinationAirportName = it
                 },
                 label = stringResource(id = R.string.search_destination_city),
                 leadingIcon = Icons.Default.FlightLand,
@@ -452,25 +453,40 @@ fun SearchScreen(
             onClick = {
                 coroutineScope.launch {
                     appViewModel.getFlightInfo(
-                        sourceAirportCode = searchDeparture,
-                        destinationAirportCode = searchDestination,
-                        takeoffDate = takeOffDate,
+                        sourceAirportCode = "NYC",
+                        destinationAirportCode = "TLV",
+                        takeoffDate = "2024-01-25",
                         itineraryType = defaultItineraryOption,
                         numberOfAdults = selectedNumber,
                         classOfService = defaultClass.name,
                         currency = selectedCurrency,
-                        returnDate = returnDate
+                        returnDate = "2024-02-19"
                     ).collect {
                         flightInfo = it
                     }
                 }
-
+//            onClick = {
+//                coroutineScope.launch {
+//                    appViewModel.getFlightInfo(
+//                        sourceAirportCode = searchDeparture,
+//                        destinationAirportCode = searchDestination,
+//                        takeoffDate = takeOffDate,
+//                        itineraryType = defaultItineraryOption,
+//                        numberOfAdults = selectedNumber,
+//                        classOfService = defaultClass.name,
+//                        currency = selectedCurrency,
+//                        returnDate = returnDate
+//                    ).collect {
+//                        flightInfo = it
+//                    }
+//                }
+                Log.d("TAG", "flightInfo: $flightInfo")
                 navController.currentBackStackEntry?.savedStateHandle?.set(
                     key = "flight_info",
                     value = flightInfo
                 )
-                appViewModel.departureAirport=departureAirportName
-                appViewModel.destinationAirport=destinationAirportName
+                appViewModel.departureAirport = departureAirportName
+                appViewModel.destinationAirport = destinationAirportName
                 navController.navigate(DETAILS)
             },
             buttonColor = Dark_Blue,
