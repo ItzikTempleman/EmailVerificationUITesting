@@ -1,19 +1,25 @@
 package com.itzik.user_with_testing.project.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
+import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.models.flight_models.Flights
 import com.itzik.user_with_testing.project.utils.Constants
 import com.itzik.user_with_testing.project.viewmodels.AppViewModel
@@ -27,11 +33,11 @@ fun DetailsScreen(
     coroutineScope: CoroutineScope,
 ) {
     ConstraintLayout(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .background(White)
     ) {
         val (title, flightListLazyRow) = createRefs()
-        var airportNameDeparture = appViewModel.departureAirport
-        var airportNameDestination = appViewModel.destinationAirport
         var list = result
         Text(
             modifier = Modifier
@@ -44,23 +50,23 @@ fun DetailsScreen(
             color = Constants.Dark_Blue,
             fontFamily = FontFamily.Monospace,
             fontWeight = FontWeight.Bold,
-            text = "Select a flight"
+            text = stringResource(id = R.string.choose_flight)
         )
 
         LazyRow(modifier = Modifier
             .fillMaxWidth()
+            .height(200.dp)
             .padding(8.dp)
             .constrainAs(flightListLazyRow) {
                 top.linkTo(title.bottom)
             }
         ) {
-            items(list) {
+            items(list, itemContent = {
                 FlightItemScreen(
-                    modifier =Modifier,
-                    departureAirportParamName =airportNameDeparture,
-                    destinationAirportParamName =airportNameDestination
+                    modifier = Modifier.background(Color.Blue),
+                    flightItem = it
                 )
-            }
+            })
         }
     }
 }
