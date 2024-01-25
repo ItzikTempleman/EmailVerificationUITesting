@@ -24,25 +24,27 @@ import com.itzik.user_with_testing.project.utils.Constants.Light_Blue
 import com.itzik.user_with_testing.project.viewmodels.AppViewModel
 
 
-
 @Composable
 fun DropDownMenuScreen(
     modifier: Modifier,
-    searchParam: MutableState<String>?=null,
+    updateSearchWithCityName: (String) -> Unit,
+    searchParam: MutableState<String>? = null,
+    cityNameParam: MutableState<String>? = null,
     appViewModel: AppViewModel,
     isExpanded: MutableState<Boolean>,
-    list: MutableState<List<String>>?=null,
+    list: MutableState<List<String>>? = null,
     thisValueChange: (String) -> Unit,
     label: String,
     leadingIcon: ImageVector,
     updatedValue: (String) -> Unit,
 ) {
 
+
     val expansionIcon = if (isExpanded.value) Icons.Filled.KeyboardArrowUp
     else Icons.Filled.KeyboardArrowDown
 
     Column(
-        modifier=modifier
+        modifier = modifier
     ) {
         searchParam?.value?.let {
             OutlinedTextField(
@@ -51,6 +53,7 @@ fun DropDownMenuScreen(
                 onValueChange = {
                     thisValueChange(it)
                 },
+
                 trailingIcon = {
                     Icon(imageVector = expansionIcon, null,
                         Modifier.clickable { isExpanded.value = !isExpanded.value })
@@ -94,18 +97,31 @@ fun DropDownMenuScreen(
                     val regex = Regex("\\(([^)]+)\\)")
                     val matchResult = regex.find(item)
                     val codeName = matchResult?.groups?.get(1)?.value
-
                     if (codeName != null) {
                         searchParam?.value = codeName
-                        searchParam?.value?.let { updatedValue(it) }
+                        searchParam?.value?.let {
+                            updatedValue(it) }
                     }
-                    isExpanded.value = false
 
+                    val regex2 = Regex("([\\w\\s]+)\\s*\\([^)]+\\)")
+                    val matchResult2 = regex2.find(item)
+                    val result = matchResult2?.groupValues?.get(1)
+                    if (result != null) {
+                        cityNameParam?.value=result
+                        updateSearchWithCityName(result)
+                    }
+
+                    isExpanded.value = false
                 }
-                ) {
+
+                )
+
+                {
                     Text(text = item)
                 }
             }
+
         }
     }
 }
+//Log.d("TAG", "city: $city")

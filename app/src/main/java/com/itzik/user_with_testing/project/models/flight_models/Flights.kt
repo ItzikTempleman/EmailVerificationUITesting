@@ -5,6 +5,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Flights(
-	val segments: List<Segments>,
-	val purchaseLinks: List<PurchaseLinks>
+    val segments: List<Segments>,
+    val purchaseLinks: List<PurchaseLinks>,
 ) : Parcelable

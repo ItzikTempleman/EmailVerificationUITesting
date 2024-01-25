@@ -2,6 +2,7 @@ package com.itzik.user_with_testing.project.ui.screens
 
 import DatePickerDialogScreen
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -119,6 +120,13 @@ fun SearchScreen(
 
         var isContextMenuVisible by remember { mutableStateOf(false) }
 
+        var departureCityName by remember {
+            mutableStateOf("")
+        }
+
+        var destinationCityName by remember {
+            mutableStateOf("")
+        }
 
         var searchDeparture by remember {
             mutableStateOf("")
@@ -143,10 +151,6 @@ fun SearchScreen(
         val expansionIcon = if (isChooseClassExpanded) Icons.Filled.KeyboardArrowUp
         else Icons.Filled.KeyboardArrowDown
 
-
-
-
-
         Row(
             modifier = Modifier
                 .constrainAs(searchRow) {
@@ -154,40 +158,46 @@ fun SearchScreen(
                 }
                 .padding(top = 8.dp)
         ) {
+
             DropDownMenuScreen(
                 modifier = Modifier
                     .weight(1f)
                     .padding(start = 6.dp, end = 2.dp),
+                updateSearchWithCityName = {
+                    departureCityName = it
+                },
                 searchParam = mutableStateOf(searchDeparture),
+                cityNameParam=mutableStateOf(""),
                 appViewModel = appViewModel,
                 isExpanded = mutableStateOf(isDepartureExpanded),
                 list = list,
                 thisValueChange = {
                     searchDeparture = it
                 },
-
+                updatedValue = {},
                 label = stringResource(id = R.string.search_departure_city),
                 leadingIcon = Icons.Default.FlightTakeoff,
-            ) {
-                searchDeparture = it
-            }
+            )
 
             DropDownMenuScreen(
                 modifier = Modifier
                     .weight(1f)
                     .padding(end = 6.dp, start = 2.dp),
+                updateSearchWithCityName = {
+                    destinationCityName = it
+                },
                 searchParam = mutableStateOf(searchDestination),
+                cityNameParam=mutableStateOf(""),
                 appViewModel = appViewModel,
                 isExpanded = mutableStateOf(isDestinationExpanded),
                 list = list,
                 thisValueChange = {
                     searchDestination = it
                 },
+                updatedValue = {},
                 label = stringResource(id = R.string.search_destination_city),
                 leadingIcon = Icons.Default.FlightLand,
-            ) {
-                searchDestination = it
-            }
+            )
         }
 
         ConstraintLayout(
@@ -454,9 +464,13 @@ fun SearchScreen(
                         returnDate = returnDate
                     ).collect {
                         flightInfo = it
-
+                      //  flightInfo.data.departureName = departureCityName
+                        //flightInfo.data.destinationName = destinationCityName
+                        Log.d("TAG", "flightInfo: $flightInfo and departure city name is: $departureCityName"
+                        )
                     }
                 }
+
                 navController.currentBackStackEntry?.savedStateHandle?.set(
                     key = "flight_info",
                     value = flightInfo
