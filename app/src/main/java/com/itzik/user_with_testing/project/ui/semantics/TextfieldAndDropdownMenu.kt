@@ -124,4 +124,3 @@ fun DropDownMenuScreen(
         }
     }
 }
-//Log.d("TAG", "city: $city")

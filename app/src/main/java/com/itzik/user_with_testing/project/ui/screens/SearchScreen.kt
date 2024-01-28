@@ -55,6 +55,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.itzik.user_with_testing.R
 import com.itzik.user_with_testing.project.models.ClassOfService
+import com.itzik.user_with_testing.project.models.flight_models.FlightInfoResponse
 import com.itzik.user_with_testing.project.models.flight_models.getEmptyResponse
 import com.itzik.user_with_testing.project.ui.navigation.ScreenContainer
 import com.itzik.user_with_testing.project.ui.semantics.DropDownMenuScreen
@@ -89,7 +90,7 @@ fun SearchScreen(
             contentScale = ContentScale.FillHeight
 
         )
-        val (searchRow, datesSelectionLayout, itineraryType, selectClass, currencyIcon, button) = createRefs()
+        val (searchRow, datesSelectionLayout, itineraryType, selectClass, button) = createRefs()
 
         var isReturnDateValid by remember {
             mutableStateOf(true)
@@ -167,7 +168,7 @@ fun SearchScreen(
                     departureCityName = it
                 },
                 searchParam = mutableStateOf(searchDeparture),
-                cityNameParam=mutableStateOf(""),
+                cityNameParam = mutableStateOf(""),
                 appViewModel = appViewModel,
                 isExpanded = mutableStateOf(isDepartureExpanded),
                 list = list,
@@ -187,7 +188,7 @@ fun SearchScreen(
                     destinationCityName = it
                 },
                 searchParam = mutableStateOf(searchDestination),
-                cityNameParam=mutableStateOf(""),
+                cityNameParam = mutableStateOf(""),
                 appViewModel = appViewModel,
                 isExpanded = mutableStateOf(isDestinationExpanded),
                 list = list,
@@ -462,12 +463,12 @@ fun SearchScreen(
                         classOfService = defaultClass.name,
                         currency = selectedCurrency,
                         returnDate = returnDate
-                    ).collect {
-                        flightInfo = it
-                      //  flightInfo.data.departureName = departureCityName
-                        //flightInfo.data.destinationName = destinationCityName
-                        Log.d("TAG", "flightInfo: $flightInfo"
-                        )
+                    ).collect { updatedFlightData ->
+
+                        flightInfo = updatedFlightData
+                        flightInfo.data.departureName = departureCityName
+                        flightInfo.data.destinationName = destinationCityName
+                        logD("departureName: "+ flightInfo.data.departureName +"and destinationName: "+ flightInfo.data.destinationName +", and flight info: $flightInfo")
                     }
                 }
 
@@ -487,6 +488,16 @@ fun SearchScreen(
     }
 }
 
+fun updateModel(
+    departureCityName: String,
+    destinationCityName: String,
+    flightModel: FlightInfoResponse
+): FlightInfoResponse {
+    flightModel.data.departureName = departureCityName
+    flightModel.data.destinationName = destinationCityName
+    return flightModel
+}
 
-
-
+fun logD(messageStr: String) {
+    Log.d("TAG", messageStr)
+}
