@@ -466,7 +466,7 @@ fun SearchScreen(
                         flightInfo = it
                       //  flightInfo.data.departureName = departureCityName
                         //flightInfo.data.destinationName = destinationCityName
-                        Log.d("TAG", "flightInfo: $flightInfo and departure city name is: $departureCityName"
+                        Log.d("TAG", "flightInfo: $flightInfo"
                         )
                     }
                 }
